@@ -1,21 +1,42 @@
-MIT License
+All code is copyrighted Cornell University, 1995. 
 
-Copyright (c) 2025 Kurt Pagani
+Code has been developed by Paul Chew, Paul Jackson, Shekar Muddana,
+Rick Palmer, Todd Wilson and Richard Zippel in the Simlab group at
+Cornell University.
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+This work was supported in part by the Advanced Research Projects
+Agency of the Department of Defense under ONR Contract
+N00014--92--J--1989, by ONR Contract N00014--92--J--1839, and in part
+by the U.S. Army Research Office through the Mathematical Science
+Institute of Cornell University.
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
+This material is NOT Public Domain, but permission to copy this
+software, to redistribute it, and to use it for any purpose is
+granted, subject to the following restrictions and understandings.
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+1. Any copy made of this software must include this copyright notice
+   in full.
+
+2. Users of this software agree to make their best efforts (a) to
+   return to the Cornell Modeling and Simulation Project any
+   improvements or extensions that they make, so that these may be
+   included in future releases; and (b) to inform Cornell of
+   noteworthy uses of this software.
+
+3. All redistributions of this software must include the sources,
+   machine readable documentation and any other machine readable
+   material provided as part of this distribution by Cornell in full.
+
+4. All materials developed as a consequence of the use of this
+   software shall duly acknowledge such use, in accordance with the
+   usual standards of acknowledging credit in academic research.
+
+5. Cornell University has made no warrantee or representation that the
+   operation of this software will be error-free, and Cornell
+   University is under no obligation to provide any services, by way
+   of maintenance, update, or otherwise.
+
+6. In conjunction with products arising from the use of this material,
+   there shall be no use of the name of Cornell University nor of any
+   adaptation thereof in any advertising, promotional, or sales
+   literature without prior written consent from Cornell in each case.
