@@ -14,7 +14,20 @@ See [xref-weyl.lisp](./xref/xref-weyl.lisp)
 
 
 
+## Docs and References
+
+ * [Richard Zippel](https://www.cs.cornell.edu/rz/computer-algebra.html)
+ * [LNCS, vol 722](https://link.springer.com/chapter/10.1007/BFb0013185),
+   [local:](./docs/90-1077.pdf)
+ 
+ * [User manual](https://github.com/nilqed/weyl/blob/master/reference/Weyl%20Manual.pdf)
+ 
+ * [Predicate dispatching, A.M. Ucko](https://github.com/nilqed/weyl/blob/master/reference/AITR-2001-006.pdf)
+ 
+ 
 
 📅 14-JAN-2025
+
+
 
 
