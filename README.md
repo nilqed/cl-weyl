@@ -8,7 +8,10 @@ This repo contains derivative work and further developments of the original __WE
 
 
 ## XREF analysis
-:todo:
+See [xref-weyl.lisp](./xref/xref-weyl.lisp)
+
+![classes](./docs/classes2.jpg?raw=true)
+
 
 
 

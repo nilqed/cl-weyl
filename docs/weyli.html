@@ -1,0 +1,816 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<link rel="stylesheet" href="default.css" type="text/css" />
+<title>weyli
+
+ package</title>
+</head>
+<body>
+<div id="weyli-package" class="document"><h1 class="title"><tt class="docutils literal">
+<span class="pre">weyli</span></tt> package</h1>
+<p><a class="reference" href="index.html"><span>&lt;&lt; back to weyl index</span></a></p>
+<p>Exported symbols:</p>
+<div id="variables" class="section"><h2><a name="variables">Variables</a></h2>
+<a id="variable-2aprint-modulus-2a" class="target" name="variable-2aprint-modulus-2a"></a><div id="print-modulus" class="section"><h3><a name="print-modulus"><tt class="docutils literal">
+<span class="pre">*print-modulus*</span></tt></a></h3>
+<a id="variable-2adefault-random-height-2a" class="target" name="variable-2adefault-random-height-2a"></a></div>
+<div id="default-random-height" class="section"><h3><a name="default-random-height"><tt class="docutils literal">
+<span class="pre">*default-random-height*</span></tt></a></h3>
+<a id="variable-2acoerce-where-possible-2a" class="target" name="variable-2acoerce-where-possible-2a"></a></div>
+<div id="coerce-where-possible" class="section"><h3><a name="coerce-where-possible"><tt class="docutils literal">
+<span class="pre">*coerce-where-possible*</span></tt></a></h3>
+<a id="variable-2ageneral-2a" class="target" name="variable-2ageneral-2a"></a></div>
+<div id="general" class="section"><h3><a name="general"><tt class="docutils literal">
+<span class="pre">*general*</span></tt></a></h3>
+<p>The general representation domain</p>
+<a id="variable-2adomains-2a" class="target" name="variable-2adomains-2a"></a></div>
+<div id="domains" class="section"><h3><a name="domains"><tt class="docutils literal">
+<span class="pre">*domains*</span></tt></a></h3>
+<p>List of domains currently in use</p>
+<a id="variable-2anegative-infinity-2a" class="target" name="variable-2anegative-infinity-2a"></a></div>
+<div id="negative-infinity" class="section"><h3><a name="negative-infinity"><tt class="docutils literal">
+<span class="pre">*negative-infinity*</span></tt></a></h3>
+<a id="variable-2apositive-infinity-2a" class="target" name="variable-2apositive-infinity-2a"></a></div>
+<div id="positive-infinity" class="section"><h3><a name="positive-infinity"><tt class="docutils literal">
+<span class="pre">*positive-infinity*</span></tt></a></h3>
+</div>
+</div>
+<div id="functions" class="section"><h2><a name="functions">Functions</a></h2>
+<a id="function-tetrahedron-3f" class="target" name="function-tetrahedron-3f"></a><div id="tetrahedron" class="section"><h3><a name="tetrahedron"><tt class="docutils literal">
+<span class="pre">tetrahedron?</span></tt></a></h3>
+<a id="function-triangle-3f" class="target" name="function-triangle-3f"></a></div>
+<div id="triangle" class="section"><h3><a name="triangle"><tt class="docutils literal">
+<span class="pre">triangle?</span></tt></a></h3>
+<a id="function-segment-3f" class="target" name="function-segment-3f"></a></div>
+<div id="segment" class="section"><h3><a name="segment"><tt class="docutils literal">
+<span class="pre">segment?</span></tt></a></h3>
+<a id="function-get-tpower-series-domain" class="target" name="function-get-tpower-series-domain"></a></div>
+<div id="get-tpower-series-domain" class="section"><h3><a name="get-tpower-series-domain"><tt class="docutils literal">
+<span class="pre">get-tpower-series-domain</span></tt></a></h3>
+<a id="function-get-finite-field" class="target" name="function-get-finite-field"></a></div>
+<div id="get-finite-field" class="section"><h3><a name="get-finite-field"><tt class="docutils literal">
+<span class="pre">get-finite-field</span></tt></a></h3>
+<a id="function-get-direct-sum" class="target" name="function-get-direct-sum"></a></div>
+<div id="get-direct-sum" class="section"><h3><a name="get-direct-sum"><tt class="docutils literal">
+<span class="pre">get-direct-sum</span></tt></a></h3>
+<a id="function-ge-tan-3f" class="target" name="function-ge-tan-3f"></a></div>
+<div id="ge-tan" class="section"><h3><a name="ge-tan"><tt class="docutils literal">
+<span class="pre">ge-tan?</span></tt></a></h3>
+<a id="function-ge-cos-3f" class="target" name="function-ge-cos-3f"></a></div>
+<div id="ge-cos" class="section"><h3><a name="ge-cos"><tt class="docutils literal">
+<span class="pre">ge-cos?</span></tt></a></h3>
+<a id="function-ge-sin-3f" class="target" name="function-ge-sin-3f"></a></div>
+<div id="ge-sin" class="section"><h3><a name="ge-sin"><tt class="docutils literal">
+<span class="pre">ge-sin?</span></tt></a></h3>
+<a id="function-ge-log-3f" class="target" name="function-ge-log-3f"></a></div>
+<div id="ge-log" class="section"><h3><a name="ge-log"><tt class="docutils literal">
+<span class="pre">ge-log?</span></tt></a></h3>
+<a id="function-ge-abs-3f" class="target" name="function-ge-abs-3f"></a></div>
+<div id="ge-abs" class="section"><h3><a name="ge-abs"><tt class="docutils literal">
+<span class="pre">ge-abs?</span></tt></a></h3>
+<a id="function-make-app-function" class="target" name="function-make-app-function"></a></div>
+<div id="make-app-function" class="section"><h3><a name="make-app-function"><tt class="docutils literal">
+<span class="pre">make-app-function</span></tt></a></h3>
+<a id="function-make-universal-quantified-set" class="target" name="function-make-universal-quantified-set"></a></div>
+<div id="make-universal-quantified-set" class="section"><h3><a name="make-universal-quantified-set"><tt class="docutils literal">
+<span class="pre">make-universal-quantified-set</span></tt></a></h3>
+<a id="function-ge-variable-3f" class="target" name="function-ge-variable-3f"></a></div>
+<div id="ge-variable" class="section"><h3><a name="ge-variable"><tt class="docutils literal">
+<span class="pre">ge-variable?</span></tt></a></h3>
+<a id="function-get-automorphisms" class="target" name="function-get-automorphisms"></a></div>
+<div id="get-automorphisms" class="section"><h3><a name="get-automorphisms"><tt class="docutils literal">
+<span class="pre">get-automorphisms</span></tt></a></h3>
+<a id="function-get-homomorphisms" class="target" name="function-get-homomorphisms"></a></div>
+<div id="get-homomorphisms" class="section"><h3><a name="get-homomorphisms"><tt class="docutils literal">
+<span class="pre">get-homomorphisms</span></tt></a></h3>
+<a id="function-get-morphisms" class="target" name="function-get-morphisms"></a></div>
+<div id="get-morphisms" class="section"><h3><a name="get-morphisms"><tt class="docutils literal">
+<span class="pre">get-morphisms</span></tt></a></h3>
+<a id="function-totient" class="target" name="function-totient"></a></div>
+<div id="totient" class="section"><h3><a name="totient"><tt class="docutils literal">
+<span class="pre">totient</span></tt></a></h3>
+<a id="function-ge-ifourier-3f" class="target" name="function-ge-ifourier-3f"></a></div>
+<div id="ge-ifourier" class="section"><h3><a name="ge-ifourier"><tt class="docutils literal">
+<span class="pre">ge-ifourier?</span></tt></a></h3>
+<a id="function-ge-fourier-3f" class="target" name="function-ge-fourier-3f"></a></div>
+<div id="ge-fourier" class="section"><h3><a name="ge-fourier"><tt class="docutils literal">
+<span class="pre">ge-fourier?</span></tt></a></h3>
+<a id="function-ge-eqn-3e-3d-3f" class="target" name="function-ge-eqn-3e-3d-3f"></a></div>
+<div id="ge-eqn" class="section"><h3><a name="ge-eqn"><tt class="docutils literal">
+<span class="pre">ge-eqn&gt;=?</span></tt></a></h3>
+<a id="function-ge-eqn-3e-3f" class="target" name="function-ge-eqn-3e-3f"></a></div>
+<div id="id2" class="section"><h3><a name="id2"><tt class="docutils literal">
+<span class="pre">ge-eqn&gt;?</span></tt></a></h3>
+<a id="function-ge-eqn-3d-3f" class="target" name="function-ge-eqn-3d-3f"></a></div>
+<div id="id3" class="section"><h3><a name="id3"><tt class="docutils literal">
+<span class="pre">ge-eqn=?</span></tt></a></h3>
+<a id="function-ge-application-3f" class="target" name="function-ge-application-3f"></a></div>
+<div id="ge-application" class="section"><h3><a name="ge-application"><tt class="docutils literal">
+<span class="pre">ge-application?</span></tt></a></h3>
+<a id="function-ge-function-deriv-3f" class="target" name="function-ge-function-deriv-3f"></a></div>
+<div id="ge-function-deriv" class="section"><h3><a name="ge-function-deriv"><tt class="docutils literal">
+<span class="pre">ge-function-deriv?</span></tt></a></h3>
+<a id="function-ge-function-3f" class="target" name="function-ge-function-3f"></a></div>
+<div id="ge-function" class="section"><h3><a name="ge-function"><tt class="docutils literal">
+<span class="pre">ge-function?</span></tt></a></h3>
+<a id="function-ge-expt-3f" class="target" name="function-ge-expt-3f"></a></div>
+<div id="ge-expt" class="section"><h3><a name="ge-expt"><tt class="docutils literal">
+<span class="pre">ge-expt?</span></tt></a></h3>
+<a id="function-ge-times-3f" class="target" name="function-ge-times-3f"></a></div>
+<div id="ge-times" class="section"><h3><a name="ge-times"><tt class="docutils literal">
+<span class="pre">ge-times?</span></tt></a></h3>
+<a id="function-ge-plus-3f" class="target" name="function-ge-plus-3f"></a></div>
+<div id="ge-plus" class="section"><h3><a name="ge-plus"><tt class="docutils literal">
+<span class="pre">ge-plus?</span></tt></a></h3>
+<a id="function-ge-nary-3f" class="target" name="function-ge-nary-3f"></a></div>
+<div id="ge-nary" class="section"><h3><a name="ge-nary"><tt class="docutils literal">
+<span class="pre">ge-nary?</span></tt></a></h3>
+<a id="function-number-3f" class="target" name="function-number-3f"></a></div>
+<div id="number" class="section"><h3><a name="number"><tt class="docutils literal">
+<span class="pre">number?</span></tt></a></h3>
+<a id="function-reset-domains" class="target" name="function-reset-domains"></a></div>
+<div id="reset-domains" class="section"><h3><a name="reset-domains"><tt class="docutils literal">
+<span class="pre">reset-domains</span></tt></a></h3>
+<a id="function-25quotient" class="target" name="function-25quotient"></a></div>
+<div id="quotient" class="section"><h3><a name="quotient"><tt class="docutils literal">
+<span class="pre">%quotient</span></tt></a></h3>
+<a id="function-25times" class="target" name="function-25times"></a></div>
+<div id="times" class="section"><h3><a name="times"><tt class="docutils literal">
+<span class="pre">%times</span></tt></a></h3>
+<a id="function-25difference" class="target" name="function-25difference"></a></div>
+<div id="difference" class="section"><h3><a name="difference"><tt class="docutils literal">
+<span class="pre">%difference</span></tt></a></h3>
+<a id="function-25plus" class="target" name="function-25plus"></a></div>
+<div id="plus" class="section"><h3><a name="plus"><tt class="docutils literal">
+<span class="pre">%plus</span></tt></a></h3>
+<a id="function-25min" class="target" name="function-25min"></a></div>
+<div id="min" class="section"><h3><a name="min"><tt class="docutils literal">
+<span class="pre">%min</span></tt></a></h3>
+<a id="function-25max" class="target" name="function-25max"></a></div>
+<div id="max" class="section"><h3><a name="max"><tt class="docutils literal">
+<span class="pre">%max</span></tt></a></h3>
+</div>
+</div>
+<div id="macros" class="section"><h2><a name="macros">Macros</a></h2>
+<a id="macro-make-mesh" class="target" name="macro-make-mesh"></a><div id="make-mesh" class="section"><h3><a name="make-mesh"><tt class="docutils literal">
+<span class="pre">make-mesh</span></tt></a></h3>
+<a id="macro-map-over-maximal-cells" class="target" name="macro-map-over-maximal-cells"></a></div>
+<div id="map-over-maximal-cells" class="section"><h3><a name="map-over-maximal-cells"><tt class="docutils literal">
+<span class="pre">map-over-maximal-cells</span></tt></a></h3>
+<a id="macro-map-over-cells" class="target" name="macro-map-over-cells"></a></div>
+<div id="map-over-cells" class="section"><h3><a name="map-over-cells"><tt class="docutils literal">
+<span class="pre">map-over-cells</span></tt></a></h3>
+<a id="macro-with-matrix-dimensions" class="target" name="macro-with-matrix-dimensions"></a></div>
+<div id="with-matrix-dimensions" class="section"><h3><a name="with-matrix-dimensions"><tt class="docutils literal">
+<span class="pre">with-matrix-dimensions</span></tt></a></h3>
+<a id="macro-variable-derivation" class="target" name="macro-variable-derivation"></a></div>
+<div id="variable-derivation" class="section"><h3><a name="variable-derivation"><tt class="docutils literal">
+<span class="pre">variable-derivation</span></tt></a></h3>
+<a id="macro-funct" class="target" name="macro-funct"></a></div>
+<div id="funct" class="section"><h3><a name="funct"><tt class="docutils literal">
+<span class="pre">funct</span></tt></a></h3>
+<a id="macro-memoize" class="target" name="macro-memoize"></a></div>
+<div id="memoize" class="section"><h3><a name="memoize"><tt class="docutils literal">
+<span class="pre">memoize</span></tt></a></h3>
+<a id="macro-partition" class="target" name="macro-partition"></a></div>
+<div id="partition" class="section"><h3><a name="partition"><tt class="docutils literal">
+<span class="pre">partition</span></tt></a></h3>
+<a id="macro-permute" class="target" name="macro-permute"></a></div>
+<div id="permute" class="section"><h3><a name="permute"><tt class="docutils literal">
+<span class="pre">permute</span></tt></a></h3>
+<a id="macro-choose" class="target" name="macro-choose"></a></div>
+<div id="choose" class="section"><h3><a name="choose"><tt class="docutils literal">
+<span class="pre">choose</span></tt></a></h3>
+<a id="macro-with-numerator-and-denominator" class="target" name="macro-with-numerator-and-denominator"></a></div>
+<div id="with-numerator-and-denominator" class="section"><h3><a name="with-numerator-and-denominator"><tt class="docutils literal">
+<span class="pre">with-numerator-and-denominator</span></tt></a></h3>
+<a id="macro-define-operations" class="target" name="macro-define-operations"></a></div>
+<div id="define-operations" class="section"><h3><a name="define-operations"><tt class="docutils literal">
+<span class="pre">define-operations</span></tt></a></h3>
+<a id="macro-gcd" class="target" name="macro-gcd"></a></div>
+<div id="gcd" class="section"><h3><a name="gcd"><tt class="docutils literal">
+<span class="pre">gcd</span></tt></a></h3>
+<a id="macro-2f" class="target" name="macro-2f"></a></div>
+<div id="" class="section"><h3><a name=""><tt class="docutils literal">
+<span class="pre">/</span></tt></a></h3>
+<a id="macro-2a" class="target" name="macro-2a"></a></div>
+<div id="id4" class="section"><h3><a name="id4"><tt class="docutils literal">
+<span class="pre">*</span></tt></a></h3>
+<a id="macro" class="target" name="macro"></a></div>
+<div id="id5" class="section"><h3><a name="id5"><tt class="docutils literal">
+<span class="pre">-</span></tt></a></h3>
+<a id="macro-2b" class="target" name="macro-2b"></a></div>
+<div id="id6" class="section"><h3><a name="id6"><tt class="docutils literal">
+<span class="pre">+</span></tt></a></h3>
+<a id="macro-min" class="target" name="macro-min"></a></div>
+<div id="id7" class="section"><h3><a name="id7"><tt class="docutils literal">
+<span class="pre">min</span></tt></a></h3>
+<a id="macro-max" class="target" name="macro-max"></a></div>
+<div id="id8" class="section"><h3><a name="id8"><tt class="docutils literal">
+<span class="pre">max</span></tt></a></h3>
+<a id="macro-3e-3d" class="target" name="macro-3e-3d"></a></div>
+<div id="id9" class="section"><h3><a name="id9"><tt class="docutils literal">
+<span class="pre">&gt;=</span></tt></a></h3>
+<a id="macro-3c-3d" class="target" name="macro-3c-3d"></a></div>
+<div id="id10" class="section"><h3><a name="id10"><tt class="docutils literal">
+<span class="pre">&lt;=</span></tt></a></h3>
+<a id="macro-3e" class="target" name="macro-3e"></a></div>
+<div id="id11" class="section"><h3><a name="id11"><tt class="docutils literal">
+<span class="pre">&gt;</span></tt></a></h3>
+<a id="macro-3d" class="target" name="macro-3d"></a></div>
+<div id="id12" class="section"><h3><a name="id12"><tt class="docutils literal">
+<span class="pre">=</span></tt></a></h3>
+<a id="macro-3c" class="target" name="macro-3c"></a></div>
+<div id="id13" class="section"><h3><a name="id13"><tt class="docutils literal">
+<span class="pre">&lt;</span></tt></a></h3>
+</div>
+</div>
+<div id="generic-functions" class="section"><h2><a name="generic-functions">Generic Functions</a></h2>
+<a id="generic-function-read-mesh" class="target" name="generic-function-read-mesh"></a><div id="read-mesh" class="section"><h3><a name="read-mesh"><tt class="docutils literal">
+<span class="pre">read-mesh</span></tt></a></h3>
+<p>The purpose of this method is unknown.</p>
+<a id="generic-function-write-mesh" class="target" name="generic-function-write-mesh"></a></div>
+<div id="write-mesh" class="section"><h3><a name="write-mesh"><tt class="docutils literal">
+<span class="pre">write-mesh</span></tt></a></h3>
+<p>The purpose of this method is unknown.</p>
+<a id="generic-function-make-mesh-from-file" class="target" name="generic-function-make-mesh-from-file"></a></div>
+<div id="make-mesh-from-file" class="section"><h3><a name="make-mesh-from-file"><tt class="docutils literal">
+<span class="pre">make-mesh-from-file</span></tt></a></h3>
+<p>The purpose of this function is unknown.</p>
+<a id="generic-function-refine-mesh" class="target" name="generic-function-refine-mesh"></a></div>
+<div id="refine-mesh" class="section"><h3><a name="refine-mesh"><tt class="docutils literal">
+<span class="pre">refine-mesh</span></tt></a></h3>
+<p>The purpose of this function is unknown.</p>
+<a id="generic-function-name-region" class="target" name="generic-function-name-region"></a></div>
+<div id="name-region" class="section"><h3><a name="name-region"><tt class="docutils literal">
+<span class="pre">name-region</span></tt></a></h3>
+<p>The purpose of this function is unknown.</p>
+<a id="generic-function-insert-boundary" class="target" name="generic-function-insert-boundary"></a></div>
+<div id="insert-boundary" class="section"><h3><a name="insert-boundary"><tt class="docutils literal">
+<span class="pre">insert-boundary</span></tt></a></h3>
+<p>The purpose of this function is unknown.</p>
+<a id="generic-function-create-mesh" class="target" name="generic-function-create-mesh"></a></div>
+<div id="create-mesh" class="section"><h3><a name="create-mesh"><tt class="docutils literal">
+<span class="pre">create-mesh</span></tt></a></h3>
+<p>The purpose of this function is unknown.</p>
+<a id="generic-function-boundary-complex-of" class="target" name="generic-function-boundary-complex-of"></a></div>
+<div id="boundary-complex-of" class="section"><h3><a name="boundary-complex-of"><tt class="docutils literal">
+<span class="pre">boundary-complex-of</span></tt></a></h3>
+<p>The purpose of this function is unknown.</p>
+<a id="generic-function-dimension-of" class="target" name="generic-function-dimension-of"></a></div>
+<div id="dimension-of" class="section"><h3><a name="dimension-of"><tt class="docutils literal">
+<span class="pre">dimension-of</span></tt></a></h3>
+<p>The purpose of this function is unknown.</p>
+<a id="generic-function-locate" class="target" name="generic-function-locate"></a></div>
+<div id="locate" class="section"><h3><a name="locate"><tt class="docutils literal">
+<span class="pre">locate</span></tt></a></h3>
+<p>The purpose of this method is unknown.</p>
+<a id="generic-function-angles" class="target" name="generic-function-angles"></a></div>
+<div id="angles" class="section"><h3><a name="angles"><tt class="docutils literal">
+<span class="pre">angles</span></tt></a></h3>
+<p>The purpose of this function is unknown.</p>
+<a id="generic-function-make-curved-segment" class="target" name="generic-function-make-curved-segment"></a></div>
+<div id="make-curved-segment" class="section"><h3><a name="make-curved-segment"><tt class="docutils literal">
+<span class="pre">make-curved-segment</span></tt></a></h3>
+<p>The purpose of this function is unknown.</p>
+<a id="generic-function-simplex-size" class="target" name="generic-function-simplex-size"></a></div>
+<div id="simplex-size" class="section"><h3><a name="simplex-size"><tt class="docutils literal">
+<span class="pre">simplex-size</span></tt></a></h3>
+<p>The purpose of this function is unknown.</p>
+<a id="generic-function-split" class="target" name="generic-function-split"></a></div>
+<div id="split" class="section"><h3><a name="split"><tt class="docutils literal">
+<span class="pre">split</span></tt></a></h3>
+<p>The purpose of this function is unknown.</p>
+<a id="generic-function-all-names" class="target" name="generic-function-all-names"></a></div>
+<div id="all-names" class="section"><h3><a name="all-names"><tt class="docutils literal">
+<span class="pre">all-names</span></tt></a></h3>
+<p>The purpose of this function is unknown.</p>
+<a id="generic-function-insert" class="target" name="generic-function-insert"></a></div>
+<div id="insert" class="section"><h3><a name="insert"><tt class="docutils literal">
+<span class="pre">insert</span></tt></a></h3>
+<p>The purpose of this function is unknown.</p>
+<a id="generic-function-name" class="target" name="generic-function-name"></a></div>
+<div id="name" class="section"><h3><a name="name"><tt class="docutils literal">
+<span class="pre">name</span></tt></a></h3>
+<p>The purpose of this function is unknown.</p>
+<a id="generic-function-home-of" class="target" name="generic-function-home-of"></a></div>
+<div id="home-of" class="section"><h3><a name="home-of"><tt class="docutils literal">
+<span class="pre">home-of</span></tt></a></h3>
+<p>The home of a noncurved simplex is determined by (the first of) its vertices.</p>
+<a id="generic-function-integral" class="target" name="generic-function-integral"></a></div>
+<div id="integral" class="section"><h3><a name="integral"><tt class="docutils literal">
+<span class="pre">integral</span></tt></a></h3>
+<p>The purpose of this function is unknown.</p>
+<a id="generic-function-make-sampled-function" class="target" name="generic-function-make-sampled-function"></a></div>
+<div id="make-sampled-function" class="section"><h3><a name="make-sampled-function"><tt class="docutils literal">
+<span class="pre">make-sampled-function</span></tt></a></h3>
+<p>The purpose of this function is unknown.</p>
+<a id="generic-function-boundary" class="target" name="generic-function-boundary"></a></div>
+<div id="boundary" class="section"><h3><a name="boundary"><tt class="docutils literal">
+<span class="pre">boundary</span></tt></a></h3>
+<p>The purpose of this function is unknown.</p>
+<a id="generic-function-boundary-domain" class="target" name="generic-function-boundary-domain"></a></div>
+<div id="boundary-domain" class="section"><h3><a name="boundary-domain"><tt class="docutils literal">
+<span class="pre">boundary-domain</span></tt></a></h3>
+<p>The purpose of this function is unknown.</p>
+<a id="generic-function-get-chain-module" class="target" name="generic-function-get-chain-module"></a></div>
+<div id="get-chain-module" class="section"><h3><a name="get-chain-module"><tt class="docutils literal">
+<span class="pre">get-chain-module</span></tt></a></h3>
+<p>The purpose of this function is unkown.</p>
+<a id="generic-function-make-simplex" class="target" name="generic-function-make-simplex"></a></div>
+<div id="make-simplex" class="section"><h3><a name="make-simplex"><tt class="docutils literal">
+<span class="pre">make-simplex</span></tt></a></h3>
+<p>The purpose of this function is unknown.</p>
+<a id="generic-function-make-point" class="target" name="generic-function-make-point"></a></div>
+<div id="make-point" class="section"><h3><a name="make-point"><tt class="docutils literal">
+<span class="pre">make-point</span></tt></a></h3>
+<p>The purpose of this function is unknown.</p>
+<a id="generic-function-transpose" class="target" name="generic-function-transpose"></a></div>
+<div id="transpose" class="section"><h3><a name="transpose"><tt class="docutils literal">
+<span class="pre">transpose</span></tt></a></h3>
+<p>The purpose of this function is unknown.</p>
+<a id="generic-function-one-matrix" class="target" name="generic-function-one-matrix"></a></div>
+<div id="one-matrix" class="section"><h3><a name="one-matrix"><tt class="docutils literal">
+<span class="pre">one-matrix</span></tt></a></h3>
+<p>The purpose of this function is unknown.</p>
+<a id="generic-function-matrix-dimensions" class="target" name="generic-function-matrix-dimensions"></a></div>
+<div id="matrix-dimensions" class="section"><h3><a name="matrix-dimensions"><tt class="docutils literal">
+<span class="pre">matrix-dimensions</span></tt></a></h3>
+<p>The purpose of this function is unknown.</p>
+<a id="generic-function-minimal-polynomial" class="target" name="generic-function-minimal-polynomial"></a></div>
+<div id="minimal-polynomial" class="section"><h3><a name="minimal-polynomial"><tt class="docutils literal">
+<span class="pre">minimal-polynomial</span></tt></a></h3>
+<p>The purpose of this function is unknown.</p>
+<a id="generic-function-taylor" class="target" name="generic-function-taylor"></a></div>
+<div id="taylor" class="section"><h3><a name="taylor"><tt class="docutils literal">
+<span class="pre">taylor</span></tt></a></h3>
+<p>The purpose of this function is unknown.</p>
+<a id="generic-function-add-relation" class="target" name="generic-function-add-relation"></a></div>
+<div id="add-relation" class="section"><h3><a name="add-relation"><tt class="docutils literal">
+<span class="pre">add-relation</span></tt></a></h3>
+<p>The purpose of this function is unknown.</p>
+<a id="generic-function-make-ideal" class="target" name="generic-function-make-ideal"></a></div>
+<div id="make-ideal" class="section"><h3><a name="make-ideal"><tt class="docutils literal">
+<span class="pre">make-ideal</span></tt></a></h3>
+<p>The purpose of this function is unknown.</p>
+<a id="generic-function-interpolate" class="target" name="generic-function-interpolate"></a></div>
+<div id="interpolate" class="section"><h3><a name="interpolate"><tt class="docutils literal">
+<span class="pre">interpolate</span></tt></a></h3>
+<p>The purpose of this function is unknown.</p>
+<a id="generic-function-get-variable-name" class="target" name="generic-function-get-variable-name"></a></div>
+<div id="get-variable-name" class="section"><h3><a name="get-variable-name"><tt class="docutils literal">
+<span class="pre">get-variable-name</span></tt></a></h3>
+<p>The purpose of this function is unknown.</p>
+<a id="generic-function-coefficient" class="target" name="generic-function-coefficient"></a></div>
+<div id="coefficient" class="section"><h3><a name="coefficient"><tt class="docutils literal">
+<span class="pre">coefficient</span></tt></a></h3>
+<p>The purpose of this method is unknown.</p>
+<a id="generic-function-list-of-variables" class="target" name="generic-function-list-of-variables"></a></div>
+<div id="list-of-variables" class="section"><h3><a name="list-of-variables"><tt class="docutils literal">
+<span class="pre">list-of-variables</span></tt></a></h3>
+<p>The purpose of this method is unknown.</p>
+<a id="generic-function-degree" class="target" name="generic-function-degree"></a></div>
+<div id="degree" class="section"><h3><a name="degree"><tt class="docutils literal">
+<span class="pre">degree</span></tt></a></h3>
+<p>The purpose of this method is unknown.</p>
+<a id="generic-function-partial-deriv" class="target" name="generic-function-partial-deriv"></a></div>
+<div id="partial-deriv" class="section"><h3><a name="partial-deriv"><tt class="docutils literal">
+<span class="pre">partial-deriv</span></tt></a></h3>
+<p>The purpose of this method is unknown.</p>
+<a id="generic-function-resultant" class="target" name="generic-function-resultant"></a></div>
+<div id="resultant" class="section"><h3><a name="resultant"><tt class="docutils literal">
+<span class="pre">resultant</span></tt></a></h3>
+<p>The purpose of this method is unknown.</p>
+<a id="generic-function-scalar-3f" class="target" name="generic-function-scalar-3f"></a></div>
+<div id="scalar" class="section"><h3><a name="scalar"><tt class="docutils literal">
+<span class="pre">scalar?</span></tt></a></h3>
+<p>The purpose of this method is unknown.</p>
+<a id="generic-function-get-polynomial-ring" class="target" name="generic-function-get-polynomial-ring"></a></div>
+<div id="get-polynomial-ring" class="section"><h3><a name="get-polynomial-ring"><tt class="docutils literal">
+<span class="pre">get-polynomial-ring</span></tt></a></h3>
+<p>The purpose of this method is unknown.</p>
+<a id="generic-function-add-new-variable" class="target" name="generic-function-add-new-variable"></a></div>
+<div id="add-new-variable" class="section"><h3><a name="add-new-variable"><tt class="docutils literal">
+<span class="pre">add-new-variable</span></tt></a></h3>
+<p>The purpose of this method is unknown.</p>
+<a id="generic-function-variable-index" class="target" name="generic-function-variable-index"></a></div>
+<div id="variable-index" class="section"><h3><a name="variable-index"><tt class="docutils literal">
+<span class="pre">variable-index</span></tt></a></h3>
+<p>The purpose of this method is unknown.</p>
+<a id="generic-function-get-factor-ring" class="target" name="generic-function-get-factor-ring"></a></div>
+<div id="get-factor-ring" class="section"><h3><a name="get-factor-ring"><tt class="docutils literal">
+<span class="pre">get-factor-ring</span></tt></a></h3>
+<p>The purpose of this method is unknown.</p>
+<a id="generic-function-multiplicative-order" class="target" name="generic-function-multiplicative-order"></a></div>
+<div id="multiplicative-order" class="section"><h3><a name="multiplicative-order"><tt class="docutils literal">
+<span class="pre">multiplicative-order</span></tt></a></h3>
+<p>The purpose of this method is unknown.</p>
+<a id="generic-function-number-of-elements" class="target" name="generic-function-number-of-elements"></a></div>
+<div id="number-of-elements" class="section"><h3><a name="number-of-elements"><tt class="docutils literal">
+<span class="pre">number-of-elements</span></tt></a></h3>
+<p>The purpose of this method is unknown.</p>
+<a id="generic-function-even-3f" class="target" name="generic-function-even-3f"></a></div>
+<div id="even" class="section"><h3><a name="even"><tt class="docutils literal">
+<span class="pre">even?</span></tt></a></h3>
+<p>Return true if the number is even.</p>
+<a id="generic-function-plus-3f" class="target" name="generic-function-plus-3f"></a></div>
+<div id="id14" class="section"><h3><a name="id14"><tt class="docutils literal">
+<span class="pre">plus?</span></tt></a></h3>
+<p>Return true if the number is positive.</p>
+<a id="generic-function-convert-to-lisp-number" class="target" name="generic-function-convert-to-lisp-number"></a></div>
+<div id="convert-to-lisp-number" class="section"><h3><a name="convert-to-lisp-number"><tt class="docutils literal">
+<span class="pre">convert-to-lisp-number</span></tt></a></h3>
+<p>Return a lisp representation of the number.</p>
+<a id="generic-function-fourier" class="target" name="generic-function-fourier"></a></div>
+<div id="fourier" class="section"><h3><a name="fourier"><tt class="docutils literal">
+<span class="pre">fourier</span></tt></a></h3>
+<p>The purpose of this method is unknown.</p>
+<a id="generic-function-expand" class="target" name="generic-function-expand"></a></div>
+<div id="expand" class="section"><h3><a name="expand"><tt class="docutils literal">
+<span class="pre">expand</span></tt></a></h3>
+<p>The purpose of this method is unknown.</p>
+<a id="generic-function-different-kernels" class="target" name="generic-function-different-kernels"></a></div>
+<div id="different-kernels" class="section"><h3><a name="different-kernels"><tt class="docutils literal">
+<span class="pre">different-kernels</span></tt></a></h3>
+<p>The purpose of this method is unknown.</p>
+<a id="generic-function-make-union" class="target" name="generic-function-make-union"></a></div>
+<div id="make-union" class="section"><h3><a name="make-union"><tt class="docutils literal">
+<span class="pre">make-union</span></tt></a></h3>
+<p>The purpose of this method is unknown.</p>
+<a id="generic-function-eqn-3e-3d" class="target" name="generic-function-eqn-3e-3d"></a></div>
+<div id="eqn" class="section"><h3><a name="eqn"><tt class="docutils literal">
+<span class="pre">eqn&gt;=</span></tt></a></h3>
+<p>The purpose of this method is unknown.</p>
+<a id="generic-function-eqn-3e" class="target" name="generic-function-eqn-3e"></a></div>
+<div id="id15" class="section"><h3><a name="id15"><tt class="docutils literal">
+<span class="pre">eqn&gt;</span></tt></a></h3>
+<p>The purpose of this method is unknown.</p>
+<a id="generic-function-eqn-3d" class="target" name="generic-function-eqn-3d"></a></div>
+<div id="id16" class="section"><h3><a name="id16"><tt class="docutils literal">
+<span class="pre">eqn=</span></tt></a></h3>
+<p>The purpose of this method is unknown.</p>
+<a id="generic-function-deriv" class="target" name="generic-function-deriv"></a></div>
+<div id="deriv" class="section"><h3><a name="deriv"><tt class="docutils literal">
+<span class="pre">deriv</span></tt></a></h3>
+<p>The purspose of this method is unknown.</p>
+<a id="generic-function-depends-on-3f" class="target" name="generic-function-depends-on-3f"></a></div>
+<div id="depends-on" class="section"><h3><a name="depends-on"><tt class="docutils literal">
+<span class="pre">depends-on?</span></tt></a></h3>
+<p>Return true if the expression depends on any of the variables</p>
+<a id="generic-function-declare-dependencies" class="target" name="generic-function-declare-dependencies"></a></div>
+<div id="declare-dependencies" class="section"><h3><a name="declare-dependencies"><tt class="docutils literal">
+<span class="pre">declare-dependencies</span></tt></a></h3>
+<p>The purpose of this method is unknown.</p>
+<a id="generic-function-get-variable-property" class="target" name="generic-function-get-variable-property"></a></div>
+<div id="get-variable-property" class="section"><h3><a name="get-variable-property"><tt class="docutils literal">
+<span class="pre">get-variable-property</span></tt></a></h3>
+<p>The purpose of this method is unknown.</p>
+<a id="generic-function-make-ge-expt" class="target" name="generic-function-make-ge-expt"></a></div>
+<div id="make-ge-expt" class="section"><h3><a name="make-ge-expt"><tt class="docutils literal">
+<span class="pre">make-ge-expt</span></tt></a></h3>
+<p>The purpose of this method is unknown.</p>
+<a id="generic-function-make-ge-times" class="target" name="generic-function-make-ge-times"></a></div>
+<div id="make-ge-times" class="section"><h3><a name="make-ge-times"><tt class="docutils literal">
+<span class="pre">make-ge-times</span></tt></a></h3>
+<p>The purpose of this method is unknown.</p>
+<a id="generic-function-make-ge-plus" class="target" name="generic-function-make-ge-plus"></a></div>
+<div id="make-ge-plus" class="section"><h3><a name="make-ge-plus"><tt class="docutils literal">
+<span class="pre">make-ge-plus</span></tt></a></h3>
+<p>The purpose of this method is unknown.</p>
+<a id="generic-function-get-function" class="target" name="generic-function-get-function"></a></div>
+<div id="get-function" class="section"><h3><a name="get-function"><tt class="docutils literal">
+<span class="pre">get-function</span></tt></a></h3>
+<p>The purpose of this method is not known.</p>
+<a id="generic-function-add-subscripts" class="target" name="generic-function-add-subscripts"></a></div>
+<div id="add-subscripts" class="section"><h3><a name="add-subscripts"><tt class="docutils literal">
+<span class="pre">add-subscripts</span></tt></a></h3>
+<p>The purpose of this method is unknown.</p>
+<a id="generic-function-make-ge-variable" class="target" name="generic-function-make-ge-variable"></a></div>
+<div id="make-ge-variable" class="section"><h3><a name="make-ge-variable"><tt class="docutils literal">
+<span class="pre">make-ge-variable</span></tt></a></h3>
+<p>The purpose of this method is unknown.</p>
+<a id="generic-function-ge-equal" class="target" name="generic-function-ge-equal"></a></div>
+<div id="ge-equal" class="section"><h3><a name="ge-equal"><tt class="docutils literal">
+<span class="pre">ge-equal</span></tt></a></h3>
+<p>The purpose of this method is unknown.</p>
+<a id="generic-function-simplify" class="target" name="generic-function-simplify"></a></div>
+<div id="simplify" class="section"><h3><a name="simplify"><tt class="docutils literal">
+<span class="pre">simplify</span></tt></a></h3>
+<p>Simplify the expression.</p>
+<a id="generic-function-display" class="target" name="generic-function-display"></a></div>
+<div id="display" class="section"><h3><a name="display"><tt class="docutils literal">
+<span class="pre">display</span></tt></a></h3>
+<p>The purpose of this method is unknown.</p>
+<a id="generic-function-minus-3f" class="target" name="generic-function-minus-3f"></a></div>
+<div id="minus" class="section"><h3><a name="minus"><tt class="docutils literal">
+<span class="pre">minus?</span></tt></a></h3>
+<p>Return true if the object is negative.</p>
+<a id="generic-function-height" class="target" name="generic-function-height"></a></div>
+<div id="height" class="section"><h3><a name="height"><tt class="docutils literal">
+<span class="pre">height</span></tt></a></h3>
+<p>The purpose of this method is unknown.</p>
+<a id="generic-function-get-quotient-field" class="target" name="generic-function-get-quotient-field"></a></div>
+<div id="get-quotient-field" class="section"><h3><a name="get-quotient-field"><tt class="docutils literal">
+<span class="pre">get-quotient-field</span></tt></a></h3>
+<p>The purpose of this method is unknown.</p>
+<a id="generic-function-compose" class="target" name="generic-function-compose"></a></div>
+<div id="compose" class="section"><h3><a name="compose"><tt class="docutils literal">
+<span class="pre">compose</span></tt></a></h3>
+<p>The purpose of this function is unknown.</p>
+<a id="generic-function-map-over-elements" class="target" name="generic-function-map-over-elements"></a></div>
+<div id="map-over-elements" class="section"><h3><a name="map-over-elements"><tt class="docutils literal">
+<span class="pre">map-over-elements</span></tt></a></h3>
+<p>Map over the elements of the set applying the function.</p>
+<a id="generic-function-set-elements" class="target" name="generic-function-set-elements"></a></div>
+<div id="set-elements" class="section"><h3><a name="set-elements"><tt class="docutils literal">
+<span class="pre">set-elements</span></tt></a></h3>
+<p>The purpose of this method is unknown.</p>
+<a id="generic-function-map-with-domain" class="target" name="generic-function-map-with-domain"></a></div>
+<div id="map-with-domain" class="section"><h3><a name="map-with-domain"><tt class="docutils literal">
+<span class="pre">map-with-domain</span></tt></a></h3>
+<p>Map the values of the sequences into the domain.</p>
+<a id="generic-function-list-of-elements" class="target" name="generic-function-list-of-elements"></a></div>
+<div id="list-of-elements" class="section"><h3><a name="list-of-elements"><tt class="docutils literal">
+<span class="pre">list-of-elements</span></tt></a></h3>
+<p>Return a list of the tuple elements.</p>
+<a id="generic-function-ref" class="target" name="generic-function-ref"></a></div>
+<div id="ref" class="section"><h3><a name="ref"><tt class="docutils literal">
+<span class="pre">ref</span></tt></a></h3>
+<p>Refernce the item of tuple specified by the first arg.</p>
+<a id="generic-function-factor" class="target" name="generic-function-factor"></a></div>
+<div id="factor" class="section"><h3><a name="factor"><tt class="docutils literal">
+<span class="pre">factor</span></tt></a></h3>
+<p>Return the factors of the number.</p>
+<a id="generic-function-power-of-3f" class="target" name="generic-function-power-of-3f"></a></div>
+<div id="power-of" class="section"><h3><a name="power-of"><tt class="docutils literal">
+<span class="pre">power-of?</span></tt></a></h3>
+<p>Return true if number is a power of opt-number.</p>
+<a id="generic-function-prime-3f" class="target" name="generic-function-prime-3f"></a></div>
+<div id="prime" class="section"><h3><a name="prime"><tt class="docutils literal">
+<span class="pre">prime?</span></tt></a></h3>
+<p>Return true if the number is prime.</p>
+<a id="generic-function-combinations" class="target" name="generic-function-combinations"></a></div>
+<div id="combinations" class="section"><h3><a name="combinations"><tt class="docutils literal">
+<span class="pre">combinations</span></tt></a></h3>
+<p>Return a combination of the upper and lower factorial.</p>
+<a id="generic-function-pochhammer" class="target" name="generic-function-pochhammer"></a></div>
+<div id="pochhammer" class="section"><h3><a name="pochhammer"><tt class="docutils literal">
+<span class="pre">pochhammer</span></tt></a></h3>
+<p>Return the falling, or lower, factorial.</p>
+<a id="generic-function-factorial" class="target" name="generic-function-factorial"></a></div>
+<div id="factorial" class="section"><h3><a name="factorial"><tt class="docutils literal">
+<span class="pre">factorial</span></tt></a></h3>
+<p>Return the factorial of the number.</p>
+<a id="id1" class="target" name="id1"></a></div>
+<div id="id17" class="section"><h3><a name="id17"><tt class="docutils literal">
+<span class="pre">insert</span></tt></a></h3>
+<p>The first interesting operation on AVL trees. This inserts THING into the tree and returns a new tree and an integer which is the change in height of the tree.</p>
+<a id="generic-function-make-generator" class="target" name="generic-function-make-generator"></a></div>
+<div id="make-generator" class="section"><h3><a name="make-generator"><tt class="docutils literal">
+<span class="pre">make-generator</span></tt></a></h3>
+<p>The purpose of this method is unknown.</p>
+<a id="generic-function-dimensions" class="target" name="generic-function-dimensions"></a></div>
+<div id="dimensions" class="section"><h3><a name="dimensions"><tt class="docutils literal">
+<span class="pre">dimensions</span></tt></a></h3>
+<a id="generic-function-characteristic" class="target" name="generic-function-characteristic"></a></div>
+<div id="characteristic" class="section"><h3><a name="characteristic"><tt class="docutils literal">
+<span class="pre">characteristic</span></tt></a></h3>
+<p>The purpose of this method is not known.</p>
+<a id="generic-function-0-3f" class="target" name="generic-function-0-3f"></a></div>
+<div id="id18" class="section"><h3><a name="id18"><tt class="docutils literal">
+<span class="pre">0?</span></tt></a></h3>
+<a id="generic-function-zero" class="target" name="generic-function-zero"></a></div>
+<div id="zero" class="section"><h3><a name="zero"><tt class="docutils literal">
+<span class="pre">zero</span></tt></a></h3>
+<a id="generic-function-recip" class="target" name="generic-function-recip"></a></div>
+<div id="recip" class="section"><h3><a name="recip"><tt class="docutils literal">
+<span class="pre">recip</span></tt></a></h3>
+<a id="generic-function-1-3f" class="target" name="generic-function-1-3f"></a></div>
+<div id="id19" class="section"><h3><a name="id19"><tt class="docutils literal">
+<span class="pre">1?</span></tt></a></h3>
+<a id="generic-function-one" class="target" name="generic-function-one"></a></div>
+<div id="one" class="section"><h3><a name="one"><tt class="docutils literal">
+<span class="pre">one</span></tt></a></h3>
+<a id="generic-function-expt" class="target" name="generic-function-expt"></a></div>
+<div id="expt" class="section"><h3><a name="expt"><tt class="docutils literal">
+<span class="pre">expt</span></tt></a></h3>
+<a id="generic-function-coercible-3f" class="target" name="generic-function-coercible-3f"></a></div>
+<div id="coercible" class="section"><h3><a name="coercible"><tt class="docutils literal">
+<span class="pre">coercible?</span></tt></a></h3>
+<p>Return true if the element is coercible into the domain.</p>
+<a id="generic-function-coerce" class="target" name="generic-function-coerce"></a></div>
+<div id="coerce" class="section"><h3><a name="coerce"><tt class="docutils literal">
+<span class="pre">coerce</span></tt></a></h3>
+<p>Coerce the element into the domain.</p>
+<a id="generic-function-required-operations" class="target" name="generic-function-required-operations"></a></div>
+<div id="required-operations" class="section"><h3><a name="required-operations"><tt class="docutils literal">
+<span class="pre">required-operations</span></tt></a></h3>
+<p>The purpose of this method is not known.</p>
+<a id="generic-function-describe-operations" class="target" name="generic-function-describe-operations"></a></div>
+<div id="describe-operations" class="section"><h3><a name="describe-operations"><tt class="docutils literal">
+<span class="pre">describe-operations</span></tt></a></h3>
+<p>The purpose of this method is not known.</p>
+<a id="generic-function-operation-values" class="target" name="generic-function-operation-values"></a></div>
+<div id="operation-values" class="section"><h3><a name="operation-values"><tt class="docutils literal">
+<span class="pre">operation-values</span></tt></a></h3>
+<p>The purpose of this method is not known.</p>
+<a id="generic-function-operation-arguments" class="target" name="generic-function-operation-arguments"></a></div>
+<div id="operation-arguments" class="section"><h3><a name="operation-arguments"><tt class="docutils literal">
+<span class="pre">operation-arguments</span></tt></a></h3>
+<p>The purpose of this method is not known.</p>
+<a id="generic-function-list-operations" class="target" name="generic-function-list-operations"></a></div>
+<div id="list-operations" class="section"><h3><a name="list-operations"><tt class="docutils literal">
+<span class="pre">list-operations</span></tt></a></h3>
+<p>Return a list of operations for the domain.</p>
+<a id="generic-function-map" class="target" name="generic-function-map"></a></div>
+<div id="map" class="section"><h3><a name="map"><tt class="docutils literal">
+<span class="pre">map</span></tt></a></h3>
+<p>Extend the common lisp MAP function.</p>
+<a id="generic-function-substitute" class="target" name="generic-function-substitute"></a></div>
+<div id="substitute" class="section"><h3><a name="substitute"><tt class="docutils literal">
+<span class="pre">substitute</span></tt></a></h3>
+<p>Extend the common lisp SUBSTITUTE function.</p>
+<a id="generic-function-replace" class="target" name="generic-function-replace"></a></div>
+<div id="replace" class="section"><h3><a name="replace"><tt class="docutils literal">
+<span class="pre">replace</span></tt></a></h3>
+<p>Extend the common lisp standard replace.</p>
+<a id="generic-function-member" class="target" name="generic-function-member"></a></div>
+<div id="member" class="section"><h3><a name="member"><tt class="docutils literal">
+<span class="pre">member</span></tt></a></h3>
+<p>Extend the common lisp standard member.</p>
+<a id="generic-function-delete" class="target" name="generic-function-delete"></a></div>
+<div id="delete" class="section"><h3><a name="delete"><tt class="docutils literal">
+<span class="pre">delete</span></tt></a></h3>
+<p>Extend the common lisp standard DELETE.</p>
+</div>
+</div>
+<div id="classes" class="section"><h2><a name="classes">Classes</a></h2>
+<a id="class-mesh" class="target" name="class-mesh"></a><div id="mesh" class="section"><h3><a name="mesh"><tt class="docutils literal">
+<span class="pre">mesh</span></tt></a></h3>
+<a id="class-tuple" class="target" name="class-tuple"></a></div>
+<div id="tuple" class="section"><h3><a name="tuple"><tt class="docutils literal">
+<span class="pre">tuple</span></tt></a></h3>
+<a id="class-universal-quantified-set" class="target" name="class-universal-quantified-set"></a></div>
+<div id="universal-quantified-set" class="section"><h3><a name="universal-quantified-set"><tt class="docutils literal">
+<span class="pre">universal-quantified-set</span></tt></a></h3>
+<a id="class-hilbert-space" class="target" name="class-hilbert-space"></a></div>
+<div id="hilbert-space" class="section"><h3><a name="hilbert-space"><tt class="docutils literal">
+<span class="pre">hilbert-space</span></tt></a></h3>
+<a id="class-banach-space" class="target" name="class-banach-space"></a></div>
+<div id="banach-space" class="section"><h3><a name="banach-space"><tt class="docutils literal">
+<span class="pre">banach-space</span></tt></a></h3>
+<a id="class-function-space" class="target" name="class-function-space"></a></div>
+<div id="function-space" class="section"><h3><a name="function-space"><tt class="docutils literal">
+<span class="pre">function-space</span></tt></a></h3>
+<a id="class-simplicial-complex" class="target" name="class-simplicial-complex"></a></div>
+<div id="simplicial-complex" class="section"><h3><a name="simplicial-complex"><tt class="docutils literal">
+<span class="pre">simplicial-complex</span></tt></a></h3>
+<a id="class-simplex" class="target" name="class-simplex"></a></div>
+<div id="simplex" class="section"><h3><a name="simplex"><tt class="docutils literal">
+<span class="pre">simplex</span></tt></a></h3>
+<a id="class-point" class="target" name="class-point"></a></div>
+<div id="point" class="section"><h3><a name="point"><tt class="docutils literal">
+<span class="pre">point</span></tt></a></h3>
+<a id="class-abstract-point" class="target" name="class-abstract-point"></a></div>
+<div id="abstract-point" class="section"><h3><a name="abstract-point"><tt class="docutils literal">
+<span class="pre">abstract-point</span></tt></a></h3>
+<a id="class-dimensional-space" class="target" name="class-dimensional-space"></a></div>
+<div id="dimensional-space" class="section"><h3><a name="dimensional-space"><tt class="docutils literal">
+<span class="pre">dimensional-space</span></tt></a></h3>
+<a id="class-abstract-space" class="target" name="class-abstract-space"></a></div>
+<div id="abstract-space" class="section"><h3><a name="abstract-space"><tt class="docutils literal">
+<span class="pre">abstract-space</span></tt></a></h3>
+<a id="class-direct-sum" class="target" name="class-direct-sum"></a></div>
+<div id="direct-sum" class="section"><h3><a name="direct-sum"><tt class="docutils literal">
+<span class="pre">direct-sum</span></tt></a></h3>
+<a id="class-homomorphism" class="target" name="class-homomorphism"></a></div>
+<div id="homomorphism" class="section"><h3><a name="homomorphism"><tt class="docutils literal">
+<span class="pre">homomorphism</span></tt></a></h3>
+<a id="class-morphism" class="target" name="class-morphism"></a></div>
+<div id="morphism" class="section"><h3><a name="morphism"><tt class="docutils literal">
+<span class="pre">morphism</span></tt></a></h3>
+<a id="class-polynomial" class="target" name="class-polynomial"></a></div>
+<div id="polynomial" class="section"><h3><a name="polynomial"><tt class="docutils literal">
+<span class="pre">polynomial</span></tt></a></h3>
+<a id="class-gfm" class="target" name="class-gfm"></a></div>
+<div id="gfm" class="section"><h3><a name="gfm"><tt class="docutils literal">
+<span class="pre">gfm</span></tt></a></h3>
+<a id="class-gfp" class="target" name="class-gfp"></a></div>
+<div id="gfp" class="section"><h3><a name="gfp"><tt class="docutils literal">
+<span class="pre">gfp</span></tt></a></h3>
+<a id="class-rational-number" class="target" name="class-rational-number"></a></div>
+<div id="rational-number" class="section"><h3><a name="rational-number"><tt class="docutils literal">
+<span class="pre">rational-number</span></tt></a></h3>
+<a id="class-rational-numbers" class="target" name="class-rational-numbers"></a></div>
+<div id="rational-numbers" class="section"><h3><a name="rational-numbers"><tt class="docutils literal">
+<span class="pre">rational-numbers</span></tt></a></h3>
+<a id="class-complex-number" class="target" name="class-complex-number"></a></div>
+<div id="complex-number" class="section"><h3><a name="complex-number"><tt class="docutils literal">
+<span class="pre">complex-number</span></tt></a></h3>
+<a id="class-complex-numbers" class="target" name="class-complex-numbers"></a></div>
+<div id="complex-numbers" class="section"><h3><a name="complex-numbers"><tt class="docutils literal">
+<span class="pre">complex-numbers</span></tt></a></h3>
+<a id="class-bigfloat" class="target" name="class-bigfloat"></a></div>
+<div id="bigfloat" class="section"><h3><a name="bigfloat"><tt class="docutils literal">
+<span class="pre">bigfloat</span></tt></a></h3>
+<a id="class-real-number" class="target" name="class-real-number"></a></div>
+<div id="real-number" class="section"><h3><a name="real-number"><tt class="docutils literal">
+<span class="pre">real-number</span></tt></a></h3>
+<a id="class-real-numbers" class="target" name="class-real-numbers"></a></div>
+<div id="real-numbers" class="section"><h3><a name="real-numbers"><tt class="docutils literal">
+<span class="pre">real-numbers</span></tt></a></h3>
+<a id="class-rational-integer" class="target" name="class-rational-integer"></a></div>
+<div id="rational-integer" class="section"><h3><a name="rational-integer"><tt class="docutils literal">
+<span class="pre">rational-integer</span></tt></a></h3>
+<a id="class-rational-integers" class="target" name="class-rational-integers"></a></div>
+<div id="rational-integers" class="section"><h3><a name="rational-integers"><tt class="docutils literal">
+<span class="pre">rational-integers</span></tt></a></h3>
+<a id="class-ordered-set-of-pairs" class="target" name="class-ordered-set-of-pairs"></a></div>
+<div id="ordered-set-of-pairs" class="section"><h3><a name="ordered-set-of-pairs"><tt class="docutils literal">
+<span class="pre">ordered-set-of-pairs</span></tt></a></h3>
+<a id="class-ordered-simple-set" class="target" name="class-ordered-simple-set"></a></div>
+<div id="ordered-simple-set" class="section"><h3><a name="ordered-simple-set"><tt class="docutils literal">
+<span class="pre">ordered-simple-set</span></tt></a></h3>
+<a id="class-set-of-pairs" class="target" name="class-set-of-pairs"></a></div>
+<div id="set-of-pairs" class="section"><h3><a name="set-of-pairs"><tt class="docutils literal">
+<span class="pre">set-of-pairs</span></tt></a></h3>
+<a id="class-simple-set" class="target" name="class-simple-set"></a></div>
+<div id="simple-set" class="section"><h3><a name="simple-set"><tt class="docutils literal">
+<span class="pre">simple-set</span></tt></a></h3>
+<a id="class-finite-set" class="target" name="class-finite-set"></a></div>
+<div id="finite-set" class="section"><h3><a name="finite-set"><tt class="docutils literal">
+<span class="pre">finite-set</span></tt></a></h3>
+<a id="class-mutable-set" class="target" name="class-mutable-set"></a></div>
+<div id="mutable-set" class="section"><h3><a name="mutable-set"><tt class="docutils literal">
+<span class="pre">mutable-set</span></tt></a></h3>
+<p>Sets built from this class can be modified</p>
+<a id="class-quotient-field" class="target" name="class-quotient-field"></a></div>
+<div id="quotient-field" class="section"><h3><a name="quotient-field"><tt class="docutils literal">
+<span class="pre">quotient-field</span></tt></a></h3>
+<a id="class-quotient-ring" class="target" name="class-quotient-ring"></a></div>
+<div id="quotient-ring" class="section"><h3><a name="quotient-ring"><tt class="docutils literal">
+<span class="pre">quotient-ring</span></tt></a></h3>
+<a id="class-differential-ring" class="target" name="class-differential-ring"></a></div>
+<div id="differential-ring" class="section"><h3><a name="differential-ring"><tt class="docutils literal">
+<span class="pre">differential-ring</span></tt></a></h3>
+<a id="class-projective-space" class="target" name="class-projective-space"></a></div>
+<div id="projective-space" class="section"><h3><a name="projective-space"><tt class="docutils literal">
+<span class="pre">projective-space</span></tt></a></h3>
+<a id="class-vector-space" class="target" name="class-vector-space"></a></div>
+<div id="vector-space" class="section"><h3><a name="vector-space"><tt class="docutils literal">
+<span class="pre">vector-space</span></tt></a></h3>
+<a id="class-simple-field-extension" class="target" name="class-simple-field-extension"></a></div>
+<div id="simple-field-extension" class="section"><h3><a name="simple-field-extension"><tt class="docutils literal">
+<span class="pre">simple-field-extension</span></tt></a></h3>
+<a id="class-algebraic-extension" class="target" name="class-algebraic-extension"></a></div>
+<div id="algebraic-extension" class="section"><h3><a name="algebraic-extension"><tt class="docutils literal">
+<span class="pre">algebraic-extension</span></tt></a></h3>
+<a id="class-finite-field" class="target" name="class-finite-field"></a></div>
+<div id="finite-field" class="section"><h3><a name="finite-field"><tt class="docutils literal">
+<span class="pre">finite-field</span></tt></a></h3>
+<a id="class-field" class="target" name="class-field"></a></div>
+<div id="field" class="section"><h3><a name="field"><tt class="docutils literal">
+<span class="pre">field</span></tt></a></h3>
+<a id="class-ring" class="target" name="class-ring"></a></div>
+<div id="ring" class="section"><h3><a name="ring"><tt class="docutils literal">
+<span class="pre">ring</span></tt></a></h3>
+<a id="class-algebra" class="target" name="class-algebra"></a></div>
+<div id="algebra" class="section"><h3><a name="algebra"><tt class="docutils literal">
+<span class="pre">algebra</span></tt></a></h3>
+<a id="class-simple-ring" class="target" name="class-simple-ring"></a></div>
+<div id="simple-ring" class="section"><h3><a name="simple-ring"><tt class="docutils literal">
+<span class="pre">simple-ring</span></tt></a></h3>
+<a id="class-rng" class="target" name="class-rng"></a></div>
+<div id="rng" class="section"><h3><a name="rng"><tt class="docutils literal">
+<span class="pre">rng</span></tt></a></h3>
+<a id="class-abelian-group" class="target" name="class-abelian-group"></a></div>
+<div id="abelian-group" class="section"><h3><a name="abelian-group"><tt class="docutils literal">
+<span class="pre">abelian-group</span></tt></a></h3>
+<a id="class-abelian-monoid" class="target" name="class-abelian-monoid"></a></div>
+<div id="abelian-monoid" class="section"><h3><a name="abelian-monoid"><tt class="docutils literal">
+<span class="pre">abelian-monoid</span></tt></a></h3>
+<a id="class-abelian-semigroup" class="target" name="class-abelian-semigroup"></a></div>
+<div id="abelian-semigroup" class="section"><h3><a name="abelian-semigroup"><tt class="docutils literal">
+<span class="pre">abelian-semigroup</span></tt></a></h3>
+<a id="class-group" class="target" name="class-group"></a></div>
+<div id="group" class="section"><h3><a name="group"><tt class="docutils literal">
+<span class="pre">group</span></tt></a></h3>
+<a id="class-monoid" class="target" name="class-monoid"></a></div>
+<div id="monoid" class="section"><h3><a name="monoid"><tt class="docutils literal">
+<span class="pre">monoid</span></tt></a></h3>
+<a id="class-semigroup" class="target" name="class-semigroup"></a></div>
+<div id="semigroup" class="section"><h3><a name="semigroup"><tt class="docutils literal">
+<span class="pre">semigroup</span></tt></a></h3>
+<a id="class-set" class="target" name="class-set"></a></div>
+<div id="set" class="section"><h3><a name="set"><tt class="docutils literal">
+<span class="pre">set</span></tt></a></h3>
+<p>A class for finite, unordered sets</p>
+</div>
+</div>
+<hr class ="docutils footer" /><div class="footer">Generated on : Tue, 14 Jan 2025 20:30:48 .
+</div>
+</div>
+</body>
+</html>
