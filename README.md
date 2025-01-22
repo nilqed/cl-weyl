@@ -13,6 +13,8 @@ See [xref-weyl.lisp](./xref/xref-weyl.lisp)
 ![classes](./docs/classes2.jpg?raw=true)
 
 
+## TeXmacs/SBCL Example
+See `docs` folder ([tm-weyl-tests1](./docs/tm-weyl-tests1.pdf)).
 
 ## Docs and References
 
