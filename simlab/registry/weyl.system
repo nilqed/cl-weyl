@@ -1,0 +1,86 @@
+;;; -*- Mode:Lisp; Package:CL-User; Base:10; Lowercase:T; Syntax:Common-Lisp -*-
+;;; ===========================================================================
+;;;			    Weyl System Definition
+;;; ===========================================================================
+;;; (c) Copyright 1989, 1993 Cornell University
+
+;;; weyl.system,v 1.9 1995/04/10 00:25:29 jackson Exp
+
+(in-package "MAKE")
+
+(load-system 'basic-support)
+
+(defsystem weyl
+  :source-pathname (module-directory "weyl" "src")
+
+  ; Uncomment :binary-pathname line to put binaries in separate directory.
+  ; Note that if alternate directory used, then standard-binary-directory may
+  ; need updating, and user should ensure that directory exists.
+
+  ;  :binary-pathname (module-directory "weyl" (standard-binary-directory))
+
+  :initially-do (ensure-sufficient-memory 64.)
+  :finally-do (progn
+		(pushnew :weyl *features*)
+		(funcall (intern "INITIALIZE-CONTEXTS" 'weyli))
+		(funcall (intern "RESET-DOMAINS" 'weyli))
+		(make::print-system-banner 'weyl t))
+  :components
+   ((:file "packages" :load-only t)
+    (:file "maintenance" :load-only t)
+    (:file "lisp-support" :depends-on ("packages"))
+    (:file "domain-support" :depends-on ("lisp-support"))
+    ;; All defclass definitions are included in this module.  This
+    ;; eliminates some painful dependencies.
+    (:module classes
+	     :source-pathname ""
+	     :depends-on ("domain-support")
+	     :components ((:file "algebraic-domains")
+			  (:file "space-classes")
+			  (:file "general-classes")))
+    (:file "avl" :depends-on (classes))
+    (:file "lisp-numbers" :depends-on (classes))
+    (:file "sets" :depends-on (classes))
+    (:file "morphisms" :depends-on (classes "avl"))
+    (:file "quotient-fields" :depends-on (classes)) 
+    (:module general
+	     :source-pathname ""
+	     :depends-on (classes)
+	     :components ((:file "general")
+			  (:file "fourier")))
+    (:file "functions" :depends-on (classes general))
+    (:file "direct-sums" :depends-on (classes))
+    (:module numbers
+	     :source-pathname ""
+	     :depends-on (classes)
+	     :components ((:file "bigfloat")
+			  (:file "numbers" :depends-on ("bigfloat"))
+			  (:file "gfp")))
+    (:module polynomials
+	     :source-pathname ""
+	     :depends-on (classes)
+	     :components
+	       ((:file "poly-tools")
+		(:file "mpolynomial" :depends-on ("poly-tools"))
+		(:file "upolynomial" :depends-on ("poly-tools"))
+		(:file "epolynomial" :depends-on ("poly-tools"))
+		(:file "sparsegcd" :depends-on ("mpolynomial"))
+		(:file "grobner" :depends-on ("mpolynomial" "epolynomial"))))
+    (:file "tpower" :depends-on (polynomials))
+    (:file "taylor" :depends-on (tpower))
+    (:file "rational-functions" :depends-on (polynomials "quotient-fields"))
+    (:file "differential-domains" :depends-on (polynomials))
+    (:file "algebraic-extension" :depends-on (polynomials))
+
+    (:module vector-spaces
+	     :source-pathname ""
+	     :depends-on ("sets")
+	     :components
+	       ((:file "vector")
+		(:file "projective-space" :depends-on ("vector"))
+		(:file "quaternions" :depends-on ("vector"))))
+    (:file "matrix" :depends-on ("morphisms"))
+    (:file "topology" :depends-on ("avl" polynomials vector-spaces))
+    ;; Really on space-classes
+    (:file "funct-spaces" :depends-on (classes vector-spaces))
+    (:file "mesh" :depends-on ("topology"))))

@@ -1,0 +1,14 @@
+(in-package "MAKE")
+
+;; This one system requires the pathname of the source files to be
+;; create by hand.  The other systems can use the "module-directory"
+;; function defined by this system.
+
+(defsystem basic-support
+  :source-pathname
+    (let ((path (pathname make::*central-registry*)))
+      (make-pathname :device (pathname-device path)
+		     :directory (append (butlast (pathname-directory path))
+					(list "utilities" "lisp"))))
+  :components
+   ((:file "basic-support")))

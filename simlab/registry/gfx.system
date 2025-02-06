@@ -1,0 +1,39 @@
+;;; -*- Mode:Lisp; Package:CL-User; Base:10; Lowercase:T; Syntax:Common-Lisp -*-
+;;; ===========================================================================
+;;;			    Weyl System Definition
+;;; ===========================================================================
+;;; (c) Copyright 1989, 1993 Cornell University
+
+;;; gfx.system,v 1.7 1995/06/12 15:09:21 rick Exp
+
+(in-package "MAKE")
+
+(load-system 'basic-support)
+
+(unless (find-package "COMMON-LISP-USER")
+  (MAKE-PACKAGE "COMMON-LISP-USER" :nicknames (list "CLU")))
+
+(defsystem gfx
+  :source-pathname (module-directory "gfx" "src")
+
+  ;; Uncomment :binary-pathname line to put binaries in separate directory.
+  ;; Note that if alternate directory used, then standard-binary-directory may
+  ;; need updating, and user should ensure that directory exists.
+  ;; :binary-pathname (module-directory "gfx" (standard-binary-directory))
+
+  :finally-do (progn
+		(pushnew :gfx *features*)
+		(make::print-system-banner 'gfx t))
+  :components
+  ((:file "version")
+   #-apple (:file "new-windows")
+   (:file "algebra-utils")
+   (:file "geom-utils")
+   (:file "transforms")
+   #-apple (:file " basic-graphics")
+   (:file "views")
+   (:file "rendering")
+   #+APPLE (:file "drawmac")
+   (:file "init")
+   (:file "exports"))
+  )

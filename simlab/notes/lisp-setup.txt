@@ -1,0 +1,91 @@
+SIMLAB LISP SETUP
+=================
+
+Introduction
+------------
+Simlab uses the `DEFSYSTEM' part of Mark Kantrowitz's `Portable
+Utilities for Common Lisp' for compiling and loading lisp files.
+Documentation on these utilities can be found in the postscript file
+utilities/lisp/lisp-utilities.ps.
+
+The `utilities/lisp' directory contains the lisp files that make up these
+utilities. The `registry' directory contains the "defsystem"'s (makefiles)
+of each Simlab sub-system.
+
+To inform Lisp about the DEFSYSTEM utility, it is recommended that you include
+the sample forms below, or something similar, in your lisp init file:
+
+  ~/lisp-init.lisp   if you are using Lucid lisp
+
+The lines that most likely will need customisation are terminated by
+a ;CHANGE? comment
+
+Sample Lisp init file
+---------------------
+;;;;;;Lisp init file begins here
+
+(in-package "USER")
+
+;; This form tells lisp were your personal registry is being kept by
+;; setting the variable *central-registry*.
+;; If you have installed the Simlab files in directory <simlab-dir>
+;; (full pathname), then you should use the value
+;;
+;; "<simlab-dir>/registry/"
+;; 
+;; The trailing "/" is needed here so that Common Lisp's pathname 
+;; manipulation functions recognise `registry' as naming a directory and not
+;; a file.
+
+(defvar *central-registry* "home;macsimlab:registry:") ;CHANGE?
+
+;; The LOAD-DEFSYSTEM function causes the utility for defining and
+;; loading systems (called defsystem) to be loaded into your lisp.  If
+;; your copy hasn't been compiled, it is compiled.
+
+(defun load-defsystem ()
+  (unless (and (boundp '*central-registry*)
+	       (probe-file *central-registry*))
+    (error "Central registry doesn't exist"))
+  (let* ((registry (pathname *central-registry*))
+	 (source (make-pathname
+		   :host (pathname-host registry)
+		   :device (pathname-device registry)
+		   :directory (append (butlast (pathname-directory registry))
+				      (list "utilities" "lisp"))
+		   :name "defsystem"
+		   :type "lisp"))
+	 (binary (make-pathname
+		   :host (pathname-host registry)
+		   :device (pathname-device registry)
+		   :directory (append (butlast (pathname-directory registry))
+				      (list "utilities" "lisp"))
+		   :name "defsystem"
+		   :type #+Lucid "sbin" #-Lucid "fasl"
+                                        ;CHANGE?
+                                        ;needs changing if your Lisp's binary
+                                        ;files have some other extension.
+		   )))
+    (unless (probe-file source)
+      (error "Can't find DEFSYSTEM source file"))
+    (unless (and (probe-file binary)
+		 (> (file-write-date binary) (file-write-date source)))
+      (compile-file source))
+    (load binary)
+    (setf (symbol-value (intern "*CENTRAL-REGISTRY*" 'make))
+	  *central-registry*)))
+
+;; Get DEFSYSTEM loaded.
+(load-defsystem)
+
+;; The basic-support system contains some tools for making it easier
+;; to create other systems.  This must be loaded before doing anything
+;; else.  In a perfect world, I would have included the stuff in this
+;; system in the defsystem sources, but I'd like to leave the
+;; defsystem file completely unchanged from what is distributed by
+;; CMU.
+
+(load-system 'basic-support :compile-during-load t)
+
+;;;;;;Lisp init file ends here
+

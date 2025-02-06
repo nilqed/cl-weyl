@@ -1,0 +1,162 @@
+#!/usr/local/bin/perl  
+# -*- Perl -*-
+# update-as-of,v 1.1 1995/05/16 17:10:47 vxg Exp
+#######################################################################
+## Program: update-as-of YYYY/MM/DD | now [-v]
+## By: Venkatesh Gopalakrishnan (vxg@cs.cornell.edu) 1995/02/12
+## Summary: Script that uses CVS to check out the versions of WEYL
+## source files that were current as of a given date (YYYY/MM/DD).
+#######################################################################
+#
+# SYNTAX:
+#         update-as-of YYYY/MM/DD | now   directory-offset  -v
+#        
+# - YYYY/MM/DD is the date for which you want the source code to be
+#   current. It can be interchnaged with 'now'.
+# - directory-offset is the offset from the CVSROOT directory where
+#   the sources are kept and the offset from the PWD where the 
+#   local versions of the source resides.
+# 
+# REQUIREMENTS:
+# - uses CVSROOT environment variable.
+# - the project should have been previously checked out using
+#   "cvs checkout" into the offset directory since the information in 
+#   .../CVS/Entries is used.
+# - uses RCS date format (YYYY/MM/DD).
+#
+# FEATURES:
+# - (WARNING) If a source file did not exist on the date specified in 
+#   YYYY/MM/DD, it is removed!
+# - VERBOSE MODE: if -v is used after the date, update-as-of and cvs are
+#   run in verbose mode (the default is quiet mode).
+# - MOST RECENT VERSION: checkout-as-of now [-v] updates the sources in 
+#   the offset directory with the most recent versions checked into the 
+#   repository.
+#
+#######################################################################
+#
+
+##  Get required environment variables and command line arguments
+##    and do some error-checking.
+
+$pwd = $ENV{'PWD'} || die "can't get pwd \n";
+$cvsroot = $ENV{'CVSROOT'} || die "environment variable CVSROOT not set \n";
+$key = $ARGV[0] || die "Syntax: update-as-of YYYY/MM/DD | now  dir-offset [-v] \n";
+$offset = $ARGV[1] || die "Syntax: update-as-of YYYY/MM/DD | now  dir-offset [-v] \n";
+$mode = $ARGV[2];
+$path = "$pwd/$offset";
+
+print "$path \n";
+
+##  Extact the year, month and day components from the date
+@srch = split(/\//,$key);
+if((($srch[0]<=1990)||($srch[1]>12)||($srch[2]>31))&&($srch[0] ne "now")) {
+    die "Syntax: update-as-of YYYY/MM/DD | now [-v] \n";
+}
+#print "$srch[0]\t$srch[1]\t$srch[2]\n";
+
+##  Get a list of all the files in the WEYL master directory
+##    not forgetting that they are appended with a ,v
+opendir(WDIR, "$cvsroot/weyl/src/") || die "Canot open $cvsroot";
+@list = readdir WDIR ;
+closedir(WDIR);
+
+##  Change to the working directory defined in $WDIR
+chdir $path || die "Can't chdir to $path \n";
+
+##  Iff we want the most recent version, bypass the rest of the
+##    program and check-out using the -A option.
+if($key eq "now") {
+    foreach $pair (@list ) {
+	@file = split(/,/,$pair); # remove the ,v at the end.
+	if($file[0] =~ /lisp/) { 
+	    if($mode eq "-v") { 
+		# in verbose mode, print the name of the file
+		print "$file[0] \n";
+		system "cvs update -A $file[0]";
+	    } else {
+		# fork process to update all files using -A to
+		# negate any sticky tags caused by the -r <tag>
+		# switch.
+		system "cvs -Q update -A $file[0]";
+	    }
+	}
+    }
+    die "Most recevent version checked out...\n";
+}
+
+##  If we are checking out a version by date...then...
+foreach $pair (@list) {
+    @file = split(/,/,$pair);
+    $checked_out = 0;		# add flag in so that extra version don't
+				# keep getting checked out.
+    if($file[0] =~ /lisp/) {
+	# pipe the output from the cvs command for processing
+	open (LOG,"cvs log $file[0] |");
+	@log = <LOG> ;
+	foreach $line (@log) {
+	    if($line =~ /revision /) {
+		# filter out lines with revision numbers in them
+		# and save the revision number.
+		@ln = split(/ /,$line);
+		$rev = $ln[1];
+	    } elsif ($line =~ /date: /) {
+		# then get the corresponding line with the date
+		# and split it into its components.
+		@ln = split(/ /,$line);
+		$date = $ln[1];
+		@field = split(/\//,$date);
+		if(($field[0]<$srch[0])&&($checked_out != 99)) {
+		    # if we first hit a version which has a lower year
+		    # we check that one out right away and skip the rest.
+		    &update($rev,$file[0],$date,$mode);
+		    $checked_out = 99;
+		} elsif(($field[0]==$srch[0])&&($field[1]<$srch[1])&&  
+			($checked_out!=99)) {
+		    # if we hit a version with the same year, but a lower
+		    # moth, check it out and skip the rest.
+		    &update($rev,$file[0],$date,$mode); 
+		    $checked_out = 99;
+		} elsif(($field[0]==$srch[0])&&($field[1]==$srch[1])&&
+			($field[2]<=$srch[2])&&($checked_out !=99)) {
+		    # if we hit a version with the same year and the same
+		    # month but has a lower day (or the same day), then
+		    # we check it out.
+		    &update($rev,$file[0],$date,$mode);	
+		    $checked_out = 99;
+		} 
+	    }
+	}
+	# if we couldn't find a version of the file that was checked in
+	# on a day earlier or before YYYY/DD/MM specified on the command
+	# line, then remove the file.  In verbose mode, give a warning.
+	if($checked_out==0) {
+	    if($mode eq "-v") { print "$file[0] did not exist on $key \n"; }
+	    system "rm -f $file[0]";
+	}
+    }
+}
+
+
+## Procedure to update the selected version of the source file
+sub update {
+    @args = @_;
+    $dt = $args[2];
+    $ver = $args[0];
+    $fil = $args[1];
+    $mode = $args[3];
+    $ver =~ tr/\n/ /;
+    if($mode eq "-v") { 
+	# In verbose mode, print the file, version and date of
+	# the selected file version and check it out.  CVS will only
+	# perform the update procedure if the version required is not
+	# the version currently in the working directory.
+	print "$fil, v$ver -- $date \n"; 
+	system "cvs update -r $ver $fil" || die "CVS error...\n";
+    } else {
+	# check the file out with no messages from cvs.
+	system "cvs -Q update -r $ver $fil" || die "CVS error...\n";
+    }
+    return 1;
+}
+
