@@ -53,5 +53,7 @@
 
 ;(defmethod perform :after ((op load-op) (comp (eql (find-system "weyl"))))
 ;  "Initialize and reset the contexts."
-;  (pushnew :weyl *features*)
-;  (funcall (intern "INITIALIZE-CONTEXTS" :weyli))
+
+(pushnew :weyl *features*)
+(funcall (intern "INITIALIZE-CONTEXTS" :weyli))
+(funcall (intern "RESET-DOMAINS" :weyli))
