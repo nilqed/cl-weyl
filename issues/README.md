@@ -49,5 +49,57 @@ and ...
 
 
 
+Rewrite ge-deriv ... 
 
-    
+    (defmethod-sd ge-deriv ((exp ge-expt) (var ge-atom))
+      (let ((base (base-of exp))
+	    (power (exponent-of exp)))
+          (+ (* (log base) (expt base power) (ge-deriv power var))
+          (* power (expt base (- power 1)) (ge-deriv base var)))))
+
+
+Better now:
+
+
+        Unit Test Summary
+         | 12 assertions total
+         | 12 passed
+         | 0 failed
+         | 0 execution errors
+         | 0 missing tests
+
+        Unit Test Summary
+         | 22 assertions total
+         | 22 passed
+         | 0 failed
+         | 0 execution errors
+         | 0 missing tests
+
+        Unit Test Summary
+         | 16 assertions total
+         | 14 passed
+         | 2 failed
+         | 0 execution errors
+         | 0 missing tests
+
+         | Failed Form: (GE-EQUAL GE4 GE5)
+         | Expected T but saw NIL
+         | GE4 => (-1 q + p) (-1 q^2 + p^2)^-1 (q + p)
+         | GE5 => 1
+         |
+         | Failed Form: (GE-EQUAL GE1 GE2)
+         | Expected T but saw NIL
+         | GE1 => (-1 q + p) (q + p)
+         | GE2 => -1 q^2 + p^2
+         |
+        GE-BASICS: 3 assertions passed, 2 failed.
+
+        Unit Test Summary
+         | 16 assertions total
+         | 14 passed
+         | 2 failed
+         | 0 execution errors
+         | 0 missing tests
+
+
+            
