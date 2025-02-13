@@ -1,4 +1,10 @@
 
+
+;;; This is just a scratchpad /\/\/\ 
+;;; v Thu 13 Feb 22:39:29 CET 2025 
+
+
+
 ;;; load weyl from sources (just a few seconds)
 (load "load-weyl")
 
@@ -172,5 +178,68 @@
 
 
 
+(defun wtype (obj) (cl::type-of obj))
+
+(defun slot-names (cls)
+  (mapcar #'sb-mop::slot-definition-name 
+    (sb-mop:class-slots (sb-mop::find-class cls ))))
+
+(defun slot-iargs (cls)
+  (mapcar #'sb-mop::slot-definition-initargs 
+    (sb-mop:class-slots (sb-mop::find-class cls))))
+    
+(defun slot-info (obj &key (prt t))
+  (let* ((tobj (cl-user::type-of obj))
+         (sn (slot-names tobj))
+         (sv (map 'list (lambda (x) (slot-value obj x)) sn))
+         (sa (slot-iargs tobj)))
+            (format prt "Obj:Type : ~a : ~a ~%" obj tobj)
+            (format prt "Names ...: ~{~a~^, ~} ~%" sn)
+            (format prt "Values ..: ~{~a~^, ~} ~%" sv)  
+            (format prt "InitArgs : ~{~a~^, ~} ~%~%" sa)))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(defvar t1  (wtype p))                  ;;; WEYLI::GE-VARIABLE
+(defvar t2  (wtype (ifx "p*q")))        ;;; WEYLI::GE-TIMES
+(defvar t3  (wtype (ifx "p/q")))        ;;; WEYLI::GE-TIMES 
+(defvar t4  (wtype (ifx "p+q")))        ;;; WEYLI::GE-PLUS
+(defvar t5  (wtype (ifx "p-q")))        ;;; WEYLI::GE-PLUS
+(defvar t6  (wtype (ifx "p^q")))        ;;; WEYLI::GE-EXPT
+(defvar t7  (wtype (ifx "-p")))         ;;; WEYLI::GE-TIMES 
+(defvar t8  (wtype (ifx "sin(p)")))     ;;; WEYLI::GE-APPLICATION 
+(defvar t9  (wtype (ifx "p^2+q*p")))    ;;; WEYLI::GE-PLUS
+(defvar t10 (wtype (ifx "q-q")))        ;;; RATIONAL-INTEGER
+(defvar t11 (wtype (ifx "q/q")))        ;;; RATIONAL-INTEGER
+
+(slot-info p)
+; Obj:Type : p : GE-VARIABLE
+; Names ...: PROPERTY-LIST, DOMAIN, SIMPLIFIED?, SYMBOL, STRING
+; Values ..: NIL, #<Domain: GENERAL-EXPRESSIONS>, NIL, P, p
+; InitArgs : NIL, (DOMAIN), NIL, (SYMBOL), (STRING)
+
+(slot-info (ifx "p*q"))
+; Obj:Type : q p : GE-TIMES
+; Names ...: DOMAIN, SIMPLIFIED?, TERMS
+; Values ..: #<Domain: GENERAL-EXPRESSIONS>, NIL, (q p)
+; InitArgs : (DOMAIN), NIL, (TERMS)
+
+(slot-info (ifx "p^q"))
+; Obj:Type : p^q : GE-EXPT
+; Names ...: DOMAIN, SIMPLIFIED?, BASE, EXP
+; Values ..: #<Domain: GENERAL-EXPRESSIONS>, NIL, p, q
+; InitArgs : (DOMAIN), NIL, (BASE), (EXP)
+
+(slot-info (ifx "sin(p)"))
+; Obj:Type : sin(p) : GE-APPLICATION
+; Names ...: DOMAIN, SIMPLIFIED?, FUNCT, ARGS
+; Values ..: #<Domain: GENERAL-EXPRESSIONS>, NIL, sin, (p)
+; InitArgs : (DOMAIN), NIL, (FUNCT), (ARGS)
 
 
+ (slot-value (ifx "sin(p)") 'funct)         ;;; sin  (in weyl, also in weyli)
+ (slot-value (ifx "sin(p)") 'weyli::domain) ;;; tag is necessary
+ (slot-value (ifx "sin(p)") 'weyli::args)   ;;; (q) , dito!
+
+
+ 
