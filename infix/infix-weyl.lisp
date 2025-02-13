@@ -63,7 +63,7 @@
 ;;; notification about major updates, bug fixes, and additions to the Lisp
 ;;; Utilities Repository. The mailing list is intended to have low traffic.
 ;;;
-
+;;;
 ;;; ********************************
 ;;; Documentation ******************
 ;;; ********************************
@@ -124,7 +124,7 @@
 ;;;     if p then q         conditional                    (when p q)
 ;;;     if p then q else r  conditional                    (if p q r) 
 ;;;
-
+
 ;;; Precedence:
 ;;;
 ;;;    The following precedence conventions are obeyed by the infix operators:
@@ -152,7 +152,7 @@
 ;;;    C precedence conventions. You can change the precedence conventions by
 ;;;    modifying the value of the variable *operator-ordering*.
 ;;;
-
+
 ;;; ********************************
 ;;; To Do **************************
 ;;; ********************************
@@ -198,7 +198,7 @@
 ;;;                 and the start of the expression.
 
 
-
+
 ;;; ********************************
 ;;; Implementation Notes ***********
 ;;; ********************************
@@ -245,14 +245,13 @@
 ;;; detects this and similar cases, replacing the expression with (< a b c).
 ;;; For cases like a<b<=c, it replaces it with (and (< a b) (<= b c)).
 ;;; 
-
+
 ;;; ********************************
 ;;; Package Cruft ******************
 ;;; ********************************
 
-(in-package :weyl)
 
-(pushnew :weyl *features*)
+(pushnew :infix *features*)
 
 (eval-when (compile load eval)
   (defparameter *version* "1.3  28-JUN-96")
@@ -331,7 +330,7 @@
   (let ((*readtable* *normal-readtable*))
     (read stream t nil t)))
 
-
+
 ;;; ********************************
 ;;; Reader Code ********************
 ;;; ********************************
@@ -458,7 +457,7 @@
     ;; Gather the expression until the next delimiter.
     (push (gather-superiors delimiter-token stream) list)))
 
-
+
 ;;; ********************************
 ;;; Precedence *********************
 ;;; ********************************
@@ -497,7 +496,7 @@
 (defun operator-right-associative-p (operator)
   (find operator *right-associative-operators*))
 
-
+
 ;;; ********************************
 ;;; Define Operators ***************
 ;;; ********************************
@@ -544,7 +543,7 @@
   (defmacro define-character-tokenization (char function)
     `(set-macro-character ,char ,function nil *infix-readtable*)))
 
-
+
 ;;; ********************************
 ;;; Operator Definitions ***********
 ;;; ********************************
@@ -850,7 +849,7 @@
 		    (read stream t nil t))))
 	  (read-char stream))))
 
-
+
 ;;; ********************************
 ;;; Syntactic Modifications ********
 ;;; ********************************
@@ -895,7 +894,7 @@
 	       expression)))
       expression))
 
-
+
 ;;; ********************************
 ;;; Test Infix *********************
 ;;; ********************************
@@ -1070,7 +1069,7 @@
 
 (defun test-infix-case (string result)
   (multiple-value-bind (value error)
-      (let ((*package* (find-package "INFIX")))
+      (let ((*package* (find-package "WEYL")))
 	(ignore-errors
 	 (values (read-from-string (concatenate 'string "#I(" string ")")
 				   t nil))))

@@ -33,9 +33,10 @@
 (defvar ge1 (deriv (expt p q) q))
 (defvar ge2 (* x1 (expt x2 2) (expt x3 3) (sin x1)))
 
+#|
 ;;; Infix
-;(load "../xref/infix")  
-(load "../xref/weyl-infix")
+;(load "../infix/infix")  
+(load "../infix/weyl-infix")
 
 ;(defvar ix1 infix::'#I(p^^2+q^^2))
 ; (COMMON-LISP:+ (COMMON-LISP:EXPT INFIX::P 2) (COMMON-LISP:EXPT INFIX::Q 2))
@@ -44,6 +45,56 @@
 ; (infix::string->prefix "p+q")
  ;(COMMON-LISP:+ P Q)
 
+
+(defvar dgex (deriv (eval '#I(p^2 + q^2 - p))  p))
+;* dgex
+;-1 + 2 p
+;*
+
+(defvar gex '#I(p^2 + q^2 - p))
+;GEX
+;*
+
+(cl-user::type-of  gex)
+;CONS
+;*
+
+(cl-user::type-of  (eval gex))
+;WEYLI::GE-PLUS
+;*
+
+;;;;;;; after load:
+;;  * (in-package :weyl)
+;;  #<PACKAGE "WEYL">
+;;  * gex
+;;  (+ (EXPT P 2) (EXPT Q 2) (- P))
+;;  * dgex
+;; -1 + 2 p
+;; *
+;;
+
+
+'(eval #I(p^2 + q^2 - p^sin(x1) ))
+;; (EVAL (+ (EXPT P 2) (EXPT Q 2) (- (EXPT P (SIN X1)))))
+
+(eval #I(p^2 + q^2 - p^sin(x1) ))
+;;q^2 - p^(sin(x1)) + p^2
+
+(deriv (eval #I(p^2 + q^2 - p^sin(x1))) x1)
+;; -1 (log(p)) p^(sin(x1)) (cos(x1))
+
+(deriv (eval #I(p^2 + q^2 - p^sin(x1))) x1 p)
+;; p^(-1 + sin(x1)) (cos(x1)) - ((sin(x1)) p^(-1 + sin(x1)) (log(p)) (cos(x1)))
+
+(deriv (eval #I(p^2 + q^2 - p^sin(x1))) q )
+;; 2 q
+
+|#
+
+
+#|
+ 
+(load "../infix/infix-weyl")
 
 (defvar dgex (deriv (eval '#I(p^^2 + q^^2 - p))  p))
 ;* dgex
@@ -62,7 +113,7 @@
 ;WEYLI::GE-PLUS
 ;*
 
-;;;;;;;
+;;;;;;; after load:
 ;;  * (in-package :weyl)
 ;;  #<PACKAGE "WEYL">
 ;;  * gex
@@ -73,4 +124,53 @@
 ;;
 
 
- 
+'(eval #I(p^^2 + q^^2 - p^^sin(x1) ))
+;; (EVAL (+ (EXPT P 2) (EXPT Q 2) (- (EXPT P (SIN X1)))))
+
+(eval #I(p^^2 + q^^2 - p^^sin(x1) ))
+;;q^2 - p^(sin(x1)) + p^2
+
+(deriv (eval #I(p^^2 + q^^2 - p^^sin(x1))) x1)
+;; -1 (log(p)) p^(sin(x1)) (cos(x1))
+
+(deriv (eval #I(p^^2 + q^^2 - p^^sin(x1))) x1 p)
+;; p^(-1 + sin(x1)) (cos(x1)) - ((sin(x1)) p^(-1 + sin(x1)) (log(p)) (cos(x1)))
+
+(deriv (eval #I(p^^2 + q^^2 - p^^sin(x1))) q )
+;; 2 q
+
+(ge-vars '(a b c d e f g))
+
+|#
+
+
+(load "../infix/weyl-infix")
+(infix:test-infix)
+
+; '#I(p+q^2^w)
+; (COMMON-LISP:+ P (COMMON-LISP:EXPT Q (COMMON-LISP:EXPT 2 W)))
+; * '#I(p+q)
+; (COMMON-LISP:+ P Q)
+; * (eval '#I(p+q))
+
+;; how to get rid of the COMMON-LISP: tags ???
+;; dirty but useful :-)
+(defvar ix1  '#I(p+q))
+(eval (read-from-string  (format nil "~A" ix1)))
+
+(defun ifx (str)
+  (eval (read-from-string (format nil "~A" (infix:string->prefix str)))))
+
+(ifx "p+q")
+(ifx "p*q^2")
+(deriv (ifx "p*q^2*sin(x1*x2)") x2 x1)
+
+(ifx "sin(q)^2+cos(q)^2")  ;; unable to =1 
+(deriv (ifx "sin(q)^2+cos(q)^2") q)  ;; unable =0, even expand does not help!
+
+(ifx "p*q-q*p") ; =0 at least 
+
+
+
+
+
