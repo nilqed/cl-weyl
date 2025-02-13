@@ -10,6 +10,8 @@
 ;;;                 : fix bug in 'simp-times-terms' if exponent not a number
 ;;;
 
+(defparameter +version+ "cl-weyl:13-FEB-2025 00:57")
+
 (in-package :weyli)
 
 ;;; DELETE (make::adjust-version-numbers Weyl "1.14")
