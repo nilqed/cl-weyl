@@ -237,9 +237,51 @@
 ; InitArgs : (DOMAIN), NIL, (FUNCT), (ARGS)
 
 
- (slot-value (ifx "sin(p)") 'funct)         ;;; sin  (in weyl, also in weyli)
- (slot-value (ifx "sin(p)") 'weyli::domain) ;;; tag is necessary
- (slot-value (ifx "sin(p)") 'weyli::args)   ;;; (q) , dito!
+(slot-value (ifx "sin(p)") 'funct)         ;;; sin  (in weyl, also in weyli)
+(slot-value (ifx "sin(p)") 'weyli::domain) ;;; tag is necessary
+(slot-value (ifx "sin(p)") 'weyli::args)   ;;; (q) , dito!
+
+(defun ltx (x)
+  (case (wtype x) 
+    ('rational-integer       (ltx-ratint x))
+    ('weyli::ge-variable     (ltx-var x))
+    ('weyli::ge-expt         (ltx-expt x))
+    ('weyli::ge-plus         (ltx-plus x))
+    ('weyli::ge-times        (ltx-times x))
+    ('weyli::ge-application  (ltx-app x))
+    (otherwise "END"))) 
 
 
- 
+(defun ltx-ratint (x)
+  (format nil "{~A}" (slot-value x 'weyli::value)))  
+
+(defun ltx-var (x) ;;TODO: subscripts
+  (format nil "{~A}" (slot-value x 'weyli::string)))
+  
+(defun ltx-expt (x)
+  (format nil "{{~A}^{~A}}" 
+    (ltx (slot-value x 'weyli::base))
+    (ltx (slot-value x 'weyli::exp))))
+    
+(defun ltx-plus (x)
+  (format nil "~{{~a}~^ + ~}" (mapcar 'ltx (slot-value x 'weyli::terms))))
+
+(defun ltx-times (x)
+  (format nil "~{{~a}~^ \\, ~}" (mapcar 'ltx (slot-value x 'weyli::terms))))
+  
+(defun ltx-app (x)
+  (format nil "~a( ~{{~a}~^ , ~})" 
+    (slot-value x 'weyli::funct)
+    (mapcar 'ltx (slot-value x 'weyli::args))))
+  
+(defun test-ltx ()
+  (list (ltx (+ p q))
+        (ltx (* p q))
+        (ltx (* p (expt q 2) ))
+        (ltx (* p (expt q 2) (sin x1) ))))
+
+
+
+
+
+
