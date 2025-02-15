@@ -281,7 +281,32 @@
         (ltx (* p (expt q 2) (sin x1) ))))
 
 
+;;; let's test it with MathJax in the browser ...
 
+(defvar template
+"<!DOCTYPE html>
+<html>
+<head>
+<title>MathJax TeX Test Page</title>
+<script type=\"text/javascript\" id=\"MathJax-script\" async
+  src=\"https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js\">
+</script>
+</head>
+<body>
+  ~{$$ ~a $$~%  ~^ ~} ~%
+</body>
+</html>
+")
+
+(defvar htmlfile "/home/kfp/tmp/weyl-ltx.html")
+
+(with-open-file (s htmlfile :direction :output :if-exists :supersede) 
+  (format s template (test-ltx) )) 
+
+(sb-ext::run-program "/usr/bin/firefox" (list htmlfile))
+
+
+;;; ok 
 
 
 
