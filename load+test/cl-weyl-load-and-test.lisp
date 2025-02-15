@@ -270,15 +270,24 @@
   (format nil "~{{~a}~^ \\, ~}" (mapcar 'ltx (slot-value x 'weyli::terms))))
   
 (defun ltx-app (x)
-  (format nil "~a( ~{{~a}~^ , ~})" 
+  (format nil "\\operatorname{~a}( ~{{~a}~^ , ~})" 
     (slot-value x 'weyli::funct)
     (mapcar 'ltx (slot-value x 'weyli::args))))
-  
+
+
+(ge-vars '(x_0 x_1 x_2 x_3))  ;;; better? yep
+
 (defun test-ltx ()
   (list (ltx (+ p q))
         (ltx (* p q))
         (ltx (* p (expt q 2) ))
-        (ltx (* p (expt q 2) (sin x1) ))))
+        (ltx (* p (expt q 2) (sin x1))) 
+        (ltx (/ p q))
+        (ltx (+ (* x3 (expt x1 x2)) (* x0 x1 x2 (expt x3 p))))
+        (ltx (* p (expt q 2) (sin x_1))) 
+        (ltx (/ x_1 x_0))
+        (ltx (+ (* x_3 (expt x_1 x_2)) (* x_0 x_1 x_2 (expt x_3 p))))        
+        ))
 
 
 ;;; let's test it with MathJax in the browser ...
