@@ -307,6 +307,7 @@
 </html>
 ")
 
+#|
 (defvar htmlfile "/home/kfp/tmp/weyl-ltx.html")
 
 (with-open-file (s htmlfile :direction :output :if-exists :supersede) 
@@ -314,8 +315,32 @@
 
 (sb-ext::run-program "/usr/bin/firefox" (list htmlfile))
 
+|#
 
-;;; ok 
+;;; ok, let's pack it into a defun
+
+(defun test-latex (lst)  ;; lst a list of latex-strings w/o $
+  (let* ((htmlfile "/home/kfp/tmp/weyl-ltx.html")
+         (browser "/usr/bin/firefox"))
+         (with-open-file (s htmlfile :direction :output :if-exists :supersede) 
+            (format s template lst))
+             (sb-ext::run-program browser (list htmlfile))))
+            
+;;; (test-ltx) --> list of lattex-strings           
+;(test-latex (test-ltx))
+
+(defvar ltxm '("\\hbar" "\\int_\\Omega d \\omega =" 
+               "\\int_{\\partial\\Omega} \\omega" "\\LaTeX"))
+
+;(test-latex ltxm)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+
+
+
+
 
 
 
