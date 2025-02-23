@@ -336,11 +336,62 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+; list all variables (defined) in a domain:
+;
+(weyli::ge-variables *general*)
+; (x_3 x_2 x_1 x_0 r q p z y x x3 x2 x1 x0 v.1 x)
+
+(make-ge-variable *general* 'g)
+; same as (coerce 'g *general*)
+; Note: same variable added without warnings ...
+
+(weyli::ge-variables *general*)
+;(g x_3 x_2 x_1 x_0 r q p z y x x3 x2 x1 x0 v.1 x)
+
+(substitute p q (* p q))
+; p^2, ok.
+
+(substitute p q (+ p q))
+; 2 p
+
+(substitute 4 q (+ p q))
+; 4 + p
+
+(substitute x_1  q (+ p (sin (cos q)) ))
+;p + sin(cos(x_1))
+
+;(mapcar (lambda (x) (coerce x *general*)) (list a b c))
+
+(weyli::ge-variables *general*)
+; (c b a g x_3 x_2 x_1 x_0 r q p z y x x3 x2 x1 x0 v.1 x)
+
+(ge-variable? p) ;; -> T 
+;(ge-variable? a) ;; -> unbound
+
+(defvar *general-vars* (weyli::ge-variables *general*))
+
+(defun ge-var-member? (symbol subscripts)
+    "Checks if symbol is a member of ge-variables"
+    (member symbol (weyli::ge-variables *general*)
+		  :test #'(lambda (a b)
+			    (and (equal a (weyli::symbol-of b))
+				 (equal subscripts (getf b :subscripts))))))
+
+;;; make-app-function (todo: wrong in manual: make-applicable-function)
+(defvar f1 (weyli::make-app-function '(u v) (+ (* 'u 'v) (* 'u 'u 'u))))
+f1 ; -->(lambda (v.1 v.2) v.1^3 + v.2 v.1)
+
+;; NOTICE!
+(deriv f1 0) ; --> (lambda (v.1 v.2) v.2 + 3 v.1^2)
+;;
+(deriv f1 1)
+;; (lambda (v.1 v.2) v.1)
 
 
+(cl-user::type-of f1)
+;WEYLI::APPLICABLE-FUNCTION
 
-
-
-
+(apply f1 '(p q)) ; --> p^3 + q p
+(apply (deriv f1 0) '(p q)) ; --> q + 3 p^2
 
 
