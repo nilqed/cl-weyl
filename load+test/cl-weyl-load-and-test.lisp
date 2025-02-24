@@ -405,5 +405,5 @@ f1 ; -->(lambda (v.1 v.2) v.1^3 + v.2 v.1)
 
 
 
-(ql:quickload :coo)
-(coo:document-system :weyl)
+;(ql:quickload :coo)
+;(coo:document-system :weyl)

@@ -174,6 +174,9 @@
 <a id="macro-memoize" class="target" name="macro-memoize"></a></div>
 <div id="memoize" class="section"><h3><a name="memoize"><tt class="docutils literal">
 <span class="pre">memoize</span></tt></a></h3>
+<dl class="docutils"><dt>Performs the same functions as weyli::%memoize except that the domain </dt>
+<dd>used is <em><span>general</span></em>.</dd>
+</dl>
 <a id="macro-partition" class="target" name="macro-partition"></a></div>
 <div id="partition" class="section"><h3><a name="partition"><tt class="docutils literal">
 <span class="pre">partition</span></tt></a></h3>
@@ -430,11 +433,13 @@
 <a id="generic-function-expand" class="target" name="generic-function-expand"></a></div>
 <div id="expand" class="section"><h3><a name="expand"><tt class="docutils literal">
 <span class="pre">expand</span></tt></a></h3>
-<p>The purpose of this method is unknown.</p>
+<p>Replaces all products of sums in exp by sums of products.</p>
 <a id="generic-function-different-kernels" class="target" name="generic-function-different-kernels"></a></div>
 <div id="different-kernels" class="section"><h3><a name="different-kernels"><tt class="docutils literal">
 <span class="pre">different-kernels</span></tt></a></h3>
-<p>The purpose of this method is unknown.</p>
+<dl class="docutils"><dt>Returns a list of the kernels in exp that are di erent from those in </dt>
+<dd>list-of-kernels.</dd>
+</dl>
 <a id="generic-function-make-union" class="target" name="generic-function-make-union"></a></div>
 <div id="make-union" class="section"><h3><a name="make-union"><tt class="docutils literal">
 <span class="pre">make-union</span></tt></a></h3>
@@ -454,7 +459,7 @@
 <a id="generic-function-deriv" class="target" name="generic-function-deriv"></a></div>
 <div id="deriv" class="section"><h3><a name="deriv"><tt class="docutils literal">
 <span class="pre">deriv</span></tt></a></h3>
-<p>The purspose of this method is unknown.</p>
+<p>Derivative of expression with respect to variables.</p>
 <a id="generic-function-depends-on-3f" class="target" name="generic-function-depends-on-3f"></a></div>
 <div id="depends-on" class="section"><h3><a name="depends-on"><tt class="docutils literal">
 <span class="pre">depends-on?</span></tt></a></h3>
@@ -462,39 +467,45 @@
 <a id="generic-function-declare-dependencies" class="target" name="generic-function-declare-dependencies"></a></div>
 <div id="declare-dependencies" class="section"><h3><a name="declare-dependencies"><tt class="docutils literal">
 <span class="pre">declare-dependencies</span></tt></a></h3>
-<p>The purpose of this method is unknown.</p>
+<dl class="docutils"><dt>Dependencies of one variable on another can be declared using </dt>
+<dd>declare-dependencies.</dd>
+</dl>
 <a id="generic-function-get-variable-property" class="target" name="generic-function-get-variable-property"></a></div>
 <div id="get-variable-property" class="section"><h3><a name="get-variable-property"><tt class="docutils literal">
 <span class="pre">get-variable-property</span></tt></a></h3>
-<p>The purpose of this method is unknown.</p>
+<dl class="docutils"><dt>There is a property list associated with each variable in a polynomial </dt>
+<dd>ring. This property list is ring specificc and not global. The ring property list is accessed using the generic function get-variable-property. Properties can modified using setf, as with normal property lists.</dd>
+</dl>
 <a id="generic-function-make-ge-expt" class="target" name="generic-function-make-ge-expt"></a></div>
 <div id="make-ge-expt" class="section"><h3><a name="make-ge-expt"><tt class="docutils literal">
 <span class="pre">make-ge-expt</span></tt></a></h3>
-<p>The purpose of this method is unknown.</p>
+<p>Create ge-expt instances.</p>
 <a id="generic-function-make-ge-times" class="target" name="generic-function-make-ge-times"></a></div>
 <div id="make-ge-times" class="section"><h3><a name="make-ge-times"><tt class="docutils literal">
 <span class="pre">make-ge-times</span></tt></a></h3>
-<p>The purpose of this method is unknown.</p>
+<p>Create ge-times instances.</p>
 <a id="generic-function-make-ge-plus" class="target" name="generic-function-make-ge-plus"></a></div>
 <div id="make-ge-plus" class="section"><h3><a name="make-ge-plus"><tt class="docutils literal">
 <span class="pre">make-ge-plus</span></tt></a></h3>
-<p>The purpose of this method is unknown.</p>
+<p>Create ge-plus instances.</p>
 <a id="generic-function-get-function" class="target" name="generic-function-get-function"></a></div>
 <div id="get-function" class="section"><h3><a name="get-function"><tt class="docutils literal">
 <span class="pre">get-function</span></tt></a></h3>
-<p>The purpose of this method is not known.</p>
+<p>Looks for a function with given name.</p>
 <a id="generic-function-add-subscripts" class="target" name="generic-function-add-subscripts"></a></div>
 <div id="add-subscripts" class="section"><h3><a name="add-subscripts"><tt class="docutils literal">
 <span class="pre">add-subscripts</span></tt></a></h3>
-<p>The purpose of this method is unknown.</p>
+<dl class="docutils"><dt>Creates a new variable, which has the subscripts indicated. If the </dt>
+<dd>variable already has subscripts, then the new subscripts are appended to the ones already present.</dd>
+</dl>
 <a id="generic-function-make-ge-variable" class="target" name="generic-function-make-ge-variable"></a></div>
 <div id="make-ge-variable" class="section"><h3><a name="make-ge-variable"><tt class="docutils literal">
 <span class="pre">make-ge-variable</span></tt></a></h3>
-<p>The purpose of this method is unknown.</p>
+<p>Create a variable in a domain.</p>
 <a id="generic-function-ge-equal" class="target" name="generic-function-ge-equal"></a></div>
 <div id="ge-equal" class="section"><h3><a name="ge-equal"><tt class="docutils literal">
 <span class="pre">ge-equal</span></tt></a></h3>
-<p>The purpose of this method is unknown.</p>
+<p>Returns T for syntactically identical general expressions.</p>
 <a id="generic-function-simplify" class="target" name="generic-function-simplify"></a></div>
 <div id="simplify" class="section"><h3><a name="simplify"><tt class="docutils literal">
 <span class="pre">simplify</span></tt></a></h3>
@@ -502,7 +513,9 @@
 <a id="generic-function-display" class="target" name="generic-function-display"></a></div>
 <div id="display" class="section"><h3><a name="display"><tt class="docutils literal">
 <span class="pre">display</span></tt></a></h3>
-<p>The purpose of this method is unknown.</p>
+<dl class="docutils"><dt>Prints the expression expr onto stream. If stream a graphics stream </dt>
+<dd>then a two dimension display will be used (not yet implemented), otherwise some textual display will be used.</dd>
+</dl>
 <a id="generic-function-minus-3f" class="target" name="generic-function-minus-3f"></a></div>
 <div id="minus" class="section"><h3><a name="minus"><tt class="docutils literal">
 <span class="pre">minus?</span></tt></a></h3>
@@ -809,7 +822,7 @@
 <p>A class for finite, unordered sets</p>
 </div>
 </div>
-<hr class ="docutils footer" /><div class="footer">Generated on : Mon, 24 Feb 2025 14:35:47 .
+<hr class ="docutils footer" /><div class="footer">Generated on : Mon, 24 Feb 2025 14:56:24 .
 </div>
 </div>
 </body>
