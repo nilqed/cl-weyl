@@ -14,7 +14,12 @@ See [xref-weyl.lisp](./xref/xref-weyl.lisp)
 
 
 ## TeXmacs/SBCL Example
-See `docs` folder ([tm-weyl-tests1](./docs/tm-weyl-tests1.pdf)).
+See `docs` folder 
+
+  * [tm-weyl-tests1](./docs/tm-weyl-tests1.pdf)
+  * [tm-weyl-tests1](./docs/tm-weyl-tests2.pdf)
+  
+
 
 ## Docs and References
 
