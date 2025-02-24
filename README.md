@@ -17,7 +17,7 @@ See [xref-weyl.lisp](./xref/xref-weyl.lisp)
 See `docs` folder 
 
   * [tm-weyl-tests1](./docs/tm-weyl-tests1.pdf)
-  * [tm-weyl-tests1](./docs/tm-weyl-tests2.pdf)
+  * [tm-weyl-tests2](./docs/tm-weyl-tests2.pdf)
   
 
 
