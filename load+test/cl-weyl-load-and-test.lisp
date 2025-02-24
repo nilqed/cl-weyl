@@ -394,4 +394,16 @@ f1 ; -->(lambda (v.1 v.2) v.1^3 + v.2 v.1)
 (apply f1 '(p q)) ; --> p^3 + q p
 (apply (deriv f1 0) '(p q)) ; --> q + 3 p^2
 
+(documentation 'weyli::make-ge-variable 'function)
+; "Create a variable in a domain."
 
+(documentation 'weyli::coerce 'function)
+; "Coerce the element into the domain."
+
+(documentation 'weyli::expand 'function)
+; "Replaces all products of sums in exp by sums of products."
+
+
+
+(ql:quickload :coo)
+(coo:document-system :weyl)
