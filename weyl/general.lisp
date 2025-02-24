@@ -42,7 +42,7 @@
    without executing the body. If expression is not found in the cache, then 
    the forms in body are evaluated, and the value of the last form is both 
    returned and saved in domain's memoization cache.
-   It is usually much more convenient to use the memoize control structure."
+   It is usually much more convenient to use the ``memoize`` control structure."
   `(let ((.expr. ,expression))
     (with-slots (memos) ,domain
       (multiple-value-bind (value found?) (gethash .expr. memos)
@@ -50,8 +50,8 @@
             (setf (get-memoization ,domain .expr.) (progn ,@body)))))))
 
 (defmacro memoize (expression &body body)
-  "Performs the same functions as weyli::%memoize except that the domain 
-  used is *general*."
+  "Performs the same functions as ``weyli::%memoize`` except that the domain
+   used is ``*general*``."
   `(%memoize *general* ,expression ,@body))
 
 #+ignore
@@ -62,7 +62,7 @@
 
 (defgeneric display (expression &optional stream &rest ignore)
   (:documentation
-   "Prints the expression expr onto stream. If stream a graphics stream 
+   "Prints the expression ``expr`` onto stream. If stream a graphics stream 
    then a two dimension display will be used (not yet implemented), otherwise 
    some textual display will be used.")
   (:method ((express general-expression) &optional stream &rest ignore)
@@ -76,20 +76,20 @@
 
 (defgeneric ge-equal (expression1 expression2)
   (:documentation
-   "Returns T for syntactically identical general expressions.")
+   "Returns ``T`` for syntactically identical general expressions.")
   (:method (expression1 expression2)
     (declare (ignore expression1 expression2))
     nil))
 
 (defmethod ge-equal ((x general-expression) (y general-expression))
-  "Returns T if x and y are syntactically identical general expressions."
+  "Returns ``T` if ``x` and ``y`` are syntactically identical general expressions."
   (eql x y))
 
 (defgeneric ge-great (expression1 expression2)
   (:documentation
-   "To speed up operations like simpli cation of expressions, an order is 
+   "To speed up operations like simplification of expressions, an order is 
     placed on all expressions in the general representation. This ordering 
-    is provided by the function ge-great.")
+    is provided by the function ``ge-great``.")
   (:method ((x general-expression) (y general-expression))
     (declare (ignore x y))
     nil))
@@ -228,7 +228,7 @@
 
 (defgeneric reparse-print-string (variable)
   (:documentation
-   "The classe ge-variable has a slot for the symbol and one for
+   "The class ``ge-variable`` has a slot for the symbol and one for
     a string represenation. If subscripts are added, the string
     represenation will be updated"))
 
@@ -528,7 +528,7 @@
 
 (defgeneric display-list (objects &optional stream)
   (:documentation "Display a list of objects, paying attention to
-*print-length*.  No surrounding delimiters.  This is a method so that
+``*print-length*``.  No surrounding delimiters.  This is a method so that
 we can define similar functions for sets of objects embedded in
 arrays."))
 
@@ -554,7 +554,7 @@ arrays."))
   (write-char #\) stream))
 
 (defmethod simplify ((x ge-application))
-  "Performs simple simplifications of expr, 0 + x ! x and so on."
+  "Performs simple simplifications of expr, ``0 + x = x`` and so on."
   (let ((args (mapcar #'simplify (args-of x)))
         (simplifier (getf (funct-of x) 'simplify))
 	new-x)
@@ -586,21 +586,21 @@ arrays."))
 
 (defgeneric make-ge-plus (domain terms)
   (:documentation
-   "Create ge-plus instances."))
+   "Create ``ge-plus`` instances."))
 
 (defmethod make-ge-plus ((domain general-expressions) terms)
   (make-instance 'ge-plus :domain domain :terms terms))
 
 (defgeneric make-ge-times (domain terms)
   (:documentation
-   "Create ge-times instances."))
+   "Create ``ge-times`` instances."))
 
 (defmethod make-ge-times ((domain general-expressions) terms)
   (make-instance 'ge-times :domain domain :terms terms))
 
 (defgeneric make-ge-expt (domain base exp)
   (:documentation
-   "Create ge-expt instances."))
+   "Create ``ge-expt`` instances."))
 
 (defmethod make-ge-expt ((domain general-expressions) base exp)
   (make-instance 'ge-expt :domain domain :base base :exp exp))
@@ -721,7 +721,7 @@ arrays."))
       ,@body)))
 
 (defun simp-plus-terms (domain old-terms)
-  "Simplify ge-plus terms."
+  "Simplify ``ge-plus`` terms."
   (merge-terms-in-sum terms
     (let ((const 0))
       (labels ((loop-over-terms (terms)
@@ -757,7 +757,7 @@ arrays."))
 	      (t (make-ge-plus domain terms)))))))
 
 (defun simp-times-terms (domain old-terms)
-  "Simplify ge-times terms"
+  "Simplify ``ge-times`` terms"
   (merge-terms-in-sum terms 
     (let ((const 1))
       (labels ((loop-over-terms (terms) 
@@ -836,7 +836,7 @@ arrays."))
   (ge-lgreat (terms-of x) (terms-of y)))
 
 (defmethod simplify ((x ge-expt))
-  "Simplify ge-expt (base exponent)."
+  "Simplify ``ge-expt`` (base exponent)."
   (let ((exp (simplify (exponent-of x)))
 	(base (base-of x)))
     (cond ((0? exp) 1)
@@ -913,7 +913,7 @@ arrays."))
 (defgeneric declare-dependencies (variable &rest variables)
   (:documentation
    "Dependencies of one variable on another can be declared using 
-    declare-dependencies."))
+    ``declare-dependencies``."))
 
 (defmethod declare-dependencies ((var ge-variable) &rest vars)
   "This indicates that kernel depends upon each of the variables in vars."
@@ -1365,8 +1365,8 @@ arrays."))
 
 (defgeneric different-kernels (expression kernels)
   (:documentation
-   "Returns a list of the kernels in exp that are di erent from those in 
-   list-of-kernels.")
+   "Returns a list of the kernels in exp that are different from those in 
+   ``list-of-kernels``.")
   (:method ((expression numeric) (kernels list))
     (declare (ignore expression))
     kernels))
@@ -1405,7 +1405,7 @@ arrays."))
 (defmethod substitute (value var expr &rest ignore)
   "Substitutes value for each occurrence of var in polynomial . If value 
   is a list, it is interpreted as a set of values to be substituted in 
-  parallel for the variables in var . The values being substituted must 
+  parallel for the variables in var. The values being substituted must 
   be either elements of the domain of polynomial or its coefficient domain."
   (declare (ignore value var ignore))
   expr)
