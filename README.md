@@ -19,7 +19,12 @@ See `docs` folder
   * [tm-weyl-tests1](./docs/tm-weyl-tests1.pdf)
   * [tm-weyl-tests2](./docs/tm-weyl-tests2.pdf)
   
-
+## Jupyter/SBCL Example (juCL)
+Notebook file and exported *.pdf (LaTeX) and *.lisp.
+ 
+  * [nb-weyl-tests1](./docs/weyl-tests1.ipynb)
+  * [pdf-weyl-tests1](./docs/weyl-tests1.pdf)
+  * [lisp-weyl-tests1](./docs/weyl-tests1.lisp)
 
 ## Docs and References
 

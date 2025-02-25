@@ -410,6 +410,10 @@ f1 ; -->(lambda (v.1 v.2) v.1^3 + v.2 v.1)
 ; Notice: uses weyl from quicklisp/local-projects !!
 ; that means copy -> there.
 
+(defun show (out)
+  (sb-ext:run-program "/usr/local/bin/aamath"
+                    (list  (format nil "~A" out))
+                    :output *standard-output*))
 
 
 
