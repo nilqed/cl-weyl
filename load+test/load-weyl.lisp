@@ -50,6 +50,10 @@
 (load "../weyl/funct-spaces")
 (load "../weyl/mesh")
 
+;; (weyl/new) <-- Sat 1 Mar 22:09:56 CET 2025/KFP
+(load "../weyl/new/weyl-infix")
+(load "../weyl/new/ge-support")
+
 
 ;(defmethod perform :after ((op load-op) (comp (eql (find-system "weyl"))))
 ;  "Initialize and reset the contexts."
