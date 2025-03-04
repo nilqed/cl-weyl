@@ -26,6 +26,9 @@ Notebook file and exported *.pdf (LaTeX) and *.lisp.
   * [pdf-weyl-tests1](./docs/weyl-tests1.pdf)
   * [lisp-weyl-tests1](./docs/weyl-tests1.lisp)
 
+## New files
+See README in [new](https://github.com/nilqed/cl-weyl/blob/main/weyl/new/README.md)
+
 ## Docs and References
 
  * [Richard Zippel](https://www.cs.cornell.edu/rz/computer-algebra.html)
