@@ -53,6 +53,7 @@
 ;; (weyl/new) <-- Sat 1 Mar 22:09:56 CET 2025/KFP
 (load "../weyl/new/weyl-infix")
 (load "../weyl/new/ge-support")
+(load "../weyl/new/ge-latex")
 
 
 ;(defmethod perform :after ((op load-op) (comp (eql (find-system "weyl"))))
