@@ -34,7 +34,7 @@ set-latex-repr
     "Add a LaTeX representation ltx (string '\\...') to a ge-variable var.
     Example: (set-latex-repr a \"\\alpha\")." 
 
-`+->`
+`+->` (inifx->prefix)
  
     (documentation '+-> 'function)
     "Convert a string containing a valid GE expression to prefix form.
@@ -45,7 +45,51 @@ set-latex-repr
 
 latex
 
+    (documentation 'latex 'function)
+    "Tries to represent object x as latex code. Example: (latex (expt p q )) ==>
+    $${{{\\pi}}^{{q}}}$$"
+
+cl-user::latex-to-sixel
+
+    (documentation 'cl-user::latex-to-sixel 'function)
+    "Render latex code on a sixel-graphics capable terminal (xterm, mlterm, ...).
+    Besides the LaTex string, optional keys are: :pt point-size, :fg foreground-
+    color, :bg background-color, :res resolution, :size size and :off offset."
+
+display6
+
+    (documentation 'display6 'function)
+    "Display a object as rendered LaTeX code in a terminal that supports sixel
+    graphics (e.g. xterm, mlterm and some others)."
 
 
+![display6](../../docs/display6.png)
+
+:todo: handle (-1)
+    
 
 ## weyl-infix
+
+    ;;; Wed Jan 18 13:13:59 1995 by Mark Kantrowitz <mkant@FLATHEAD.OZ.CS.CMU.EDU>
+    ;;; infix.cl -- 40545 bytes
+
+    ;;; **************************************************************************
+    ;;; Infix ********************************************************************
+    ;;; **************************************************************************
+    ;;;
+    ;;; This is an implementation of an infix reader macro. It should run in any
+    ;;; valid Common Lisp and has been tested in Allegro CL 4.1, Lucid CL 4.0.1,
+    ;;; MCL 2.0 and CMU CL. It allows the user to type arithmetic expressions in
+    ;;; the traditional way (e.g., 1+2) when writing Lisp programs instead of
+    ;;; using the normal Lisp syntax (e.g., (+ 1 2)).  It is not intended to be a
+    ;;; full replacement for the normal Lisp syntax. If you want a more complete
+    ;;; alternate syntax for Lisp, get a copy Apple's MLisp or Pratt's CGOL.
+    ;;;
+
+We only swapped  `^^` (former `èxpt`)  and `^` (former `logor`) and use eval/read-from-string to
+avoid package tags.
+
+
+
+
+
