@@ -113,7 +113,7 @@
 
 
 
-(weyli::set-variable-property *general* p  'latex-repr "\\pi" )
+;(weyli::set-variable-property *general* p  'latex-repr "\\pi" )
 ;; "\\pi"
 (get-variable-property *general* p  'latex-repr )
 ;; "\\pi"
@@ -121,7 +121,16 @@
 (display6 p)
 
 ;;; note: adding subs creates a NEW variable ....
+
 (defvar pp (add-subscripts p q r))
 (print (getf pp :subscripts))
 
-
+#|
+(display6 (* p (expt q 2) ))
+(display6 (* p (expt q 2) (sin x_1))) 
+(display6 (deriv (+-> "p/q^r") p q r))
+(display6 (+ (* x_3 (expt x_1 x_2)) (* x_0 x_1 x_2 (expt x_3 p))))
+(display6 (* p (expt q 2) (sin x_1))) 
+(weyli::set-variable-property *general* p  'latex-repr "\\pi" )
+(display6 (+ p q))
+|#

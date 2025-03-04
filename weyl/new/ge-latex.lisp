@@ -42,7 +42,9 @@
 
 
 
-(defun latex (x) 
+(defun latex (x)
+"Tries to represent object x as latex code. Example: (latex (expt p q )) ==>
+ $${{{\\pi}}^{{q}}}$$"
   (format nil "$$~A$$" (ltx x)))
   
   
@@ -109,6 +111,9 @@
 
 (defun latex-to-sixel (tex  &key (pt "11pt") (fg "Green") (bg "Black") 
              (res "150") (size "bbox") (off "-1.0cm,-2.0cm"))
+"Render latex code on a sixel-graphics capable terminal (xterm, mlterm, ...).
+ Besides the LaTex string, optional keys are: :pt point-size, :fg foreground-
+ color, :bg background-color, :res resolution, :size size and :off offset."
   (let* ((jobname (temp-basename "ltx2sixel")))
          (progn (write-tex-file jobname tex :pt pt)
                 (run-latex jobname)
@@ -118,6 +123,7 @@
 
 
 (defun image-to-sixel (file)
+"Render a .png, .jpg etc. picture on a sixel-graphics capable terminal."
   (uiop:run-program 
     (format nil "img2sixel ~A" file) :output t :ignore-error-status t))
     
@@ -126,6 +132,8 @@
 
 (defun display6 (obj &key (pt "11pt") (fg "Green") (bg "Black") 
              (res "150") (size "bbox") (off "-1.0cm,-2.0cm"))
+"Display a object as rendered LaTeX code in a terminal that supports sixel
+ graphics (e.g. xterm, mlterm and some others)."
   (progn 
     (cl-user::latex-to-sixel (latex obj) :fg "Blue" :bg "'rgb 1.0 1.0 1.0'" )
     T)) 
