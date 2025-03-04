@@ -24,6 +24,10 @@
  with (ge-variable? v)."
   (weyli::ge-variables *general*))
   
+(defun set-latex-repr (var ltx)
+"Add a LaTeX representation ltx (string '\\...') to a ge-variable var.
+ Example: (set-latex-repr a \"\\alpha\")."
+  (weyli::set-variable-property *general* var 'latex-repr ltx ))
 
 ;; infix -> prefix
 (defun +-> (str)

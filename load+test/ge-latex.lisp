@@ -117,3 +117,11 @@
 ;; "\\pi"
 (get-variable-property *general* p  'latex-repr )
 ;; "\\pi"
+
+(display6 p)
+
+;;; note: adding subs creates a NEW variable ....
+(defvar pp (add-subscripts p q r))
+(print (getf pp :subscripts))
+
+
