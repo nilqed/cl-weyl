@@ -66,7 +66,11 @@ display6
 ![display6](../../docs/display6.png)
 
 :todo: handle (-1)
-    
+
+In Jupyter notebooks (using e.g. [juCL](https://github.com/nilqed/juCL)) we can use `(latex ...)`, even with
+TeXmacs;  [texmacs-plugin](https://github.com/nilqed/sbcl-texmacs).
+
+![jucl-ge-latex](../../docs/jucl-ge-latex.png)    
 
 ## weyl-infix
 
