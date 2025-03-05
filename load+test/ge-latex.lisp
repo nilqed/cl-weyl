@@ -126,7 +126,7 @@
 (print (getf pp :subscripts))
 
 #|
-(display6 (* p (expt q 2) ))
+(display6 (* p (expt q 2)))
 (display6 (* p (expt q 2) (sin x_1))) 
 (display6 (deriv (+-> "p/q^r") p q r))
 (display6 (+ (* x_3 (expt x_1 x_2)) (* x_0 x_1 x_2 (expt x_3 p))))
