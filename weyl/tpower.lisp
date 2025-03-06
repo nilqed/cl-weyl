@@ -101,7 +101,7 @@
   (let ((coef-domain (coefficient-domain-of domain)))
     (apply #'make-tpower-series
 	   domain
-	   (map 'array #'(lambda (e) (coerce e coef-domain))
+	   (map 'vector #'(lambda (e) (coerce e coef-domain))
 		plist)
 	   options)))
 
@@ -308,7 +308,7 @@
 ;; an existing TPS.  This is convenient for computing minus.
 (defun map-tpower-series (tp f)
   (make-tpower-series (domain-of tp) tp
-		      :coeffs (map 'array f (coeffs tp))))
+		      :coeffs (map 'vector f (coeffs tp))))
 
 ;; Coercions 
 (defmethod coerce (elt (domain tpower-series-domain))
@@ -380,7 +380,7 @@
 			      (poly-terms (poly-form a))))
 		 (arr (make-array (+ (- ord val) 1) :initial-element
 				  (zero (coefficient-domain-of domain)))))
-		(map 'array #'(lambda (a)
+		(map 'vector #'(lambda (a)
 				      (setf (aref arr (- (car a) val)) (cdr a)))
 		     (poly-terms (poly-form a)))
 		(make-instance 'tpower-series :domain domain

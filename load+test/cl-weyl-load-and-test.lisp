@@ -7,6 +7,8 @@
 
 ;;; load weyl from sources (just a few seconds)
 (load "load-weyl")
+(compile-file "../weyl/numbers/numbers.lisp")  ;; necessary to create numbers
+
 
 ; (sb-ext::disable-debugger)
 (declaim (sb-ext:muffle-conditions style-warning))

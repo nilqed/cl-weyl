@@ -122,3 +122,146 @@
 
 (weyli::make-rational-integers)
 ;Z
+
+;Subdomains and Superdomains (4.2.1)
+;Returns the superdomains that contain domain.
+;At the moment, nothing uses this mechanism. The superdomain concept is 
+;intended for dealing with deductive questions like: Are there any zero 
+;divisors in the set of positive integers?
+
+(weyli::super-domains-of *general* )
+;NIL
+
+;Morphisms (4.3)
+;Morphisms are maps between domains. They are rst-class objects in Weyl and 
+;can manipulated like domains and domain elements. In particular, two morphisms 
+;can be composed using the operation compose. Morphisms are created using the 
+;function make-morphism, which takes three arguments.
+;
+; >> make-morphism domain mapping range &key (replace? T) [Generic]
+;
+;This function creates a morphism from domain to range. Mapping is a function 
+;of one argument that takes an element of domain and returns an element of 
+;range . If replace? is true, then any existing morphisms between domain and 
+;range are deleted before the new morphism is created.
+;All morphisms created are remembered in the *morphisms* data structure. 
+;(Initially, this is just a list.) To nd any existing homomorphisms we can 
+;use the function get-morphisms:
+; 
+; >> get-morphisms &key domain range  [Function]
+; 
+;When given no arguments this function returns a list of all the morphisms 
+;Weyl currently knows about in this context. When the domain is provided, it 
+;returns all morphisms from domain to anywhere. Similarly, when range is 
+;provided, only those morphisms that map into range are returned. When both 
+;range and domain are given, then only those morphisms from domain to range 
+;are returned.
+
+(weyli::make-morphism *general* (lambda (x) x) *general*)
+;#<Domain: GENERAL-EXPRESSIONS>->#<Domain: GENERAL-EXPRESSIONS>
+
+(get-morphisms)
+;NIL
+
+; (get-morphisms :domain *general*) not working as with :domain
+
+
+;4.4 Coercions (see Weyl Manual for details)
+;Explicit coercions are performed by the function coerce:
+;
+; >> coerce element domain [Generic]
+;Coerce finds an element of domain that corresponds with element.
+
+;As a general rule, Weyl does not provide for implicit coercions of arguments 
+;to functions. Thus we assume that in the expression (+ a b) the domains of 
+;a and b are the same. If this is not the case, the user must explicitly 
+;insert a coercion.
+
+(coerce  2345 (get-rational-integers))
+;2345
+
+(describe (coerce  2345 (get-rational-integers)))
+;2345
+;  [standard-object]
+;
+;Slots with :INSTANCE allocation:
+;  DOMAIN                         = Z
+;  VALUE                          = 2345
+;*
+
+(describe 'rational-integer)
+;WEYLI:RATIONAL-INTEGER
+;  [symbol]
+;
+;RATIONAL-INTEGER names the standard-class #<STANDARD-CLASS WEYLI:RATIONAL-INTEGER>:
+;  Class precedence-list: RATIONAL-INTEGER, WEYLI::NUMERIC,
+;                         WEYLI::GE-OR-NUMERIC, WEYLI::DOMAIN-ELEMENT,
+;                         STANDARD-OBJECT, SB-PCL::SLOT-OBJECT, T
+;  Direct superclasses: WEYLI::NUMERIC
+;  No subclasses.
+;  Direct slots:
+;    WEYLI::VALUE
+;      Initargs: :VALUE
+;      Readers: WEYLI::INTEGER-VALUE
+
+
+
+;4.5 Hierarchy of Domains
+
+(defvar w2345  (coerce  2345 (get-rational-integers)))
+;W2345
+
+w2345
+;2345
+
+(weyli::binary= w2345 2345)
+;T
+
+(= w2345 2345)
+;T
+
+; although 
+; (describe 2345)
+; 2345
+; [fixnum]
+
+
+;4.5.1 Semigroups, Monoids and Groups
+
+
+;Scalar Domains
+;Almost all domains that occur in mathematics can be constructed from the 
+;rational integers, Z.
+
+;There are several di erent ways to determine if an object is a scalar.
+;   (typep obj 'cl:number) a Lisp number,
+;   (typep obj 'numeric) a Weyl number,
+;   (number? obj)
+;either a Lisp number or a Weyl number.
+
+(typep 2345 'cl:number)
+;T
+(typep w2345 'cl:number)
+;F
+
+(typep w2345 'weyli::numeric)
+;T
+
+(typep 2345 'weyli::numeric)
+;NIL
+
+(number? w2345)
+;T
+(number? 2345)
+;T
+
+
+;;;;;;;;;;;;;;;;;
+;;  ARRAY is a bad type specifier for sequences.
+(defvar tsd1 (weyli::get-tpower-series-domain (get-rational-integers) 'x))
+(defvar tsd2 (get-tpower-series-domain (get-rational-numbers) 'x))
+(taylor (sin 'x) tsd1  8)
+
+(ge-var p) ;; not standard
+(defvar tsdp (get-tpower-series-domain (get-rational-numbers) p))
+(taylor (sin p) tdsp 4) 
