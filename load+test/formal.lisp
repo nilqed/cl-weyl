@@ -23,6 +23,12 @@
    (body :initarg :body  :initform nil :accessor sum-body)))
    
 
+(defmethod latex ((s sum) &key (pre "") (post ""))
+  (let ((lb (sum-lb s))
+        (ub (sum-ub s))
+        (body (sum-body s)))
+    (format nil "~A\\sum_{~A}^{~A} {~A} ~A" pre lb ub body post)))
+
 ;weyl::lb1
 ;i = 0
 ;(describe weyl::lb1)
@@ -58,10 +64,19 @@ Slots with :INSTANCE allocation:
 *
 (cl-user::Type-of  weyl::lb1)
 WEYLI::GE-EQN=
+
+
+
+* (in-package :formal-objectS)
+#<PACKAGE "FORMAL-OBJECTS">
+* sum1
+#<SUM {10031B0713}>
+* (latex sum1)
+"\\sum_{i = 0}^{n} {x^i a(i)} "
+* (latex sum1 :pre "$$" :post "$$")
+"$$\\sum_{i = 0}^{n} {x^i a(i)} $$"
+*
+
 |#
-
-
-
-
 
    

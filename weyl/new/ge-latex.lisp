@@ -1,5 +1,7 @@
 ;;; provisional -- testing LaTeX in MathJax, Jupyter and Sixel.
 ;;; (weyli::set-variable-property *general* var  'latex-repr "\\??" )
+;;; Later we will use a generic latex method for all weyl types:
+;;; (defmethod latex ((obj weyl-type) &key (pre "") (post "") (context nil))
 
 (in-package :weyl)
 
