@@ -1,0 +1,49 @@
+#!/usr/bin/env -S sbcl --script
+
+(require :uiop)
+(load "~/.sbclrc")
+
+;; Load :weyl silently.
+(ql:quickload :weyl :silent t)
+
+(in-package :weyl)
+
+(defun erfs (s) (eval (read-from-string s)))
+
+
+;;; done with ./weyl-refman.script | par -j 70
+(defparameter intro-6
+"6 GENERAL EXPRESSIONS
+Most  sophisticated  computations using  Weyl  take  place within  one
+of  the more  specialized  domains discussed  in  the later  chapters.
+Generally, these  domains deal with algebraic  structures like groups,
+rings and  fields. Unfortunately,  none of  these structures  can deal
+with all  types of mathematical  objects. For instance,  while vectors
+can be  elements of vector spaces,  there is no algebraic  domain that
+contains both vectors and polynomial. Similarly, there is no algebraic
+domain that can deal with special functions, summations, products etc.
+What is required  is a domain that can  represent mathematical objects
+syntactically. This  is dealt with  in Weyl by  the general-expression
+domain.  General  expressions are  intended  to  be exible  enough  to
+represent any mathematical expression that  one might write on a piece
+of paper. On paper one can write the two distinct expressions a(b + c)
+and  ab  +  ac,  even  though  as  polynomials  they  are  equivalent.
+Within  the  polynomial  domain  discussed in  Chapter  9,  these  two
+expressions are indistinguishable. However, as generalexpressions they
+are  distinct  objects  that  can be  differentiated.  While,  general
+expressions  are  extremely  exible,  they are  not  necessarily  very
+efficient.  As  a consequence,  for  large  scale computations  it  is
+usually preferable to use one of the special purpose domains described
+in the  later sections. While  some computations are  purely algebraic
+and  need never  reference general  expressions, most  engineering and
+scientific computations  need a place  to store information  about the
+dimensions  of  variables, defining  relationships  and so  on.  These
+purposes are also served well by the general expression structures.
+")
+
+(format t "~A" intro-6)
+
+(describe 'ge-variable)
+
+(cl-user::quit)
+
