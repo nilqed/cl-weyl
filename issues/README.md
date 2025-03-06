@@ -103,3 +103,14 @@ Better now:
 
 
             
+
+## Taylor series (tpower.lisp)
+The problem is that `map array` is used (ARRAY is a bad type specifier for sequences.)
+Changing in tpower.lisp to `map vector` resolves issue.
+
+    debugger invoked on a SIMPLE-TYPE-ERROR in thread
+    #<THREAD "main thread" RUNNING {10048B8113}>:
+    ARRAY is a bad type specifier for sequences.
+
+
+    (SB-KERNEL:%MAP ARRAY #<FUNCTION (LAMBDA (WEYLI::E) :IN WEYLI::MAKE-TPOWER-SERIES) {100395F15B}> (1 0 -1/6 0 1/120 0 -1/5040 0))0]
