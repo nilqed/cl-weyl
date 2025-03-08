@@ -1,5 +1,5 @@
 
-File: ../weyl/matrix.lisp 
+ File: ../weyl/matrix.lisp 
 
 
  MATRIX-SPACE-PRINT-OBJECT (domain stream)                           [FUNCTION]

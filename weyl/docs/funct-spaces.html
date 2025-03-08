@@ -1,0 +1,103 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title></title>
+<meta name="generator" content="HTML::TextToHTML v3.0"/>
+</head>
+<body>
+<p> File: ../weyl/funct-spaces.lisp 
+</p>
+<p> NORM ((x hilbert-space-element))                                      [METHOD]
+</p>
+<p><strong><em>MAXIMUM-NUMBER-OF-CACHED-VECTORS</em> (12)                             [VARIABLE]</strong>
+</p>
+<p> <em>CACHED-VECTORS</em> (nil)                                              [VARIABLE]
+</p>
+<p> CHECK-CACHED-VECTOR (vector)                                        [FUNCTION]
+</p>
+<pre>
+ SAMPLED-FUNCTION ""                                                    [CLASS]
+   Superclasses
+   function-space-element
+   Initialization Arguments
+   The :x argument is a 
+   The :y argument is a 
+   Readers
+   function-x   Generic Function
+        sampled-function
+   Returns 
+   function-y   Generic Function
+        sampled-function
+   Returns 
+   Writers
+
+ PRINT-OBJECT ((obj sampled-function) stream)                          [METHOD]
+
+ MAKE-SAMPLED-FUNCTION (domain x y)                          [GENERIC FUNCTION]
+   The purpose of this function is unknown.
+
+ MAKE-SAMPLED-FUNCTION ((domain function-space) x y)                   [METHOD]
+
+ PRINT-TABLE ((func sampled-function)                                  [METHOD]
+              &amp;optional (stream <em>standard-output</em>))
+
+ MAKE-SAMPLED-FUNCTION-1 (domain x-list function)            [GENERIC FUNCTION]
+   The purpose of this function is unknown.
+
+ MAKE-SAMPLED-FUNCTION-1 ((domain function-space) x-list function)     [METHOD]
+
+ MAKE-SAMPLED-FUNCTION-1 ((domain (eql nil)) x-list function)          [METHOD]
+
+ RESAMPLE ((func sampled-function) n)                                  [METHOD]
+
+ SMOOTH2 #'x                                                 [GENERIC FUNCTION]
+   The purpose of this function is unknown.
+
+ SMOOTH2 ((func sampled-function) new-x)                               [METHOD]
+
+ EVALUATE-AT ((func sampled-function) pt)                              [METHOD]
+
+ POLYNOMIAL-INTERPOLATE (x-vector y-vector x &amp;optional (n 4))        [FUNCTION]
+
+ MAP ((result-type (eql 'sampled-function)) oper (func                 [METHOD]
+      sampled-function) &amp;rest ignore)
+
+ MINUS ((func sampled-function))                                       [METHOD]
+
+ TIMES ((num number) (func sampled-function))                          [METHOD]
+
+ TIMES ((num numeric) (func sampled-function))                         [METHOD]
+
+ TIMES ((func sampled-function) (num number))                          [METHOD]
+
+ TIMES ((func sampled-function) (num numeric))                         [METHOD]
+
+ QUOTIENT ((func sampled-function) (num number))                       [METHOD]
+
+ QUOTIENT ((func sampled-function) (num numeric))                      [METHOD]
+
+ CONJUGATE ((func sampled-function))                                   [METHOD]
+
+ REALPART ((func sampled-function))                                    [METHOD]
+
+ IMAGPART ((func sampled-function))                                    [METHOD]
+
+ DERIV-2POINT (x y index1 index2)                                       [MACRO]
+
+ DERIV ((func sampled-function) &amp;rest vars)                            [METHOD]
+
+ TRAPEZOIDAL (x y i1 i2)                                                [MACRO]
+
+ INTEGRAL (function &amp;key lower upper &amp;allow-other-keys)      [GENERIC FUNCTION]
+   The purpose of this function is unknown.
+
+ INTEGRAL ((func sampled-function) &amp;key lower upper                    [METHOD]
+           &amp;allow-other-keys)
+
+ SIMPSON (x y i1 i2 i3)                                              [FUNCTION]
+
+ INDEF-INTEGRAL (func)                                               [FUNCTION]
+</pre>
+</body>
+</html>

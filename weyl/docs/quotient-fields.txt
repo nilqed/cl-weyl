@@ -1,5 +1,5 @@
 
-File: ../weyl/quotient-fields.lisp 
+ File: ../weyl/quotient-fields.lisp 
 
 
  MAKE-QUOTIENT-FIELD (field)                                 [GENERIC FUNCTION]

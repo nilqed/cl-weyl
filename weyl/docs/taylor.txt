@@ -1,5 +1,5 @@
 
-File: ../weyl/taylor.lisp 
+ File: ../weyl/taylor.lisp 
 
 
  DEFINE-TAYLOR-EXPANSION-FUN (name (domain order) &body body)           [MACRO]

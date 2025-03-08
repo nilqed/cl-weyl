@@ -1,5 +1,5 @@
 
-File: ../weyl/polynomials/epolynomial.lisp 
+ File: ../weyl/polynomials/epolynomial.lisp 
 
 
  MAKE-EPOLYNOMIAL* (domain greater-function terms)           [GENERIC FUNCTION]

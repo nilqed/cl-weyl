@@ -1,0 +1,168 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title></title>
+<meta name="generator" content="HTML::TextToHTML v3.0"/>
+</head>
+<body>
+<p> File: ../weyl/numbers/bigfloat.lisp 
+</p>
+<p> BIGFLOATP (x)                                                       [FUNCTION]
+</p>
+<p> DECPREC! (number k)                                                 [FUNCTION]
+</p>
+<p> INCPREC! (number k)                                                 [FUNCTION]
+</p>
+<p> CONV!MT (number k)                                                  [FUNCTION]
+</p>
+<p> CONV!EP (nmbr k)                                                    [FUNCTION]
+</p>
+<p> CUT!MT (nmbr k)                                                     [FUNCTION]
+</p>
+<p> CUT!EP (nmbr k)                                                     [FUNCTION]
+</p>
+<p> PRECI! (nmbr)                                                       [FUNCTION]
+</p>
+<p> ORDER! (nmbr)                                                       [FUNCTION]
+</p>
+<p> CONVERT-NUMBER-&gt;CHARACTERS (number)                                 [FUNCTION]
+</p>
+<p> ROUND!LAST (nmbr)                                                   [FUNCTION]
+</p>
+<p> ROUND!MT (nmbr k)                                                   [FUNCTION]
+</p>
+<p> ROUND!EP (nmbr k)                                                   [FUNCTION]
+</p>
+<p> PRINT-OBJECT ((number bigfloat) stream)                               [METHOD]
+</p>
+<p> READ!LNUM (l)                                                       [FUNCTION]
+</p>
+<p> READ!NUM (n)                                                        [FUNCTION]
+</p>
+<pre>
+ CONVERT-TO-BIGFLOAT (number)                                [GENERIC FUNCTION]
+   Return the bigfloat representation of the number.
+
+ CONVERT-TO-BIGFLOAT ((x rational-integer))                            [METHOD]
+
+ CONVERT-TO-BIGFLOAT ((x rational-number))                             [METHOD]
+
+ CONVERT-TO-BIGFLOAT ((x floating-point-number))                       [METHOD]
+
+ BF-ABS (nmbr)                                                       [FUNCTION]
+
+ BF-MINUS (nmbr)                                                     [FUNCTION]
+
+ BF-PLUS (n1 n2)                                                     [FUNCTION]
+
+ BF-DIFFERENCE (n1 n2)                                               [FUNCTION]
+
+ BF-TIMES (n1 n2)                                                    [FUNCTION]
+
+ BF-QUOTIENT (n1 n2 k)                                               [FUNCTION]
+
+ BF-EXPT (number k precision)                                        [FUNCTION]
+
+ BF-FLOOR (n1 n2)                                                    [FUNCTION]
+
+ BF-INTEGER-PART (num)                                               [FUNCTION]
+
+ FLOOR1 (number)                                             [GENERIC FUNCTION]
+   Return the quotient truncated towards negative infinity.
+
+ FLOOR1 ((number bigfloat))                                            [METHOD]
+
+ FLOOR2 ((number bigfloat) modulus)                                    [METHOD]
+
+ CEILING1 (number)                                           [GENERIC FUNCTION]
+   Return the quotient truncated towards positive infinity.
+
+ CEILING1 ((number bigfloat))                                          [METHOD]
+
+ CEILING2 ((number bigfloat) modulus)                                  [METHOD]
+
+ ROUND1 (number)                                             [GENERIC FUNCTION]
+   Return the quotient rounded to the nearest integer.
+
+ ROUND1 ((number bigfloat))                                            [METHOD]
+
+ ROUND2 ((number bigfloat) modulus)                                    [METHOD]
+
+ TRUNCATE1 (number)                                          [GENERIC FUNCTION]
+   Return a quotient that has been truncated towards zero.
+
+ TRUNCATE1 ((num bigfloat))                                            [METHOD]
+
+ TRUNCATE2 ((num bigfloat) modulus)                                    [METHOD]
+
+ BF-BINARY= (n1 n2)                                                  [FUNCTION]
+
+ BF-BINARY&gt;= (n1 n2)                                                 [FUNCTION]
+
+ BF-BINARY&gt; (n1 n2)                                                  [FUNCTION]
+
+ BF-INTEGERP (x)                                                     [FUNCTION]
+
+ GET!CONST (cnst k)                                                  [FUNCTION]
+
+ SAVE!CONST (cnst nmbr)                                              [FUNCTION]
+
+ SET!CONST (constant digits)                                            [MACRO]
+
+ DEFINE-BFLOAT-CONSTANT (name &amp;body form)                               [MACRO]
+
+ BF-PI-MACHIN (k)                                                    [FUNCTION]
+
+ BF-SQRT (x k)                                                       [FUNCTION]
+
+ BF-PI-AGM (k)                                                       [FUNCTION]
+
+ BF-PI (precision)                                                   [FUNCTION]
+
+ PI-VALUE (domain)                                           [GENERIC FUNCTION]
+   Return the value of PI with the proper precision.
+
+ PI-VALUE ((domain real-numbers))                                      [METHOD]
+
+ BF-E (precision)                                                    [FUNCTION]
+
+ E-VALUE (domain)                                            [GENERIC FUNCTION]
+   Return the value of e with the proper precision.
+
+ E-VALUE ((domain real-numbers))                                       [METHOD]
+
+ BF-EXP (x k)                                                        [FUNCTION]
+
+ EXP ((number bigfloat))                                               [METHOD]
+
+ BF-LOG (x k)                                                        [FUNCTION]
+
+ LOG ((x bigfloat))                                                    [METHOD]
+
+ BF-COS (x k)                                                        [FUNCTION]
+
+ BF-SIN (x k)                                                        [FUNCTION]
+
+ SIN ((number bigfloat))                                               [METHOD]
+
+ COS ((number bigfloat))                                               [METHOD]
+
+ BF-TAN (x k)                                                        [FUNCTION]
+
+ TAN ((number bigfloat))                                               [METHOD]
+
+ BF-ATAN (x k)                                                       [FUNCTION]
+
+ ATAN ((number bigfloat) &amp;optional base)                               [METHOD]
+
+ BF-ASIN (x k)                                                       [FUNCTION]
+
+ ASIN ((number bigfloat))                                              [METHOD]
+
+ BF-ACOS (x k)                                                       [FUNCTION]
+
+ ACOS ((number bigfloat))                                              [METHOD]
+</pre>
+</body>
+</html>

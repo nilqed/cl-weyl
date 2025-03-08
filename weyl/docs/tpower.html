@@ -1,0 +1,98 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title></title>
+<meta name="generator" content="HTML::TextToHTML v3.0"/>
+</head>
+<body>
+<p> File: ../weyl/tpower.lisp 
+</p>
+<p> TP-FIELD-PRINT-OBJECT (d stream)                                    [FUNCTION]
+</p>
+<p> TP-RING-PRINT-OBJECT (d stream)                                     [FUNCTION]
+</p>
+<p> GET-TPOWER-SERIES-DOMAIN (cdom variable)                            [FUNCTION]
+</p>
+<pre>
+ MAKE-TPOWER-SERIES (domain series                           [GENERIC FUNCTION]
+                     &amp;key &amp;allow-other-keys)
+   The purpose of this function is unknown.
+
+ MAKE-TPOWER-SERIES ((domain tpower-series-domain)                     [METHOD]
+                     (tp tpower-series) &amp;key (valence (valence tp))
+                     (order (order tp)) (branch-order
+                     (branch-order tp)) (coeffs (coeffs tp))
+                     &amp;allow-other-keys)
+
+ MAKE-TPOWER-SERIES ((domain tpower-series-domain) coef                [METHOD]
+                     &amp;rest options &amp;key &amp;allow-other-keys)
+
+ MAKE-TPOWER-SERIES ((domain tpower-series-domain) (plist list)        [METHOD]
+                     &amp;rest options &amp;key &amp;allow-other-keys)
+
+ TRIM-ZEROES (coeffs)                                                [FUNCTION]
+
+ MAKE-TPOWER-SERIES ((domain tpower-series-domain) (terms array)       [METHOD]
+                     &amp;key (valence 0) (order <em>positive-infinity</em>)
+                     (branch-order 1))
+
+ INITIALIZE-INSTANCE :AFTER ((d power-series-domain) &amp;rest plist)      [METHOD]
+
+ PRINT-GROUPED (n stream)                                            [FUNCTION]
+
+ GROUPED? (str a b)                                                  [FUNCTION]
+
+ PRINT-EXPONENT (e br stream)                                        [FUNCTION]
+
+ PRINT-TPOWER-SERIES (var tp stream)                                 [FUNCTION]
+
+ PRINT-OBJECT ((p tpower-series) stream)                               [METHOD]
+
+ TPS-SPREAD-COEFFS (coeffs b)                                        [FUNCTION]
+
+ TPS-VAR-VAL (v)                                                     [FUNCTION]
+
+ TPS-VAR-BO (v)                                                      [FUNCTION]
+
+ TPS-VAR-ORDER (v)                                                   [FUNCTION]
+
+ TPS-VAR-COEFFS (v)                                                  [FUNCTION]
+
+ WITH-TPOWER-SERIES (vars-and-tps &amp;body body)                           [MACRO]
+
+ MODIFY-BRANCH-ORDER (series factor)                         [GENERIC FUNCTION]
+   The purpose of this function is unknown.
+
+ MODIFY-BRANCH-ORDER ((a tpower-series) (factor integer))              [METHOD]
+
+ SET-BRANCH-ORDER ((a tpower-series) (bo integer))                     [METHOD]
+
+ (SETF BRANCH-ORDER) set-branch-order                            [SETF MAPPING]
+
+ MAP-TPOWER-SERIES (tp f)                                            [FUNCTION]
+
+ COERCE (elt (domain tpower-series-domain))                            [METHOD]
+
+ COERCE ((exp symbol) (domain tpower-series-domain))                   [METHOD]
+
+ COERCE ((exp list) (domain tpower-series-domain))                     [METHOD]
+
+ COERCE ((exp general-expression) (domain tpower-series-domain))       [METHOD]
+
+ COERCE ((a upolynomial) (domain tpower-series-domain))                [METHOD]
+
+ COERCE ((a mpolynomial) (domain tpower-series-domain))                [METHOD]
+
+ LARGEST-STORED-COEFF ((tp tpower-series))                             [METHOD]
+
+ TRUNCATE-ORDER ((tp tpower-series) (torder integer))                  [METHOD]
+
+ MINUS ((tp tpower-series))                                            [METHOD]
+
+ EXPT ((a tpower-series) k)                                            [METHOD]
+
+ QUOTIENT ((a tpower-series) (b tpower-series))                        [METHOD]
+</pre>
+</body>
+</html>

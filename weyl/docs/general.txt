@@ -1,5 +1,5 @@
 
-File: ../weyl/general.lisp 
+ File: ../weyl/general.lisp 
 
 
  +VERSION+ ("cl-weyl:23-feb-2025 14:30")                            [PARAMETER]

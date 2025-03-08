@@ -1,5 +1,5 @@
 
-File: ../weyl/polynomials/upolynomial.lisp 
+ File: ../weyl/polynomials/upolynomial.lisp 
 
 
  SCALAR? ((x upolynomial))                                             [METHOD]

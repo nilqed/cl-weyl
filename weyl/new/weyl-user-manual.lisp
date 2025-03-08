@@ -745,7 +745,7 @@
   (with-open-file (stream filename :direction :input)
     (let ((eof (gensym)))
       (case output-format
-	((text :text) (format t "~%File: ~A ~%~%" filename)))  ;+kfp
+	((text :text) (format t "~% File: ~A ~%~%" filename)))  ;+kfp
       (do ((form (read stream nil eof nil)
 		 (read stream nil eof nil)))
 	  ((eq form eof)

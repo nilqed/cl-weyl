@@ -1,0 +1,75 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title></title>
+<meta name="generator" content="HTML::TextToHTML v3.0"/>
+</head>
+<body>
+<p> File: ../weyl/taylor.lisp 
+</p>
+<p> DEFINE-TAYLOR-EXPANSION-FUN (name (domain order) &amp;body body)           [MACRO]
+</p>
+<p> TAYLOR-EXP (domain order)                                           [FUNCTION]
+</p>
+<pre>
+ SUBSTITUTE (value (variable symbol) (tp tpower-series)                [METHOD]
+             &amp;rest ignore)
+
+ SUBSTITUTE ((value tpower-series) (variable ge-variable)              [METHOD]
+             (tp tpower-series) &amp;rest ignore)
+
+ TAYLOR (exp domain order)                                   [GENERIC FUNCTION]
+   The purpose of this function is unknown.
+
+ TAYLOR (exp (domain tpower-series-domain) order)                      [METHOD]
+
+ TAYLOR1 (exp domain order)                                  [GENERIC FUNCTION]
+   The purpose of this function is unknown.
+
+ TAYLOR1 ((exp ge-variable) (domain tpower-series-domain) order)       [METHOD]
+
+ TAYLOR1 ((exp ge-plus) (domain tpower-series-domain) order)           [METHOD]
+
+ TAYLOR1 ((exp ge-times) (domain tpower-series-domain) order)          [METHOD]
+
+ TAYLOR1 ((exp ge-expt) (domain tpower-series-domain) order)           [METHOD]
+
+ TAYLOR1 ((exp ge-application) (domain tpower-series-domain)           [METHOD]
+          order)
+
+ TAYLOR1 (exp (domain tpower-series-domain) order)                     [METHOD]
+
+ PLUS ((tp tpower-series) (exp general-expression))                    [METHOD]
+
+ PLUS ((exp general-expression) (tp tpower-series))                    [METHOD]
+
+ DIFFERENCE ((tp tpower-series) (exp general-expression))              [METHOD]
+
+ DIFFERENCE ((exp general-expression) (tp tpower-series))              [METHOD]
+
+ TIMES ((tp tpower-series) (exp general-expression))                   [METHOD]
+
+ TIMES ((exp general-expression) (tp tpower-series))                   [METHOD]
+
+ QUOTIENT ((tp tpower-series) (exp general-expression))                [METHOD]
+
+ QUOTIENT ((exp general-expression) (tp tpower-series))                [METHOD]
+
+ GET-DEFAULT-TAYLOR-EXPANSION (power-series-domain)                  [FUNCTION]
+
+ DERIV ((tp tpower-series) &amp;rest vars)                                 [METHOD]
+
+ TPS-DERIV1 (a)                                                      [FUNCTION]
+
+ TPS-DERIV2 (a var)                                                  [FUNCTION]
+
+ REVERSION ((tp tpower-series))                                        [METHOD]
+
+ SOLVE-FOR-COEFFS (coef-poly (domain rational-function-field)          [METHOD]
+                   coef-list value-list)
+
+ SOLVE-FOR-COEFFS (coef-poly domain coef-list value-list)              [METHOD]
+</pre>
+</body>
+</html>

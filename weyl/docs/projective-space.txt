@@ -1,5 +1,5 @@
 
-File: ../weyl/vector-spaces/projective-space.lisp 
+ File: ../weyl/vector-spaces/projective-space.lisp 
 
 
  PROJECTIVE-SPACE-PRINT-OBJECT (domain stream)                       [FUNCTION]

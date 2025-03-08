@@ -1,5 +1,5 @@
 
-File: ../weyl/funct-spaces.lisp 
+ File: ../weyl/funct-spaces.lisp 
 
 
  NORM ((x hilbert-space-element))                                      [METHOD]

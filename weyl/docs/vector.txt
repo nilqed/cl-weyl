@@ -1,5 +1,5 @@
 
-File: ../weyl/vector-spaces/vector.lisp 
+ File: ../weyl/vector-spaces/vector.lisp 
 
 
  LOOP-VECTOR-BIND (index vars-vectors &body body)                       [MACRO]

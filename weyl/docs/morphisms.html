@@ -1,0 +1,94 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title></title>
+<meta name="generator" content="HTML::TextToHTML v3.0"/>
+</head>
+<body>
+<p> File: ../weyl/morphisms.lisp 
+</p>
+<p> PRINT-OBJECT ((homo morphism) stream)                                 [METHOD]
+</p>
+<p> <em>MORPHISM-COMPOSITION-TABLE</em> ((make-hash-table))                    [VARIABLE]
+</p>
+<pre>
+ COMPOSE (morphism1 morphism2)                               [GENERIC FUNCTION]
+   The purpose of this function is unknown.
+
+ COMPOSE ((f homomorphism) (g homomorphism))                           [METHOD]
+
+ GET-MORPHISMS (&amp;key type domain range direct?)                      [FUNCTION]
+
+ MAKE-MORPHISM (domain map range &amp;key (replace? t))                  [FUNCTION]
+
+ DELETE-MORPHISM (morphism)                                  [GENERIC FUNCTION]
+   Delete the morphism.
+
+ DELETE-MORPHISM ((morph morphism))                                    [METHOD]
+
+ MAKE-HOMOMORPHISM (domain map range)                                [FUNCTION]
+
+ GET-HOMOMORPHISMS (&amp;key domain range)                               [FUNCTION]
+
+ GET-EMBEDDABLE-DOMAINS (domain)                                     [FUNCTION]
+
+ MAKE-AUTOMORPHISM (domain map &amp;optional range)                      [FUNCTION]
+
+ GET-AUTOMORPHISMS (&amp;key domain)                                     [FUNCTION]
+
+ APPLY-MORPHISM (morphism argument)                          [GENERIC FUNCTION]
+   Apply the morphism to the argument.
+
+ APPLY-MORPHISM ((h morphism) argument)                                [METHOD]
+
+ CANONICALIZE-NUMBER (elt)                                   [GENERIC FUNCTION]
+   Converts a LISP number into a a Weyl number in the appropriate
+   canonical domain. These guys CANNOT use coerce!!!!
+
+ CANONICALIZE-NUMBER ((num integer))                                   [METHOD]
+
+ CANONICALIZE-NUMBER ((num rational-integer))                          [METHOD]
+
+ CANONICALIZE-NUMBER ((num ratio))                                     [METHOD]
+
+ CANONICALIZE-NUMBER ((num rational-number))                           [METHOD]
+
+ CANONICALIZE-NUMBER ((num float))                                     [METHOD]
+
+ CANONICALIZE-NUMBER ((num floating-point-number))                     [METHOD]
+
+ CANONICALIZE-NUMBER ((num bigfloat))                                  [METHOD]
+
+ CANONICALIZE-NUMBER ((num complex))                                   [METHOD]
+
+ CANONICALIZE-NUMBER ((num complex-number))                            [METHOD]
+
+ CANONICALIZE-NUMBER ((num gfp-element))                               [METHOD]
+
+ CANONICALIZE-NUMBER ((num gfm-element))                               [METHOD]
+
+ APPLY-MORPHISM ((map morphism) (elt number))                          [METHOD]
+
+ REACHABLE-DOMAINS (domain)                                          [FUNCTION]
+
+ FIND-COMMON-DOMAINS (d1 d2)                                         [FUNCTION]
+
+ <em>COERCIBILITY-CHECKING</em> (nil)                                       [VARIABLE]
+
+ COERCE (elt (domain domain))                                          [METHOD]
+
+ COERCE ((elt number) (domain domain))                                 [METHOD]
+
+ COERCE ((elt numeric) (domain domain))                                [METHOD]
+
+ COERCIBLE? (elt (d domain))                                           [METHOD]
+
+ <em>COERCE-WHERE-POSSIBLE</em> (t)                                         [VARIABLE]
+
+ DEF-BINARY-COERCION (op illegal-mess ambig-mess                        [MACRO]
+                      &amp;key (numeric-numeric? t)
+                      (domain-element-domain-element? t))
+</pre>
+</body>
+</html>

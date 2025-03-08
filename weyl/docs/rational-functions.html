@@ -1,0 +1,78 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title></title>
+<meta name="generator" content="HTML::TextToHTML v3.0"/>
+</head>
+<body>
+<p> File: ../weyl/rational-functions.lisp 
+</p>
+<pre>
+ INITIALIZE-INSTANCE :AFTER ((qf rational-function-field)              [METHOD]
+                             &amp;rest plist)
+
+ RATFUN-FIELD-PRINT-OBJECT (qf stream)                               [FUNCTION]
+
+ RING-VARIABLES ((qf rational-function-field))                         [METHOD]
+
+ MAKE-RATIONAL-FUNCTION* (domain num den)                    [GENERIC FUNCTION]
+   The purpose of this function is unknown.
+
+ MAKE-RATIONAL-FUNCTION* (domain num den)                              [METHOD]
+
+ MAKE-QUOTIENT-ELEMENT ((domain rational-function-field) numerator     [METHOD]
+                        denominator)
+
+ PRINT-OBJECT ((ratfun rational-function) stream)                      [METHOD]
+
+ NUMERATOR ((r rational-function))                                     [METHOD]
+
+ DENOMINATOR ((r rational-function))                                   [METHOD]
+
+ 0? ((r rational-function))                                            [METHOD]
+
+ 1? ((r rational-function))                                            [METHOD]
+
+ MINUS ((r rational-function))                                         [METHOD]
+
+ QUOTIENT-REDUCE ((qf rational-function-field) num &amp;optional den)      [METHOD]
+
+ RATFUN-REDUCE (qf num &amp;optional den)                                [FUNCTION]
+
+ RECIP ((r1 rational-function))                                        [METHOD]
+
+ EXPT ((r1 rational-function) (exp integer))                           [METHOD]
+
+ EXPT ((r1 rational-function) (exp rational-integer))                  [METHOD]
+
+ LIST-OF-VARIABLES ((x rational-function)                              [METHOD]
+                    &amp;optional list-of-variables)
+
+ RATIONAL-POLY-SUBST (poly var-value)                                [FUNCTION]
+
+ RATIONAL-TERMS-HORNERS-RULE (terms value &amp;optional var-value)       [FUNCTION]
+
+ SUBSTITUTE ((value rational-function)                                 [METHOD]
+             (variable rational-function) (p rational-function)
+             &amp;rest ignore)
+
+ SUBSTITUTE ((values list) (variables list) (p rational-function)      [METHOD]
+             &amp;rest ignore)
+
+ PARTIAL-DERIV ((p rational-function) x)                               [METHOD]
+
+ PARTIAL-DERIV ((p rational-function) (x symbol))                      [METHOD]
+
+ PARTIAL-DERIV ((p rational-function) (x list))                        [METHOD]
+
+ PARTIAL-DERIV ((p rational-function) (x general-expression))          [METHOD]
+
+ PARTIAL-DERIV ((p rational-function) (x rational-function))           [METHOD]
+
+ DERIV ((poly rational-function) &amp;rest vars)                           [METHOD]
+
+ COERCE ((x ge-expt) (domain rational-function-field))                 [METHOD]
+</pre>
+</body>
+</html>

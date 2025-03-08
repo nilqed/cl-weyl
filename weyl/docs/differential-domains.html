@@ -1,0 +1,47 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title></title>
+<meta name="generator" content="HTML::TextToHTML v3.0"/>
+</head>
+<body>
+<p> File: ../weyl/differential-domains.lisp 
+</p>
+<p> RING-VARIABLES ((domain differential-polynomial-ring))                [METHOD]
+</p>
+<p> (SETF VARIABLE-DERIVATION) set-variable-derivation              [SETF MAPPING]
+</p>
+<p> DIFFERENTIAL-RING-PRINT-OBJECT (d stream)                           [FUNCTION]
+</p>
+<p> COERCE ((variable list) (domain differential-polynomial-ring))        [METHOD]
+</p>
+<p> VARIABLE-DERIVATION (domain var)                                       [MACRO]
+</p>
+<p> VARIABLE-DERIVATIVE-ORDER (domain var)                                 [MACRO]
+</p>
+<pre>
+ SET-VARIABLE-DERIVATION (domain variable derivation)        [GENERIC FUNCTION]
+   The purpose of this function is unknown.
+
+ SET-VARIABLE-DERIVATION ((domain differential-polynomial-ring)        [METHOD]
+                          (variable symbol) derivation)
+
+ SET-VARIABLE-DERIVATION ((domain differential-polynomial-ring)        [METHOD]
+                          (variable general-expression) derivation)
+
+ ADD-NEW-VARIABLE ((domain differential-ring) variable)                [METHOD]
+
+ STANDARD-DERIVATION (p)                                             [FUNCTION]
+
+ POLY-DERIVATION (p                                                  [FUNCTION]
+                  &amp;optional (derivation #'standard-derivation))
+
+ POLY-DIFFERENTIATE-COEFS (p derivation)                             [FUNCTION]
+
+ DERIVATION ((poly polynomial))                                        [METHOD]
+
+ DERIVATION ((rat rational-function))                                  [METHOD]
+</pre>
+</body>
+</html>
