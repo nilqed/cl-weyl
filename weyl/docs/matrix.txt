@@ -1,6 +1,0 @@
-
-;;;
-;;; MATRIX-SPACE-PRINT-OBJECT (domain stream)                        [FUNCTION]
-;;;
-;;; MAKE-ELEMENT ((domain matrix-space) (value array) &rest ignore)    [METHOD]
-;;;

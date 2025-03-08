@@ -1,4 +1,0 @@
-
-;;;
-;;; WTYPE (obj)                                                      [FUNCTION]
-;;;

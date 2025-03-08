@@ -26,7 +26,6 @@
 ;;; 
 ;;; See general license below.
 ;;;
-
 ;;; ****************************************************************
 ;;; General License Agreement and Lack of Warranty *****************
 ;;; ****************************************************************
@@ -90,7 +89,6 @@
 ;;; notification about major updates, bug fixes, and additions to the lisp
 ;;; utilities collection. The mailing list is intended to have low traffic.
 ;;;
-
 ;;; ********************************
 ;;; Change Log *********************
 ;;; ********************************
@@ -145,7 +143,7 @@
 ;;;                 problems, but still accepts `bad style' arguments for
 ;;;                 backwards compatibility. 
 ;;; 20-OCT-94 mk    Added *userman-version* parameter.
-
+;;; 08-MAR-25 kfp   Changed ";;;" to "" left margin.
 
 ;;; ********************************
 ;;; To Do **************************
@@ -166,7 +164,6 @@
 ;;; the -device FILE arguments should produce output similar to 
 ;;; :output-format 'text, except without semicolons in the left margin.
 ;;;
-
 ;;; ********************************
 ;;; Documentation Types ************
 ;;; ********************************
@@ -195,7 +192,6 @@
 ;;;    + (DEFCONSTRAINT name super-types lambda-list documentation ...)
 ;;;    + (DEFDAEMON     name super-types lambda-list documentation ...)
 ;;;
-
 ;;; ********************************
 ;;; Notes **************************
 ;;; ********************************
@@ -219,7 +215,6 @@
 ;;;       HP Common Lisp (same as Lucid?)
 ;;;       Procyon Common Lisp
 
-
 ;;; ********************************
 ;;; User Guide *********************
 ;;; ********************************
@@ -353,7 +348,6 @@
 ;;;    Breaks LINE into a list of strings, using DELIM as a 
 ;;;    breaking point.
 ;;;
-
 ;;; ********************************
 ;;; Version Information ************
 ;;; ********************************
@@ -729,7 +723,6 @@
 	  (third form)))
 
 
-
 ;;; ********************************
 ;;; Create User Manual *************
 ;;; ********************************
@@ -752,7 +745,7 @@
   (with-open-file (stream filename :direction :input)
     (let ((eof (gensym)))
       (case output-format
-	((text :text) (format t "~%;;;")))
+	((text :text) (format t "~%##File: ~A ~%~%" filename)))  ;+kfp
       (do ((form (read stream nil eof nil)
 		 (read stream nil eof nil)))
 	  ((eq form eof)
@@ -941,18 +934,19 @@
 				       type-pos
 				       &optional (stream *standard-output*))
   "Prints out the user guide entry for a form in TEXT mode." 
-  (format stream "~%;;; ~A ~A ~VT[~A]" name (first args) type-pos type)
+  (format stream "~%###~A ~A ~VT[~A]" name (first args) type-pos type)
   (dolist (arg (rest args))
-    (format stream "~%;;; ~0,1,V,' @A" 
+    (format stream "~% ~0,1,V,' @A" 
 	    (+ #+:XP 1 #-:XP 2 args-tab-pos)
-	    arg))
+	    arg)) ;;+kfp
   (when (stringp documentation)
     ;; We give a line width of 70 characters for documentation
     ;; strings. This leaves us room for a left margin of
     ;; ";;;    " and a right margin of 3 spaces (2 chars left of []).
-    (dolist (string (split-string documentation 70 nil nil nil))
-      (format stream "~&;;;    ~A" string)))
-  (format stream "~%;;;"))
+    (format stream "~%~%")  ;;+kfp
+    (dolist (string (split-string documentation 70 nil nil nil))   
+      (format stream "~&   ~A" string)))
+  (format stream "~%"))
 
 (defun output-scribe-documentation (name type args documentation 
 					 &optional (stream *standard-output*))
