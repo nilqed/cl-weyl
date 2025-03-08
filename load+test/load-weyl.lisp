@@ -1,3 +1,9 @@
+; some silence ...
+(defun debug-ignore (c h) (declare (ignore h)) (print c) (abort))
+(setf *debugger-hook* #'debug-ignore)
+(declaim (sb-ext:muffle-conditions style-warning))
+
+
 (load "../closer-mop/closer-mop-packages")
 (load "../closer-mop/closer-mop-shared")
 (load "../closer-mop/closer-sbcl")
@@ -54,6 +60,13 @@
 (load "../weyl/new/weyl-infix")
 (load "../weyl/new/ge-support")
 (load "../weyl/new/ge-latex")
+
+;; some files have to be compiled to get full functionality.
+(compile-file "../weyl/numbers/numbers.lisp")   ;; get-rational-...
+(compile-file "../weyl/tpower.lisp")            ;; taylor
+
+;; we also load MKs user-manual here.
+(load "user-manual")
 
 
 ;(defmethod perform :after ((op load-op) (comp (eql (find-system "weyl"))))

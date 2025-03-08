@@ -260,8 +260,8 @@ w2345
 ;;  ARRAY is a bad type specifier for sequences.
 (defvar tsd1 (weyli::get-tpower-series-domain (get-rational-integers) 'x))
 (defvar tsd2 (get-tpower-series-domain (get-rational-numbers) 'x))
-(taylor (sin 'x) tsd1  8)
+(taylor (sin 'x) tsd2  8)
 
 (ge-var p) ;; not standard
 (defvar tsdp (get-tpower-series-domain (get-rational-numbers) p))
-(taylor (sin p) tdsp 4) 
+(taylor (sin p) tsdp 4) 
