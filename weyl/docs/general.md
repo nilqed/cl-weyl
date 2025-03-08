@@ -1,598 +1,607 @@
+##File: ../weyl/general.lisp
 
-##File: ../weyl/general.lisp 
+###+VERSION+ ("cl-weyl:23-feb-2025 14:30") \[PARAMETER\]
 
+###SET-MEMOIZATION (domain key value) \[GENERIC FUNCTION\]
 
-###+VERSION+ ("cl-weyl:23-feb-2025 14:30")                          [PARAMETER]
+Set memoization. See chapter 3.2 in the manual.
 
-###SET-MEMOIZATION (domain key value)                        [GENERIC FUNCTION]
+###SET-MEMOIZATION ((domain has-memoization) key value) \[METHOD\]
 
-   Set memoization. See chapter 3.2 in the manual.
+###GET-MEMOIZATION (domain key) \[GENERIC FUNCTION\]
 
-###SET-MEMOIZATION ((domain has-memoization) key value)                [METHOD]
+Get memoization.
 
-###GET-MEMOIZATION (domain key)                              [GENERIC FUNCTION]
+###GET-MEMOIZATION ((domain has-memoization) key) \[METHOD\]
 
-   Get memoization.
+###(SETF GET-MEMOIZATION) set-memoization \[SETF MAPPING\]
 
-###GET-MEMOIZATION ((domain has-memoization) key)                      [METHOD]
+###%MEMOIZE (domain expression &body body) \[MACRO\]
 
-###(SETF GET-MEMOIZATION) set-memoization                        [SETF MAPPING]
+Each time this form is executed, it checks to see if expression is
+cached in domain's memoization cache. If so, the value in the cache is
+returned without executing the body. If expression is not found in the
+cache, then the forms in body are evaluated, and the value of the last
+form is both returned and saved in domain's memoization cache. It is
+usually much more convenient to use the `memoize` control structure.
 
-###%MEMOIZE (domain expression &body body)                              [MACRO]
+###MEMOIZE (expression &body body) \[MACRO\]
 
-   Each time this form is executed, it checks to see if expression is
-   cached in domain's memoization cache. If so, the value in the cache
-   is returned without executing the body. If expression is not found in
-   the cache, then the forms in body are evaluated, and the value of the
-   last form is both returned and saved in domain's memoization cache.
-   It is usually much more convenient to use the ``memoize`` control
-   structure. 
+Performs the same functions as `weyli::%memoize` except that the domain
+used is `*general*`.
 
-###MEMOIZE (expression &body body)                                      [MACRO]
+###DISPLAY (expression &optional stream &rest ignore) \[GENERIC
+FUNCTION\]
 
-   Performs the same functions as ``weyli::%memoize`` except that the
-   domain used is ``*general*``.
+Prints the expression `expr` onto stream. If stream a graphics stream
+then a two dimension display will be used (not yet implemented),
+otherwise some textual display will be used.
 
-###DISPLAY (expression &optional stream &rest ignore)        [GENERIC FUNCTION]
+###SIMPLIFY (expression) \[GENERIC FUNCTION\]
 
-   Prints the expression ``expr`` onto stream. If stream a graphics
-   stream then a two dimension display will be used (not yet
-   implemented), otherwise some textual display will be used.
+Simplify the expression.
 
-###SIMPLIFY (expression)                                     [GENERIC FUNCTION]
+###GE-EQUAL (expression1 expression2) \[GENERIC FUNCTION\]
 
-   Simplify the expression.
+Returns `T` for syntactically identical general expressions.
 
-###GE-EQUAL (expression1 expression2)                        [GENERIC FUNCTION]
+###GE-EQUAL ((x general-expression) (y general-expression)) \[METHOD\]
 
-   Returns ``T`` for syntactically identical general expressions.
+Returns `` T` if ``x\` and `y` are syntactically identical general
+expressions.
 
-###GE-EQUAL ((x general-expression) (y general-expression))            [METHOD]
+###GE-GREAT (expression1 expression2) \[GENERIC FUNCTION\]
 
-   Returns ``T` if ``x` and ``y`` are syntactically identical general
-   expressions. 
+To speed up operations like simplification of expressions, an order is
+placed on all expressions in the general representation. This ordering
+is provided by the function `ge-great`.
 
-###GE-GREAT (expression1 expression2)                        [GENERIC FUNCTION]
+###MAKE-QUOTIENT-ELEMENT ((domain general-expressions) (x integer)
+\[METHOD\] (y integer))
 
-   To speed up operations like simplification of expressions, an order
-   is placed on all expressions in the general representation. This
-   ordering is provided by the function ``ge-great``.
+###MAKE-ELEMENT ((domain general-expressions) (x integer) \[METHOD\]
+&rest args)
 
-###MAKE-QUOTIENT-ELEMENT ((domain general-expressions) (x integer)     [METHOD]
-                        (y integer))
+###MAKE-ELEMENT ((domain general-expressions) (x ratio) &rest args)
+\[METHOD\]
 
-###MAKE-ELEMENT ((domain general-expressions) (x integer)              [METHOD]
-               &rest args)
+###MAKE-ELEMENT ((domain general-expressions) (x float) &rest args)
+\[METHOD\]
 
-###MAKE-ELEMENT ((domain general-expressions) (x ratio) &rest args)    [METHOD]
+###MAKE-ELEMENT ((domain general-expressions) (x complex) \[METHOD\]
+&rest ignore)
 
-###MAKE-ELEMENT ((domain general-expressions) (x float) &rest args)    [METHOD]
+###COERCE ((num number) (domain general-expressions)) \[METHOD\]
 
-###MAKE-ELEMENT ((domain general-expressions) (x complex)              [METHOD]
-               &rest ignore)
+Coerce finds an element of domain that corresponds with element. This is
+done using one of two methods. First, there may be a canonical coercion,
+which is one that is defined via explicit coerce methods. These methods
+take care of mapping Lisp expressions, like numbers and atoms, into Weyl
+domains. If there are no canonical coercion methods then coerce checks
+to see if there is a unique morphism between element's domain and
+domain. If so, this morphism is used to map element to domain. If there
+is more than one morphism then an error is signaled.
 
-###COERCE ((num number) (domain general-expressions))                  [METHOD]
+###COERCE ((num rational-integer) (domain general-expressions))
+\[METHOD\]
 
-   Coerce finds an element of domain that corresponds with element. This
-   is done using one of two methods. First, there may be a canonical
-   coercion, which is one that is defined via explicit coerce methods.
-   These methods take care of mapping Lisp expressions, like numbers and
-   atoms, into Weyl domains. If there are no canonical coercion methods
-   then coerce checks to see if there is a unique morphism between
-   element's domain and domain. If so, this morphism is used to map
-   element to domain. If there is more than one morphism then an error
-   is signaled. 
+###COERCE ((num rational-number) (domain general-expressions))
+\[METHOD\]
 
-###COERCE ((num rational-integer) (domain general-expressions))        [METHOD]
+###COERCE ((num floating-point-number) (domain general-expressions))
+\[METHOD\]
 
-###COERCE ((num rational-number) (domain general-expressions))         [METHOD]
+###COERCE ((num bigfloat) (domain general-expressions)) \[METHOD\]
 
-###COERCE ((num floating-point-number) (domain general-expressions))   [METHOD]
+###COERCE ((num complex) (domain general-expressions)) \[METHOD\]
 
-###COERCE ((num bigfloat) (domain general-expressions))                [METHOD]
+###COERCE ((num complex-number) (domain general-expressions)) \[METHOD\]
 
-###COERCE ((num complex) (domain general-expressions))                 [METHOD]
+###SIMPLIFY ((x number)) \[METHOD\]
 
-###COERCE ((num complex-number) (domain general-expressions))          [METHOD]
+###SIMPLIFY ((x numeric)) \[METHOD\]
 
-###SIMPLIFY ((x number))                                               [METHOD]
+###GE-EQUAL ((x number) (y number)) \[METHOD\]
 
-###SIMPLIFY ((x numeric))                                              [METHOD]
+###GE-EQUAL ((x numeric) (y number)) \[METHOD\]
 
-###GE-EQUAL ((x number) (y number))                                    [METHOD]
+###GE-EQUAL ((x number) (y numeric)) \[METHOD\]
 
-###GE-EQUAL ((x numeric) (y number))                                   [METHOD]
+###GE-EQUAL ((x numeric) (y numeric)) \[METHOD\]
 
-###GE-EQUAL ((x number) (y numeric))                                   [METHOD]
+###GE-EQUAL ((x number) y) \[METHOD\]
 
-###GE-EQUAL ((x numeric) (y numeric))                                  [METHOD]
+###GE-EQUAL ((x numeric) y) \[METHOD\]
 
-###GE-EQUAL ((x number) y)                                             [METHOD]
+###GE-EQUAL (x (y number)) \[METHOD\]
 
-###GE-EQUAL ((x numeric) y)                                            [METHOD]
+###GE-EQUAL (x (y numeric)) \[METHOD\]
 
-###GE-EQUAL (x (y number))                                             [METHOD]
+###GE-GREAT ((x number) (y number)) \[METHOD\]
 
-###GE-EQUAL (x (y numeric))                                            [METHOD]
+###GE-GREAT ((x numeric) (y number)) \[METHOD\]
 
-###GE-GREAT ((x number) (y number))                                    [METHOD]
+###GE-GREAT ((x number) (y numeric)) \[METHOD\]
 
-###GE-GREAT ((x numeric) (y number))                                   [METHOD]
+###GE-GREAT ((x numeric) (y numeric)) \[METHOD\]
 
-###GE-GREAT ((x number) (y numeric))                                   [METHOD]
+###GE-GREAT ((x number) y) \[METHOD\]
 
-###GE-GREAT ((x numeric) (y numeric))                                  [METHOD]
+###GE-GREAT ((x numeric) y) \[METHOD\]
 
-###GE-GREAT ((x number) y)                                             [METHOD]
+###GE-GREAT (x (y number)) \[METHOD\]
 
-###GE-GREAT ((x numeric) y)                                            [METHOD]
+###GE-GREAT (x (y numeric)) \[METHOD\]
 
-###GE-GREAT (x (y number))                                             [METHOD]
+###REPARSE-PRINT-STRING (variable) \[GENERIC FUNCTION\]
 
-###GE-GREAT (x (y numeric))                                            [METHOD]
+The class `ge-variable` has a slot for the symbol and one for a string
+represenation. If subscripts are added, the string represenation will be
+updated
 
-###REPARSE-PRINT-STRING (variable)                           [GENERIC FUNCTION]
+###REPARSE-PRINT-STRING ((var ge-variable)) \[METHOD\]
 
-   The class ``ge-variable`` has a slot for the symbol and one for
-      a string represenation. If subscripts are added, the string
-      represenation will be updated
+###INITIALIZE-INSTANCE :AFTER ((var ge-variable) &rest ignore)
+\[METHOD\]
 
-###REPARSE-PRINT-STRING ((var ge-variable))                            [METHOD]
+###MAKE-GE-VARIABLE (domain variable) \[GENERIC FUNCTION\]
 
-###INITIALIZE-INSTANCE :AFTER ((var ge-variable) &rest ignore)         [METHOD]
+Create a variable in a domain.
 
-###MAKE-GE-VARIABLE (domain variable)                        [GENERIC FUNCTION]
+###MAKE-GE-VARIABLE ((domain general-expressions) var) \[METHOD\]
 
-   Create a variable in a domain.
+Create a variable var in the general-expressions domain. The new
+variable will be pushed into the list (ge-variables domain).
 
-###MAKE-GE-VARIABLE ((domain general-expressions) var)                 [METHOD]
+###COERCE ((var symbol) (domain general-expressions)) \[METHOD\]
 
-   Create a variable var in the general-expressions domain. The new
-   variable will be pushed into the list (ge-variables domain).
+###PRINT-OBJECT ((var ge-variable) stream) \[METHOD\]
 
-###COERCE ((var symbol) (domain general-expressions))                  [METHOD]
+This method is provided for all CLOS instances. It is used whenever an
+object is printed using princ or a related function. In Weyl, a
+print-object method is provided for classes of objects to make the
+objects more readable when debugging or when doing simple computations.
+The printed form produced by print-object cannot be read to produce the
+object again (as can be done with lists and some other Lisp expressions.
 
-###PRINT-OBJECT ((var ge-variable) stream)                             [METHOD]
+###ADD-SUBSCRIPTS (variable &rest subscripts) \[GENERIC FUNCTION\]
 
-   This method is provided for all CLOS instances. It is used whenever
-   an object is printed using princ or a related function. In Weyl, a
-    print-object method is provided for classes of objects to make the
-   objects more readable when debugging or when doing simple
-   computations. The printed form produced by print-object cannot be
-   read to produce the object again (as can be done with lists and some
-   other Lisp expressions. 
+Creates a new variable, which has the subscripts indicated. If the
+variable already has subscripts, then the new subscripts are appended to
+the ones already present.
 
-###ADD-SUBSCRIPTS (variable &rest subscripts)                [GENERIC FUNCTION]
+###ADD-SUBSCRIPTS ((var ge-variable) &rest subscripts) \[METHOD\]
 
-   Creates a new variable, which has the subscripts indicated. If the 
-      variable already has subscripts, then the new subscripts are
-   appended to the ones already present.
+###ADD-SUBSCRIPTS ((var symbol) &rest subscripts) \[METHOD\]
 
-###ADD-SUBSCRIPTS ((var ge-variable) &rest subscripts)                 [METHOD]
+###GE-EQUAL ((x ge-variable) (y ge-variable)) \[METHOD\]
 
-###ADD-SUBSCRIPTS ((var symbol) &rest subscripts)                      [METHOD]
+###GE-GREAT ((x ge-variable) (y ge-variable)) \[METHOD\]
 
-###GE-EQUAL ((x ge-variable) (y ge-variable))                          [METHOD]
+###GE-GREAT ((x ge-variable) (y ge-plus)) \[METHOD\]
 
-###GE-GREAT ((x ge-variable) (y ge-variable))                          [METHOD]
+###GE-GREAT ((x ge-variable) (y ge-times)) \[METHOD\]
 
-###GE-GREAT ((x ge-variable) (y ge-plus))                              [METHOD]
+###GE-GREAT ((x ge-plus) (y ge-variable)) \[METHOD\]
 
-###GE-GREAT ((x ge-variable) (y ge-times))                             [METHOD]
+###GE-GREAT ((x ge-times) (y ge-variable)) \[METHOD\]
 
-###GE-GREAT ((x ge-plus) (y ge-variable))                              [METHOD]
+###SEARCH-FOR-FUNCTION (list name nargs) \[FUNCTION\]
 
-###GE-GREAT ((x ge-times) (y ge-variable))                             [METHOD]
+###GET-FUNCTION (domain name &optional args) \[GENERIC FUNCTION\]
 
-###SEARCH-FOR-FUNCTION (list name nargs)                             [FUNCTION]
+Looks for a function with given name.
 
-###GET-FUNCTION (domain name &optional args)                 [GENERIC FUNCTION]
+###GET-FUNCTION ((domain general-expressions) name &optional nargs)
+\[METHOD\]
 
-   Looks for a function with given name.
+###GET-FUNCTION ((domain (eql nil)) name &optional nargs) \[METHOD\]
 
-###GET-FUNCTION ((domain general-expressions) name &optional nargs)    [METHOD]
+###MAKE-FUNCTION (domain name &optional nargs) \[GENERIC FUNCTION\]
 
-###GET-FUNCTION ((domain (eql nil)) name &optional nargs)              [METHOD]
+Create a funtion in a domain with name given.
 
-###MAKE-FUNCTION (domain name &optional nargs)               [GENERIC FUNCTION]
+###MAKE-FUNCTION ((domain general-expressions) name &optional nargs)
+\[METHOD\]
 
-   Create a funtion in a domain with name given.
+###MAKE-FUNCTION ((domain (eql nil)) name &optional nargs) \[METHOD\]
 
-###MAKE-FUNCTION ((domain general-expressions) name &optional nargs)   [METHOD]
+###DERIVS-OF ((f ge-function)) \[METHOD\]
 
-###MAKE-FUNCTION ((domain (eql nil)) name &optional nargs)             [METHOD]
+###ADD-FUNCTION-TO-DOMAIN (domain name nargs &optional derivs)
+\[FUNCTION\]
 
-###DERIVS-OF ((f ge-function))                                         [METHOD]
+Add a function to a domain.
 
-###ADD-FUNCTION-TO-DOMAIN (domain name nargs &optional derivs)       [FUNCTION]
+###MINUS? ((x t)) \[METHOD\]
 
-   Add a function to a domain.
+###MINUSP (x) \[FUNCTION\]
 
-###MINUS? ((x t))                                                      [METHOD]
+For compatibility with Common Lisp: same as (minus? x)
 
-###MINUSP (x)                                                        [FUNCTION]
+###PLUSP (x) \[FUNCTION\]
 
-   For compatibility with Common Lisp: same as (minus? x)
+For compatibility with Common Lisp: same as (plus? x)
 
-###PLUSP (x)                                                         [FUNCTION]
+###ZEROP (x) \[FUNCTION\]
 
-   For compatibility with Common Lisp: same as (plus? x)
+For compatibility with Common Lisp: same as (0? x)
 
-###ZEROP (x)                                                         [FUNCTION]
+###MAKE-FUNCTION-DERIV #'derivative \[GENERIC FUNCTION\]
 
-   For compatibility with Common Lisp: same as (0? x)
+Create a function derivative.
 
-###MAKE-FUNCTION-DERIV #'derivative                          [GENERIC FUNCTION]
+###MAKE-FUNCTION-DERIV ((fun ge-function) (i integer)) \[METHOD\]
 
-   Create a function derivative.
+###MAKE-FUNCTION-DERIV ((fun ge-function) (derivs list)) \[METHOD\]
 
-###MAKE-FUNCTION-DERIV ((fun ge-function) (i integer))                 [METHOD]
+###MAKE-FUNCTION-INTEGRATE #'integrand \[GENERIC FUNCTION\]
 
-###MAKE-FUNCTION-DERIV ((fun ge-function) (derivs list))               [METHOD]
+Create the integral of a function.
 
-###MAKE-FUNCTION-INTEGRATE #'integrand                       [GENERIC FUNCTION]
+###MAKE-FUNCTION-INTEGRATE ((fun ge-function) (i integer)) \[METHOD\]
 
-   Create the integral of a function.
+###PRINT-OBJECT ((fun ge-function) stream) \[METHOD\]
 
-###MAKE-FUNCTION-INTEGRATE ((fun ge-function) (i integer))             [METHOD]
+###PRINT-OBJECT ((fun ge-function-deriv) stream) \[METHOD\]
 
-###PRINT-OBJECT ((fun ge-function) stream)                             [METHOD]
+###MAKE-GE-FUNCT (domain function &rest args) \[GENERIC FUNCTION\]
 
-###PRINT-OBJECT ((fun ge-function-deriv) stream)                       [METHOD]
+Create a function in the general expression domain.
 
-###MAKE-GE-FUNCT (domain function &rest args)                [GENERIC FUNCTION]
+###MAKE-GE-FUNCT ((domain general-expressions) funct &rest args)
+\[METHOD\]
 
-   Create a function in the general expression domain.
+###APPLY ((fun ge-function) &rest args) \[METHOD\]
 
-###MAKE-GE-FUNCT ((domain general-expressions) funct &rest args)       [METHOD]
+Apply fun to the k arguments specified and the elements of list. If the
+number of arguments of the function di er from k plus the length of list
+then an error is signaled.
 
-###APPLY ((fun ge-function) &rest args)                                [METHOD]
+###FUNCT (function &rest args) \[MACRO\]
 
-   Apply fun to the k arguments specified and the elements of list. If
-   the number of arguments of the function di er from k plus the length
-   of list then an error is signaled.
+###DISPLAY-LIST (objects &optional stream) \[GENERIC FUNCTION\]
 
-###FUNCT (function &rest args)                                          [MACRO]
+Display a list of objects, paying attention to `*print-length*`. No
+surrounding delimiters. This is a method so that we can define similar
+functions for sets of objects embedded in arrays.
 
-###DISPLAY-LIST (objects &optional stream)                   [GENERIC FUNCTION]
+###DISPLAY-LIST ((objects list) \[METHOD\] &optional (stream
+*standard-output*))
 
-   Display a list of objects, paying attention to
-   ``*print-length*``.  No surrounding delimiters.  This is a method so
-   that we can define similar functions for sets of objects embedded in
-   arrays.
+###PRINT-OBJECT ((x ge-application) stream) \[METHOD\]
 
-###DISPLAY-LIST ((objects list)                                        [METHOD]
-               &optional (stream *standard-output*))
+###SIMPLIFY ((x ge-application)) \[METHOD\]
 
-###PRINT-OBJECT ((x ge-application) stream)                            [METHOD]
+Performs simple simplifications of expr, `0 + x = x` and so on.
 
-###SIMPLIFY ((x ge-application))                                       [METHOD]
+\###*INITIALIZE-CONTEXTS-FUNS* (nil) \[VARIABLE\]
 
-   Performs simple simplifications of expr, ``0 + x = x`` and so on.
+###INITIALIZE-CONTEXTS "()" \[FUNCTION\]
 
-###*INITIALIZE-CONTEXTS-FUNS* (nil)                                  [VARIABLE]
+###WITH-NEW-CONTEXT (&body body) \[MACRO\]
 
-###INITIALIZE-CONTEXTS "()"                                          [FUNCTION]
+###CHECK-POINT-CONTEXT (&body body) \[MACRO\]
 
-###WITH-NEW-CONTEXT (&body body)                                        [MACRO]
+###MAKE-GE-PLUS (domain terms) \[GENERIC FUNCTION\]
 
-###CHECK-POINT-CONTEXT (&body body)                                     [MACRO]
+Create `ge-plus` instances.
 
-###MAKE-GE-PLUS (domain terms)                               [GENERIC FUNCTION]
+###MAKE-GE-PLUS ((domain general-expressions) terms) \[METHOD\]
 
-   Create ``ge-plus`` instances.
+###MAKE-GE-TIMES (domain terms) \[GENERIC FUNCTION\]
 
-###MAKE-GE-PLUS ((domain general-expressions) terms)                   [METHOD]
+Create `ge-times` instances.
 
-###MAKE-GE-TIMES (domain terms)                              [GENERIC FUNCTION]
+###MAKE-GE-TIMES ((domain general-expressions) terms) \[METHOD\]
 
-   Create ``ge-times`` instances.
+###MAKE-GE-EXPT (domain base exp) \[GENERIC FUNCTION\]
 
-###MAKE-GE-TIMES ((domain general-expressions) terms)                  [METHOD]
+Create `ge-expt` instances.
 
-###MAKE-GE-EXPT (domain base exp)                            [GENERIC FUNCTION]
+###MAKE-GE-EXPT ((domain general-expressions) base exp) \[METHOD\]
 
-   Create ``ge-expt`` instances.
+###COERCE ((exp list) (domain general-expressions)) \[METHOD\]
 
-###MAKE-GE-EXPT ((domain general-expressions) base exp)                [METHOD]
+###PARENTHESIZED-DISPLAY (expr stream) \[FUNCTION\]
 
-###COERCE ((exp list) (domain general-expressions))                    [METHOD]
+Decorate the expr with parens ().
 
-###PARENTHESIZED-DISPLAY (expr stream)                               [FUNCTION]
+###SAFE-DISPLAY (expr stream) \[FUNCTION\]
 
-   Decorate the expr with parens ().
+Use parens if necessary.
 
-###SAFE-DISPLAY (expr stream)                                        [FUNCTION]
+###GE-LEQUAL (x y) \[FUNCTION\]
 
-   Use parens if necessary.
+###GE-LGREAT (x y) \[FUNCTION\]
 
-###GE-LEQUAL (x y)                                                   [FUNCTION]
+###REAL? (object) \[GENERIC FUNCTION\]
 
-###GE-LGREAT (x y)                                                   [FUNCTION]
+Return true if the object is real valued.
 
-###REAL? (object)                                            [GENERIC FUNCTION]
+###GE-MINUS? (x) \[FUNCTION\]
 
-   Return true if the object is real valued.
+###MERGE-TERMS-IN-SUM (terms &body body) \[MACRO\]
 
-###GE-MINUS? (x)                                                     [FUNCTION]
+This works by converting the sum into a list of dotted pairs. The first
+element of the list is a number, while the second is a list of product
+terms. This makes combining new elements quite easy. After the
+combination, everything is converted back to the standard
+representation.
 
-###MERGE-TERMS-IN-SUM (terms &body body)                                [MACRO]
+###SIMP-PLUS-TERMS (domain old-terms) \[FUNCTION\]
 
-   This works by converting the sum into a list of dotted pairs.  The
-   first element of the list is a number, while the second is a list
-   of product terms.  This makes combining new elements quite easy.
-   After the combination, everything is converted back to the
-   standard representation.
+Simplify `ge-plus` terms.
 
-###SIMP-PLUS-TERMS (domain old-terms)                                [FUNCTION]
+###SIMP-TIMES-TERMS (domain old-terms) \[FUNCTION\]
 
-   Simplify ``ge-plus`` terms.
+Simplify `ge-times` terms
 
-###SIMP-TIMES-TERMS (domain old-terms)                               [FUNCTION]
+###PRINT-OBJECT ((sum ge-plus) stream) \[METHOD\]
 
-   Simplify ``ge-times`` terms
+###SIMPLIFY ((x ge-plus)) \[METHOD\]
 
-###PRINT-OBJECT ((sum ge-plus) stream)                                 [METHOD]
+###GE-EQUAL ((x ge-plus) (y ge-plus)) \[METHOD\]
 
-###SIMPLIFY ((x ge-plus))                                              [METHOD]
+###GE-GREAT ((x ge-plus) (y ge-plus)) \[METHOD\]
 
-###GE-EQUAL ((x ge-plus) (y ge-plus))                                  [METHOD]
+###PRINT-OBJECT ((x ge-times) stream) \[METHOD\]
 
-###GE-GREAT ((x ge-plus) (y ge-plus))                                  [METHOD]
+###SIMPLIFY ((x ge-times)) \[METHOD\]
 
-###PRINT-OBJECT ((x ge-times) stream)                                  [METHOD]
+###GE-EQUAL ((x ge-times) (y ge-times)) \[METHOD\]
 
-###SIMPLIFY ((x ge-times))                                             [METHOD]
+###GE-GREAT ((x ge-times) (y ge-times)) \[METHOD\]
 
-###GE-EQUAL ((x ge-times) (y ge-times))                                [METHOD]
+###SIMPLIFY ((x ge-expt)) \[METHOD\]
 
-###GE-GREAT ((x ge-times) (y ge-times))                                [METHOD]
+Simplify `ge-expt` (base exponent).
 
-###SIMPLIFY ((x ge-expt))                                              [METHOD]
+###PRINT-OBJECT ((expr ge-expt) stream) \[METHOD\]
 
-   Simplify ``ge-expt`` (base exponent).
+###GE-EQUAL ((x ge-expt) (y ge-expt)) \[METHOD\]
 
-###PRINT-OBJECT ((expr ge-expt) stream)                                [METHOD]
+###GE-GREAT ((x ge-expt) (y ge-expt)) \[METHOD\]
 
-###GE-EQUAL ((x ge-expt) (y ge-expt))                                  [METHOD]
+###GE-EQUAL ((x ge-application) (y ge-application)) \[METHOD\]
 
-###GE-GREAT ((x ge-expt) (y ge-expt))                                  [METHOD]
+###GE-EQUAL ((x ge-function) (y ge-function)) \[METHOD\]
 
-###GE-EQUAL ((x ge-application) (y ge-application))                    [METHOD]
+###GET-VARIABLE-PROPERTY (domain variable key) \[GENERIC FUNCTION\]
 
-###GE-EQUAL ((x ge-function) (y ge-function))                          [METHOD]
+There is a property list associated with each variable in a polynomial
+ring. This property list is ring specificc and not global. The ring
+property list is accessed using the generic function
+get-variable-property. Properties can modified using setf, as with
+normal property lists.
 
-###GET-VARIABLE-PROPERTY (domain variable key)               [GENERIC FUNCTION]
+###GET-VARIABLE-PROPERTY ((domain domain) (var ge-variable) key)
+\[METHOD\]
 
-   There is a property list associated with each variable in a
-   polynomial ring. This property list is ring specificc and not global.
-   The ring property list is accessed using the generic function
-   get-variable-property. Properties can modified using setf, as with
-   normal property lists. 
+Returns a property property of variable.
 
-###GET-VARIABLE-PROPERTY ((domain domain) (var ge-variable) key)       [METHOD]
+###SET-VARIABLE-PROPERTY (domain variable key value) \[GENERIC
+FUNCTION\]
 
-   Returns a property property of variable.
+There is a property list associated with each variable in a polynomial
+ring. This property list is ring specificc and not global. The ring
+property list is accessed using the generic function
+get-variable-property. Properties can modified using setf, as with
+normal property lists.
 
-###SET-VARIABLE-PROPERTY (domain variable key value)         [GENERIC FUNCTION]
+###SET-VARIABLE-PROPERTY (domain (var ge-variable) key value) \[METHOD\]
 
-   There is a property list associated with each variable in a
-   polynomial ring. This property list is ring specificc and not global.
-   The ring property list is accessed using the generic function
-   get-variable-property. Properties can modified using setf, as with
-   normal property lists. 
+Set a variable property.
 
-###SET-VARIABLE-PROPERTY (domain (var ge-variable) key value)          [METHOD]
+###(SETF GET-VARIABLE-PROPERTY) set-variable-property \[SETF MAPPING\]
 
-   Set a variable property.
+###DECLARE-DEPENDENCIES (variable &rest variables) \[GENERIC FUNCTION\]
 
-###(SETF GET-VARIABLE-PROPERTY) set-variable-property            [SETF MAPPING]
+Dependencies of one variable on another can be declared using
+`declare-dependencies`.
 
-###DECLARE-DEPENDENCIES (variable &rest variables)           [GENERIC FUNCTION]
+###DECLARE-DEPENDENCIES ((var ge-variable) &rest vars) \[METHOD\]
 
-   Dependencies of one variable on another can be declared using 
-      ``declare-dependencies``.
+This indicates that kernel depends upon each of the variables in vars.
 
-###DECLARE-DEPENDENCIES ((var ge-variable) &rest vars)                 [METHOD]
+###DEPENDS-ON? (expression &rest variables) \[GENERIC FUNCTION\]
 
-   This indicates that kernel depends upon each of the variables in
-   vars. 
+Return true if the expression depends on any of the variables
 
-###DEPENDS-ON? (expression &rest variables)                  [GENERIC FUNCTION]
+###DEPENDS-ON? ((exp list) &rest vars) \[METHOD\]
 
-   Return true if the expression depends on any of the variables
+This predicate can be applied to any expression, not just to variables.
+It returns t if the exp depends on all of the variables in vars,
+otherwise it returns nil. The expression can also be a list, in which
+case nil is returned only if every element of exp is free of vars.
 
-###DEPENDS-ON? ((exp list) &rest vars)                                 [METHOD]
+###DEPENDS-ON? ((exp number) &rest vars) \[METHOD\]
 
-   This predicate can be applied to any expression, not just to
-   variables. It returns t if the exp depends on all of the variables in
-   vars, otherwise it returns nil. The expression can also be a list, in
-   which case nil is returned only if every element of exp is free of
-   vars. 
+###DEPENDS-ON? ((exp numeric) &rest vars) \[METHOD\]
 
-###DEPENDS-ON? ((exp number) &rest vars)                               [METHOD]
+###DEPENDS-ON? ((exp ge-variable) &rest vars) \[METHOD\]
 
-###DEPENDS-ON? ((exp numeric) &rest vars)                              [METHOD]
+###DEPENDS-ON? ((exp ge-function) &rest vars) \[METHOD\]
 
-###DEPENDS-ON? ((exp ge-variable) &rest vars)                          [METHOD]
+###DEPENDS-ON? ((exp ge-application) &rest vars) \[METHOD\]
 
-###DEPENDS-ON? ((exp ge-function) &rest vars)                          [METHOD]
+###DEPENDS-ON? ((exp ge-plus) &rest vars) \[METHOD\]
 
-###DEPENDS-ON? ((exp ge-application) &rest vars)                       [METHOD]
+###DEPENDS-ON? ((exp ge-times) &rest vars) \[METHOD\]
 
-###DEPENDS-ON? ((exp ge-plus) &rest vars)                              [METHOD]
+###DEPENDS-ON? ((exp ge-expt) &rest vars) \[METHOD\]
 
-###DEPENDS-ON? ((exp ge-times) &rest vars)                             [METHOD]
+###GE-DERIV (expression variable) \[GENERIC FUNCTION\]
 
-###DEPENDS-ON? ((exp ge-expt) &rest vars)                              [METHOD]
+Return the derivate of the expression with respect to variable.
 
-###GE-DERIV (expression variable)                            [GENERIC FUNCTION]
+###DERIV (expression &rest variables) \[GENERIC FUNCTION\]
 
-   Return the derivate of the expression with respect to variable.
+Derivative of expression with respect to variables.
 
-###DERIV (expression &rest variables)                        [GENERIC FUNCTION]
+###DERIV ((exp number) &rest vars) \[METHOD\]
 
-   Derivative of expression with respect to variables.
+###DERIV ((exp numeric) &rest vars) \[METHOD\]
 
-###DERIV ((exp number) &rest vars)                                     [METHOD]
+###DERIV ((exp symbol) &rest vars) \[METHOD\]
 
-###DERIV ((exp numeric) &rest vars)                                    [METHOD]
+###DERIV ((exp general-expression) &rest vars) \[METHOD\]
 
-###DERIV ((exp symbol) &rest vars)                                     [METHOD]
+###DERIV ((fun ge-function) &rest args) \[METHOD\]
 
-###DERIV ((exp general-expression) &rest vars)                         [METHOD]
+###GE-DERIV ((exp general-expression) (var symbol)) \[METHOD\]
 
-###DERIV ((fun ge-function) &rest args)                                [METHOD]
+Derivative of expression w.r.t symbol which will be coerced to the
+domain where expression lives.
 
-###GE-DERIV ((exp general-expression) (var symbol))                    [METHOD]
+###MAKE-GE-EQN= (domain lhs rhs) \[GENERIC FUNCTION\]
 
-   Derivative of expression w.r.t symbol which will be coerced
-   to the domain where expression lives.
+The purpose of this method is unknown.
 
-###MAKE-GE-EQN= (domain lhs rhs)                             [GENERIC FUNCTION]
+###MAKE-GE-EQN= ((domain general-expressions) lhs rhs) \[METHOD\]
 
-   The purpose of this method is unknown.
+###PRINT-OBJECT ((eqn ge-eqn=) stream) \[METHOD\]
 
-###MAKE-GE-EQN= ((domain general-expressions) lhs rhs)                 [METHOD]
+###EQN= (lhs rhs) \[GENERIC FUNCTION\]
 
-###PRINT-OBJECT ((eqn ge-eqn=) stream)                                 [METHOD]
+The purpose of this method is unknown.
 
-###EQN= (lhs rhs)                                            [GENERIC FUNCTION]
+###EQN= (lhs rhs) \[METHOD\]
 
-   The purpose of this method is unknown.
+###SIMPLIFY ((eqn ge-eqn=)) \[METHOD\]
 
-###EQN= (lhs rhs)                                                      [METHOD]
+###MAKE-GE-EQN\> (domain lhs rhs) \[GENERIC FUNCTION\]
 
-###SIMPLIFY ((eqn ge-eqn=))                                            [METHOD]
+The purpose of this method is unknown.
 
-###MAKE-GE-EQN> (domain lhs rhs)                             [GENERIC FUNCTION]
+###MAKE-GE-EQN\> ((domain general-expressions) lhs rhs) \[METHOD\]
 
-   The purpose of this method is unknown.
+###PRINT-OBJECT ((eqn ge-eqn\>) stream) \[METHOD\]
 
-###MAKE-GE-EQN> ((domain general-expressions) lhs rhs)                 [METHOD]
+###EQN\> (lhs rhs) \[GENERIC FUNCTION\]
 
-###PRINT-OBJECT ((eqn ge-eqn>) stream)                                 [METHOD]
+The purpose of this method is unknown.
 
-###EQN> (lhs rhs)                                            [GENERIC FUNCTION]
+###EQN\> (lhs rhs) \[METHOD\]
 
-   The purpose of this method is unknown.
+###SIMPLIFY ((eqn ge-eqn\>)) \[METHOD\]
 
-###EQN> (lhs rhs)                                                      [METHOD]
+###MAKE-GE-EQN\>= (domain lhs rhs) \[GENERIC FUNCTION\]
 
-###SIMPLIFY ((eqn ge-eqn>))                                            [METHOD]
+The purpose of this method is unknown.
 
-###MAKE-GE-EQN>= (domain lhs rhs)                            [GENERIC FUNCTION]
+###MAKE-GE-EQN\>= ((domain general-expressions) lhs rhs) \[METHOD\]
 
-   The purpose of this method is unknown.
+###PRINT-OBJECT ((eqn ge-eqn\>=) stream) \[METHOD\]
 
-###MAKE-GE-EQN>= ((domain general-expressions) lhs rhs)                [METHOD]
+###EQN\>= (lhs rhs) \[GENERIC FUNCTION\]
 
-###PRINT-OBJECT ((eqn ge-eqn>=) stream)                                [METHOD]
+The purpose of this method is unknown.
 
-###EQN>= (lhs rhs)                                           [GENERIC FUNCTION]
+###EQN\>= (lhs rhs) \[METHOD\]
 
-   The purpose of this method is unknown.
+###SIMPLIFY ((eqn ge-eqn\>=)) \[METHOD\]
 
-###EQN>= (lhs rhs)                                                     [METHOD]
+###DEFINE-GE2-STANDARD-METHODS (op) \[MACRO\]
 
-###SIMPLIFY ((eqn ge-eqn>=))                                           [METHOD]
+###MINUS ((x symbol)) \[METHOD\]
 
-###DEFINE-GE2-STANDARD-METHODS (op)                                     [MACRO]
+###MINUS ((x general-expression)) \[METHOD\]
 
-###MINUS ((x symbol))                                                  [METHOD]
+###MINUS ((eq1 ge-eqn=)) \[METHOD\]
 
-###MINUS ((x general-expression))                                      [METHOD]
+###RECIP ((x symbol)) \[METHOD\]
 
-###MINUS ((eq1 ge-eqn=))                                               [METHOD]
+###RECIP ((x general-expression)) \[METHOD\]
 
-###RECIP ((x symbol))                                                  [METHOD]
+###RECIP ((eq1 ge-eqn=)) \[METHOD\]
 
-###RECIP ((x general-expression))                                      [METHOD]
+###MAKE-UNION (variable set expression &rest expressions) \[GENERIC
+FUNCTION\]
 
-###RECIP ((eq1 ge-eqn=))                                               [METHOD]
+The purpose of this method is unknown.
 
-###MAKE-UNION (variable set expression &rest expressions)    [GENERIC FUNCTION]
+###MAKE-UNION ((var symbol) (set set) (expr general-expression)
+\[METHOD\] &rest rest-exprs)
 
-   The purpose of this method is unknown.
+###MAKE-UNIVERSAL-QUANTIFIED-SET (domain bound-vars expressions)
+\[FUNCTION\]
 
-###MAKE-UNION ((var symbol) (set set) (expr general-expression)        [METHOD]
-             &rest rest-exprs)
+###UQ-SET-PRINT-OBJECT (set stream) \[FUNCTION\]
 
-###MAKE-UNIVERSAL-QUANTIFIED-SET (domain bound-vars expressions)     [FUNCTION]
+###MAKE-UNION (var set (expr general-expression) &rest rest-exprs)
+\[METHOD\]
 
-###UQ-SET-PRINT-OBJECT (set stream)                                  [FUNCTION]
+###MERGE-BOUND-VARS (type bound-vars exprs) \[FUNCTION\]
 
-###MAKE-UNION (var set (expr general-expression) &rest rest-exprs)     [METHOD]
+###SIMPLIFY ((set universal-quantified-set)) \[METHOD\]
 
-###MERGE-BOUND-VARS (type bound-vars exprs)                          [FUNCTION]
+###DIFFERENT-KERNELS (expression kernels) \[GENERIC FUNCTION\]
 
-###SIMPLIFY ((set universal-quantified-set))                           [METHOD]
+Returns a list of the kernels in exp that are different from those in
+`list-of-kernels`.
 
-###DIFFERENT-KERNELS (expression kernels)                    [GENERIC FUNCTION]
+###DIFFERENT-KERNELS (exp (kernels list)) \[METHOD\]
 
-   Returns a list of the kernels in exp that are different from those in
-   ``list-of-kernels``.
+###DIFFERENT-KERNELS ((exp ge-plus) (kernels list)) \[METHOD\]
 
-###DIFFERENT-KERNELS (exp (kernels list))                              [METHOD]
+###DIFFERENT-KERNELS ((exp ge-times) (kernels list)) \[METHOD\]
 
-###DIFFERENT-KERNELS ((exp ge-plus) (kernels list))                    [METHOD]
+###DIFFERENT-KERNELS ((exp ge-expt) (kernels list)) \[METHOD\]
 
-###DIFFERENT-KERNELS ((exp ge-times) (kernels list))                   [METHOD]
+###DIFFERENT-KERNELS ((exp ge-equation) (kernels list)) \[METHOD\]
 
-###DIFFERENT-KERNELS ((exp ge-expt) (kernels list))                    [METHOD]
+###DIFFERENT-KERNELS ((exp list) (kernels list)) \[METHOD\]
 
-###DIFFERENT-KERNELS ((exp ge-equation) (kernels list))                [METHOD]
+###SUBSTITUTE (value var expr &rest ignore) \[METHOD\]
 
-###DIFFERENT-KERNELS ((exp list) (kernels list))                       [METHOD]
+Substitutes value for each occurrence of var in polynomial . If value is
+a list, it is interpreted as a set of values to be substituted in
+parallel for the variables in var. The values being substituted must be
+either elements of the domain of polynomial or its coefficient domain.
 
-###SUBSTITUTE (value var expr &rest ignore)                            [METHOD]
+###SUBSTITUTE (value (var symbol) expr &rest ignore) \[METHOD\]
 
-   Substitutes value for each occurrence of var in polynomial . If value
-   is a list, it is interpreted as a set of values to be substituted in
-    parallel for the variables in var. The values being substituted
-   must be either elements of the domain of polynomial or its
-   coefficient domain. 
+###SUBSTITUTE (value (var ge-variable) (expr number) &rest ignore)
+\[METHOD\]
 
-###SUBSTITUTE (value (var symbol) expr &rest ignore)                   [METHOD]
+###SUBSTITUTE (value (var ge-variable) (expr numeric) &rest ignore)
+\[METHOD\]
 
-###SUBSTITUTE (value (var ge-variable) (expr number) &rest ignore)     [METHOD]
+###SUBSTITUTE (value (var ge-variable) (expr ge-variable) \[METHOD\]
+&rest ignore)
 
-###SUBSTITUTE (value (var ge-variable) (expr numeric) &rest ignore)    [METHOD]
+###SUBSTITUTE (value (var ge-function) (expr ge-function) \[METHOD\]
+&rest ignore)
 
-###SUBSTITUTE (value (var ge-variable) (expr ge-variable)              [METHOD]
-             &rest ignore)
+###SUBSTITUTE (value var (expr ge-plus) &rest ignore) \[METHOD\]
 
-###SUBSTITUTE (value (var ge-function) (expr ge-function)              [METHOD]
-             &rest ignore)
+###SUBSTITUTE (value var (expr ge-times) &rest ignore) \[METHOD\]
 
-###SUBSTITUTE (value var (expr ge-plus) &rest ignore)                  [METHOD]
+###SUBSTITUTE (value var (expr ge-expt) &rest ignore) \[METHOD\]
 
-###SUBSTITUTE (value var (expr ge-times) &rest ignore)                 [METHOD]
+###SUBSTITUTE (value (var ge-variable) (expr ge-application) \[METHOD\]
+&rest ignore)
 
-###SUBSTITUTE (value var (expr ge-expt) &rest ignore)                  [METHOD]
+\###*FEM-KLUDGE* (nil) \[VARIABLE\]
 
-###SUBSTITUTE (value (var ge-variable) (expr ge-application)           [METHOD]
-             &rest ignore)
+###SUBSTITUTE (value (var ge-function) (expr ge-application) \[METHOD\]
+&rest ignore)
 
-###*FEM-KLUDGE* (nil)                                                [VARIABLE]
+###SUBSTITUTE (value var (expr ge-equation) &rest ignore) \[METHOD\]
 
-###SUBSTITUTE (value (var ge-function) (expr ge-application)           [METHOD]
-             &rest ignore)
+###EXPAND (expression) \[GENERIC FUNCTION\]
 
-###SUBSTITUTE (value var (expr ge-equation) &rest ignore)              [METHOD]
+Replaces all products of sums in exp by sums of products.
 
-###EXPAND (expression)                                       [GENERIC FUNCTION]
+###EXPAND-PRODUCT1 (terms) \[FUNCTION\]
 
-   Replaces all products of sums in exp by sums of products.
+###EXPAND-PRODUCT (exp) \[FUNCTION\]
 
-###EXPAND-PRODUCT1 (terms)                                           [FUNCTION]
+###EXPAND ((exp ge-times)) \[METHOD\]
 
-###EXPAND-PRODUCT (exp)                                              [FUNCTION]
+###EXPAND ((exp ge-plus)) \[METHOD\]
 
-###EXPAND ((exp ge-times))                                             [METHOD]
+###EXPAND-BINOMIAL-FORM (terms n) \[FUNCTION\]
 
-###EXPAND ((exp ge-plus))                                              [METHOD]
-
-###EXPAND-BINOMIAL-FORM (terms n)                                    [FUNCTION]
-
-###EXPAND ((exp ge-expt))                                              [METHOD]
+###EXPAND ((exp ge-expt)) \[METHOD\]
