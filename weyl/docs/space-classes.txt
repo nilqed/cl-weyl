@@ -3,7 +3,6 @@ File: ../weyl/classes/space-classes.lisp
 
 
  ABSTRACT-SPACE ""                                                      [CLASS]
-
    Superclasses
    domain
    Initialization Arguments
@@ -14,7 +13,6 @@ File: ../weyl/classes/space-classes.lisp
    None.
 
  DIMENSIONAL-SPACE ""                                                   [CLASS]
-
    Superclasses
    abstract-spacedimensional-domain
    Initialization Arguments
@@ -25,7 +23,6 @@ File: ../weyl/classes/space-classes.lisp
    None.
 
  EUCLIDEAN-SPACE ""                                                     [CLASS]
-
    Superclasses
    vector-spacedimensional-space
    Initialization Arguments

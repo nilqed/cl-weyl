@@ -35,7 +35,6 @@ File: ../weyl/numbers/bigfloat.lisp
  READ!NUM (n)                                                        [FUNCTION]
 
  CONVERT-TO-BIGFLOAT (number)                                [GENERIC FUNCTION]
-
    Return the bigfloat representation of the number.
 
  CONVERT-TO-BIGFLOAT ((x rational-integer))                            [METHOD]
@@ -63,7 +62,6 @@ File: ../weyl/numbers/bigfloat.lisp
  BF-INTEGER-PART (num)                                               [FUNCTION]
 
  FLOOR1 (number)                                             [GENERIC FUNCTION]
-
    Return the quotient truncated towards negative infinity.
 
  FLOOR1 ((number bigfloat))                                            [METHOD]
@@ -71,7 +69,6 @@ File: ../weyl/numbers/bigfloat.lisp
  FLOOR2 ((number bigfloat) modulus)                                    [METHOD]
 
  CEILING1 (number)                                           [GENERIC FUNCTION]
-
    Return the quotient truncated towards positive infinity.
 
  CEILING1 ((number bigfloat))                                          [METHOD]
@@ -79,7 +76,6 @@ File: ../weyl/numbers/bigfloat.lisp
  CEILING2 ((number bigfloat) modulus)                                  [METHOD]
 
  ROUND1 (number)                                             [GENERIC FUNCTION]
-
    Return the quotient rounded to the nearest integer.
 
  ROUND1 ((number bigfloat))                                            [METHOD]
@@ -87,7 +83,6 @@ File: ../weyl/numbers/bigfloat.lisp
  ROUND2 ((number bigfloat) modulus)                                    [METHOD]
 
  TRUNCATE1 (number)                                          [GENERIC FUNCTION]
-
    Return a quotient that has been truncated towards zero.
 
  TRUNCATE1 ((num bigfloat))                                            [METHOD]
@@ -119,7 +114,6 @@ File: ../weyl/numbers/bigfloat.lisp
  BF-PI (precision)                                                   [FUNCTION]
 
  PI-VALUE (domain)                                           [GENERIC FUNCTION]
-
    Return the value of PI with the proper precision.
 
  PI-VALUE ((domain real-numbers))                                      [METHOD]
@@ -127,7 +121,6 @@ File: ../weyl/numbers/bigfloat.lisp
  BF-E (precision)                                                    [FUNCTION]
 
  E-VALUE (domain)                                            [GENERIC FUNCTION]
-
    Return the value of e with the proper precision.
 
  E-VALUE ((domain real-numbers))                                       [METHOD]

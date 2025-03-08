@@ -8,7 +8,6 @@ File: ../weyl/polynomials/mpolynomial.lisp
  POLYNOMIAL-RING-PRINT-OBJECT (d stream)                             [FUNCTION]
 
  GET-POLYNOMIAL-RING (domain variables)                      [GENERIC FUNCTION]
-
    The purpose of this method is unknown.
 
  GET-POLYNOMIAL-RING ((coefficient-domain domain)                      [METHOD]
@@ -21,7 +20,6 @@ File: ../weyl/polynomials/mpolynomial.lisp
  POLY-COEF? (x)                                                         [MACRO]
 
  SCALAR? (object)                                            [GENERIC FUNCTION]
-
    The purpose of this method is unknown.
 
  SCALAR? ((x mpolynomial))                                             [METHOD]
@@ -33,7 +31,6 @@ File: ../weyl/polynomials/mpolynomial.lisp
  MAKE-POLY-FORM (poly terms)                                         [FUNCTION]
 
  MAKE-POLYNOMIAL (domain form)                               [GENERIC FUNCTION]
-
    The purpose of this method is unknown.
 
  MAKE-POLYNOMIAL ((domain multivariate-polynomial-ring) form)          [METHOD]
@@ -59,7 +56,6 @@ File: ../weyl/polynomials/mpolynomial.lisp
  TERMS0 "()"                                                            [MACRO]
 
  MAKE-POLY (domain variable &optional terms)                 [GENERIC FUNCTION]
-
    This is not part of the interface. It is mostly used for
    testing.
 
@@ -116,7 +112,6 @@ File: ../weyl/polynomials/mpolynomial.lisp
  EMAX (x y)                                                             [MACRO]
 
  MAKE-POLYNOMIAL-MORPHISM (domain range &rest pairs)         [GENERIC FUNCTION]
-
    The purpose of this method is unknown.
 
  MAKE-POLYNOMIAL-MORPHISM ((domain polynomial-ring)                    [METHOD]
@@ -128,7 +123,6 @@ File: ../weyl/polynomials/mpolynomial.lisp
  POLY-MONOMIAL? (poly)                                               [FUNCTION]
 
  PRINT-MPOLYNOMIAL-FORM (domain p stream)                    [GENERIC FUNCTION]
-
    The purpose of this method is unknown.
 
  PRINT-MPOLYNOMIAL-FORM ((domain multivariate-polynomial-ring) p       [METHOD]
@@ -210,7 +204,6 @@ File: ../weyl/polynomials/mpolynomial.lisp
  POLY-FACTOR-CBOUND (p)                                              [FUNCTION]
 
  POLY-GCD-ALGORITHM ('poly-subresultant-gcd)                         [VARIABLE]
-
    Algorithm to be used to compute the GCD of two polynomials with the
    same main variable
 
@@ -256,7 +249,6 @@ File: ../weyl/polynomials/mpolynomial.lisp
  POLY-SUBRESULTANT-GCD (p q)                                         [FUNCTION]
 
  RESULTANT (polynomial polynomial~ variable)                 [GENERIC FUNCTION]
-
    The purpose of this method is unknown.
 
  RESULTANT ((x mpolynomial) (y mpolynomial) var)                       [METHOD]
@@ -286,7 +278,6 @@ File: ../weyl/polynomials/mpolynomial.lisp
  POLY-VARIABLE-LIST (p &optional (varlist nil))                      [FUNCTION]
 
  PARTIAL-DERIV (polynomial variable)                         [GENERIC FUNCTION]
-
    The purpose of this method is unknown.
 
  PARTIAL-DERIV ((p mpolynomial) x)                                     [METHOD]
@@ -308,7 +299,6 @@ File: ../weyl/polynomials/mpolynomial.lisp
  TERMS-MAX-COEFFICIENT (terms &optional (max 0))                     [FUNCTION]
 
  DEGREE (polynomial variable &rest rest)                     [GENERIC FUNCTION]
-
    The purpose of this method is unknown.
 
  DEGREE ((p mpolynomial) (var symbol) &rest ignore)                    [METHOD]
@@ -326,7 +316,6 @@ File: ../weyl/polynomials/mpolynomial.lisp
  TERMS-DEGREE-VECTOR (terms pdv)                                     [FUNCTION]
 
  LIST-OF-VARIABLES (polynomial &optional variables)          [GENERIC FUNCTION]
-
    The purpose of this method is unknown.
 
  LIST-OF-VARIABLES ((x mpolynomial) &optional list-of-variables)       [METHOD]
@@ -334,7 +323,6 @@ File: ../weyl/polynomials/mpolynomial.lisp
  POLY-LIST-OF-VARIABLES (p &optional list-of-vars)                   [FUNCTION]
 
  COEFFICIENT (polynomial variables &optional exponent)       [GENERIC FUNCTION]
-
    The purpose of this method is unknown.
 
  COEFFICIENT ((p mpolynomial) (var symbol) &optional (exponent 1))     [METHOD]
@@ -352,7 +340,6 @@ File: ../weyl/polynomials/mpolynomial.lisp
  POLY-LEADING-COEFFICIENT (poly)                                     [FUNCTION]
 
  GET-VARIABLE-NAME (order-number domain)                     [GENERIC FUNCTION]
-
    The purpose of this function is unknown.
 
  GET-VARIABLE-NAME (order-number (domain variable-hash-table))         [METHOD]

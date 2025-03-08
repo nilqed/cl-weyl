@@ -3,7 +3,6 @@ File: ../weyl/numbers/gfp.lisp
 
 
  NUMBER-OF-ELEMENTS (domain)                                 [GENERIC FUNCTION]
-
    The purpose of this method is unknown.
 
  NUMBER-OF-ELEMENTS ((domain gfp))                                     [METHOD]
@@ -11,7 +10,6 @@ File: ../weyl/numbers/gfp.lisp
  NUMBER-OF-ELEMENTS ((domain gfq))                                     [METHOD]
 
  MAKE-GFP-DOMAIN (number number~)                            [GENERIC FUNCTION]
-
    The purpose of this method is unknown.
 
  MAKE-GFP-DOMAIN ((characteristic integer) (degree integer))           [METHOD]

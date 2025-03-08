@@ -3,7 +3,6 @@ File: ../weyl/classes/algebraic-domains.lisp
 
 
  SET ""                                                                 [CLASS]
-
    A class for finite, unordered sets
    Superclasses
    domain
@@ -15,7 +14,6 @@ File: ../weyl/classes/algebraic-domains.lisp
    None.
 
  HAS-NAME ""                                                            [CLASS]
-
    Include this class in objects and/or domains that have names.
    Superclasses
    None.
@@ -31,13 +29,11 @@ File: ../weyl/classes/algebraic-domains.lisp
    The name-of argument should be a 
 
  BINARY= (x y)                                               [GENERIC FUNCTION]
-
    Elements of a set are assumed to be comparable using binary=. For
    more complex set structures, the binary= operation looks up the
    comparison function in EQUAL-FUNCTION slot.
 
  BINARY> (x y)                                               [GENERIC FUNCTION]
-
    Elements of a set are assumed to be comparable using binary>. For
    more complex set structures, the binary> operation looks up the
    comparison function in greater-funcion slot.
@@ -45,11 +41,9 @@ File: ../weyl/classes/algebraic-domains.lisp
  BINARY>= (x y)                                              [GENERIC FUNCTION]
 
  MAKE-ELEMENT (domain obj &rest rest)                        [GENERIC FUNCTION]
-
    The purpose of this method is unknown.
 
  HAS-EQUALITY ""                                                        [CLASS]
-
    A canonical place to cache equality function information.
    Superclasses
    None.
@@ -65,7 +59,6 @@ File: ../weyl/classes/algebraic-domains.lisp
    The equal-function-of argument should be a 
 
  HAS-COMPARISON ""                                                      [CLASS]
-
    A cononical place to cache inequality function information.
    Superclasses
    None.
@@ -81,7 +74,6 @@ File: ../weyl/classes/algebraic-domains.lisp
    The greater-function-of argument should be a 
 
  NON-STRICT-DOMAIN ""                                                   [CLASS]
-
    Superclasses
    None.
    Initialization Arguments
@@ -98,7 +90,6 @@ File: ../weyl/classes/algebraic-domains.lisp
  DEFINE-MATH-PROPERTY (property-name subsumed-properties)               [MACRO]
 
  SEMIGROUP ""                                                           [CLASS]
-
    Superclasses
    set
    Initialization Arguments
@@ -113,7 +104,6 @@ File: ../weyl/classes/algebraic-domains.lisp
  EXPT (x y)                                                  [GENERIC FUNCTION]
 
  MONOID ""                                                              [CLASS]
-
    Superclasses
    semigroup
    Initialization Arguments
@@ -130,7 +120,6 @@ File: ../weyl/classes/algebraic-domains.lisp
  1? (x)                                                      [GENERIC FUNCTION]
 
  GROUP ""                                                               [CLASS]
-
    Superclasses
    monoid
    Initialization Arguments
@@ -143,7 +132,6 @@ File: ../weyl/classes/algebraic-domains.lisp
  RECIP (x)                                                   [GENERIC FUNCTION]
 
  ABELIAN-SEMIGROUP ""                                                   [CLASS]
-
    Superclasses
    set
    Initialization Arguments
@@ -156,7 +144,6 @@ File: ../weyl/classes/algebraic-domains.lisp
  PLUS (x y)                                                  [GENERIC FUNCTION]
 
  ABELIAN-MONOID ""                                                      [CLASS]
-
    Superclasses
    abelian-semigroup
    Initialization Arguments
@@ -173,7 +160,6 @@ File: ../weyl/classes/algebraic-domains.lisp
  0? (x)                                                      [GENERIC FUNCTION]
 
  ABELIAN-GROUP ""                                                       [CLASS]
-
    Superclasses
    abelian-monoid
    Initialization Arguments
@@ -188,7 +174,6 @@ File: ../weyl/classes/algebraic-domains.lisp
  DIFFERENCE (x y)                                            [GENERIC FUNCTION]
 
  RNG ""                                                                 [CLASS]
-
    Superclasses
    semigroupabelian-group
    Initialization Arguments
@@ -199,7 +184,6 @@ File: ../weyl/classes/algebraic-domains.lisp
    None.
 
  SIMPLE-RING ""                                                         [CLASS]
-
    Superclasses
    rngmonoid
    Initialization Arguments
@@ -210,7 +194,6 @@ File: ../weyl/classes/algebraic-domains.lisp
    None.
 
  HAS-COEFFICIENT-DOMAIN ""                                              [CLASS]
-
    Superclasses
    None.
    Initialization Arguments
@@ -222,7 +205,6 @@ File: ../weyl/classes/algebraic-domains.lisp
    Writers
 
  *COEFFICIENT-DOMAIN* (nil)                                          [VARIABLE]
-
    Within the context of a polynomial operation, the coefficient
    domain
 
@@ -230,7 +212,6 @@ File: ../weyl/classes/algebraic-domains.lisp
                                function)
 
  MODULE ""                                                              [CLASS]
-
    Superclasses
    abelian-grouphas-coefficient-domain
    Initialization Arguments
@@ -241,13 +222,11 @@ File: ../weyl/classes/algebraic-domains.lisp
    None.
 
  CHARACTERISTIC (domain)                                     [GENERIC FUNCTION]
-
    The purpose of this method is not known.
 
  CHARACTERISTIC ((domain module))                                      [METHOD]
 
  ALGEBRA ""                                                             [CLASS]
-
    Superclasses
    modulesemigroup
    Initialization Arguments
@@ -258,7 +237,6 @@ File: ../weyl/classes/algebraic-domains.lisp
    None.
 
  RING ""                                                                [CLASS]
-
    Superclasses
    algebrasimple-ring
    Initialization Arguments
@@ -273,7 +251,6 @@ File: ../weyl/classes/algebraic-domains.lisp
  BINARY-LCM (x y)                                            [GENERIC FUNCTION]
 
  FIELD ""                                                               [CLASS]
-
    Superclasses
    ring
    Initialization Arguments
@@ -286,7 +263,6 @@ File: ../weyl/classes/algebraic-domains.lisp
  INITIALIZE-INSTANCE :AFTER ((domain field) &rest plist)               [METHOD]
 
  FINITE-FIELD ""                                                        [CLASS]
-
    Superclasses
    fieldfinite-set
    Initialization Arguments
@@ -297,7 +273,6 @@ File: ../weyl/classes/algebraic-domains.lisp
    None.
 
  FACTOR-DOMAIN ""                                                       [CLASS]
-
    Superclasses
    domain
    Initialization Arguments
@@ -325,7 +300,6 @@ File: ../weyl/classes/algebraic-domains.lisp
  INITIALIZE-INSTANCE :AFTER ((domain factor-domain) &rest plist)       [METHOD]
 
  FACTOR-GROUP ""                                                        [CLASS]
-
    Superclasses
    factor-domaingroup
    Initialization Arguments
@@ -336,7 +310,6 @@ File: ../weyl/classes/algebraic-domains.lisp
    None.
 
  FACTOR-MODULE ""                                                       [CLASS]
-
    Superclasses
    factor-domainmodule
    Initialization Arguments
@@ -347,7 +320,6 @@ File: ../weyl/classes/algebraic-domains.lisp
    None.
 
  FACTOR-RING ""                                                         [CLASS]
-
    Superclasses
    factor-domainring
    Initialization Arguments
@@ -358,7 +330,6 @@ File: ../weyl/classes/algebraic-domains.lisp
    None.
 
  ALGEBRAIC-EXTENSION ""                                                 [CLASS]
-
    Superclasses
    ring
    Initialization Arguments
@@ -369,7 +340,6 @@ File: ../weyl/classes/algebraic-domains.lisp
    None.
 
  SIMPLE-FIELD-EXTENSION ""                                              [CLASS]
-
    Superclasses
    algebraic-extensionfield
    Initialization Arguments
@@ -380,7 +350,6 @@ File: ../weyl/classes/algebraic-domains.lisp
    None.
 
  DIMENSIONAL-DOMAIN ""                                                  [CLASS]
-
    Superclasses
    domain
    Initialization Arguments
@@ -396,7 +365,6 @@ File: ../weyl/classes/algebraic-domains.lisp
  DIMENSIONS ((d dimensional-domain))                                   [METHOD]
 
  FREE-MODULE ""                                                         [CLASS]
-
    Superclasses
    moduledimensional-domain
    Initialization Arguments
@@ -407,7 +375,6 @@ File: ../weyl/classes/algebraic-domains.lisp
    None.
 
  VECTOR-SPACE ""                                                        [CLASS]
-
    Superclasses
    free-module
    Initialization Arguments
@@ -418,7 +385,6 @@ File: ../weyl/classes/algebraic-domains.lisp
    None.
 
  PROJECTIVE-SPACE ""                                                    [CLASS]
-
    Superclasses
    free-module
    Initialization Arguments
@@ -429,7 +395,6 @@ File: ../weyl/classes/algebraic-domains.lisp
    None.
 
  DIFFERENTIAL-RING ""                                                   [CLASS]
-
    Superclasses
    ring
    Initialization Arguments
@@ -440,7 +405,6 @@ File: ../weyl/classes/algebraic-domains.lisp
    None.
 
  QUOTIENT-RING ""                                                       [CLASS]
-
    Superclasses
    domain
    Initialization Arguments

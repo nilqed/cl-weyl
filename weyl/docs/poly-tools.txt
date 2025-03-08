@@ -6,7 +6,6 @@ File: ../weyl/polynomials/poly-tools.lisp
                              &rest plist)
 
  VARIABLE-INDEX (domain variable)                            [GENERIC FUNCTION]
-
    The purpose of this method is unknown.
 
  VARIABLE-INDEX ((domain variable-hash-table) (variable symbol))       [METHOD]
@@ -15,14 +14,12 @@ File: ../weyl/polynomials/poly-tools.lisp
                  (variable general-expression))
 
  VARIABLE-SYMBOL (domain order)                              [GENERIC FUNCTION]
-
    The purpose of this method is unknown.
 
  VARIABLE-SYMBOL ((domain variable-hash-table)                         [METHOD]
                   (order-number number))
 
  GET-VARIABLE-NUMBER-PROPERTY (domain order property)        [GENERIC FUNCTION]
-
    The purpose of this method is unknown.
 
  GET-VARIABLE-NUMBER-PROPERTY ((domain variable-hash-table)            [METHOD]
@@ -30,7 +27,6 @@ File: ../weyl/polynomials/poly-tools.lisp
 
  SET-VARIABLE-NUMBER-PROPERTY (domain order property         [GENERIC FUNCTION]
                                value)
-
    The purpose of this method is unknown.
 
  SET-VARIABLE-NUMBER-PROPERTY ((domain variable-hash-table)            [METHOD]
@@ -45,7 +41,6 @@ File: ../weyl/polynomials/poly-tools.lisp
                         property value)
 
  ADD-NEW-VARIABLE (ring variable)                            [GENERIC FUNCTION]
-
    The purpose of this method is unknown.
 
  ADD-NEW-VARIABLE ((ring variable-hash-table) variable)                [METHOD]

@@ -3,7 +3,6 @@ File: ../weyl/fourier.lisp
 
 
  MAKE-GE-FOURIER (domain argument svar fvar)                 [GENERIC FUNCTION]
-
    The purpose of this method is not known.
 
  MAKE-GE-FOURIER ((domain general-expressions) argument svar fvar)     [METHOD]
@@ -15,7 +14,6 @@ File: ../weyl/fourier.lisp
  GE-GREAT ((x ge-fourier) (y ge-fourier))                              [METHOD]
 
  GE-FOURIER (exp svar fvar)                                  [GENERIC FUNCTION]
-
    The purpose of this method is unknown.
 
  GE-FOURIER ((exp general-expression) (svar symbol) (fvar symbol))     [METHOD]
@@ -32,7 +30,6 @@ File: ../weyl/fourier.lisp
  GE-FOURIER ((exp ge-times) (svar ge-variable) (fvar ge-variable))     [METHOD]
 
  FOURIER (expression &rest variables)                        [GENERIC FUNCTION]
-
    The purpose of this method is unknown.
 
  FOURIER ((exp number) &rest vars)                                     [METHOD]
@@ -44,7 +41,6 @@ File: ../weyl/fourier.lisp
  FOURIER ((exp general-expression) &rest vars)                         [METHOD]
 
  MAKE-GE-IFOURIER (domain argument svar fvar)                [GENERIC FUNCTION]
-
    The purpose of this method is unknown.
 
  MAKE-GE-IFOURIER ((domain general-expressions) argument svar          [METHOD]

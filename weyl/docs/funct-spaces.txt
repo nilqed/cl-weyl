@@ -11,7 +11,6 @@ File: ../weyl/funct-spaces.lisp
  CHECK-CACHED-VECTOR (vector)                                        [FUNCTION]
 
  SAMPLED-FUNCTION ""                                                    [CLASS]
-
    Superclasses
    function-space-element
    Initialization Arguments
@@ -29,7 +28,6 @@ File: ../weyl/funct-spaces.lisp
  PRINT-OBJECT ((obj sampled-function) stream)                          [METHOD]
 
  MAKE-SAMPLED-FUNCTION (domain x y)                          [GENERIC FUNCTION]
-
    The purpose of this function is unknown.
 
  MAKE-SAMPLED-FUNCTION ((domain function-space) x y)                   [METHOD]
@@ -38,7 +36,6 @@ File: ../weyl/funct-spaces.lisp
               &optional (stream *standard-output*))
 
  MAKE-SAMPLED-FUNCTION-1 (domain x-list function)            [GENERIC FUNCTION]
-
    The purpose of this function is unknown.
 
  MAKE-SAMPLED-FUNCTION-1 ((domain function-space) x-list function)     [METHOD]
@@ -48,7 +45,6 @@ File: ../weyl/funct-spaces.lisp
  RESAMPLE ((func sampled-function) n)                                  [METHOD]
 
  SMOOTH2 #'x                                                 [GENERIC FUNCTION]
-
    The purpose of this function is unknown.
 
  SMOOTH2 ((func sampled-function) new-x)                               [METHOD]
@@ -87,7 +83,6 @@ File: ../weyl/funct-spaces.lisp
  TRAPEZOIDAL (x y i1 i2)                                                [MACRO]
 
  INTEGRAL (function &key lower upper &allow-other-keys)      [GENERIC FUNCTION]
-
    The purpose of this function is unknown.
 
  INTEGRAL ((func sampled-function) &key lower upper                    [METHOD]

@@ -3,15 +3,12 @@ File: ../weyl/quotient-fields.lisp
 
 
  MAKE-QUOTIENT-FIELD (field)                                 [GENERIC FUNCTION]
-
    The purpose of this method is unknown.
 
  GET-QUOTIENT-FIELD (field)                                  [GENERIC FUNCTION]
-
    The purpose of this method is unknown.
 
  MAKE-QUOTIENT-ELEMENT (domain numerator denominator)        [GENERIC FUNCTION]
-
    The purpose of this method is unknown.
 
  MAKE-QUOTIENT-ELEMENT ((domain quotient-field) numerator              [METHOD]
@@ -36,7 +33,6 @@ File: ../weyl/quotient-fields.lisp
  1? ((r quotient-element))                                             [METHOD]
 
  HEIGHT (object)                                             [GENERIC FUNCTION]
-
    The purpose of this method is unknown.
 
  HEIGHT ((r quotient-element))                                         [METHOD]
@@ -44,7 +40,6 @@ File: ../weyl/quotient-fields.lisp
  MINUS ((r quotient-element))                                          [METHOD]
 
  MINUS? (object)                                             [GENERIC FUNCTION]
-
    Return true if the object is negative.
 
  MINUS? ((r quotient-element))                                         [METHOD]
@@ -52,7 +47,6 @@ File: ../weyl/quotient-fields.lisp
  QUOTIENT-REDUCE* (qf num &optional den)                             [FUNCTION]
 
  QUOTIENT-REDUCE (field numerator &optional denominator)     [GENERIC FUNCTION]
-
    The purpose of this method is unknown.
 
  QUOTIENT-REDUCE ((qf quotient-field) num &optional den)               [METHOD]

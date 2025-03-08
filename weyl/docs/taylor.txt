@@ -13,13 +13,11 @@ File: ../weyl/taylor.lisp
              (tp tpower-series) &rest ignore)
 
  TAYLOR (exp domain order)                                   [GENERIC FUNCTION]
-
    The purpose of this function is unknown.
 
  TAYLOR (exp (domain tpower-series-domain) order)                      [METHOD]
 
  TAYLOR1 (exp domain order)                                  [GENERIC FUNCTION]
-
    The purpose of this function is unknown.
 
  TAYLOR1 ((exp ge-variable) (domain tpower-series-domain) order)       [METHOD]

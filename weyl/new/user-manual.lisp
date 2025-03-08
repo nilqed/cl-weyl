@@ -943,7 +943,7 @@
     ;; We give a line width of 70 characters for documentation
     ;; strings. This leaves us room for a left margin of
     ;; ";;;    " and a right margin of 3 spaces (2 chars left of []).
-    (format stream "~%~%")  ;;+kfp
+    ;(format stream "~%~%")  ;;+kfp
     (dolist (string (split-string documentation 70 nil nil nil))   
       (format stream "~&   ~A" string)))
   (format stream "~%"))

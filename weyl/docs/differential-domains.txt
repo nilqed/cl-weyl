@@ -15,7 +15,6 @@ File: ../weyl/differential-domains.lisp
  VARIABLE-DERIVATIVE-ORDER (domain var)                                 [MACRO]
 
  SET-VARIABLE-DERIVATION (domain variable derivation)        [GENERIC FUNCTION]
-
    The purpose of this function is unknown.
 
  SET-VARIABLE-DERIVATION ((domain differential-polynomial-ring)        [METHOD]

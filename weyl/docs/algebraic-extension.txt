@@ -5,7 +5,6 @@ File: ../weyl/algebraic-extension.lisp
  VARIABLE-MINIMAL-POLYNOMIAL (domain var)                               [MACRO]
 
  MINIMAL-POLYNOMIAL (domain variable)                        [GENERIC FUNCTION]
-
    The purpose of this function is unknown.
 
  MINIMAL-POLYNOMIAL ((domain algebraic-extension-ring) variable)       [METHOD]

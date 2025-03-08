@@ -3,14 +3,12 @@ File: ../weyl/polynomials/epolynomial.lisp
 
 
  MAKE-EPOLYNOMIAL* (domain greater-function terms)           [GENERIC FUNCTION]
-
    The purpose of this function is unknown.
 
  MAKE-EPOLYNOMIAL* ((domain multivariate-polynomial-ring)              [METHOD]
                     greater-function terms)
 
  MAKE-EPOLYNOMIAL (domain greater-function poly)             [GENERIC FUNCTION]
-
    The purpose of this function is unknown.
 
  MAKE-EPOLYNOMIAL ((domain multivariate-polynomial-ring)               [METHOD]

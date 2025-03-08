@@ -3,7 +3,6 @@ File: ../weyl/sets.lisp
 
 
  TUPLE ""                                                               [CLASS]
-
    Superclasses
    None.
    Initialization Arguments
@@ -15,7 +14,6 @@ File: ../weyl/sets.lisp
    Writers
 
  TUPLE-VALUE (tuple)                                         [GENERIC FUNCTION]
-
    A wrapper function for value-of for backward compatibility.
 
  INITIALIZE-INSTANCE :AFTER ((object tuple) &rest plist)               [METHOD]
@@ -23,11 +21,9 @@ File: ../weyl/sets.lisp
  PRINT-OBJECT ((tuple tuple) stream)                                   [METHOD]
 
  REF (tuple &rest args)                                      [GENERIC FUNCTION]
-
    Refernce the item of tuple specified by the first arg.
 
  SET-REF (tuple new-value &rest args)                        [GENERIC FUNCTION]
-
    Set the element specified by args to new-value.
 
  SET-REF ((tuple tuple) new-value &rest args)                          [METHOD]
@@ -35,7 +31,6 @@ File: ../weyl/sets.lisp
  (SETF REF) (new-value)                                          [SETF MAPPING]
 
  LIST-OF-ELEMENTS (tuple)                                    [GENERIC FUNCTION]
-
    Return a list of the tuple elements.
 
  LIST-OF-ELEMENTS ((tuple tuple))                                      [METHOD]
@@ -44,7 +39,6 @@ File: ../weyl/sets.lisp
 
  MAP-WITH-DOMAIN (type domain function sequence              [GENERIC FUNCTION]
                   &rest sequences)
-
    Map the values of the sequences into the domain.
 
  MAP-WITH-DOMAIN (type domain function (seq tuple)                     [METHOD]
@@ -67,7 +61,6 @@ File: ../weyl/sets.lisp
  MAKE-ELEMENT ((set set-elements-as-pairs) key &rest rest)             [METHOD]
 
  SET-ELEMENTS (set)                                          [GENERIC FUNCTION]
-
    The purpose of this method is unknown.
 
  SET-WITH-ELEMENT-LIST-PRINT-OBJECT (set stream)                     [FUNCTION]
@@ -82,7 +75,6 @@ File: ../weyl/sets.lisp
  MEMBER (key (set set-with-element-list) &rest args)                   [METHOD]
 
  MAP-OVER-ELEMENTS (set function)                            [GENERIC FUNCTION]
-
    Map over the elements of the set applying the function.
 
  MAP-OVER-ELEMENTS ((set set-with-element-list) function)              [METHOD]
@@ -98,11 +90,9 @@ File: ../weyl/sets.lisp
  MEMBER (key (set set-with-sorted-element-list) &rest args)            [METHOD]
 
  SIZE (set)                                                  [GENERIC FUNCTION]
-
    Return the length of the set.
 
  RANDOM (set &optional height)                               [GENERIC FUNCTION]
-
    Return a random element of the list.
 
  RANDOM ((set set-with-element-list) &optional height)                 [METHOD]

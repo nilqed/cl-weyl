@@ -10,7 +10,6 @@ File: ../weyl/rational-functions.lisp
  RING-VARIABLES ((qf rational-function-field))                         [METHOD]
 
  MAKE-RATIONAL-FUNCTION* (domain num den)                    [GENERIC FUNCTION]
-
    The purpose of this function is unknown.
 
  MAKE-RATIONAL-FUNCTION* (domain num den)                              [METHOD]

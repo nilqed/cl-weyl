@@ -7,7 +7,6 @@ File: ../weyl/morphisms.lisp
  *MORPHISM-COMPOSITION-TABLE* ((make-hash-table))                    [VARIABLE]
 
  COMPOSE (morphism1 morphism2)                               [GENERIC FUNCTION]
-
    The purpose of this function is unknown.
 
  COMPOSE ((f homomorphism) (g homomorphism))                           [METHOD]
@@ -17,7 +16,6 @@ File: ../weyl/morphisms.lisp
  MAKE-MORPHISM (domain map range &key (replace? t))                  [FUNCTION]
 
  DELETE-MORPHISM (morphism)                                  [GENERIC FUNCTION]
-
    Delete the morphism.
 
  DELETE-MORPHISM ((morph morphism))                                    [METHOD]
@@ -33,13 +31,11 @@ File: ../weyl/morphisms.lisp
  GET-AUTOMORPHISMS (&key domain)                                     [FUNCTION]
 
  APPLY-MORPHISM (morphism argument)                          [GENERIC FUNCTION]
-
    Apply the morphism to the argument.
 
  APPLY-MORPHISM ((h morphism) argument)                                [METHOD]
 
  CANONICALIZE-NUMBER (elt)                                   [GENERIC FUNCTION]
-
    Converts a LISP number into a a Weyl number in the appropriate
    canonical domain. These guys CANNOT use coerce!!!!
 

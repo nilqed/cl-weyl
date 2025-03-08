@@ -10,7 +10,6 @@ File: ../weyl/tpower.lisp
 
  MAKE-TPOWER-SERIES (domain series                           [GENERIC FUNCTION]
                      &key &allow-other-keys)
-
    The purpose of this function is unknown.
 
  MAKE-TPOWER-SERIES ((domain tpower-series-domain)                     [METHOD]
@@ -56,7 +55,6 @@ File: ../weyl/tpower.lisp
  WITH-TPOWER-SERIES (vars-and-tps &body body)                           [MACRO]
 
  MODIFY-BRANCH-ORDER (series factor)                         [GENERIC FUNCTION]
-
    The purpose of this function is unknown.
 
  MODIFY-BRANCH-ORDER ((a tpower-series) (factor integer))              [METHOD]

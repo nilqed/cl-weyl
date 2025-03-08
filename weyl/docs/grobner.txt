@@ -7,7 +7,6 @@ File: ../weyl/polynomials/grobner.lisp
  IDEAL-PRINT-OBJECT (id stream)                                      [FUNCTION]
 
  MAKE-IDEAL (ring &rest generators)                          [GENERIC FUNCTION]
-
    The purpose of this function is unknown.
 
  MAKE-IDEAL ((ring ring) &rest generators)                             [METHOD]
@@ -35,7 +34,6 @@ File: ../weyl/polynomials/grobner.lisp
  (SETF GREATER-FUNCTION) (new-function (grob grobner-basis))           [METHOD]
 
  ADD-RELATION (basis poly)                                   [GENERIC FUNCTION]
-
    The purpose of this function is unknown.
 
  ADD-RELATION ((grob-struct grobner-basis) (relation mpolynomial))     [METHOD]
@@ -51,13 +49,11 @@ File: ../weyl/polynomials/grobner.lisp
  REDUCE-BASIS ((grob-struct grobner-basis))                            [METHOD]
 
  REDUCE-ALL (basis)                                          [GENERIC FUNCTION]
-
    The purpose of this function is unknown.
 
  REDUCE-ALL ((grob-struct grobner-basis))                              [METHOD]
 
  NEW-BASIS (basis)                                           [GENERIC FUNCTION]
-
    The purpose of this function is unknown.
 
  NEW-BASIS ((grob-struct grobner-basis))                               [METHOD]

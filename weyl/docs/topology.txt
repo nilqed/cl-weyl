@@ -8,7 +8,6 @@ File: ../weyl/topology.lisp
  EUCLIDEAN-SPACE-PRINT-OBJECT (domain stream)                        [FUNCTION]
 
  MAKE-POINT (domain value &rest values)                      [GENERIC FUNCTION]
-
    The purpose of this function is unknown.
 
  MAKE-POINT ((domain vector-space) (value vector) &rest values)        [METHOD]
@@ -29,7 +28,6 @@ File: ../weyl/topology.lisp
  BINARY= ((cell1 cell) (cell2 cell))                                   [METHOD]
 
  MAKE-SIMPLEX (point &rest rest)                             [GENERIC FUNCTION]
-
    The purpose of this function is unknown.
 
  MAKE-SIMPLEX ((point abstract-point) &rest rest)                      [METHOD]
@@ -37,7 +35,6 @@ File: ../weyl/topology.lisp
  PRINT-OBJECT ((simplex simplex) stream)                               [METHOD]
 
  CELL-ID (simplex)                                           [GENERIC FUNCTION]
-
    The purpose of this function is unknown.
 
  CELL-ID ((simplex simplex))                                           [METHOD]
@@ -53,7 +50,6 @@ File: ../weyl/topology.lisp
  OPPOSITE ((face point) (simplex simplex))                             [METHOD]
 
  FACE? (points simplex)                                      [GENERIC FUNCTION]
-
    The purpose of this function is unknown.
 
  FACE? ((points list) (simplex simplex))                               [METHOD]
@@ -70,12 +66,10 @@ File: ../weyl/topology.lisp
 
  MAP-OVER-ORIENTED-FACETS ((facet orientation simplex complex)          [MACRO]
                            &rest body)
-
    Map over the faces of SIMPLEX, taking ORIENTATION into account
 
  MAP-OVER-ORIENTED-COFACETS ((cofacet orientation simplex complex)      [MACRO]
                              &rest body)
-
    Map over the faces of SIMPLEX, taking ORIENTATION into account
 
  CELL-ID ((polygon polygon))                                           [METHOD]
@@ -85,7 +79,6 @@ File: ../weyl/topology.lisp
  DIMENSION-OF ((polygon polygon))                                      [METHOD]
 
  GET-CELL (cell complex)                                     [GENERIC FUNCTION]
-
    The purpose of this function is unknown.
 
  GET-CELL ((cell cell) (complex cell-complex))                         [METHOD]
@@ -95,7 +88,6 @@ File: ../weyl/topology.lisp
  MEMBER ((cell cell) (complex cell-complex) &rest ignore)              [METHOD]
 
  FACETS (cell complex)                                       [GENERIC FUNCTION]
-
    The purpose of this method is unknown.
 
  FACETS ((cell cell) (complex cell-complex))                           [METHOD]
@@ -103,7 +95,6 @@ File: ../weyl/topology.lisp
  FACETS ((cells list) (complex cell-complex))                          [METHOD]
 
  COFACETS (cell complex)                                     [GENERIC FUNCTION]
-
    The purpose of this method is unknown.
 
  COFACETS ((cell cell) (complex cell-complex))                         [METHOD]
@@ -111,7 +102,6 @@ File: ../weyl/topology.lisp
  COFACETS ((cells list) (complex cell-complex))                        [METHOD]
 
  MAXIMAL-CELL? (cell complex)                                [GENERIC FUNCTION]
-
    The purpose of this function is unknown.
 
  MAXIMAL-CELL? ((cell cell) (complex cell-complex))                    [METHOD]
@@ -121,7 +111,6 @@ File: ../weyl/topology.lisp
  DELETE-MAXIMAL-CELL ((cell cell) (complex cell-complex))              [METHOD]
 
  %MAP-OVER-CELLS (function complex dimension)                [GENERIC FUNCTION]
-
    The purpose of this function is unknown.
 
  %MAP-OVER-CELLS (#'function (complex cell-complex) dimension)         [METHOD]
@@ -144,7 +133,6 @@ File: ../weyl/topology.lisp
  MAKE-SIMPLICIAL-COMPLEX (cells)                                     [FUNCTION]
 
  MAX-DIMENSION-OF (cell)                                     [GENERIC FUNCTION]
-
    The purpose of this function is unknown.
 
  MAX-DIMENSION-OF ((cm cell-complex))                                  [METHOD]
@@ -162,21 +150,18 @@ File: ../weyl/topology.lisp
  COMPLEX-OF ((chain chain))                                            [METHOD]
 
  GET-CHAIN-MODULE (cell integer &optional ring)              [GENERIC FUNCTION]
-
    The purpose of this function is unkown.
 
  GET-CHAIN-MODULE ((c cell-complex) (n integer)                        [METHOD]
                    &optional (ring (get-rational-integers)))
 
  GET-COCHAIN-MODULE (cell integer &optional ring)            [GENERIC FUNCTION]
-
    The purpose of this function is unknown.
 
  GET-COCHAIN-MODULE ((c cell-complex) (n integer)                      [METHOD]
                      &optional (ring (get-rational-integers)))
 
  BOUNDARY-DOMAIN (chain)                                     [GENERIC FUNCTION]
-
    The purpose of this function is unknown.
 
  BOUNDARY-DOMAIN ((c chain-module))                                    [METHOD]
@@ -190,7 +175,6 @@ File: ../weyl/topology.lisp
  BOUNDARY-DOMAIN ((cc cell-complex))                                   [METHOD]
 
  COBOUNDARY-DOMAIN (cochain)                                 [GENERIC FUNCTION]
-
    The purpose of this function is unknown.
 
  COBOUNDARY-DOMAIN ((c cochain))                                       [METHOD]
@@ -208,7 +192,6 @@ File: ../weyl/topology.lisp
  POINTS-ORDER (a b)                                                  [FUNCTION]
 
  CELL-ORDER (cell1 cell2)                                    [GENERIC FUNCTION]
-
    The purpose of this function is unknown.
 
  CELL-ORDER ((a cell) (b cell))                                        [METHOD]
@@ -244,7 +227,6 @@ File: ../weyl/topology.lisp
  CHAIN-TERMS-TIMES (xt yt)                                           [FUNCTION]
 
  BOUNDARY (simplex &optional domain)                         [GENERIC FUNCTION]
-
    The purpose of this function is unknown.
 
  BOUNDARY ((s simplex) &optional (domain (boundary-domain s)))         [METHOD]

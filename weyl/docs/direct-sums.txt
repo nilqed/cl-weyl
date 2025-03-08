@@ -9,5 +9,4 @@ File: ../weyl/direct-sums.lisp
  DIRECT-SUM-PRINT-OBJECT (domain stream)                             [FUNCTION]
 
  %MAKE-DIRECT-SUM (domain1 domain2)                          [GENERIC FUNCTION]
-
    The purpose of this method is unknown.

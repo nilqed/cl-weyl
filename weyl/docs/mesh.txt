@@ -13,7 +13,6 @@ File: ../weyl/mesh.lisp
  *TOO-CLOSE-FACTOR* (0.75)                                           [VARIABLE]
 
  HAS-HOME-SPACE ""                                                      [CLASS]
-
    Superclasses
    None.
    Initialization Arguments
@@ -25,7 +24,6 @@ File: ../weyl/mesh.lisp
    Writers
 
  CURVED-SIMPLEX ""                                                      [CLASS]
-
    Superclasses
    has-home-spacesimplex
    Initialization Arguments
@@ -36,6 +34,5 @@ File: ../weyl/mesh.lisp
    None.
 
  HOME-OF (simplex)                                           [GENERIC FUNCTION]
-
    The home of a noncurved simplex is determined by (the first of)
    its vertices.

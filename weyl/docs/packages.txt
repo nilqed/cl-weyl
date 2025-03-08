@@ -144,7 +144,6 @@ File: ../weyl/packages.lisp
                            "with-matrix-dimensions"
                            "with-numerator-and-denominator"
                            "write-mesh" "zero" "zero-matrix"))
-
    Symbols exported from the internal WEYL package.
 
  *WEYLI-SHADOWED-SYMBOLS* ('(coerce set + - * / = > < >= <=          [VARIABLE]
@@ -158,21 +157,17 @@ File: ../weyl/packages.lisp
                            replace substitute getf union
                            intersection apply funcall variable
                            type-of))
-
    Common lisp symbols shadowed in the internal WEYL package.
 
  *WEYL-EXPORTED-SYMBOLS* ('("make-element" "make-upolynomial"))      [VARIABLE]
-
    The WEYL package export these symbols in addition to those exported
    form WEYLI.
 
  USE-WEYLI-PACKAGE (package)                                         [FUNCTION]
-
    Shadow import the shadowed symbols in the WEYLI package and then
    use it.
 
  USE-WEYL-PACKAGE (package)                                          [FUNCTION]
-
    Shadow import the shadowed symbols in the WEYL package and then use
    it.
 
