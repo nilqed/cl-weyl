@@ -745,7 +745,7 @@
   (with-open-file (stream filename :direction :input)
     (let ((eof (gensym)))
       (case output-format
-	((text :text) (format t "~%##File: ~A ~%~%" filename)))  ;+kfp
+	((text :text) (format t "~%File: ~A ~%~%" filename)))  ;+kfp
       (do ((form (read stream nil eof nil)
 		 (read stream nil eof nil)))
 	  ((eq form eof)
@@ -934,7 +934,7 @@
 				       type-pos
 				       &optional (stream *standard-output*))
   "Prints out the user guide entry for a form in TEXT mode." 
-  (format stream "~%###~A ~A ~VT[~A]" name (first args) type-pos type)
+  (format stream "~% ~A ~A ~VT[~A]" name (first args) type-pos type)
   (dolist (arg (rest args))
     (format stream "~% ~0,1,V,' @A" 
 	    (+ #+:XP 1 #-:XP 2 args-tab-pos)
