@@ -1,4 +1,14 @@
-; some silence ...
+;;;; make-docs.lisp 
+;;;;   (create-refman) builds the WEYL reference manual (HTML)
+;;;;    from scratch based on:
+;;;;    -- weyl-folder [PARAMETER]   .... the path of the weyl folder
+;;;;    -- src-files   [PARAMETER]   .... list of source files 
+;;;;    -- html-[index, nav, start]  .... html templates
+;;;; The output is in <weyl-folder>/docs.
+;;;; Note that files are superseded when running (create-refman) again.
+;;;; ---
+
+;; some silence ...
 (defun debug-ignore (c h) (declare (ignore h)) (print c) (abort))
 (setf *debugger-hook* #'debug-ignore)
 (declaim (sb-ext:muffle-conditions style-warning))
@@ -86,6 +96,17 @@
 
 (defparameter html-nav
 "
+<img src=\"data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAAAUA
+       AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
+        9TXL0Y4OHwAAAABJRU5ErkJggg==\" alt=\"Red dot\"/> 
+<pre>
+<a href=\"start.html\"  target=\"main\">START</a>
+</pre>
+
+<pre>
+<a href=\"../reference/Weyl Manual.pdf\"  target=\"main\">User Manual [PDF]</a>
+</pre>
+
 <pre>
 SOURCE FILES
 </pre>
@@ -183,6 +204,10 @@ SOURCE FILES
 <a href=\"ge-support.txt\"  target=\"main\">ge-support</a><br>
 <a href=\"ge-latex.txt\"  target=\"main\">ge-latex</a><br>
 </details>
+
+<pre>
+EXAMPLES
+</pre>
 ")
 
 
@@ -196,10 +221,6 @@ SOURCE FILES
 </head>
 <body>
   <header>
-    <img src=\"data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAAAUA
-       AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
-        9TXL0Y4OHwAAAABJRU5ErkJggg==\" alt=\"Red dot\"/> 
-
 <img src=\"data:image/png;base64, 
 iVBORw0KGgoAAAANSUhEUgAAAPQAAAGaCAMAAAAPeJ5SAAAAw3pUWHRSYXcg
 cHJvZmlsZSB0eXBlIGV4aWYAAHjabVDREcMgCP1nio6goAbGIU1y1w06flFI
@@ -727,14 +748,21 @@ YKbOktfFt95qfn+kLm8GbwAkLRjhfI7Py5fhS63O45vgAxs/6fvxa/z3Bj7i
 i4qulKvMs7QoqD6Ejc7yezg4qwAnPqfla+jdOPOW6C3XF4+ndnZ+FfC5GUFX
 eN3y/wA65PFsc1SaQAAAAABJRU5ErkJggg==\" alt=\"Hermann Weyl\"/> 
 
+<br>
+<a href=\"https://en.wikipedia.org/wiki/Hermann_Weyl\">
+  Hermann Weyl 1885-1955</a>
+<br>
 
-    <h5>HEADER</h5>
+    <h5>References</h5>
   </header>
   <nav>
     <ul>
-      <li><a href=\"#link_1.html\">Link1</a></li>
-      <li><a href=\"#link_2.html\">Link2</a></li>
-      <li><a href=\"#link_3.html\">Link3</a></li>
+      <li><a href=\"https://www.cs.cornell.edu/Info/Projects/SimLab/releases/release-1-0.html\">
+         SimLab (Cornell)</a></li>
+      <li><a href=\"https://www.cs.cornell.edu/Info/Projects/SimLab/projects/computer-algebra.html\">
+         Richard Zippel</a></li>
+      <li><a href=\"https://www.cs.cmu.edu/afs/cs/project/ai-repository/ai/lang/lisp/code/tools/0.html\">
+         Lisp tools at CMU (Mark Kantrowitz)</a></li>
     </ul>
   </nav>
   <main>
@@ -742,9 +770,9 @@ eN3y/wA65PFsc1SaQAAAAABJRU5ErkJggg==\" alt=\"Hermann Weyl\"/>
    <pre> This is -- preformatted </pre>
   </main>
   <footer>
-     <h5>FOOTER</h5>
+     <h5>Meta</h5>
      <a href=\"contact.html\">Contact</a>
-     <p>(c) 2025 by</p>
+     <p>created: 10-MAR-2025</p>
   </footer>
 </body>
 </html>")
