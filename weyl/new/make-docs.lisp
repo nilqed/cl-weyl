@@ -16,13 +16,13 @@
 (defparameter weyl-folder "../")
 (load (format nil "~A~A" weyl-folder "new/weyl-user-manual"))
 
+;;; -"classes/general-classes"
 (defparameter src-files (list
 "packages"
 "lisp-support"
 "domain-support"
 "classes/algebraic-domains"
 "classes/space-classes"
-"classes/general-classes"
 "avl"
 "lisp-numbers"
 "sets"

@@ -84,9 +84,18 @@ there is a problem regarding the property list.
   (format nil "~A~{{~A}~^ \\, ~}~A" 
     pre (mapcar #'display-latex (terms-of x)) post))
 
+(defmethod display-latex ((x weyli::ge-application) &key (pre "") (post ""))
+  (format nil "~A\\operatorname{~A}( ~{{~A}~^ , ~})~A" 
+    pre 
+     (funct-of x)
+     (mapcar #'display-latex (args-of x)) 
+    post))  
 
+(defmethod display-latex ((x weyli::ge-equation) &key (pre "") (post ""))
+  (format nil "~A{~A=~A}~A" pre (display-latex (lhs-of x)) 
+                     (display-latex (rhs-of x)) post))
 
-
+   
 ;;;;;;
 (ge-var p)
 (weyli::set-variable-property *general* p 'latex-repr "\\pi")
@@ -109,6 +118,13 @@ there is a problem regarding the property list.
  (disp6 (expt (+ q r) (+ p q)))
  (disp6 (expt (+ q r 2) (+ 33 p q)))
  (disp6 (+-> "p+q^(2+r)"))
- (disp6 (+-> "(p+r*q)^(p+q^(2+r))")S) 
+ (disp6 (+-> "(p+r*q)^(p+q^(2+r))")) 
+ (disp6 (sin (* p p q 2)))
+ (disp6 (+-> "cos(sin(p)/q+cos(r^p))"))
+ 
+(defvar eq1 (make-instance 'weyli::ge-equation :lhs (+ p q) :rhs (expt p q)))
+(disp6 eq1)
+
+  
  
  
