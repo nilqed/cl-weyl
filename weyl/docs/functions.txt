@@ -1,5 +1,5 @@
 
- File: ../weyl/functions.lisp 
+ File: ../functions.lisp 
 
 
  MAKE-APP-FUNCTION (args body)                                       [FUNCTION]

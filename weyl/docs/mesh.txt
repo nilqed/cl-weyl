@@ -1,5 +1,5 @@
 
- File: ../weyl/mesh.lisp 
+ File: ../mesh.lisp 
 
 
  *DELAUNAY* (t)                                                      [VARIABLE]

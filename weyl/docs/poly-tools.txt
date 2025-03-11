@@ -1,5 +1,5 @@
 
- File: ../weyl/polynomials/poly-tools.lisp 
+ File: ../polynomials/poly-tools.lisp 
 
 
  INITIALIZE-INSTANCE :AFTER ((domain variable-hash-table)              [METHOD]

@@ -1,5 +1,5 @@
 
- File: ../weyl/tpower.lisp 
+ File: ../tpower.lisp 
 
 
  TP-FIELD-PRINT-OBJECT (d stream)                                    [FUNCTION]

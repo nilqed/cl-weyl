@@ -1,5 +1,5 @@
 
- File: ../weyl/classes/space-classes.lisp 
+ File: ../classes/space-classes.lisp 
 
 
  ABSTRACT-SPACE ""                                                      [CLASS]

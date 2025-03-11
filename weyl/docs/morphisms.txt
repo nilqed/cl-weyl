@@ -1,5 +1,5 @@
 
- File: ../weyl/morphisms.lisp 
+ File: ../morphisms.lisp 
 
 
  PRINT-OBJECT ((homo morphism) stream)                                 [METHOD]
