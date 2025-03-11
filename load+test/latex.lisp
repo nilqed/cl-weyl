@@ -37,7 +37,8 @@ WEYLI::UNIVERSAL-QUANTIFIED-SET
 (defgeneric display-latex (object &key &allow-other-keys)
   (:documentation "Return a LaTeX representation of object."))
 
-
+(defmethod display-latex ((x weyli::rational-integer) &key (pre "") (post ""))
+  (format nil "~A{~A}~A" pre (slot-value x 'weyli::value) post))  
 
 (defmethod display-latex ((x weyli::ge-variable) &key (pre "") (post ""))
   (let* ((lr (get-variable-property *general* x 'latex-repr)))
@@ -79,6 +80,12 @@ there is a problem regarding the property list.
   (format nil "~A~{{~A}~^ + ~}~A" 
     pre (mapcar #'display-latex (terms-of x)) post))
 
+(defmethod display-latex ((x weyli::ge-times) &key (pre "") (post ""))
+  (format nil "~A~{{~A}~^ \\, ~}~A" 
+    pre (mapcar #'display-latex (terms-of x)) post))
+
+
+
 
 ;;;;;;
 (ge-var p)
@@ -99,3 +106,9 @@ there is a problem regarding the property list.
            :fg "Blue" :bg "'rgb 1.0 1.0 1.0'" ) T)) 
   
  (disp6 (expt r (+ p q )))  
+ (disp6 (expt (+ q r) (+ p q)))
+ (disp6 (expt (+ q r 2) (+ 33 p q)))
+ (disp6 (+-> "p+q^(2+r)"))
+ (disp6 (+-> "(p+r*q)^(p+q^(2+r))")S) 
+ 
+ 
