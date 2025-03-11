@@ -1,3 +1,4 @@
+;;;; **** moved to weyl/new (use that!)
 ;;;; make-docs.lisp 
 ;;;;   (create-refman) builds the WEYL reference manual (HTML)
 ;;;;    from scratch based on:
