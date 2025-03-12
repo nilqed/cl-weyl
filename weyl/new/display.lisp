@@ -3,6 +3,7 @@
 ;;; Later we will use a generic latex method for all weyl types:
 ;;; (defmethod latex ((obj weyl-type) &key (pre "") (post "") (context nil))
 
+#|
 (in-package :weyl)
 
 (defun wtype (obj) (cl::type-of obj))
@@ -49,7 +50,7 @@
  $${{{\\pi}}^{{q}}}$$"
   (format nil "$$~A$$" (ltx x)))
   
-  
+|#  
 ;;;; latex->sixel
 
 (in-package :cl-user)
@@ -137,9 +138,9 @@
 "Display a object as rendered LaTeX code in a terminal that supports sixel
  graphics (e.g. xterm, mlterm and some others)."
   (progn 
-    (cl-user::latex-to-sixel (latex obj) :fg "Blue" :bg "'rgb 1.0 1.0 1.0'" )
-    T)) 
-  
+    (cl-user::latex-to-sixel 
+      (latex obj :pre "$$" :post "$$") 
+        :fg "Blue" :bg "'rgb 1.0 1.0 1.0'" ) T)) 
   
 
 

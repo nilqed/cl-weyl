@@ -62,9 +62,10 @@
 
 ;; (weyl/new) <-- Sat 1 Mar 22:09:56 CET 2025/KFP
 (defparameter group10 (list 
-"weyl/new/weyl-infix"
-"weyl/new/ge-support"
-"weyl/new/ge-latex"))
+(load "../weyl/new/weyl-infix")
+(load "../weyl/new/ge-support")
+(load "../weyl/new/latex")
+(load "../weyl/new/display")
 
 (defparameter group11 (list 
 "weyl/new/weyl-user-manual"

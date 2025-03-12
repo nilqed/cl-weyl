@@ -59,7 +59,8 @@
 ;; (weyl/new) <-- Sat 1 Mar 22:09:56 CET 2025/KFP
 (load "../weyl/new/weyl-infix")
 (load "../weyl/new/ge-support")
-(load "../weyl/new/ge-latex")
+(load "../weyl/new/latex")
+(load "../weyl/new/display")
 (load "../weyl/new/weyl-user-manual")
 (load "../weyl/new/make-docs")
 
