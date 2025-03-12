@@ -44,3 +44,24 @@ there is a problem regarding the property list.
 (defvar eq3 (make-instance 'weyli::ge-eqn>= :lhs (+ p q) :rhs (expt p q)))
 (display6 eq3)
 
+;; todo
+;; create a function f of two variables in domain *general*
+(defvar f (weyli::make-function *general* 'f 2))
+(wtype f) ;-> WEYLI::GE-FUNCTION
+(describe f) ; ....
+(derivs-of f) ;-> nil
+
+(weyli::make-ge-funct *general* 'g)
+;-> g()
+
+(defvar h (weyli::make-ge-funct *general* 'h p  ))
+; -> H = h(p)
+
+(deriv h p)
+;h_{0}(p)
+(deriv h p p q)
+;0
+(deriv h p p )
+;h_{00}(p)
+
+
