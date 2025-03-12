@@ -60,13 +60,17 @@
 (load "../weyl/new/weyl-infix")
 (load "../weyl/new/ge-support")
 (load "../weyl/new/ge-latex")
+(load "../weyl/new/weyl-user-manual")
+(load "../weyl/new/make-docs")
+
 
 ;; some files have to be compiled to get full functionality.
 (compile-file "../weyl/numbers/numbers.lisp")   ;; get-rational-...
 (compile-file "../weyl/tpower.lisp")            ;; taylor
 
 ;; we also load MKs user-manual here.
-(load "user-manual")
+;;(load "user-manual") replaced by new/weyl-user-manual
+;; fixed a format bug ...
 
 
 ;(defmethod perform :after ((op load-op) (comp (eql (find-system "weyl"))))

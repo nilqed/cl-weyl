@@ -67,7 +67,8 @@
 "weyl/new/ge-latex"))
 
 (defparameter group11 (list 
-"load+test/user-manual"))
+"weyl/new/weyl-user-manual"
+"weyl/new/make-docs"))
 
 
 ;; some files have to be compiled to get full functionality.
