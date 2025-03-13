@@ -326,8 +326,175 @@ weyli::*global-functions*
 
 ; simplify expr                                                     [Function]
 ;
-; Performs simple simpli cations of expr, 0 + x ! x and so on.
+; Performs simple simplifications of expr, 0 + x ! x and so on.
+
+; +-> "(p+q)*(p-q)"
+(defvar ge1 (* (+ p q) (- p q)))
+;=> GE1
+
+; +-> "p^2 - q^2"
+(defvar ge2 (- (expt p 2) (expt q 2)))
+;=> GE2
+
+ge1
+;=> (-1 q + p) (q + p)
+
+ge2
+;=> -1 q^2 + p^2
+
+(simplify (- ge1 ge2))
+;=> (-1 q + p) (q + p) - (-1 q^2 + p^2)
+
+; We see that the simplifier is far from perfect ;-) and needs some
+; attention.
+
+(simplify (- 1 (/ ge1 ge2)))
+; 1 - ((-1 q + p) (-1 q^2 + p^2)^-1 (q + p))
+
+;even ...
+(simplify (- (expand ge1) ge2))
+;=> -1 q^2 + p^2 - (-1 q^2 + p^2)
+
+;(ge-equal (simplify (- ge1 ge2)) 0)
+;=> NIL :-((
+
+;eventually ...
+ (expand (- (expand ge1) ge2))
+ ;=> 0
+
+;
+; expand exp                                                        [Function]
+;
+; Replaces all products of sums in exp by sums of products.
+
+(expand (* (+ a b c) (- p q) (+ r (expt v u))))
+;=> -1 r q c - (r q b) - (r q a) + r p c + r p b + r p a - (v^u q c) - 
+;   (v^u q b) - (v^u q a) + v^u p c + v^u p b + v^u p a
+
+;
+; ge-equal x y                                                      [Function]
+;
+; Returns T if x and y are syntactically identical general expressions.
+
+(ge-equal (/ x y) (* x (expt  y -1)))
+; => T
+
+; one must be careful here about the meaning of "syntactically"...
+
+;
+; ge-great x y                                                      [Function]
+;
+; To speed up operations like simplification of expressions, an order is 
+; placed on all expressions in the general representation. This ordering is 
+; provided by the function ge-great.
+
+; The function WEYL::GE-GREAT is undefined.
+; we have to use weyli::
+
+(weyli::ge-great q p)
+;=> 0
+
+;
+; def-ge-operator operator &rest keyword-expr-pairs                 [Function]
+;
+; When a new operator is introduced this de ner should be used. It allows one 
+; to define the simplifier, display and equality tester functions.
+
+; ???? 
+
+;
+; deriv exp var &rest vars                                          [Function]
+;
+; Computes the derivative of exp with respect to var and simplifies the results.
+; This is done for var and each element of var . Thus the second derivative 
+; of exp with respect to T could be computed by: (deriv exp 't 't).
+
+(defvar sc (+ (expt (sin p) 2) (expt (cos p) 2)))
+;=> SC
+
+(deriv sc p)
+;=>2 (sin(p)) (cos(p)) - (2 (cos(p)) (sin(p)))
+
+(simplify (deriv sc p))
+;=> 2 (sin(p)) (cos(p)) - (2 (cos(p)) (sin(p)))
+; well, advertising 'simplifying' is quite exaggerated ;)
 
 
+(expand (deriv sc p ))
+;=> -2 (cos(p)) (sin(p)) + 2 (sin(p)) (cos(p))
 
+(deriv (tanh p) p p p)
+;=> -2 (cosh(p))^-2 + 6 (cosh(p))^-4 (sinh(p))^2
+
+(deriv (expt q (tan p)) p)
+;=> -1 (log(q)) q^(tan(p)) (cos(p))^-2
+
+(deriv (log (cos p))  p)
+;=> -1 (sin(p)) (cos(p))^-1
+
+(deriv (expt (log (sin (* (cos p) p))) p) p)
+;=> (log(log(sin((cos(p)) p)))) (log(sin((cos(p)) p)))^p + (-1 (sin(p)) p + 
+;    cos(p)) p (log(sin((cos(p)) p)))^(-1 + p) (cos((cos(p)) p)) 
+;    (sin((cos(p)) p))^-1
+
+;;
+;; Functions (6.6)
+;;
+; There are three different types of functions as illustrated in Figure 6.3, 
+; sampled-functions, ge-functions and applicable-functions. Each of these 
+; represent functions about which different aspects are known. To represent 
+; *well-known* functions, like sine, cosine and f (in the expressions f (x)),
+; we use instances of the class ge-function. We are given only these functions
+; names. Sometimes we know more about the functions, like their derivative or
+; their expansion as a power series. This additional information is placed on 
+; their property lists.
+
+; applicable-functions are functions for which we have a program for computing
+; their values. They are essentially lambda-expressions. Finally, 
+; sampled-functions are functions about which we know only their graph. That 
+; is, we are given the values of the function at certain points and mechanisms
+; for interpolating those values. Each of these types of functions are 
+; described in more detail in the following sections.
+; Each class that inherits from abstract-function includes a slot that 
+; indicates the number of arguments an instance of this class (i.e., functions)
+; accepts. This information can be accessed using the method nargs-of.
+
+;
+; nargs-of abstract-function                                        [Function]
+;
+; Returns the number of arguments accepted by abstract-function.
+
+
+; Each of these types of functions can be applied to arguments to get the value 
+; of the function at that point. This can be done by either of the following 
+; two functions, which are extensions of the usual Lisp ones (and continue to 
+; work with Lisp arguments).
+
+;
+;funcall fun arg1 arg2 : : : argn                                   [Function]
+;
+; Apply fun to the specified arguments. If the number of arguments provided 
+; does not match the number of arguments of the function, then an error is 
+; signaled.
+
+;
+;apply fun arg1 arg2 : : : argn list                                [Function]
+;
+; Apply fun to the k arguments specified and the elements of list. If the 
+; number of arguments of the function di er from k plus the length of list 
+; then an error is signaled.
+
+
+;;
+;; GE Functions and Applications (6.6.1)
+;;
+
+; The most commonly used type of function in Weyl is ge-function. These are 
+; functions with *well-known* names. The easiest way to generate examples of
+; ge-functions is to invoke the Lisp function with the same name. For instance,
+;   > (setq appl (sin 'x))
+;   sin(x)
+; This expression sin x is not a ge-function, but a ge-application. It consists
+; of two pieces, a function and an argument list. These pieces can be extracted
+; using the functions funct-of and args-of.
 
