@@ -599,4 +599,104 @@ ge2
 ;
 ; Returns the function obtained by taking the positional derivative of function
 ; with respect to the given positions.
+; For example:
+
+; ** WRONG in manual: make-applicable-function does not exist, but
+; weyli::make-app-function in functions.lisp
+(defvar f1 (weyli::make-app-function '(u v) (+ (* 'u 'v) (* 'u 'u 'u))))
+;=> F1
+
+f1
+;=> (lambda (v.1 v.2) v.1^3 + v.2 v.1)
+
+(deriv f1 1)
+;=> (lambda (v.1 v.2) v.1)
+
+(deriv f1 0)
+;=> (lambda (v.1 v.2) v.2 + 3 v.1^2)
+
+(deriv f1 1 0)
+;=> (lambda (v.1 v.2) 1)
+
+; The example given in the manual:
+(defvar f0 (make-app-function '(x y) (+ (* 'x 'y) (* 'y 'y))))
+;=> F0
+
+f0
+;=> (lambda (v.1 v.2) v.2^2 + v.2 v.1)
+
+(deriv f0 1)
+;=> (lambda (v.1 v.2) 2 v.2 + v.1)
+
+;(deriv f0 2)
+;=> 
+;debugger invoked on a SIMPLE-ERROR @7B5FACF1B4CD in thread
+;#<THREAD "main thread" RUNNING {10048C8253}>:
+;  Cannot take deriv of (lambda (v.1 v.2) v.2^2 + v.2 v.1) and 2
+; however
+
+(deriv f0 0)
+;(lambda (v.1 v.2) v.2)
+
+; Therefore, contrary to the manual, derivs are zero based now. Hmm, maybe
+; we should change this.
+
+;;
+;; Sampled Functions (6.6.3)
+;;
+
+; nothing in manual, tbw.
+
+
+;;
+;; Substitution
+;;
+
+;
+; substitute value var expr &rest ignore
+;
+; Substitutes value for each occurrence of var in expr. If value 
+; is a list, it is interpreted as a set of values to be substituted in 
+; parallel for the variables in var. The values being substituted must 
+; be either elements of the domain of polynomial or its coefficient domain.
+; still valid? To review ...
+
+(documentation 'substitute 'function)
+;=> "Extend the common lisp SUBSTITUTE function."
+
+(substitute q p (sin p))
+;=> sin(q)
+
+(substitute (expt x q)  p (sin p))
+;=> sin(x^q)
+
+(substitute (+ a b)  p (expt y  (* p p)))
+;=> y^(b + a)^2
+
+
+;No way to raise 2 to the p power
+;(expt (coerce 2 *general*) p)
+
+(substitute 2  p (expt y  (* p p)))
+;=> y^4
+
+;(substitute 2  y (expt y  (* p p)))
+;No way to raise 2 to the p^2 power
+
+;* (expt 'e 2)
+;e^2
+;* (expt 'e (* p (log 2)))
+;e^(0.6931472 p)
+;* (expt 'e (* p (log (coerce 2 *general*))))
+;e^(p (log(2)))
+;*
+;(defvar tt (expt 'e (* p (log (coerce 2 *general*)))))
+;TT
+;* tt
+;e^(p (log(2)))
+;* (deriv tt p)
+;(log(e)) e^(p (log(2))) (log(2))
+;*
+
+
 
