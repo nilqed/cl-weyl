@@ -498,3 +498,105 @@ ge2
 ; of two pieces, a function and an argument list. These pieces can be extracted
 ; using the functions funct-of and args-of.
 
+(defvar appl (sin 'x))
+;=> APPL
+
+;
+; funct-of application                                              [Function]
+; 
+; Returns the ge-function in the functional position of application.
+
+
+;
+; args-of application                                               [Function]
+;
+; Returns a list of the arguments of application.
+
+; For instance, using appl created above, we have
+;   > (funct-of appl)
+;   sin
+;   > (args-of appl)
+;  (x)
+
+(funct-of appl)
+;=> sin
+
+(args-of appl)
+;=> (x)
+
+; The ge-function can be used with funcall and apply to create new applications.
+;   > (funcall (funct-of appl) (expt 'y 2))
+;   sin(y^2)
+;   > (apply (funct-of appl) (list 'y))
+;   sin(y)
+
+(funcall (funct-of appl) (expt 'y 2))
+;=> sin(y^2)
+
+(apply (funct-of appl) (list 'y))
+;=> sin(y)
+
+
+; Like all classes that inherit from ge-function, instances of 
+; abstract-function handle the nargs-of method.
+;   > (nargs-of (funct-of appl))
+
+(nargs-of (funct-of appl))
+;=> 1
+
+; In addition to information about the number of arguments accepted by a 
+; function, we can also indicate the function's derivative. This is done 
+; using the following function: 
+
+;
+; declare-derivative func args &body body [Function]
+;
+; This form is used to de ne the derivative of func. The body of this form 
+; can do any computation it wants on the arguments of func. For instance, 
+; the derivative of sin and cosine are de ned as follows:
+;     (declare-derivative sin (x) var
+;       (* (deriv x var) (cos x)))
+;
+;     (declare-derivative cos (x) var
+;       (* (- (deriv x var)) (sin x)))
+;
+; With these definitions, which are already in Weyl, derivatives of general 
+; expressions involving sine and cosine can be performed:
+;
+;  > (deriv (* (sin 'x) (cos 'x)) 'x)
+;  (cos(x))^2 - (sin(x))^2
+
+(deriv (* (sin 'x) (cos 'x)) 'x)
+;=> (cos(x))^2 - (sin(x))^2
+
+;;
+;; Applicable functions (6.6.2) 
+;;
+
+; Applicable functions are a mechanism to enable manipulation of anonymous 
+; functions. In languages like Scheme and Common Lisp they correspond to 
+; lambda-expressions. One of the useful features of Weyl is that one can 
+; perform arithmetic operations on functions. This often forces us to produce
+; applicable functions. For instance,
+;
+;   > (+ (funct-of (sin 'x)) (funct-of (cos 'x)))
+;   (lambda (v.1) sin(v.1) + cos(v.1))
+;
+; To explicitly create an applicable function, the function 
+; make-applicable-function is used.
+
+;
+; make-applicable-function args body                                [Function]
+;
+; Create an applicable function. The variables used in args are replaced by 
+; newly generated variables, and the uses of the variables in body are 
+; similarly replaced.
+
+; Like other functions, one can differentiate applicable functions.
+
+;
+; deriv function integer1 integer2 ...                              [Function]
+;
+; Returns the function obtained by taking the positional derivative of function
+; with respect to the given positions.
+
