@@ -698,5 +698,121 @@ f0
 ;(log(e)) e^(p (log(2))) (log(2))
 ;*
 
+;;
+;; Equations
+;;
+
+(defvar eq1 (make-instance 'weyli::ge-eqn= :lhs (+ p q) :rhs (expt p q)))
+;=> EQ1
+EQ1
+;=> q + p = p^q
+
+(slot-value eq1 'weyli::lhs)
+;=> q + p
+
+(wtype eq1)
+;=> WEYLI::GE-EQN=
+
+(defvar eq2 (make-instance 'weyli::ge-eqn> :lhs (+ p q) :rhs (expt p q)))
+;=> EQ2
+eq2
+;=> q + p > p^q
+
+(lhs-of eq2)
+;=> q + p
+
+(defvar eq3 (make-instance 'weyli::ge-eqn>= :lhs (+ p q) :rhs (expt p q)))
+;=> EQ3
+eq3
+;=> q + p >= p^q
+
+(rhs-of eq3)
+;=> p^q
+
+(describe (wtype eq1))
+;WEYLI::GE-EQN=
+;  [symbol]
+;
+;GE-EQN= names the standard-class #<STANDARD-CLASS WEYLI::GE-EQN=>:
+;  Class precedence-list: WEYLI::GE-EQN=, WEYLI::GE-EQUATION,
+;                         WEYLI::GENERAL-EXPRESSION,
+;                         WEYLI::GE-OR-NUMERIC, WEYLI::DOMAIN-ELEMENT,
+;                         STANDARD-OBJECT, SB-PCL::SLOT-OBJECT, T
+;  Direct superclasses: WEYLI::GE-EQUATION
+;  No subclasses.
+;  No direct slots.
+;*
+
+(describe 'WEYLI::GE-EQUATION)
+;WEYLI::GE-EQUATION
+;  [symbol]
+;
+;GE-EQUATION names the standard-class #<STANDARD-CLASS WEYLI::GE-EQUATION>:
+;  Direct superclasses: WEYLI::GENERAL-EXPRESSION
+;  Direct subclasses: WEYLI::GE-EQN>=, WEYLI::GE-EQN>, WEYLI::GE-EQN=
+;  Not yet finalized.
+;  Direct slots:
+;    WEYLI::LHS
+;      Initargs: :LHS
+;      Readers: LHS-OF
+;      Writers: (SETF LHS-OF)
+;    WEYLI::RHS
+;      Initargs: :RHS
+;      Readers: RHS-OF
+;      Writers: (SETF RHS-OF)
+;*
+
+
+; Actually there are constructors in general.lisp for equations:
+
+(weyli::make-ge-eqn=  *general* (+ p q) (expt p q))
+;=> q + p = p^q
+
+(weyli::make-ge-eqn>  *general* (+ p q) (expt p q))
+;=> q + p > p^q
+
+(weyli::make-ge-eqn>=  *general* (+ p q) (expt p q))
+;=> q + p >= p^q
+
+; special for *general* in general.lisp as well (somehow redundant ...??)
+; However, here we do not have to use prefix weyli:: 
+(eqn>=  (+ p q) (expt p q))
+;=> q + p >= p^q
+
+(eqn=  (+ p q) (expt p q))
+;=> q + p = p^q
+
+
+
+
+
+
+
+
+;;
+;; GE-FUNCTION
+;;
+
+;; create a function f of two variables in domain *general*
+(defvar f (weyli::make-function *general* 'f 2))
+(wtype f) ;-> WEYLI::GE-FUNCTION
+(describe f) ; ....
+(derivs-of f) ;-> nil
+
+(weyli::make-ge-funct *general* 'g)
+;-> g()
+
+(defvar h (weyli::make-ge-funct *general* 'h p  ))
+; -> H = h(p)
+
+(deriv h p)
+;h_{0}(p)
+(deriv h p p q)
+;0
+(deriv h p p )
+;h_{00}(p)
+
+
+
 
 
