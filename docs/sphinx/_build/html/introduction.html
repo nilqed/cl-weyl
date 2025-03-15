@@ -1,0 +1,152 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Introduction &mdash; Weyl 0.2 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/documentation_options.js?v=10f1778b"></script>
+      <script src="_static/doctools.js?v=888ff710"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Getting Started" href="getting-started.html" />
+    <link rel="prev" title="Welcome to Weyl’s documentation!" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Weyl
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Introduction</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#the-domain-concept">The Domain Concept</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="getting-started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="general.html">General Expressions</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Weyl</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Introduction</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/introduction.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="introduction">
+<h1>Introduction<a class="headerlink" href="#introduction" title="Link to this heading">¶</a></h1>
+<p>In the last twenty years the algorithms and techniques for manipulating symbolic mathematical
+quantities have improved dramatically. These techniques have been made available to a practi-
+tioners through a number of algebraic manipulation systems. Among the most widely distributed
+systems are Macsyma [9], Reduce [3], Maple [5] and Mathematica [10]. These systems are designed
+to be self-contained and are not intended to be incorporated into larger, more specialized systems.
+This is at odds with the experience with numerical computation where libraries of carefully coded
+routines like Linpack [2] and Eispack [7] have been of the greatest value because they could be
+incorporated in larger systems (like uid dynamics simulators or circuit analyzers). Linear algebra
+systems like Matlab [6], though of signi cant value, where developed much later and tend to be
+used more for research in linear algebra than as part of large computations.</p>
+<p>Another limitation of current symbolic mathematics systems is that they generally deal with
+a relatively limited and xed set of algebraic types, which the user is not expected to extend
+signi cantly. Thus it may be difficult for a user to experiment with algorithms for dealing with
+Poisson series if the algebra system does not already have a data type that matches the behavior of
+Poisson series. This situation is exacerbated by the unavailability of the code that implements the
+algebraic algorithms of the symbolic manipulation system. Scratchpad [4] is a noticeable exception
+to this trend in that the developers plan to make the algebra code for the system widely available,
+and the internal data typing mechanisms provided by Scratchpad are designed with the extension
+mechanisms just mentioned in mind.</p>
+<p>Weyl is an extensible algebraic manipulation substrate that has been designed to represent
+all types of algebraic objects. It deals not only with the basic symbolic objects like polynomials,
+algebraic functions and di erential forms, but can also deal with higher level objects like groups,
+rings, ideals and vector spaces. Furthermore, to encourage the use of symbolic techniques within
+other applications, Weyl is implemented as an extension of Common Lisp [8] using the Common
+Lisp Object Standard [1] so that all of Common Lisp’s facilities and development tools can be used
+in concert with Weyl’s symbolic tools.</p>
+<p>It should be noted that the initial implementation of Weyl is intended to be as clean and
+semantically correct as possible. The primary goal of Weyl is provide the tools needed to express
+algebraic algorithms naturally and succinctly. Nonetheless, we believe that algebraic algorithms
+can be efficiently implemented within the Weyl framework even though that was not a goal of the
+initial implementation.</p>
+<section id="the-domain-concept">
+<h2>The Domain Concept<a class="headerlink" href="#the-domain-concept" title="Link to this heading">¶</a></h2>
+<p>One of the novel concepts in Weyl is that of a domain . This section gives three examples that
+illustrate the need for domains.
+Consider the problem of integrating the function <span class="math notranslate nohighlight">\(\frac{1}{(x^3-2)}\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[\int \frac{dx}{x^3-2} =\]</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="Welcome to Weyl’s documentation!" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="getting-started.html" class="btn btn-neutral float-right" title="Getting Started" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, SimLab Group &amp; Weyl enthusiasts.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

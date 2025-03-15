@@ -1,0 +1,997 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>General Expressions &mdash; Weyl 0.2 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/documentation_options.js?v=10f1778b"></script>
+      <script src="_static/doctools.js?v=888ff710"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Getting Started" href="getting-started.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Weyl
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="getting-started.html">Getting Started</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">General Expressions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#variables-6-2">Variables (6.2)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#check-if-symbol-is-a-ge-variable">Check if symbol is a ge-variable</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#listing-all-variables-currently-active-in-domain-general">Listing all variables currently active in domain *general*</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#adding-subscripts-to-a-variable-yields-a-new-variable">Adding subscripts to a variable (yields a new variable!)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#variable-properties">Variable properties</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#dependencies">Dependencies</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#operators-6-4">Operators (6.4)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#tools-for-general-expressions-6-5">Tools for General Expressions (6.5)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#display-tools-6-5-1">Display tools (6.5.1)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#simplification-tools-6-5-2">Simplification Tools (6.5.2)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#functions-6-6">Functions (6.6)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#ge-functions-and-applications-6-6-1">GE Functions and Applications (6.6.1)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#applicable-functions-6-6-2">Applicable functions (6.6.2)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sampled-functions-6-6-3">Sampled Functions (6.6.3)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#substitution">Substitution</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#equations">Equations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ge-function">GE-FUNCTION</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Weyl</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">General Expressions</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/general.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="general-expressions">
+<h1>General Expressions<a class="headerlink" href="#general-expressions" title="Link to this heading">¶</a></h1>
+<p>Most sophisticated computations using Weyl take place within one of the more
+specialized domains discussed in the later chapters. Generally, these domains
+deal with algebraic structures like groups, rings and elds. Unfortunately,
+none of these structures can deal with all types of mathematical objects. For
+instance, while vectors can be elements of vector spaces, there is no
+algebraic domain that contains both vectors and polynomial. Similarly, there
+is no algebraic domain that can deal with special functions, summations,
+products etc. What is required is a domain that can represent mathematical
+objects syntactically. This is dealt with in Weyl by the general-expression
+domain. General expressions are intended to be exible enough to represent any
+mathematical expression that one might write on a piece of paper. On paper
+one can write the two distinct expressions a(b + c) and ab + ac, even though
+as polynomials they are equivalent. Within the polynomial domain discussed in
+Chapter 9, these two expressions are indistinguishable. However, as general
+expressions they are distinct objects that can be di erentiated. While,
+general expressions are extremely exible, they are not necessarily very
+efficient. As a consequence, for large scale computations it is usually
+preferable to use one of the special purpose domains described in the later
+sections. While some computations are purely algebraic and need never
+reference general expressions, most engineering and scienti c computations
+need a place to store information about the dimensions of variables, defining
+relationships and so on. These purposes are also served well by the
+general expression structures.</p>
+<section id="variables-6-2">
+<h2>Variables (6.2)<a class="headerlink" href="#variables-6-2" title="Link to this heading">¶</a></h2>
+<p>Originally, general variables in Weyl are declared by using ‘coerce’ or
+the method ‘make-ge-variable’ (general.lisp).</p>
+<div class="highlight-lisp notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="nb">defvar</span><span class="w"> </span><span class="nv">x</span><span class="w"> </span><span class="p">(</span><span class="nb">coerce</span><span class="w"> </span><span class="ss">&#39;x</span><span class="w"> </span><span class="vg">*general*</span><span class="p">))</span>
+
+<span class="nv">=&gt;</span><span class="w"> </span><span class="nv">X</span>
+
+<span class="p">(</span><span class="nb">defvar</span><span class="w"> </span><span class="nv">y</span><span class="w"> </span><span class="p">(</span><span class="nv">make-ge-variable</span><span class="w"> </span><span class="vg">*general*</span><span class="w"> </span><span class="ss">&#39;y</span><span class="p">))</span>
+
+<span class="nv">=&gt;</span><span class="w"> </span><span class="nv">Y</span>
+</pre></div>
+</div>
+<p>We may also use the new macro <cite>ge-var</cite> defined in <cite>ge-support.lisp</cite>:</p>
+<div class="highlight-lisp notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="nv">ge-var</span><span class="w"> </span><span class="nv">z</span><span class="p">)</span>
+
+<span class="nv">=&gt;</span><span class="w"> </span><span class="nv">Z</span>
+</pre></div>
+</div>
+<p>or the function <cite>ge-vars</cite> applied to a list (iterates <cite>ge-var</cite>):</p>
+<div class="highlight-lisp notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="nv">ge-vars</span><span class="w"> </span><span class="o">&#39;</span><span class="p">(</span><span class="nv">p</span><span class="w"> </span><span class="nv">q</span><span class="w"> </span><span class="nv">r</span><span class="p">))</span>
+
+<span class="w"> </span><span class="nv">=&gt;</span><span class="w"> </span><span class="no">NIL</span>
+</pre></div>
+</div>
+<section id="check-if-symbol-is-a-ge-variable">
+<h3>Check if symbol is a ge-variable<a class="headerlink" href="#check-if-symbol-is-a-ge-variable" title="Link to this heading">¶</a></h3>
+<div class="highlight-lisp notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="nv">ge-variable?</span><span class="w"> </span><span class="nv">x</span><span class="p">)</span>
+
+<span class="nv">=&gt;</span><span class="w"> </span><span class="no">T</span>
+
+<span class="p">(</span><span class="nv">ge-variable?</span><span class="w"> </span><span class="nv">r</span><span class="p">)</span>
+
+<span class="nv">=&gt;</span><span class="w"> </span><span class="no">T</span>
+</pre></div>
+</div>
+<p>unfortunately quoting is useless and not quoting results in an error if
+it is not defined at all (fix?)</p>
+<div class="highlight-lisp notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="nv">ge-variable?</span><span class="w"> </span><span class="ss">&#39;r</span><span class="p">)</span>
+
+<span class="nv">=&gt;</span><span class="w"> </span><span class="no">NIL</span>
+</pre></div>
+</div>
+</section>
+<section id="listing-all-variables-currently-active-in-domain-general">
+<h3>Listing all variables currently active in domain *general*<a class="headerlink" href="#listing-all-variables-currently-active-in-domain-general" title="Link to this heading">¶</a></h3>
+<div class="highlight-lisp notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="nv">weyli::ge-variables</span><span class="w"> </span><span class="vg">*general*</span><span class="p">)</span>
+
+<span class="nv">=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nv">r</span><span class="w"> </span><span class="nv">q</span><span class="w"> </span><span class="nv">p</span><span class="w"> </span><span class="nv">z</span><span class="w"> </span><span class="nv">y</span><span class="w"> </span><span class="nv">x</span><span class="w"> </span><span class="nv">v.1</span><span class="w"> </span><span class="nv">x</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>there is a function <cite>list-ge-vars</cite> in <cite>ge-support.lisp</cite> which does the same:</p>
+<div class="highlight-lisp notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="nv">list-ge-vars</span><span class="p">)</span>
+
+<span class="nv">=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nv">r</span><span class="w"> </span><span class="nv">q</span><span class="w"> </span><span class="nv">p</span><span class="w"> </span><span class="nv">z</span><span class="w"> </span><span class="nv">y</span><span class="w"> </span><span class="nv">x</span><span class="w"> </span><span class="nv">v.1</span><span class="w"> </span><span class="nv">x</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>the variables <cite>v.1</cite> and <cite>x</cite> are always present, but this <cite>x</cite> is not <cite>ge-equal</cite> to
+a later defined <cite>x</cite> (hmm, strange … :todo:)…</p>
+</section>
+<section id="adding-subscripts-to-a-variable-yields-a-new-variable">
+<h3>Adding subscripts to a variable (yields a new variable!)<a class="headerlink" href="#adding-subscripts-to-a-variable-yields-a-new-variable" title="Link to this heading">¶</a></h3>
+<div class="highlight-lisp notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="nv">ge-vars</span><span class="w"> </span><span class="o">&#39;</span><span class="p">(</span><span class="nv">u</span><span class="w"> </span><span class="nv">v</span><span class="w"> </span><span class="nv">w</span><span class="p">))</span>
+
+<span class="nv">=&gt;</span><span class="w"> </span><span class="no">NIL</span>
+
+<span class="p">(</span><span class="nb">defvar</span><span class="w"> </span><span class="nv">u12</span><span class="w"> </span><span class="p">(</span><span class="nv">add-subscripts</span><span class="w"> </span><span class="nv">u</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="p">))</span>
+
+<span class="nv">=&gt;</span><span class="w"> </span><span class="nv">U12</span>
+
+<span class="nv">u12</span>
+
+<span class="nv">=&gt;</span><span class="w"> </span><span class="nv">u</span><span class="p">(</span><span class="mi">1</span><span class="o">,</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="p">(</span><span class="nb">defvar</span><span class="w"> </span><span class="nv">u_vw</span><span class="w"> </span><span class="p">(</span><span class="nv">add-subscripts</span><span class="w"> </span><span class="nv">u</span><span class="w"> </span><span class="nv">v</span><span class="w"> </span><span class="nv">w</span><span class="p">))</span>
+
+<span class="nv">=&gt;</span><span class="w"> </span><span class="nv">U_VW</span>
+
+<span class="nv">u_vw</span>
+
+<span class="nv">=&gt;</span><span class="w"> </span><span class="nv">u</span><span class="p">(</span><span class="nv">v,w</span><span class="p">)</span>
+
+<span class="p">(</span><span class="nb">defvar</span><span class="w"> </span><span class="nv">u_ab</span><span class="w"> </span><span class="p">(</span><span class="nv">add-subscripts</span><span class="w"> </span><span class="nv">u</span><span class="w"> </span><span class="ss">&#39;a</span><span class="w"> </span><span class="ss">&#39;b</span><span class="p">))</span>
+
+<span class="nv">=&gt;</span><span class="w"> </span><span class="nv">U_AB</span>
+</pre></div>
+</div>
+<p>note the difference between using variables or symbols as indices.</p>
+<div class="highlight-lisp notranslate"><div class="highlight"><pre><span></span><span class="nv">u_ab</span>
+
+<span class="nv">=&gt;</span><span class="w"> </span><span class="nv">u</span><span class="p">(</span><span class="nv">A,B</span><span class="p">)</span>
+
+<span class="p">(</span><span class="nv">list-ge-vars</span><span class="p">)</span>
+
+<span class="nv">=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nv">u</span><span class="p">(</span><span class="nv">A,B</span><span class="p">)</span><span class="w"> </span><span class="nv">u</span><span class="p">(</span><span class="nv">v,w</span><span class="p">)</span><span class="w"> </span><span class="nv">u</span><span class="p">(</span><span class="mi">1</span><span class="o">,</span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="nv">w</span><span class="w"> </span><span class="nv">v</span><span class="w"> </span><span class="nv">u</span><span class="w"> </span><span class="nv">r</span><span class="w"> </span><span class="nv">q</span><span class="w"> </span><span class="nv">p</span><span class="w"> </span><span class="nv">z</span><span class="w"> </span><span class="nv">y</span><span class="w"> </span><span class="nv">x</span><span class="w"> </span><span class="nv">v.1</span><span class="w"> </span><span class="nv">x</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>We can always try the <cite>describe</cite> function to get information on an object:</p>
+<div class="highlight-lisp notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="nb">describe</span><span class="w"> </span><span class="nv">u_vw</span><span class="p">)</span>
+
+<span class="nv">u</span><span class="p">(</span><span class="nv">v,w</span><span class="p">)</span>
+
+<span class="c1">;  [standard-object]</span>
+<span class="c1">;</span>
+<span class="c1">; Slots with :INSTANCE allocation:</span>
+<span class="c1">;  PROPERTY-LIST                  = (:SUBSCRIPTS (v w))</span>
+<span class="c1">;  DOMAIN                         = #&lt;Domain: GENERAL-EXPRESSIONS&gt;</span>
+<span class="c1">;  SIMPLIFIED?                    = NIL</span>
+<span class="c1">;  SYMBOL                         = U</span>
+<span class="c1">;  STRING                         = &quot;u(v,w)&quot;</span>
+</pre></div>
+</div>
+<div class="highlight-lisp notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="nb">describe</span><span class="w"> </span><span class="nv">u_ab</span><span class="p">)</span>
+
+<span class="nv">u</span><span class="p">(</span><span class="nv">A,B</span><span class="p">)</span>
+<span class="c1">;  [standard-object]</span>
+<span class="c1">;</span>
+<span class="c1">; Slots with :INSTANCE allocation:</span>
+<span class="c1">;  PROPERTY-LIST                  = (:SUBSCRIPTS (A B))</span>
+<span class="c1">;  DOMAIN                         = #&lt;Domain: GENERAL-EXPRESSIONS&gt;</span>
+<span class="c1">;  SIMPLIFIED?                    = NIL</span>
+<span class="c1">;  SYMBOL                         = U</span>
+<span class="c1">;  STRING                         = &quot;u(A,B)&quot;</span>
+</pre></div>
+</div>
+<p>Most functions also provide a documentation string which can be read by the
+<cite>documentation</cite> function:</p>
+<div class="highlight-lisp notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="nb">documentation</span><span class="w"> </span><span class="ss">&#39;add-subscripts</span><span class="w"> </span><span class="ss">&#39;function</span><span class="p">)</span>
+
+<span class="c1">;&quot;Creates a new variable, which has the subscripts indicated. If the</span>
+<span class="c1">; variable already has subscripts, then the new subscripts are appended to</span>
+<span class="c1">; the ones already present.&quot;</span>
+</pre></div>
+</div>
+</section>
+<section id="variable-properties">
+<h3>Variable properties<a class="headerlink" href="#variable-properties" title="Link to this heading">¶</a></h3>
+<p>All variables have property lists which can be used to store important
+information about them. This information is not attached to the variables,
+but to the domain from which the variables arise.</p>
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">get-variable-property</span> <span class="pre">domain</span> <span class="pre">var</span> <span class="pre">key</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">[FUNCTION]</span></span></dt>
+<dd><p>Returns the key property of <cite>var</cite>. A return value of nil indicates that the
+was no key property associated with var . New properties may be established
+by using <cite>setf</cite> on this form.</p>
+</dd></dl>
+
+<div class="highlight-lisp notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="nv">get-variable-property</span><span class="w"> </span><span class="vg">*general*</span><span class="w"> </span><span class="nv">u12</span><span class="w"> </span><span class="ss">:subscripts</span><span class="p">)</span>
+
+<span class="nv">=&gt;</span><span class="w"> </span><span class="no">NIL</span>
+</pre></div>
+</div>
+<p>This shows that the propety-list displayed by <cite>describe</cite> is not the one
+where <cite>get-variable-property</cite> is looking for. As explained above, the
+information is fetched from the domain property list.</p>
+<div class="highlight-lisp notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="nb">setf</span><span class="w"> </span><span class="p">(</span><span class="nv">get-variable-property</span><span class="w"> </span><span class="vg">*general*</span><span class="w"> </span><span class="nv">u12</span><span class="w"> </span><span class="ss">&#39;mykey</span><span class="p">)</span><span class="w"> </span><span class="mi">999</span><span class="p">)</span>
+
+<span class="nv">=&gt;</span><span class="w"> </span><span class="mi">999</span>
+
+<span class="p">(</span><span class="nv">get-variable-property</span><span class="w"> </span><span class="vg">*general*</span><span class="w"> </span><span class="nv">u12</span><span class="w"> </span><span class="ss">&#39;mykey</span><span class="p">)</span>
+
+<span class="nv">=&gt;</span><span class="w"> </span><span class="mi">999</span>
+</pre></div>
+</div>
+<p>A <cite>(describe u12)</cite> shows that <cite>‘mykey</cite> is not stored in the instance.</p>
+</section>
+<section id="dependencies">
+<h3>Dependencies<a class="headerlink" href="#dependencies" title="Link to this heading">¶</a></h3>
+<p>Dependencies of one variable on another can be declared using
+<cite>declare-dependencies</cite>:</p>
+<div class="highlight-lisp notranslate"><div class="highlight"><pre><span></span><span class="nv">declare-dependencies</span><span class="w"> </span><span class="nv">kernel</span><span class="w"> </span><span class="k">&amp;rest</span><span class="w"> </span><span class="nv">vars</span><span class="w"> </span><span class="nv">[Function]</span>
+</pre></div>
+</div>
+<p>This indicates that <em>kernel</em> depends upon each of the variables in <em>vars</em>.</p>
+<div class="highlight-lisp notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="nv">declare-dependencies</span><span class="w"> </span><span class="nv">z</span><span class="w"> </span><span class="nv">x</span><span class="w"> </span><span class="nv">y</span><span class="p">)</span>
+
+<span class="w"> </span><span class="nv">=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nv">y</span><span class="w"> </span><span class="nv">x</span><span class="p">)</span>
+</pre></div>
+</div>
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">depends-on?</span> <span class="pre">exp</span> <span class="pre">&amp;rest</span> <span class="pre">vars</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">[FUNCTION]</span></span></dt>
+<dd><p>This predicate can be applied to any expression, not just to variables. It
+returns <cite>t</cite> if the exp depends on all of the variables in <cite>vars</cite>, otherwise it
+returns <cite>nil</cite>. The expression can also be a list, in which case nil is returned
+only if every element of <cite>exp</cite> is free of <cite>vars</cite>.</p>
+</dd></dl>
+
+<div class="highlight-lisp notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="nv">depends-on?</span><span class="w">  </span><span class="nv">z</span><span class="w"> </span><span class="nv">x</span><span class="p">)</span>
+
+<span class="nv">=&gt;</span><span class="w"> </span><span class="no">T</span>
+
+<span class="p">(</span><span class="nv">depends-on?</span><span class="w">  </span><span class="nv">z</span><span class="w"> </span><span class="nv">x</span><span class="w"> </span><span class="nv">y</span><span class="p">)</span>
+
+<span class="nv">=&gt;</span><span class="w"> </span><span class="no">T</span>
+
+<span class="p">(</span><span class="nv">depends-on?</span><span class="w">  </span><span class="nv">z</span><span class="w"> </span><span class="nv">u</span><span class="p">)</span>
+
+<span class="nv">=&gt;</span><span class="w"> </span><span class="no">NIL</span>
+</pre></div>
+</div>
+<p>But notice that it is enough when one variable matches! This is
+quite unfortunate (fix?)</p>
+<div class="highlight-lisp notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="nv">depends-on?</span><span class="w">  </span><span class="nv">z</span><span class="w"> </span><span class="nv">u</span><span class="w"> </span><span class="nv">x</span><span class="p">)</span>
+
+<span class="nv">=&gt;</span><span class="w"> </span><span class="no">T</span>
+</pre></div>
+</div>
+<p>Apparently we also can get the dependencies from the domain property list:
+(not documented in manual).</p>
+<div class="highlight-lisp notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="nv">get-variable-property</span><span class="w"> </span><span class="vg">*general*</span><span class="w"> </span><span class="nv">z</span><span class="w"> </span><span class="ss">:dependencies</span><span class="p">)</span>
+
+<span class="nv">=&gt;</span><span class="p">(</span><span class="nv">y</span><span class="w"> </span><span class="nv">x</span><span class="p">)</span>
+</pre></div>
+</div>
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">different-kernels</span> <span class="pre">exp</span> <span class="pre">list-of-kernels</span></span></dt>
+<dd><p>different-kernels exp list-of-kernels                             [FUNCTION]
+Returns a list of the kernels in exp that are different from those in
+list-of-kernels .</p>
+</dd></dl>
+
+<div class="highlight-lisp notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="nv">different-kernels</span><span class="w"> </span><span class="p">(</span><span class="nb">*</span><span class="w"> </span><span class="nv">z</span><span class="w"> </span><span class="nv">x</span><span class="w"> </span><span class="nv">y</span><span class="p">)</span><span class="w"> </span><span class="o">&#39;</span><span class="p">(</span><span class="nv">x</span><span class="w"> </span><span class="nv">y</span><span class="p">))</span>
+
+<span class="nv">=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nv">x</span><span class="w"> </span><span class="nv">y</span><span class="w"> </span><span class="nv">z</span><span class="w"> </span><span class="nv">X</span><span class="w"> </span><span class="nv">Y</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>not yet clear to me what’s for …</p>
+</section>
+</section>
+<section id="operators-6-4">
+<h2>Operators (6.4)<a class="headerlink" href="#operators-6-4" title="Link to this heading">¶</a></h2>
+<div class="highlight-lisp notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="nv">ge-vars</span><span class="w"> </span><span class="o">&#39;</span><span class="p">(</span><span class="nv">a</span><span class="w"> </span><span class="nv">b</span><span class="w"> </span><span class="nv">c</span><span class="p">))</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="no">NIL</span>
+
+<span class="c1">;a+b+c</span>
+<span class="p">(</span><span class="nb">+</span><span class="w"> </span><span class="nv">a</span><span class="w"> </span><span class="nv">b</span><span class="w"> </span><span class="nv">c</span><span class="p">)</span>
+
+<span class="nv">=&gt;</span><span class="w"> </span><span class="nv">c</span><span class="w"> </span><span class="nb">+</span><span class="w"> </span><span class="nv">b</span><span class="w"> </span><span class="nb">+</span><span class="w"> </span><span class="nv">a</span>
+
+<span class="c1">;a+b</span>
+<span class="p">(</span><span class="nb">+</span><span class="w"> </span><span class="nv">a</span><span class="w"> </span><span class="nv">b</span><span class="p">)</span>
+
+<span class="nv">=&gt;</span><span class="w"> </span><span class="nv">b</span><span class="w"> </span><span class="nb">+</span><span class="w"> </span><span class="nv">a</span>
+
+<span class="c1">; -a</span>
+<span class="p">(</span><span class="nb">-</span><span class="w"> </span><span class="nv">a</span><span class="p">)</span>
+
+<span class="nv">=&gt;</span><span class="w"> </span><span class="mi">-1</span><span class="w"> </span><span class="nv">a</span>
+
+<span class="c1">;a*b</span>
+<span class="p">(</span><span class="nb">*</span><span class="w"> </span><span class="nv">a</span><span class="w"> </span><span class="nv">b</span><span class="p">)</span>
+
+<span class="nv">=&gt;</span><span class="w"> </span><span class="nv">b</span><span class="w"> </span><span class="nv">a</span>
+
+<span class="c1">; a/b</span>
+<span class="p">(</span><span class="nb">/</span><span class="w"> </span><span class="nv">a</span><span class="w"> </span><span class="nv">b</span><span class="p">)</span>
+
+<span class="nv">=&gt;</span><span class="w"> </span><span class="nv">b^-1</span><span class="w"> </span><span class="nv">a</span>
+
+<span class="c1">; a^b</span>
+<span class="p">(</span><span class="nb">expt</span><span class="w"> </span><span class="nv">a</span><span class="w"> </span><span class="nv">b</span><span class="p">)</span>
+
+<span class="nv">=&gt;</span><span class="w"> </span><span class="nv">a^b</span>
+</pre></div>
+</div>
+<p>According to the manual:</p>
+<p>In addition the standard special functions are supported <cite>log sin cos tan cot
+sec csc sinh cosh tanh coth sech csch</cite></p>
+<p>Actually we have:</p>
+<div class="highlight-lisp notranslate"><div class="highlight"><pre><span></span><span class="nv">weyli::*global-functions*</span>
+
+<span class="nv">=&gt;</span><span class="p">(</span><span class="nb">acosh</span><span class="w"> </span><span class="nb">asinh</span><span class="w"> </span><span class="nb">tanh</span><span class="w"> </span><span class="nb">cosh</span><span class="w"> </span><span class="nb">sinh</span><span class="w"> </span><span class="nb">acos</span><span class="w"> </span><span class="nb">asin</span><span class="w"> </span><span class="nb">tan</span><span class="w"> </span><span class="nb">cos</span><span class="w"> </span><span class="nb">sin</span><span class="w"> </span><span class="nb">log</span><span class="w"> </span><span class="nb">imagpart</span><span class="w"> </span><span class="nb">realpart</span><span class="w"> </span><span class="nb">abs</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>that is <cite>cot, sec, csc, coth, sech, csch</cite> are not defined.</p>
+<div class="highlight-lisp notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="nb">log</span><span class="w"> </span><span class="nv">p</span><span class="p">)</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="nb">log</span><span class="p">(</span><span class="nv">p</span><span class="p">)</span>
+<span class="p">(</span><span class="nb">sin</span><span class="w"> </span><span class="nv">p</span><span class="p">)</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="nb">sin</span><span class="p">(</span><span class="nv">p</span><span class="p">)</span>
+<span class="p">(</span><span class="nb">cos</span><span class="w"> </span><span class="nv">p</span><span class="p">)</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="nb">cos</span><span class="p">(</span><span class="nv">p</span><span class="p">)</span>
+<span class="p">(</span><span class="nb">tan</span><span class="w"> </span><span class="nv">p</span><span class="p">)</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="nb">tan</span><span class="p">(</span><span class="nv">p</span><span class="p">)</span>
+
+<span class="c1">;(cot p)</span>
+<span class="c1">;(sec p)</span>
+<span class="c1">;(csc p)</span>
+
+<span class="p">(</span><span class="nb">sinh</span><span class="w"> </span><span class="nv">p</span><span class="p">)</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="nb">sinh</span><span class="p">(</span><span class="nv">p</span><span class="p">)</span>
+<span class="p">(</span><span class="nb">cosh</span><span class="w"> </span><span class="nv">p</span><span class="p">)</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="nb">cosh</span><span class="p">(</span><span class="nv">p</span><span class="p">)</span>
+<span class="p">(</span><span class="nb">tanh</span><span class="w"> </span><span class="nv">p</span><span class="p">)</span>
+<span class="nv">=&gt;tanh</span><span class="p">(</span><span class="nv">p</span><span class="p">)</span>
+
+<span class="c1">;(coth p)</span>
+<span class="c1">;(sech p)</span>
+<span class="c1">;(csch p)</span>
+
+<span class="p">(</span><span class="nv">deriv</span><span class="w"> </span><span class="p">(</span><span class="nb">tanh</span><span class="w"> </span><span class="nv">p</span><span class="p">)</span><span class="w"> </span><span class="nv">p</span><span class="p">)</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">cosh</span><span class="p">(</span><span class="nv">p</span><span class="p">))</span><span class="nv">^-2</span>
+</pre></div>
+</div>
+</section>
+<section id="tools-for-general-expressions-6-5">
+<h2>Tools for General Expressions (6.5)<a class="headerlink" href="#tools-for-general-expressions-6-5" title="Link to this heading">¶</a></h2>
+<p><em>Weyl</em> provides a number of programming tools that make writing symbolic
+programs simpler. This section discusses some of these tools.</p>
+<section id="display-tools-6-5-1">
+<h3>Display tools (6.5.1)<a class="headerlink" href="#display-tools-6-5-1" title="Link to this heading">¶</a></h3>
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">print-object</span> <span class="pre">exp</span> <span class="pre">stream</span></span></dt>
+<dd><p>This method is provided for all CLOS instances. It is used whenever an
+object is printed using princ or a related function. In Weyl, a print-object
+method is provided for classes of objects to make the objects more readable
+when debugging or when doing simple computations. The printed form produced
+by print-object cannot be read to produce the object again (as can be done
+with lists and some other Lisp expressions.</p>
+</dd></dl>
+
+<div class="highlight-lisp notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="nb">print-object</span><span class="w"> </span><span class="p">(</span><span class="nb">expt</span><span class="w"> </span><span class="nv">p</span><span class="w"> </span><span class="nv">q</span><span class="p">)</span><span class="w"> </span><span class="no">nil</span><span class="p">)</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="nv">p^q</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="s">&quot;q&quot;</span>
+</pre></div>
+</div>
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">display</span> <span class="pre">expr</span> <span class="pre">&amp;optional</span> <span class="pre">(stream</span> <span class="pre">*standard-output*)</span></span></dt>
+<dd><p>Prints the expression expr onto stream. If stream a graphics stream then a
+two dimension display will be used (not yet implemented), otherwise some
+textual display will be used.</p>
+</dd></dl>
+
+<div class="highlight-lisp notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="nv">display</span><span class="w"> </span><span class="p">(</span><span class="nb">expt</span><span class="w"> </span><span class="nv">p</span><span class="w"> </span><span class="nv">q</span><span class="p">)</span><span class="w"> </span><span class="no">nil</span><span class="p">)</span>
+<span class="w"> </span><span class="nv">=&gt;</span><span class="w"> </span><span class="nv">p^q</span>
+<span class="w"> </span><span class="nv">=&gt;</span><span class="w"> </span><span class="nv">p^q</span>
+
+<span class="w"> </span><span class="p">(</span><span class="nv">display</span><span class="w"> </span><span class="p">(</span><span class="nb">expt</span><span class="w"> </span><span class="nv">p</span><span class="w"> </span><span class="nv">q</span><span class="p">)</span><span class="w"> </span><span class="no">t</span><span class="p">)</span>
+<span class="w"> </span><span class="nv">=&gt;</span><span class="w"> </span><span class="nv">p^qp^q</span>
+</pre></div>
+</div>
+</section>
+<section id="simplification-tools-6-5-2">
+<h3>Simplification Tools (6.5.2)<a class="headerlink" href="#simplification-tools-6-5-2" title="Link to this heading">¶</a></h3>
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">simplify</span> <span class="pre">expr</span></span></dt>
+<dd><p>Performs simple simplifications of expr, 0 + x ! x and so on.</p>
+</dd></dl>
+
+<div class="highlight-lisp notranslate"><div class="highlight"><pre><span></span><span class="c1">; +-&gt; &quot;(p+q)*(p-q)&quot;</span>
+<span class="p">(</span><span class="nb">defvar</span><span class="w"> </span><span class="nv">ge1</span><span class="w"> </span><span class="p">(</span><span class="nb">*</span><span class="w"> </span><span class="p">(</span><span class="nb">+</span><span class="w"> </span><span class="nv">p</span><span class="w"> </span><span class="nv">q</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="nb">-</span><span class="w"> </span><span class="nv">p</span><span class="w"> </span><span class="nv">q</span><span class="p">)))</span>
+
+<span class="nv">=&gt;</span><span class="w"> </span><span class="nv">GE1</span>
+
+<span class="c1">; +-&gt; &quot;p^2 - q^2&quot;</span>
+<span class="p">(</span><span class="nb">defvar</span><span class="w"> </span><span class="nv">ge2</span><span class="w"> </span><span class="p">(</span><span class="nb">-</span><span class="w"> </span><span class="p">(</span><span class="nb">expt</span><span class="w"> </span><span class="nv">p</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="nb">expt</span><span class="w"> </span><span class="nv">q</span><span class="w"> </span><span class="mi">2</span><span class="p">)))</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="nv">GE2</span>
+
+<span class="nv">ge1</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="p">(</span><span class="mi">-1</span><span class="w"> </span><span class="nv">q</span><span class="w"> </span><span class="nb">+</span><span class="w"> </span><span class="nv">p</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="nv">q</span><span class="w"> </span><span class="nb">+</span><span class="w"> </span><span class="nv">p</span><span class="p">)</span>
+
+<span class="nv">ge2</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="mi">-1</span><span class="w"> </span><span class="nv">q^2</span><span class="w"> </span><span class="nb">+</span><span class="w"> </span><span class="nv">p^2</span>
+
+<span class="p">(</span><span class="nv">simplify</span><span class="w"> </span><span class="p">(</span><span class="nb">-</span><span class="w"> </span><span class="nv">ge1</span><span class="w"> </span><span class="nv">ge2</span><span class="p">))</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="p">(</span><span class="mi">-1</span><span class="w"> </span><span class="nv">q</span><span class="w"> </span><span class="nb">+</span><span class="w"> </span><span class="nv">p</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="nv">q</span><span class="w"> </span><span class="nb">+</span><span class="w"> </span><span class="nv">p</span><span class="p">)</span><span class="w"> </span><span class="nb">-</span><span class="w"> </span><span class="p">(</span><span class="mi">-1</span><span class="w"> </span><span class="nv">q^2</span><span class="w"> </span><span class="nb">+</span><span class="w"> </span><span class="nv">p^2</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>We see that the simplifier is far from perfect ;-) and needs some
+attention.</p>
+<div class="highlight-lisp notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="nv">simplify</span><span class="w"> </span><span class="p">(</span><span class="nb">-</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">(</span><span class="nb">/</span><span class="w"> </span><span class="nv">ge1</span><span class="w"> </span><span class="nv">ge2</span><span class="p">)))</span>
+
+<span class="nv">=&gt;</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="nb">-</span><span class="w"> </span><span class="p">((</span><span class="mi">-1</span><span class="w"> </span><span class="nv">q</span><span class="w"> </span><span class="nb">+</span><span class="w"> </span><span class="nv">p</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="mi">-1</span><span class="w"> </span><span class="nv">q^2</span><span class="w"> </span><span class="nb">+</span><span class="w"> </span><span class="nv">p^2</span><span class="p">)</span><span class="nv">^-1</span><span class="w"> </span><span class="p">(</span><span class="nv">q</span><span class="w"> </span><span class="nb">+</span><span class="w"> </span><span class="nv">p</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>even …</p>
+<div class="highlight-lisp notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="nv">simplify</span><span class="w"> </span><span class="p">(</span><span class="nb">-</span><span class="w"> </span><span class="p">(</span><span class="nv">expand</span><span class="w"> </span><span class="nv">ge1</span><span class="p">)</span><span class="w"> </span><span class="nv">ge2</span><span class="p">))</span>
+
+<span class="nv">=&gt;</span><span class="w"> </span><span class="mi">-1</span><span class="w"> </span><span class="nv">q^2</span><span class="w"> </span><span class="nb">+</span><span class="w"> </span><span class="nv">p^2</span><span class="w"> </span><span class="nb">-</span><span class="w"> </span><span class="p">(</span><span class="mi">-1</span><span class="w"> </span><span class="nv">q^2</span><span class="w"> </span><span class="nb">+</span><span class="w"> </span><span class="nv">p^2</span><span class="p">)</span>
+
+<span class="p">(</span><span class="nv">ge-equal</span><span class="w"> </span><span class="p">(</span><span class="nv">simplify</span><span class="w"> </span><span class="p">(</span><span class="nb">-</span><span class="w"> </span><span class="nv">ge1</span><span class="w"> </span><span class="nv">ge2</span><span class="p">))</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span>
+
+<span class="nv">=&gt;</span><span class="w"> </span><span class="no">NIL</span><span class="w"> </span><span class="ss">:-</span><span class="p">((</span>
+</pre></div>
+</div>
+<p>eventually …</p>
+<div class="highlight-lisp notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="nv">expand</span><span class="w"> </span><span class="p">(</span><span class="nb">-</span><span class="w"> </span><span class="p">(</span><span class="nv">expand</span><span class="w"> </span><span class="nv">ge1</span><span class="p">)</span><span class="w"> </span><span class="nv">ge2</span><span class="p">))</span>
+
+<span class="nv">=&gt;</span><span class="w"> </span><span class="mi">0</span>
+</pre></div>
+</div>
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">expand</span> <span class="pre">exp</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">[FUNCTION]</span></span></dt>
+<dd><p>Replaces all products of sums in exp by sums of products.</p>
+</dd></dl>
+
+<div class="highlight-lisp notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="nv">expand</span><span class="w"> </span><span class="p">(</span><span class="nb">*</span><span class="w"> </span><span class="p">(</span><span class="nb">+</span><span class="w"> </span><span class="nv">a</span><span class="w"> </span><span class="nv">b</span><span class="w"> </span><span class="nv">c</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="nb">-</span><span class="w"> </span><span class="nv">p</span><span class="w"> </span><span class="nv">q</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="nb">+</span><span class="w"> </span><span class="nv">r</span><span class="w"> </span><span class="p">(</span><span class="nb">expt</span><span class="w"> </span><span class="nv">v</span><span class="w"> </span><span class="nv">u</span><span class="p">))))</span>
+
+<span class="nv">=&gt;</span><span class="w"> </span><span class="mi">-1</span><span class="w"> </span><span class="nv">r</span><span class="w"> </span><span class="nv">q</span><span class="w"> </span><span class="nv">c</span><span class="w"> </span><span class="nb">-</span><span class="w"> </span><span class="p">(</span><span class="nv">r</span><span class="w"> </span><span class="nv">q</span><span class="w"> </span><span class="nv">b</span><span class="p">)</span><span class="w"> </span><span class="nb">-</span><span class="w"> </span><span class="p">(</span><span class="nv">r</span><span class="w"> </span><span class="nv">q</span><span class="w"> </span><span class="nv">a</span><span class="p">)</span><span class="w"> </span><span class="nb">+</span><span class="w"> </span><span class="nv">r</span><span class="w"> </span><span class="nv">p</span><span class="w"> </span><span class="nv">c</span><span class="w"> </span><span class="nb">+</span><span class="w"> </span><span class="nv">r</span><span class="w"> </span><span class="nv">p</span><span class="w"> </span><span class="nv">b</span><span class="w"> </span><span class="nb">+</span><span class="w"> </span><span class="nv">r</span><span class="w"> </span><span class="nv">p</span><span class="w"> </span><span class="nv">a</span><span class="w"> </span><span class="nb">-</span><span class="w"> </span><span class="p">(</span><span class="nv">v^u</span><span class="w"> </span><span class="nv">q</span><span class="w"> </span><span class="nv">c</span><span class="p">)</span><span class="w"> </span><span class="nb">-</span>
+<span class="w">   </span><span class="p">(</span><span class="nv">v^u</span><span class="w"> </span><span class="nv">q</span><span class="w"> </span><span class="nv">b</span><span class="p">)</span><span class="w"> </span><span class="nb">-</span><span class="w"> </span><span class="p">(</span><span class="nv">v^u</span><span class="w"> </span><span class="nv">q</span><span class="w"> </span><span class="nv">a</span><span class="p">)</span><span class="w"> </span><span class="nb">+</span><span class="w"> </span><span class="nv">v^u</span><span class="w"> </span><span class="nv">p</span><span class="w"> </span><span class="nv">c</span><span class="w"> </span><span class="nb">+</span><span class="w"> </span><span class="nv">v^u</span><span class="w"> </span><span class="nv">p</span><span class="w"> </span><span class="nv">b</span><span class="w"> </span><span class="nb">+</span><span class="w"> </span><span class="nv">v^u</span><span class="w"> </span><span class="nv">p</span><span class="w"> </span><span class="nv">a</span>
+</pre></div>
+</div>
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">ge-equal</span> <span class="pre">x</span> <span class="pre">y</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">[FUNCTION]</span></span></dt>
+<dd><p>Returns T if x and y are syntactically identical general expressions.</p>
+</dd></dl>
+
+<div class="highlight-lisp notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="nv">ge-equal</span><span class="w"> </span><span class="p">(</span><span class="nb">/</span><span class="w"> </span><span class="nv">x</span><span class="w"> </span><span class="nv">y</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="nb">*</span><span class="w"> </span><span class="nv">x</span><span class="w"> </span><span class="p">(</span><span class="nb">expt</span><span class="w">  </span><span class="nv">y</span><span class="w"> </span><span class="mi">-1</span><span class="p">)))</span>
+
+<span class="nv">=&gt;</span><span class="w"> </span><span class="no">T</span>
+</pre></div>
+</div>
+<p>one must be careful here about the meaning of “syntactically” …</p>
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">ge-great</span> <span class="pre">x</span> <span class="pre">y</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">[FUNCTION]</span></span></dt>
+<dd><p>To speed up operations like simplification of expressions, an order is
+placed on all expressions in the general representation. This ordering is
+provided by the function ge-great.</p>
+</dd></dl>
+
+<p>The function <cite>WEYL::GE-GREAT</cite> is undefined, we have to use <cite>weyli</cite>:</p>
+<div class="highlight-lisp notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="nv">weyli::ge-great</span><span class="w"> </span><span class="nv">q</span><span class="w"> </span><span class="nv">p</span><span class="p">)</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="mi">0</span>
+</pre></div>
+</div>
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">def-ge-operator</span> <span class="pre">operator</span> <span class="pre">&amp;rest</span> <span class="pre">keyword-expr-pairs</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">[Function]</span></span></dt>
+<dd><p>When a new operator is introduced this de ner should be used. It allows one
+to define the simplifier, display and equality tester functions.</p>
+</dd></dl>
+
+<hr class="docutils" />
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">deriv</span> <span class="pre">exp</span> <span class="pre">var</span> <span class="pre">&amp;rest</span> <span class="pre">vars</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">[Function]</span></span></dt>
+<dd><p>Computes the derivative of exp with respect to var and simplifies the results.
+This is done for var and each element of var . Thus the second derivative
+of exp with respect to T could be computed by: (deriv exp ‘t ‘t).</p>
+</dd></dl>
+
+<div class="highlight-lisp notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="nb">defvar</span><span class="w"> </span><span class="nv">sc</span><span class="w"> </span><span class="p">(</span><span class="nb">+</span><span class="w"> </span><span class="p">(</span><span class="nb">expt</span><span class="w"> </span><span class="p">(</span><span class="nb">sin</span><span class="w"> </span><span class="nv">p</span><span class="p">)</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="nb">expt</span><span class="w"> </span><span class="p">(</span><span class="nb">cos</span><span class="w"> </span><span class="nv">p</span><span class="p">)</span><span class="w"> </span><span class="mi">2</span><span class="p">)))</span>
+
+<span class="nv">=&gt;</span><span class="w"> </span><span class="nv">SC</span>
+
+<span class="p">(</span><span class="nv">deriv</span><span class="w"> </span><span class="nv">sc</span><span class="w"> </span><span class="nv">p</span><span class="p">)</span>
+
+<span class="w"> </span><span class="nv">=&gt;2</span><span class="w"> </span><span class="p">(</span><span class="nb">sin</span><span class="p">(</span><span class="nv">p</span><span class="p">))</span><span class="w"> </span><span class="p">(</span><span class="nb">cos</span><span class="p">(</span><span class="nv">p</span><span class="p">))</span><span class="w"> </span><span class="nb">-</span><span class="w"> </span><span class="p">(</span><span class="mi">2</span><span class="w"> </span><span class="p">(</span><span class="nb">cos</span><span class="p">(</span><span class="nv">p</span><span class="p">))</span><span class="w"> </span><span class="p">(</span><span class="nb">sin</span><span class="p">(</span><span class="nv">p</span><span class="p">)))</span>
+
+<span class="p">(</span><span class="nv">simplify</span><span class="w"> </span><span class="p">(</span><span class="nv">deriv</span><span class="w"> </span><span class="nv">sc</span><span class="w"> </span><span class="nv">p</span><span class="p">))</span>
+
+<span class="nv">=&gt;</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="p">(</span><span class="nb">sin</span><span class="p">(</span><span class="nv">p</span><span class="p">))</span><span class="w"> </span><span class="p">(</span><span class="nb">cos</span><span class="p">(</span><span class="nv">p</span><span class="p">))</span><span class="w"> </span><span class="nb">-</span><span class="w"> </span><span class="p">(</span><span class="mi">2</span><span class="w"> </span><span class="p">(</span><span class="nb">cos</span><span class="p">(</span><span class="nv">p</span><span class="p">))</span><span class="w"> </span><span class="p">(</span><span class="nb">sin</span><span class="p">(</span><span class="nv">p</span><span class="p">)))</span>
+</pre></div>
+</div>
+<p>well, advertising <em>simplifying</em> is quite exaggerated ;)</p>
+<div class="highlight-lisp notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="nv">expand</span><span class="w"> </span><span class="p">(</span><span class="nv">deriv</span><span class="w"> </span><span class="nv">sc</span><span class="w"> </span><span class="nv">p</span><span class="w"> </span><span class="p">))</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="mi">-2</span><span class="w"> </span><span class="p">(</span><span class="nb">cos</span><span class="p">(</span><span class="nv">p</span><span class="p">))</span><span class="w"> </span><span class="p">(</span><span class="nb">sin</span><span class="p">(</span><span class="nv">p</span><span class="p">))</span><span class="w"> </span><span class="nb">+</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="p">(</span><span class="nb">sin</span><span class="p">(</span><span class="nv">p</span><span class="p">))</span><span class="w"> </span><span class="p">(</span><span class="nb">cos</span><span class="p">(</span><span class="nv">p</span><span class="p">))</span>
+
+<span class="p">(</span><span class="nv">deriv</span><span class="w"> </span><span class="p">(</span><span class="nb">tanh</span><span class="w"> </span><span class="nv">p</span><span class="p">)</span><span class="w"> </span><span class="nv">p</span><span class="w"> </span><span class="nv">p</span><span class="w"> </span><span class="nv">p</span><span class="p">)</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="mi">-2</span><span class="w"> </span><span class="p">(</span><span class="nb">cosh</span><span class="p">(</span><span class="nv">p</span><span class="p">))</span><span class="nv">^-2</span><span class="w"> </span><span class="nb">+</span><span class="w"> </span><span class="mi">6</span><span class="w"> </span><span class="p">(</span><span class="nb">cosh</span><span class="p">(</span><span class="nv">p</span><span class="p">))</span><span class="nv">^-4</span><span class="w"> </span><span class="p">(</span><span class="nb">sinh</span><span class="p">(</span><span class="nv">p</span><span class="p">))</span><span class="nv">^2</span>
+
+<span class="p">(</span><span class="nv">deriv</span><span class="w"> </span><span class="p">(</span><span class="nb">expt</span><span class="w"> </span><span class="nv">q</span><span class="w"> </span><span class="p">(</span><span class="nb">tan</span><span class="w"> </span><span class="nv">p</span><span class="p">))</span><span class="w"> </span><span class="nv">p</span><span class="p">)</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="mi">-1</span><span class="w"> </span><span class="p">(</span><span class="nb">log</span><span class="p">(</span><span class="nv">q</span><span class="p">))</span><span class="w"> </span><span class="nv">q^</span><span class="p">(</span><span class="nb">tan</span><span class="p">(</span><span class="nv">p</span><span class="p">))</span><span class="w"> </span><span class="p">(</span><span class="nb">cos</span><span class="p">(</span><span class="nv">p</span><span class="p">))</span><span class="nv">^-2</span>
+
+<span class="p">(</span><span class="nv">deriv</span><span class="w"> </span><span class="p">(</span><span class="nb">log</span><span class="w"> </span><span class="p">(</span><span class="nb">cos</span><span class="w"> </span><span class="nv">p</span><span class="p">))</span><span class="w">  </span><span class="nv">p</span><span class="p">)</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="mi">-1</span><span class="w"> </span><span class="p">(</span><span class="nb">sin</span><span class="p">(</span><span class="nv">p</span><span class="p">))</span><span class="w"> </span><span class="p">(</span><span class="nb">cos</span><span class="p">(</span><span class="nv">p</span><span class="p">))</span><span class="nv">^-1</span>
+
+<span class="p">(</span><span class="nv">deriv</span><span class="w"> </span><span class="p">(</span><span class="nb">expt</span><span class="w"> </span><span class="p">(</span><span class="nb">log</span><span class="w"> </span><span class="p">(</span><span class="nb">sin</span><span class="w"> </span><span class="p">(</span><span class="nb">*</span><span class="w"> </span><span class="p">(</span><span class="nb">cos</span><span class="w"> </span><span class="nv">p</span><span class="p">)</span><span class="w"> </span><span class="nv">p</span><span class="p">)))</span><span class="w"> </span><span class="nv">p</span><span class="p">)</span><span class="w"> </span><span class="nv">p</span><span class="p">)</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">log</span><span class="p">(</span><span class="nb">log</span><span class="p">(</span><span class="nb">sin</span><span class="p">((</span><span class="nb">cos</span><span class="p">(</span><span class="nv">p</span><span class="p">))</span><span class="w"> </span><span class="nv">p</span><span class="p">))))</span><span class="w"> </span><span class="p">(</span><span class="nb">log</span><span class="p">(</span><span class="nb">sin</span><span class="p">((</span><span class="nb">cos</span><span class="p">(</span><span class="nv">p</span><span class="p">))</span><span class="w"> </span><span class="nv">p</span><span class="p">)))</span><span class="nv">^p</span><span class="w"> </span><span class="nb">+</span><span class="w"> </span><span class="p">(</span><span class="mi">-1</span><span class="w"> </span><span class="p">(</span><span class="nb">sin</span><span class="p">(</span><span class="nv">p</span><span class="p">))</span><span class="w"> </span><span class="nv">p</span><span class="w"> </span><span class="nb">+</span>
+<span class="w">   </span><span class="nb">cos</span><span class="p">(</span><span class="nv">p</span><span class="p">))</span><span class="w"> </span><span class="nv">p</span><span class="w"> </span><span class="p">(</span><span class="nb">log</span><span class="p">(</span><span class="nb">sin</span><span class="p">((</span><span class="nb">cos</span><span class="p">(</span><span class="nv">p</span><span class="p">))</span><span class="w"> </span><span class="nv">p</span><span class="p">)))</span><span class="nv">^</span><span class="p">(</span><span class="mi">-1</span><span class="w"> </span><span class="nb">+</span><span class="w"> </span><span class="nv">p</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="nb">cos</span><span class="p">((</span><span class="nb">cos</span><span class="p">(</span><span class="nv">p</span><span class="p">))</span><span class="w"> </span><span class="nv">p</span><span class="p">))</span>
+<span class="w">  </span><span class="p">(</span><span class="nb">sin</span><span class="p">((</span><span class="nb">cos</span><span class="p">(</span><span class="nv">p</span><span class="p">))</span><span class="w"> </span><span class="nv">p</span><span class="p">))</span><span class="nv">^-1</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="functions-6-6">
+<h2>Functions (6.6)<a class="headerlink" href="#functions-6-6" title="Link to this heading">¶</a></h2>
+<p>There are three different types of functions as illustrated in Figure 6.3,
+sampled-functions, ge-functions and applicable-functions. Each of these
+represent functions about which different aspects are known. To represent
+*well-known* functions, like sine, cosine and f (in the expressions f (x)),
+we use instances of the class ge-function. We are given only these functions
+names. Sometimes we know more about the functions, like their derivative or
+their expansion as a power series. This additional information is placed on
+their property lists.</p>
+<p><em>applicable-functions</em> are functions for which we have a program for computing
+their values. They are essentially lambda-expressions. Finally,
+<em>sampled-functions</em> are functions about which we know only their graph. That
+is, we are given the values of the function at certain points and mechanisms
+for interpolating those values. Each of these types of functions are
+described in more detail in the following sections.
+Each class that inherits from abstract-function includes a slot that
+indicates the number of arguments an instance of this class (i.e., functions)
+accepts. This information can be accessed using the method <cite>nargs-of</cite>.</p>
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">nargs-of</span> <span class="pre">abstract-function</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">[Function]</span></span></dt>
+<dd><p>Returns the number of arguments accepted by abstract-function.</p>
+</dd></dl>
+
+<p>Each of these types of functions can be applied to arguments to get the value
+of the function at that point. This can be done by either of the following
+two functions, which are extensions of the usual Lisp ones (and continue to
+work with Lisp arguments).</p>
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">funcall</span> <span class="pre">fun</span> <span class="pre">arg1</span> <span class="pre">arg2</span> <span class="pre">...</span> <span class="pre">argn</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">[Function]</span></span></dt>
+<dd><p>Apply fun to the specified arguments. If the number of arguments provided
+does not match the number of arguments of the function, then an error is
+signaled.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">apply</span> <span class="pre">fun</span> <span class="pre">arg1</span> <span class="pre">arg2</span> <span class="pre">:</span> <span class="pre">:</span> <span class="pre">:</span> <span class="pre">argn</span> <span class="pre">list</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">[Function]</span></span></dt>
+<dd><p>Apply fun to the k arguments specified and the elements of list. If the
+number of arguments of the function di er from k plus the length of list
+then an error is signaled.</p>
+</dd></dl>
+
+<section id="ge-functions-and-applications-6-6-1">
+<h3>GE Functions and Applications (6.6.1)<a class="headerlink" href="#ge-functions-and-applications-6-6-1" title="Link to this heading">¶</a></h3>
+<p>The most commonly used type of function in Weyl is <em>ge-function</em>. These are
+functions with <em>well-known</em> names. The easiest way to generate examples of
+<cite>ge-functions</cite> is to invoke the Lisp function with the same name. For instance,</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="p">(</span><span class="n">setq</span> <span class="n">appl</span> <span class="p">(</span><span class="n">sin</span> <span class="s1">&#39;x))</span>
+<span class="n">sin</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This expression <cite>sin x</cite> is not a <cite>ge-function</cite>, but a <cite>ge-application</cite>. It consists
+of two pieces, a function and an argument list. These pieces can be extracted
+using the functions <cite>funct-of</cite> and <cite>args-of</cite>.</p>
+<div class="highlight-lisp notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="nb">defvar</span><span class="w"> </span><span class="nv">appl</span><span class="w"> </span><span class="p">(</span><span class="nb">sin</span><span class="w"> </span><span class="ss">&#39;x</span><span class="p">))</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="nv">APPL</span>
+</pre></div>
+</div>
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">funct-of</span> <span class="pre">application</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">[Function]</span></span></dt>
+<dd><p>Returns the ge-function in the functional position of application.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">args-of</span> <span class="pre">application</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">[Function]</span></span></dt>
+<dd><p>Returns a list of the arguments of application.</p>
+</dd></dl>
+
+<p>For instance, using appl created above, we have</p>
+<div class="highlight-lisp notranslate"><div class="highlight"><pre><span></span><span class="w"> </span><span class="nb">&gt;</span><span class="w"> </span><span class="p">(</span><span class="nv">funct-of</span><span class="w"> </span><span class="nv">appl</span><span class="p">)</span>
+<span class="nb">sin</span>
+<span class="w"> </span><span class="nb">&gt;</span><span class="w"> </span><span class="p">(</span><span class="nv">args-of</span><span class="w"> </span><span class="nv">appl</span><span class="p">)</span>
+<span class="p">(</span><span class="nv">x</span><span class="p">)</span>
+
+<span class="p">(</span><span class="nv">funct-of</span><span class="w"> </span><span class="nv">appl</span><span class="p">)</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="nb">sin</span>
+
+<span class="p">(</span><span class="nv">args-of</span><span class="w"> </span><span class="nv">appl</span><span class="p">)</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nv">x</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The <cite>ge-function</cite> can be used with <cite>funcall</cite> and <cite>apply</cite> to create new applications.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span> <span class="o">&gt;</span> <span class="p">(</span><span class="n">funcall</span> <span class="p">(</span><span class="n">funct</span><span class="o">-</span><span class="n">of</span> <span class="n">appl</span><span class="p">)</span> <span class="p">(</span><span class="n">expt</span> <span class="s1">&#39;y 2))</span>
+<span class="n">sin</span><span class="p">(</span><span class="n">y</span><span class="o">^</span><span class="mi">2</span><span class="p">)</span>
+<span class="o">&gt;</span> <span class="p">(</span><span class="n">apply</span> <span class="p">(</span><span class="n">funct</span><span class="o">-</span><span class="n">of</span> <span class="n">appl</span><span class="p">)</span> <span class="p">(</span><span class="nb">list</span> <span class="s1">&#39;y))</span>
+ <span class="n">sin</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-lisp notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="nb">funcall</span><span class="w"> </span><span class="p">(</span><span class="nv">funct-of</span><span class="w"> </span><span class="nv">appl</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="nb">expt</span><span class="w"> </span><span class="ss">&#39;y</span><span class="w"> </span><span class="mi">2</span><span class="p">))</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="nb">sin</span><span class="p">(</span><span class="nv">y^2</span><span class="p">)</span>
+
+<span class="p">(</span><span class="nb">apply</span><span class="w"> </span><span class="p">(</span><span class="nv">funct-of</span><span class="w"> </span><span class="nv">appl</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="nb">list</span><span class="w"> </span><span class="ss">&#39;y</span><span class="p">))</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="nb">sin</span><span class="p">(</span><span class="nv">y</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Like all classes that inherit from ge-function, instances of
+<cite>abstract-function</cite> handle the <cite>nargs-of</cite> method.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="p">(</span><span class="n">nargs</span><span class="o">-</span><span class="n">of</span> <span class="p">(</span><span class="n">funct</span><span class="o">-</span><span class="n">of</span> <span class="n">appl</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="highlight-lisp notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="nv">nargs-of</span><span class="w"> </span><span class="p">(</span><span class="nv">funct-of</span><span class="w"> </span><span class="nv">appl</span><span class="p">))</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="mi">1</span>
+</pre></div>
+</div>
+<p>In addition to information about the number of arguments accepted by a
+function, we can also indicate the function’s derivative. This is done
+using the following function:</p>
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">declare-derivative</span> <span class="pre">func</span> <span class="pre">args</span> <span class="pre">&amp;body</span> <span class="pre">body</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">[Function]</span></span></dt>
+<dd><p>This form is used to de ne the derivative of func. The body of this form
+can do any computation it wants on the arguments of func. For instance,
+the derivative of sin and cosine are de ned as follows:</p>
+</dd></dl>
+
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">declare</span><span class="o">-</span><span class="n">derivative</span> <span class="n">sin</span> <span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="n">var</span>
+   <span class="p">(</span><span class="o">*</span> <span class="p">(</span><span class="n">deriv</span> <span class="n">x</span> <span class="n">var</span><span class="p">)</span> <span class="p">(</span><span class="n">cos</span> <span class="n">x</span><span class="p">)))</span>
+
+ <span class="p">(</span><span class="n">declare</span><span class="o">-</span><span class="n">derivative</span> <span class="n">cos</span> <span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="n">var</span>
+   <span class="p">(</span><span class="o">*</span> <span class="p">(</span><span class="o">-</span> <span class="p">(</span><span class="n">deriv</span> <span class="n">x</span> <span class="n">var</span><span class="p">))</span> <span class="p">(</span><span class="n">sin</span> <span class="n">x</span><span class="p">)))</span>
+</pre></div>
+</div>
+<p>With these definitions, which are already in Weyl, derivatives of general
+expressions involving sine and cosine can be performed:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="p">(</span><span class="n">deriv</span> <span class="p">(</span><span class="o">*</span> <span class="p">(</span><span class="n">sin</span> <span class="s1">&#39;x) (cos &#39;</span><span class="n">x</span><span class="p">))</span> <span class="s1">&#39;x)</span>
+<span class="p">(</span><span class="n">cos</span><span class="p">(</span><span class="n">x</span><span class="p">))</span><span class="o">^</span><span class="mi">2</span> <span class="o">-</span> <span class="p">(</span><span class="n">sin</span><span class="p">(</span><span class="n">x</span><span class="p">))</span><span class="o">^</span><span class="mi">2</span>
+</pre></div>
+</div>
+<p>Indeed,</p>
+<div class="highlight-lisp notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="nv">deriv</span><span class="w"> </span><span class="p">(</span><span class="nb">*</span><span class="w"> </span><span class="p">(</span><span class="nb">sin</span><span class="w"> </span><span class="ss">&#39;x</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="nb">cos</span><span class="w"> </span><span class="ss">&#39;x</span><span class="p">))</span><span class="w"> </span><span class="ss">&#39;x</span><span class="p">)</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">cos</span><span class="p">(</span><span class="nv">x</span><span class="p">))</span><span class="nv">^2</span><span class="w"> </span><span class="nb">-</span><span class="w"> </span><span class="p">(</span><span class="nb">sin</span><span class="p">(</span><span class="nv">x</span><span class="p">))</span><span class="nv">^2</span>
+</pre></div>
+</div>
+</section>
+<section id="applicable-functions-6-6-2">
+<h3>Applicable functions (6.6.2)<a class="headerlink" href="#applicable-functions-6-6-2" title="Link to this heading">¶</a></h3>
+<p>Applicable functions are a mechanism to enable manipulation of anonymous
+functions. In languages like Scheme and Common Lisp they correspond to
+lambda-expressions. One of the useful features of Weyl is that one can
+perform arithmetic operations on functions. This often forces us to produce
+applicable functions. For instance,</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="p">(</span><span class="o">+</span> <span class="p">(</span><span class="n">funct</span><span class="o">-</span><span class="n">of</span> <span class="p">(</span><span class="n">sin</span> <span class="s1">&#39;x)) (funct-of (cos &#39;</span><span class="n">x</span><span class="p">)))</span>
+<span class="p">(</span><span class="k">lambda</span> <span class="p">(</span><span class="n">v</span><span class="mf">.1</span><span class="p">)</span> <span class="n">sin</span><span class="p">(</span><span class="n">v</span><span class="mf">.1</span><span class="p">)</span> <span class="o">+</span> <span class="n">cos</span><span class="p">(</span><span class="n">v</span><span class="mf">.1</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>To explicitly create an applicable function, the function
+<cite>make-applicable-function</cite> is used.</p>
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">make-applicable-function</span> <span class="pre">args</span> <span class="pre">body</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">[Function]</span></span></dt>
+<dd><p>Create an applicable function. The variables used in args are replaced by
+newly generated variables, and the uses of the variables in body are
+similarly replaced.</p>
+</dd></dl>
+
+<p>Like other functions, one can differentiate applicable functions.</p>
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">deriv</span> <span class="pre">function</span> <span class="pre">integer1</span> <span class="pre">integer2</span> <span class="pre">...</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">[Function]</span></span></dt>
+<dd><p>Returns the function obtained by taking the positional derivative of function
+with respect to the given positions.</p>
+</dd></dl>
+
+<p>For example:</p>
+<p><strong>WRONG</strong> in manual: make-applicable-function does not exist, but
+<cite>weyli::make-app-function</cite> in <cite>functions.lisp</cite></p>
+<div class="highlight-lisp notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="nb">defvar</span><span class="w"> </span><span class="nv">f1</span><span class="w"> </span><span class="p">(</span><span class="nv">weyli::make-app-function</span><span class="w"> </span><span class="o">&#39;</span><span class="p">(</span><span class="nv">u</span><span class="w"> </span><span class="nv">v</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="nb">+</span><span class="w"> </span><span class="p">(</span><span class="nb">*</span><span class="w"> </span><span class="ss">&#39;u</span><span class="w"> </span><span class="ss">&#39;v</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="nb">*</span><span class="w"> </span><span class="ss">&#39;u</span><span class="w"> </span><span class="ss">&#39;u</span><span class="w"> </span><span class="ss">&#39;u</span><span class="p">))))</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="nv">F1</span>
+
+<span class="nv">f1</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="p">(</span><span class="k">lambda</span><span class="w"> </span><span class="p">(</span><span class="nv">v.1</span><span class="w"> </span><span class="nv">v.2</span><span class="p">)</span><span class="w"> </span><span class="nv">v.1^3</span><span class="w"> </span><span class="nb">+</span><span class="w"> </span><span class="nv">v.2</span><span class="w"> </span><span class="nv">v.1</span><span class="p">)</span>
+
+<span class="p">(</span><span class="nv">deriv</span><span class="w"> </span><span class="nv">f1</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="p">(</span><span class="k">lambda</span><span class="w"> </span><span class="p">(</span><span class="nv">v.1</span><span class="w"> </span><span class="nv">v.2</span><span class="p">)</span><span class="w"> </span><span class="nv">v.1</span><span class="p">)</span>
+
+<span class="p">(</span><span class="nv">deriv</span><span class="w"> </span><span class="nv">f1</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="p">(</span><span class="k">lambda</span><span class="w"> </span><span class="p">(</span><span class="nv">v.1</span><span class="w"> </span><span class="nv">v.2</span><span class="p">)</span><span class="w"> </span><span class="nv">v.2</span><span class="w"> </span><span class="nb">+</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="nv">v.1^2</span><span class="p">)</span>
+
+<span class="p">(</span><span class="nv">deriv</span><span class="w"> </span><span class="nv">f1</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="p">(</span><span class="k">lambda</span><span class="w"> </span><span class="p">(</span><span class="nv">v.1</span><span class="w"> </span><span class="nv">v.2</span><span class="p">)</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The example given in the manual:</p>
+<div class="highlight-lisp notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="nb">defvar</span><span class="w"> </span><span class="nv">f0</span><span class="w"> </span><span class="p">(</span><span class="nv">make-app-function</span><span class="w"> </span><span class="o">&#39;</span><span class="p">(</span><span class="nv">x</span><span class="w"> </span><span class="nv">y</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="nb">+</span><span class="w"> </span><span class="p">(</span><span class="nb">*</span><span class="w"> </span><span class="ss">&#39;x</span><span class="w"> </span><span class="ss">&#39;y</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="nb">*</span><span class="w"> </span><span class="ss">&#39;y</span><span class="w"> </span><span class="ss">&#39;y</span><span class="p">))))</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="nv">F0</span>
+
+<span class="nv">f0</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="p">(</span><span class="k">lambda</span><span class="w"> </span><span class="p">(</span><span class="nv">v.1</span><span class="w"> </span><span class="nv">v.2</span><span class="p">)</span><span class="w"> </span><span class="nv">v.2^2</span><span class="w"> </span><span class="nb">+</span><span class="w"> </span><span class="nv">v.2</span><span class="w"> </span><span class="nv">v.1</span><span class="p">)</span>
+
+<span class="p">(</span><span class="nv">deriv</span><span class="w"> </span><span class="nv">f0</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="p">(</span><span class="k">lambda</span><span class="w"> </span><span class="p">(</span><span class="nv">v.1</span><span class="w"> </span><span class="nv">v.2</span><span class="p">)</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="nv">v.2</span><span class="w"> </span><span class="nb">+</span><span class="w"> </span><span class="nv">v.1</span><span class="p">)</span>
+
+<span class="p">(</span><span class="nv">deriv</span><span class="w"> </span><span class="nv">f0</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span>
+<span class="nv">=&gt;</span>
+<span class="c1">;debugger invoked on a SIMPLE-ERROR @7B5FACF1B4CD in thread</span>
+<span class="c1">;#&lt;THREAD &quot;main thread&quot; RUNNING {10048C8253}&gt;:</span>
+<span class="c1">;  Cannot take deriv of (lambda (v.1 v.2) v.2^2 + v.2 v.1) and 2</span>
+</pre></div>
+</div>
+<p>however</p>
+<div class="highlight-lisp notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="nv">deriv</span><span class="w"> </span><span class="nv">f0</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="p">(</span><span class="k">lambda</span><span class="w"> </span><span class="p">(</span><span class="nv">v.1</span><span class="w"> </span><span class="nv">v.2</span><span class="p">)</span><span class="w"> </span><span class="nv">v.2</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Therefore, contrary to the manual, <cite>derivs</cite> are zero based now. Hmm, maybe
+we should change this.</p>
+</section>
+<section id="sampled-functions-6-6-3">
+<h3>Sampled Functions (6.6.3)<a class="headerlink" href="#sampled-functions-6-6-3" title="Link to this heading">¶</a></h3>
+<p>nothing in manual, tbw.</p>
+</section>
+<section id="substitution">
+<h3>Substitution<a class="headerlink" href="#substitution" title="Link to this heading">¶</a></h3>
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">substitute</span> <span class="pre">value</span> <span class="pre">var</span> <span class="pre">expr</span> <span class="pre">&amp;rest</span> <span class="pre">ignore</span>&#160;&#160;&#160;&#160; <span class="pre">[FUNCTION]</span></span></dt>
+<dd><p>Substitutes value for each occurrence of var in expr. If value
+is a list, it is interpreted as a set of values to be substituted in
+parallel for the variables in var. The values being substituted must
+be either elements of the domain of polynomial or its coefficient domain.
+still valid? To review …</p>
+</dd></dl>
+
+<div class="highlight-lisp notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="nb">documentation</span><span class="w"> </span><span class="ss">&#39;substitute</span><span class="w"> </span><span class="ss">&#39;function</span><span class="p">)</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="s">&quot;Extend the common lisp SUBSTITUTE function.&quot;</span>
+
+<span class="p">(</span><span class="nb">substitute</span><span class="w"> </span><span class="nv">q</span><span class="w"> </span><span class="nv">p</span><span class="w"> </span><span class="p">(</span><span class="nb">sin</span><span class="w"> </span><span class="nv">p</span><span class="p">))</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="nb">sin</span><span class="p">(</span><span class="nv">q</span><span class="p">)</span>
+
+<span class="p">(</span><span class="nb">substitute</span><span class="w"> </span><span class="p">(</span><span class="nb">expt</span><span class="w"> </span><span class="nv">x</span><span class="w"> </span><span class="nv">q</span><span class="p">)</span><span class="w">  </span><span class="nv">p</span><span class="w"> </span><span class="p">(</span><span class="nb">sin</span><span class="w"> </span><span class="nv">p</span><span class="p">))</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="nb">sin</span><span class="p">(</span><span class="nv">x^q</span><span class="p">)</span>
+
+<span class="p">(</span><span class="nb">substitute</span><span class="w"> </span><span class="p">(</span><span class="nb">+</span><span class="w"> </span><span class="nv">a</span><span class="w"> </span><span class="nv">b</span><span class="p">)</span><span class="w">  </span><span class="nv">p</span><span class="w"> </span><span class="p">(</span><span class="nb">expt</span><span class="w"> </span><span class="nv">y</span><span class="w">  </span><span class="p">(</span><span class="nb">*</span><span class="w"> </span><span class="nv">p</span><span class="w"> </span><span class="nv">p</span><span class="p">)))</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="nv">y^</span><span class="p">(</span><span class="nv">b</span><span class="w"> </span><span class="nb">+</span><span class="w"> </span><span class="nv">a</span><span class="p">)</span><span class="nv">^2</span>
+</pre></div>
+</div>
+</section>
+<section id="equations">
+<h3>Equations<a class="headerlink" href="#equations" title="Link to this heading">¶</a></h3>
+<div class="highlight-lisp notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="nb">defvar</span><span class="w"> </span><span class="nv">eq1</span><span class="w"> </span><span class="p">(</span><span class="nb">make-instance</span><span class="w"> </span><span class="ss">&#39;weyli::ge-eqn=</span><span class="w"> </span><span class="ss">:lhs</span><span class="w"> </span><span class="p">(</span><span class="nb">+</span><span class="w"> </span><span class="nv">p</span><span class="w"> </span><span class="nv">q</span><span class="p">)</span><span class="w"> </span><span class="ss">:rhs</span><span class="w"> </span><span class="p">(</span><span class="nb">expt</span><span class="w"> </span><span class="nv">p</span><span class="w"> </span><span class="nv">q</span><span class="p">)))</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="nv">EQ1</span>
+
+<span class="nv">EQ1</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="nv">q</span><span class="w"> </span><span class="nb">+</span><span class="w"> </span><span class="nv">p</span><span class="w"> </span><span class="nb">=</span><span class="w"> </span><span class="nv">p^q</span>
+
+<span class="p">(</span><span class="nb">slot-value</span><span class="w"> </span><span class="nv">eq1</span><span class="w"> </span><span class="ss">&#39;weyli::lhs</span><span class="p">)</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="nv">q</span><span class="w"> </span><span class="nb">+</span><span class="w"> </span><span class="nv">p</span>
+
+<span class="p">(</span><span class="nv">wtype</span><span class="w"> </span><span class="nv">eq1</span><span class="p">)</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="nv">WEYLI::GE-EQN=</span>
+</pre></div>
+</div>
+<div class="highlight-lisp notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="nb">defvar</span><span class="w"> </span><span class="nv">eq2</span><span class="w"> </span><span class="p">(</span><span class="nb">make-instance</span><span class="w"> </span><span class="ss">&#39;weyli::ge-eqn&gt;</span><span class="w"> </span><span class="ss">:lhs</span><span class="w"> </span><span class="p">(</span><span class="nb">+</span><span class="w"> </span><span class="nv">p</span><span class="w"> </span><span class="nv">q</span><span class="p">)</span><span class="w"> </span><span class="ss">:rhs</span><span class="w"> </span><span class="p">(</span><span class="nb">expt</span><span class="w"> </span><span class="nv">p</span><span class="w"> </span><span class="nv">q</span><span class="p">)))</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="nv">EQ2</span>
+
+<span class="nv">eq2</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="nv">q</span><span class="w"> </span><span class="nb">+</span><span class="w"> </span><span class="nv">p</span><span class="w"> </span><span class="nb">&gt;</span><span class="w"> </span><span class="nv">p^q</span>
+
+<span class="p">(</span><span class="nv">lhs-of</span><span class="w"> </span><span class="nv">eq2</span><span class="p">)</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="nv">q</span><span class="w"> </span><span class="nb">+</span><span class="w"> </span><span class="nv">p</span>
+
+<span class="p">(</span><span class="nb">defvar</span><span class="w"> </span><span class="nv">eq3</span><span class="w"> </span><span class="p">(</span><span class="nb">make-instance</span><span class="w"> </span><span class="ss">&#39;weyli::ge-eqn&gt;=</span><span class="w"> </span><span class="ss">:lhs</span><span class="w"> </span><span class="p">(</span><span class="nb">+</span><span class="w"> </span><span class="nv">p</span><span class="w"> </span><span class="nv">q</span><span class="p">)</span><span class="w"> </span><span class="ss">:rhs</span><span class="w"> </span><span class="p">(</span><span class="nb">expt</span><span class="w"> </span><span class="nv">p</span><span class="w"> </span><span class="nv">q</span><span class="p">)))</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="nv">EQ3</span>
+
+<span class="nv">eq3</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="nv">q</span><span class="w"> </span><span class="nb">+</span><span class="w"> </span><span class="nv">p</span><span class="w"> </span><span class="nb">&gt;=</span><span class="w"> </span><span class="nv">p^q</span>
+
+<span class="p">(</span><span class="nv">rhs-of</span><span class="w"> </span><span class="nv">eq3</span><span class="p">)</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="nv">p^q</span>
+</pre></div>
+</div>
+<div class="highlight-lisp notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="nb">describe</span><span class="w"> </span><span class="p">(</span><span class="nv">wtype</span><span class="w"> </span><span class="nv">eq1</span><span class="p">))</span>
+
+<span class="c1">;WEYLI::GE-EQN=</span>
+<span class="c1">;  [symbol]</span>
+<span class="c1">;</span>
+<span class="c1">;GE-EQN= names the standard-class #&lt;STANDARD-CLASS WEYLI::GE-EQN=&gt;:</span>
+<span class="c1">;  Class precedence-list: WEYLI::GE-EQN=, WEYLI::GE-EQUATION,</span>
+<span class="c1">;                         WEYLI::GENERAL-EXPRESSION,</span>
+<span class="c1">;                         WEYLI::GE-OR-NUMERIC, WEYLI::DOMAIN-ELEMENT,</span>
+<span class="c1">;                         STANDARD-OBJECT, SB-PCL::SLOT-OBJECT, T</span>
+<span class="c1">;  Direct superclasses: WEYLI::GE-EQUATION</span>
+<span class="c1">;  No subclasses.</span>
+<span class="c1">;  No direct slots.</span>
+<span class="c1">;*</span>
+
+<span class="p">(</span><span class="nb">describe</span><span class="w"> </span><span class="ss">&#39;WEYLI::GE-EQUATION</span><span class="p">)</span>
+
+<span class="c1">;WEYLI::GE-EQUATION</span>
+<span class="c1">;  [symbol]</span>
+<span class="c1">;</span>
+<span class="c1">;GE-EQUATION names the standard-class #&lt;STANDARD-CLASS WEYLI::GE-EQUATION&gt;:</span>
+<span class="c1">;  Direct superclasses: WEYLI::GENERAL-EXPRESSION</span>
+<span class="c1">;  Direct subclasses: WEYLI::GE-EQN&gt;=, WEYLI::GE-EQN&gt;, WEYLI::GE-EQN=</span>
+<span class="c1">;  Not yet finalized.</span>
+<span class="c1">;  Direct slots:</span>
+<span class="c1">;    WEYLI::LHS</span>
+<span class="c1">;      Initargs: :LHS</span>
+<span class="c1">;      Readers: LHS-OF</span>
+<span class="c1">;      Writers: (SETF LHS-OF)</span>
+<span class="c1">;    WEYLI::RHS</span>
+<span class="c1">;      Initargs: :RHS</span>
+<span class="c1">;      Readers: RHS-OF</span>
+<span class="c1">;      Writers: (SETF RHS-OF)</span>
+<span class="c1">;*</span>
+</pre></div>
+</div>
+<p>; Actually there are constructors in <cite>general.lisp</cite> for equations:</p>
+<div class="highlight-lisp notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="nv">weyli::make-ge-eqn=</span><span class="w">  </span><span class="vg">*general*</span><span class="w"> </span><span class="p">(</span><span class="nb">+</span><span class="w"> </span><span class="nv">p</span><span class="w"> </span><span class="nv">q</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="nb">expt</span><span class="w"> </span><span class="nv">p</span><span class="w"> </span><span class="nv">q</span><span class="p">))</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="nv">q</span><span class="w"> </span><span class="nb">+</span><span class="w"> </span><span class="nv">p</span><span class="w"> </span><span class="nb">=</span><span class="w"> </span><span class="nv">p^q</span>
+
+<span class="p">(</span><span class="nv">weyli::make-ge-eqn&gt;</span><span class="w">  </span><span class="vg">*general*</span><span class="w"> </span><span class="p">(</span><span class="nb">+</span><span class="w"> </span><span class="nv">p</span><span class="w"> </span><span class="nv">q</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="nb">expt</span><span class="w"> </span><span class="nv">p</span><span class="w"> </span><span class="nv">q</span><span class="p">))</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="nv">q</span><span class="w"> </span><span class="nb">+</span><span class="w"> </span><span class="nv">p</span><span class="w"> </span><span class="nb">&gt;</span><span class="w"> </span><span class="nv">p^q</span>
+
+<span class="p">(</span><span class="nv">weyli::make-ge-eqn&gt;=</span><span class="w">  </span><span class="vg">*general*</span><span class="w"> </span><span class="p">(</span><span class="nb">+</span><span class="w"> </span><span class="nv">p</span><span class="w"> </span><span class="nv">q</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="nb">expt</span><span class="w"> </span><span class="nv">p</span><span class="w"> </span><span class="nv">q</span><span class="p">))</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="nv">q</span><span class="w"> </span><span class="nb">+</span><span class="w"> </span><span class="nv">p</span><span class="w"> </span><span class="nb">&gt;=</span><span class="w"> </span><span class="nv">p^q</span>
+</pre></div>
+</div>
+<p>special for *general* in <cite>general.lisp</cite> as well (somehow redundant …??)
+However, here we do <em>not</em> have to use prefix <cite>weyli::</cite></p>
+<div class="highlight-lisp notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="nv">eqn&gt;=</span><span class="w">  </span><span class="p">(</span><span class="nb">+</span><span class="w"> </span><span class="nv">p</span><span class="w"> </span><span class="nv">q</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="nb">expt</span><span class="w"> </span><span class="nv">p</span><span class="w"> </span><span class="nv">q</span><span class="p">))</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="nv">q</span><span class="w"> </span><span class="nb">+</span><span class="w"> </span><span class="nv">p</span><span class="w"> </span><span class="nb">&gt;=</span><span class="w"> </span><span class="nv">p^q</span>
+
+<span class="p">(</span><span class="nv">eqn=</span><span class="w">  </span><span class="p">(</span><span class="nb">+</span><span class="w"> </span><span class="nv">p</span><span class="w"> </span><span class="nv">q</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="nb">expt</span><span class="w"> </span><span class="nv">p</span><span class="w"> </span><span class="nv">q</span><span class="p">))</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="nv">q</span><span class="w"> </span><span class="nb">+</span><span class="w"> </span><span class="nv">p</span><span class="w"> </span><span class="nb">=</span><span class="w"> </span><span class="nv">p^q</span>
+</pre></div>
+</div>
+</section>
+<section id="ge-function">
+<h3>GE-FUNCTION<a class="headerlink" href="#ge-function" title="Link to this heading">¶</a></h3>
+<p>Create a function f of two variables in domain *general*</p>
+<div class="highlight-lisp notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="nb">defvar</span><span class="w"> </span><span class="nv">f</span><span class="w"> </span><span class="p">(</span><span class="nv">weyli::make-function</span><span class="w"> </span><span class="vg">*general*</span><span class="w"> </span><span class="ss">&#39;f</span><span class="w"> </span><span class="mi">2</span><span class="p">))</span>
+<span class="p">(</span><span class="nv">wtype</span><span class="w"> </span><span class="nv">f</span><span class="p">)</span><span class="w"> </span><span class="c1">;-&gt; WEYLI::GE-FUNCTION</span>
+<span class="p">(</span><span class="nb">describe</span><span class="w"> </span><span class="nv">f</span><span class="p">)</span><span class="w"> </span><span class="c1">; ....</span>
+<span class="p">(</span><span class="nv">derivs-of</span><span class="w"> </span><span class="nv">f</span><span class="p">)</span><span class="w"> </span><span class="c1">;-&gt; nil</span>
+
+<span class="p">(</span><span class="nv">weyli::make-ge-funct</span><span class="w"> </span><span class="vg">*general*</span><span class="w"> </span><span class="ss">&#39;g</span><span class="p">)</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="nv">g</span><span class="p">()</span>
+
+<span class="p">(</span><span class="nb">defvar</span><span class="w"> </span><span class="nv">h</span><span class="w"> </span><span class="p">(</span><span class="nv">weyli::make-ge-funct</span><span class="w"> </span><span class="vg">*general*</span><span class="w"> </span><span class="ss">&#39;h</span><span class="w"> </span><span class="nv">p</span><span class="w">  </span><span class="p">))</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="nv">H</span><span class="w"> </span><span class="nb">=</span><span class="w"> </span><span class="nv">h</span><span class="p">(</span><span class="nv">p</span><span class="p">)</span>
+
+<span class="p">(</span><span class="nv">deriv</span><span class="w"> </span><span class="nv">h</span><span class="w"> </span><span class="nv">p</span><span class="p">)</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="nv">h_{0}</span><span class="p">(</span><span class="nv">p</span><span class="p">)</span>
+
+<span class="p">(</span><span class="nv">deriv</span><span class="w"> </span><span class="nv">h</span><span class="w"> </span><span class="nv">p</span><span class="w"> </span><span class="nv">p</span><span class="w"> </span><span class="nv">q</span><span class="p">)</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="mi">0</span>
+
+<span class="p">(</span><span class="nv">deriv</span><span class="w"> </span><span class="nv">h</span><span class="w"> </span><span class="nv">p</span><span class="w"> </span><span class="nv">p</span><span class="w"> </span><span class="p">)</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="nv">h_{00}</span><span class="p">(</span><span class="nv">p</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="getting-started.html" class="btn btn-neutral float-left" title="Getting Started" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, SimLab Group &amp; Weyl enthusiasts.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
