@@ -33,9 +33,46 @@
           (loop for s in terms do
              (format t "~3A ~45A ~A ~%" (incf nr) s (wtype s))))
   (format t "~v@{~A~:*~}~%" ll "-"))
-              
-
+ 
+ 
+(defun ge-plus-or-minus? (obj)
+  (let ((wt (wtype obj)))
+    (or (eql wt 'weyli::ge-plus) (eql wt 'weyli::ge-times))))
+ 
+; doesn't work in SBCL 
+;(defmethod num-of-terms ((ge (satisfies ge-plus-or-minus?)))
+;  (length (terms-of ge)))
   
+(defmethod num-of-terms ((ge weyli::ge-plus)) (length (terms-of ge)))
+(defmethod num-of-terms ((ge weyli::ge-times)) (length (terms-of ge)))
 
+(defmethod get-term ((ge weyli::ge-plus) k)
+  (if (<= k (num-of-terms ge)) (nth (- k 1) (terms-of ge)) nil))
+  
+(defmethod get-term ((ge weyli::ge-times) k)
+  (if (<= k (num-of-terms ge)) (nth (- k 1) (terms-of ge)) nil))
 
+;(WTYPE (get-term g12 1))
+;WEYLI::GE-TIMES
+;*
+;(expand (get-term g12 1)) -> DOES NOT EXPAND -1*(...)
+
+;(print-terms (get-term g12 1))
+
+;Terms of: GE-TIMES
+;=================================================================
+;#   Term                                          Type
+;-----------------------------------------------------------------
+;1   -1                                            RATIONAL-INTEGER
+;2   (y + x)^3 + 2 (1 - q^2)^-1 p + a^r            GE-PLUS
+;-----------------------------------------------------------------
+;NIL
+;*
+
+(weyli::expand-product (get-term g12 1))
+; (-1 (y + x)^3 -2 (1 - q^2)^-1 p -1 a^r)
+; ok
+
+(defun simp (expr)
+  (simplify (expand expr)))
 
