@@ -193,8 +193,8 @@
 ; (-1 (y + x)^3 -2 (1 - q^2)^-1 p -1 a^r)
 ; ok
 
-(defun simp (expr)
-  (simplify (expand expr)))
+;(defun simp (expr)
+;  (simplify (expand expr)))
 
 ; (expt 2 p) --> No way to raise 2 to the p power
 (make-ge-expt *general* 2 p)  ; ok
@@ -223,18 +223,65 @@
 ;             (let ((a (car el)) (b (cdr el)))
           
 ; Example: (defvar xy (* (expt 2 p) (expt x q) (expt 3 p) (expt y q)))
-; (pick-exps (terms-of ab)) --> ((q . y) (q . x) (p . 3) (p . 2))     
+; (pick-exps (terms-of xy)) --> ((q . y) (q . x) (p . 3) (p . 2))   
+; * (combine-picks pxy)
+; (((q . y) (q . x)) ((p . 2) (p . 3)))
+; (create-expts (combine-picks (pick-exps (terms-of xy2))))
+; y^q x^2 3^y 2^p
+; *
+;* (simp-again xy)
+;(y x)^q 6^p
+;*
+
 (defun pick-exps (x)
-  "Input: x a list of ge-expt." 
+  "Input: x a list of ge-expt. Returns a list of conses (exp . base)." 
   (loop for s in x collect (cons (exponent-of s) (base-of s))))
   
 (defun combine-picks (x)
-  "Input: x a list of conses (exp . base)."
+  "Input: x a list of conses (exp . base). Returns a list of lists where
+   each sublist have (exp . base) elements with the same exp."
   (if (null x) (return-from combine-picks))
-  (let* ((a (pop x))
-         (r (loop for s in x collect 
-           (if (eql (car a) (car s)) 
-             (progn (delete s x :test #'equal) s)))))
-           (push a r)
-           (nconc (list r) (combine-picks x))))
+  (let  ((a (pop x))
+         (b '())
+         (c '()))
+         (loop for s in x do 
+           (if (ge-equal (car a) (car s))   ;; not eql!
+             (push s b) (push s c)))
+           (push a b)
+           (nconc (list b) (combine-picks c))))
 
+(defun create-expts (x)
+  "Input: a list[3] of (exp . base) where each sublist has equal exp."
+  (let ((r nil))
+    (loop for s in x do
+      (let ((e (caar s))
+          (b (reduce #'(lambda (u v) (* u v)) (mapcar #'cdr s))))
+          (push (expt (expand b) e) r)))
+    (reduce #'(lambda (u v) (* u v)) r)))
+    
+
+(defmethod simp-expt ((x weyli::ge-times))
+  (let ((a nil)
+        (b nil)
+        (tx (terms-of x)))
+    (loop for s in tx do
+      (if (ge-expt? s)
+        (push s a) (push s b)))
+          (if (null a) x 
+            (let ((u (create-expts (combine-picks (pick-exps a))))
+                  (v (if (null b) 1 (reduce #'(lambda (u v) (* u v)) b))))
+                  (* v u)))))
+                  
+;;; tests
+
+(defvar t1 (* (expt 2 p) (expt x q) (expt 3 p) (expt y q)))
+(defvar t2 (* (expt (+ x y) -1) (expt (- x y) -1)))
+(defvar t3 (* x y z))
+(defvar t4 (* (expt 3 x) x y z (expt 4 x)))
+(defvar t5 (* (expt x 3) x y z (expt p 3)))
+(defvar t6 (* (expt x 3) q r (expt p 3)))
+
+(defvar x/y (+-> "(x^2-y^2)/((x-y)*(x+y))"))
+(simp-expt x/y)
+;1
+; * :-)
