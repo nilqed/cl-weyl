@@ -76,3 +76,7 @@
 (defun simp (expr)
   (simplify (expand expr)))
 
+; (expt 2 p) --> No way to raise 2 to the p power
+(make-ge-expt *general* 2 p)  ; ok
+
+
