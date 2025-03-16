@@ -100,7 +100,7 @@
 ;;;; expand will do any further simplification in the latter.
 ;;;;
 ;;;; The reason can again be seen with print-terms:
-,;;;
+;;;;
 ;;;; *
 ;;;; (print-terms x/y)
 ;;;;
@@ -201,3 +201,40 @@
 
 ;* (ge-expt? (expt 2 p))
 ;T
+
+
+(defmethod normalize ((x weyli::ge-variable)) x)
+(defmethod normalize ((x weyli::rational-integer)) x)
+
+(defmethod normalize ((x weyli::ge-expt)) x)
+
+;(defmethod normalize ((x weyli::ge-times))
+;  (let ((tx (terms-of x)))
+;    (loop for s in tx collect
+;      (typecase s
+;        (weyli::ge-plus   )
+  
+;(defmethod collect-expts-with-same-exp ((x weyli::ge-times))
+;  (let ((el nil) (tx (terms-of x)))
+;    (loop for s in tx do
+;      (if (ge-expt? s)
+;        (push s el)))
+;          (if (null el) x 
+;             (let ((a (car el)) (b (cdr el)))
+          
+; Example: (defvar xy (* (expt 2 p) (expt x q) (expt 3 p) (expt y q)))
+; (pick-exps (terms-of ab)) --> ((q . y) (q . x) (p . 3) (p . 2))     
+(defun pick-exps (x)
+  "Input: x a list of ge-expt." 
+  (loop for s in x collect (cons (exponent-of s) (base-of s))))
+  
+(defun combine-picks (x)
+  "Input: x a list of conses (exp . base)."
+  (if (null x) (return-from combine-picks))
+  (let* ((a (pop x))
+         (r (loop for s in x collect 
+           (if (eql (car a) (car s)) 
+             (progn (delete s x :test #'equal) s)))))
+           (push a r)
+           (nconc (list r) (combine-picks x))))
+
