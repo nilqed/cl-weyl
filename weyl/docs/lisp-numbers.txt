@@ -1,5 +1,5 @@
 
- File: ../lisp-numbers.lisp 
+ File: /home/kfp/devel/cl-weyl/weyl/lisp-numbers.lisp 
 
 
  NUMERATOR (number)                                          [GENERIC FUNCTION]

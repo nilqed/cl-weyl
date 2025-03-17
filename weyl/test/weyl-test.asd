@@ -6,6 +6,8 @@
  ===========================================================================
  (c) Copyright 1989, 1993 Cornell University
 
++ ge-tests
+
 |#
 
 (in-package :asdf)
@@ -19,4 +21,5 @@
   ((:file "defpackage")
    (:file "ge-tests" :depends-on ("defpackage"))
    (:file "combinatorial-tools" :depends-on ("defpackage"))
-   (:file "f-and-g-series" :depends-on ("defpackage"))))
+   (:file "f-and-g-series" :depends-on ("defpackage"))
+   (:file "test")))

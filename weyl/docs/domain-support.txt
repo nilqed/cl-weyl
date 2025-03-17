@@ -1,5 +1,5 @@
 
- File: ../domain-support.lisp 
+ File: /home/kfp/devel/cl-weyl/weyl/domain-support.lisp 
 
 
  HAS-PROPERTY-LIST ""                                                   [CLASS]

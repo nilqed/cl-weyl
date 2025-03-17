@@ -1,5 +1,5 @@
 
- File: ../new/ge-support.lisp 
+ File: /home/kfp/devel/cl-weyl/weyl/new/ge-support.lisp 
 
 
  GE-VAR (v)                                                             [MACRO]

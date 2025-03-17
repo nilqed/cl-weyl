@@ -1,5 +1,5 @@
 
- File: ../algebraic-extension.lisp 
+ File: /home/kfp/devel/cl-weyl/weyl/algebraic-extension.lisp 
 
 
  VARIABLE-MINIMAL-POLYNOMIAL (domain var)                               [MACRO]

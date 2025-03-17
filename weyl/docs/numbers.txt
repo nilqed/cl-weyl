@@ -1,5 +1,5 @@
 
- File: ../numbers/numbers.lisp 
+ File: /home/kfp/devel/cl-weyl/weyl/numbers/numbers.lisp 
 
 
  RATIONAL-INTEGERS-PRINT-OBJECT (d stream)                           [FUNCTION]

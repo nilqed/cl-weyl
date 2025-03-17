@@ -1,5 +1,5 @@
 
- File: ../classes/general-classes.lisp 
+ File: /home/kfp/devel/cl-weyl/weyl/classes/general-classes.lisp 
 
 
  HAS-MEMOIZATION ""                                                     [CLASS]

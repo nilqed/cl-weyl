@@ -261,6 +261,7 @@
     
 
 (defmethod simp-expt ((x weyli::ge-times))
+  "Simplify GE-EXPT w.r.t. equal exponents."
   (let ((a nil)
         (b nil)
         (tx (terms-of x)))
@@ -280,6 +281,7 @@
 (defvar t4 (* (expt 3 x) x y z (expt 4 x)))
 (defvar t5 (* (expt x 3) x y z (expt p 3)))
 (defvar t6 (* (expt x 3) q r (expt p 3)))
+(defvar t7 (+-> "2^p * x^y * z^2 * 6^p * y^p * (p-q)^r * 5 * q^r"))
 
 (defvar x/y (+-> "(x^2-y^2)/((x-y)*(x+y))"))
 (simp-expt x/y)

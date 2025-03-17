@@ -1,56 +1,51 @@
-;;; provisional -- testing LaTeX in MathJax, Jupyter and Sixel.
-;;; (weyli::set-variable-property *general* var  'latex-repr "\\??" )
-;;; Later we will use a generic latex method for all weyl types:
-;;; (defmethod latex ((obj weyl-type) &key (pre "") (post "") (context nil))
+;(ql:quickload :weyl) ;; test
+; todo: iter prefix
 
-#|
 (in-package :weyl)
 
-(defun wtype (obj) (cl::type-of obj))
+(defun fmt-ratint (x &key (stream nil))
+  (format stream "~A" (slot-value x 'weyli::value))) 
 
-
-(defun ltx-ratint (x)
-  (format nil "{~A}" (slot-value x 'weyli::value)))  
-
-(defun ltx-var (x) ;;TODO: subscripts
-  (let ((lr (get-variable-property *general* x 'latex-repr )))
-    (if lr (format nil "{~A}" lr)
-      (format nil "{~A}" (slot-value x 'weyli::string)))))
+(defun fmt-var (x &key (stream nil)) ;;TODO: subscripts
+  (format stream "~A" (slot-value x 'weyli::string)))
   
-(defun ltx-expt (x)
-  (format nil "{{~A}^{~A}}" 
-    (ltx (slot-value x 'weyli::base))
-    (ltx (slot-value x 'weyli::exp))))
+(defun fmt-expt (x &key (stream nil) (prefix nil))
+  (let ((fs (if prefix "(expt ~A ~A)" "(~A)^(~A)" )))
+    (format stream fs
+      (fmt (slot-value x 'weyli::base))
+      (fmt (slot-value x 'weyli::exp)))))
     
-(defun ltx-plus (x)
-  (format nil "~{{~a}~^ + ~}" (mapcar 'ltx (slot-value x 'weyli::terms))))
+(defun fmt-plus (x &key (stream nil) (prefix nil))
+  (let ((fs (if prefix "(+ ~{~a~^ ~})" "(~{~a~^ + ~})" )))
+    (format stream fs (mapcar 'fmt (slot-value x 'weyli::terms)))))
 
-(defun ltx-times (x)
-  (format nil "~{{~a}~^ \\, ~}" (mapcar 'ltx (slot-value x 'weyli::terms))))
+(defun fmt-times (x &key (stream nil) (prefix nil))
+  (let ((fs (if prefix "(* ~{~a~^ ~})" "(~{~a~^ * ~})" )))
+    (format stream fs (mapcar 'fmt (slot-value x 'weyli::terms)))))
   
-(defun ltx-app (x)
-  (format nil "\\operatorname{~a}( ~{{~a}~^ , ~})" 
-    (slot-value x 'weyli::funct)
-    (mapcar 'ltx (slot-value x 'weyli::args))))
+(defun fmt-app (x &key (stream nil) (prefix nil))
+  (let ((fs (if prefix "~a ~{~a~^  ~}"  "~a( ~{~a~^ , ~})")))
+    (format stream "~a( ~{~a~^ , ~})" 
+      (slot-value x 'weyli::funct)
+      (mapcar 'fmt (slot-value x 'weyli::args)))))
 
-(defun ltx (x)
+(defun fmt (x &key (stream nil) (prefix nil))
   (case (wtype x) 
-    (rational-integer       (ltx-ratint x))
-    (weyli::ge-variable     (ltx-var x))
-    (weyli::ge-expt         (ltx-expt x))
-    (weyli::ge-plus         (ltx-plus x))
-    (weyli::ge-times        (ltx-times x))
-    (weyli::ge-application  (ltx-app x))
+    (rational-integer       (fmt-ratint x :stream stream))
+    (weyli::ge-variable     (fmt-var x    :stream stream))
+    (weyli::ge-expt         (fmt-expt x   :stream stream :prefix prefix))
+    (weyli::ge-plus         (fmt-plus x   :stream stream :prefix prefix))
+    (weyli::ge-times        (fmt-times x  :stream stream :prefix prefix))
+    (weyli::ge-application  (fmt-app x    :stream stream :prefix prefix))
     (otherwise "NOT IMPLEMENTED YET"))) 
 
 
 
-(defun latex (x)
-"Tries to represent object x as latex code. Example: (latex (expt p q )) ==>
- $${{{\\pi}}^{{q}}}$$"
-  (format nil "$$~A$$" (ltx x)))
+(defun display1 (x)
+"Display a Weyl general expression in a 1-dimensional format."
+  (format t "~A" (fmt x)))
   
-|#  
+  
 ;;;; latex->sixel
 
 (in-package :cl-user)
@@ -143,5 +138,10 @@
         :fg "Blue" :bg "'rgb 1.0 1.0 1.0'" ) T)) 
   
 
-
+(defun aamath (obj)
+  (uiop:run-program 
+    (format nil "aamath -q \"~A\"" 
+       (display1 obj)) :output t :ignore-error-status t))
+      
+  
 

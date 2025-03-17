@@ -1,5 +1,5 @@
 
- File: ../sets.lisp 
+ File: /home/kfp/devel/cl-weyl/weyl/sets.lisp 
 
 
  TUPLE ""                                                               [CLASS]

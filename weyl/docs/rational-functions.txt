@@ -1,5 +1,5 @@
 
- File: ../rational-functions.lisp 
+ File: /home/kfp/devel/cl-weyl/weyl/rational-functions.lisp 
 
 
  INITIALIZE-INSTANCE :AFTER ((qf rational-function-field)              [METHOD]

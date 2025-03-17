@@ -1,5 +1,5 @@
 
- File: ../differential-domains.lisp 
+ File: /home/kfp/devel/cl-weyl/weyl/differential-domains.lisp 
 
 
  RING-VARIABLES ((domain differential-polynomial-ring))                [METHOD]
