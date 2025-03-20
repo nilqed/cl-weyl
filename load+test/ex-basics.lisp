@@ -419,8 +419,32 @@ q2/3
 ;; Properties (4.5.4)
 ;;
 
+(weyli::ordered-domain? QQ)
+; => T
 
+(weyli::ordered-domain? q-mes)
+; => NIL
 
+(weyli::integral-domain? ZZ)
+; => T
+
+(weyli::euclidean-domain? ZZ)
+; => T
+
+(weyli::euclidean-domain? QQ)
+; => NIL
+
+(weyli::gcd-domain? QQ)
+; => NIL
+
+(weyli::gcd-domain? ZZ)
+; => T
+
+(weyli::unique-factorization-domain? ZZ)
+; => T
+
+(weyli::unique-factorization-domain? RR)
+; => NIL
 
 
 
