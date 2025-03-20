@@ -204,3 +204,223 @@ q2/3
 ;;; sense, so two vectors are = if their components are =.
 ;;;
 
+(weyli::binary= (coerce 10 ZZ) (coerce 10 QQ))
+; => NIL
+
+(= (coerce 10 ZZ) (coerce 10 QQ))
+; => NIL
+
+(= (coerce 10 RR) (coerce 10 RR))
+; ==> T
+
+
+(= (coerce (/ 5 2) RR) (coerce 2.5  RR))
+; => NIL
+
+(describe (coerce (/ 5 2) RR))
+
+; 5/2
+;  [standard-object]
+;
+; Slots with :INSTANCE allocation:
+;  DOMAIN                         = R
+;  NUMERATOR                      = 5
+;  DENOMINATOR                    = 2
+
+(describe (coerce 2.5  RR))
+
+; 2.5
+;  [standard-object]
+;
+; Slots with :INSTANCE allocation:
+;  DOMAIN                         = R
+;  VALUE                          = 2.5
+; *
+
+
+
+
+;; Semigroups, Monoids and Groups (4.5.1)
+;;
+;; This section discusses domains that have one operation. That is, they consist
+;; of a set S and a binary operation (+) such that for two elements a and b in 
+;; S, a (+) b is an element of S . The simplest interesting class of such 
+;; domains is a semigroup, where (+) is assumed to be associative. That is, for
+;; a, b and c elements of S , 
+;;    (a (+) b) (+) c = a (+) (b (+) c).
+;; In Weyl, domains that are semigroups include the class semigroup. In 
+;; addition, the operation of a semigroup is assumed to be weyli::times [4]. As 
+;; with weyli::binary=, there is a macro * that simplifies its use. 
+;; For instance,
+;;
+;;   (* a b c) = (weyli::times (weyli::times a b) c).
+;;
+;; In addition, repeated multiplication can be indicated by expt. That is,
+;;
+;;  (expt a 3) = (weyli::times (weyli::times a a) a).
+;;
+;; although it may be computed more efficiently for elements of some domains.
+::
+;;
+;;    weyli::times x y                                               [Generic]
+;;
+;; Returns the product of two elements of a semigroup.
+;;
+;; If one wants to compute the product of all the elements of a lists, a 
+;; convenient idiom is to `apply` the `*` function to the list. This is **not** 
+;; possible with the Weyl `*` operator since it is a macro, not a function. 
+;; As a work around for this problem, Weyl also provides a function for
+;; multiplication caled `%times`. Semantically, this function is the same as 
+;; the `*` macro, but the code that would be generated if `%times` were used 
+;; in place of `*` is not as efficient [5].
+;;
+;;    * &rest args
+;;    %times &rest args  [Generic]
+;;
+;; Monoid's are semigroups that contain a multiplicative identity. This element
+;; is called one and may be accessed by applying the function one to the domain.
+;;
+;;    one semigroup     [Generic]
+;;
+;; Returns the multiplicative identity of monoid.
+;;
+;;   1? elt   [Generic]
+;;
+;; Returns true if its argument is the multiplicative identity and false otherwise.
+
+;; In addition, the expt function is extended so if its second argument is 0, 
+;; it returns the multiplicative identity.
+
+;; The elements of a group have multiplicative inverses which can be determined
+;; using recip
+;;
+;;    recip elt    [Generic]
+;;
+;; Returns the multiplicative inverse of elt .
+
+
+; [4] This is a limitation of the current implementation of Weyl and will be 
+;     fixed shortly.
+; [5] The need for this function can be eliminated by compiler macros, but this
+;     solution cannot currently be implemented in a portable manner.
+
+
+;; For efficiency reasons it often valuable to have a binary operation that 
+;; multiplies an element by the multiplicative inverse of the second argument. 
+;; This operation is called weyli::quotient. The macro `/` can be used to 
+;; simplify its use:
+;;
+;;      (/ a) = (recip a)
+;;      (/ a b) = (weyli::quotient a b)
+;;      (/ a b c) = (weyli::quotient (weyli::quotient a b) c)
+;;
+;;
+;; In a group, the `expt` operation is extended to apply to negative second 
+;; arguments also. In this case
+;;
+;;      (expt x ?n) = (expt (recip x) n)
+;;
+;;
+;;   expt a n  [Generic]
+;;
+;; Multiplies a by itself n times. If the domain of a just a semigroup, then n 
+;; must be a positive Lisp integer. When the domain of a is a monoid, then n 
+;; can be equal to zero. If the domain of a is a group then n can be negative.
+
+;; A binary operation (+) on a semigroup S is commutative if for every pair of 
+;; elements in a and b in S , a (+) b = b (+) a. The domains abelian-semigroup, 
+;; abelian-monoid and abelian-group are similar to the domains semigroup, monoid
+;; and group except the binary operation is plus instead of times.
+;; This is the biggest distinction between the domain structure of Weyl and the
+;; domains of modern algebra.[6]
+;;
+;;    + &rest args
+;;    %plus &rest args
+;;
+;;    weyli::plus x y   [Function]
+;;
+;; Returns the sum of x and y , which are elements of an abelian-semigroup. 
+;; weyli::plus is a commutative binary operation.
+
+;; The multiple argument version of weyli::plus is +, which is what should be 
+;; used in all applications.
+;;
+;;
+;;    zero abelian-semigroup    [Function]
+;;
+;;  Returns the additive identity of an abelian semigroup.
+;;
+;;    zero? elt
+;;    0? elt                   [Function]
+;; 
+;; Returns true if its argument is the additive identity and false otherwise.
+
+;; The additive inverse of an element of an abelian-group can be obtained using
+;; weyli::minus. As the multiplicative case, there is a binary operation, 
+;; weyli::difference and a macro - that makes these operations easier to use.
+
+;;      (- a) = (weyli::minus a)
+;;      (- a b) = (weyli::difference a b)
+;;      (- a b c) = (weyli::difference (weyli::difference a b) c)
+
+; [6] It would be better if any operation could be declared to be commutative.
+
+
+; Figure 4.3: Different Ring Notations
+
+
+;; The function `%difference` is provided for use when a multi-argument version
+;; of the `-` should be passed to another function. The same caveats about 
+;; efficiency apply here.
+;;   Notice that algebraically we consider all of these domains to possess 
+;; only one operation weyli::times, or weyli::plus in the abelian case. The 
+;; other operations are either abbreviations, e.g., expt, or are constructive 
+;; versions of existential axioms. For instance, a monoid M obeys the axiom: 
+;; There exists an element e in M such that all for elements a of M , 
+;; e - a = a - e = a. The function one just returns the element e.
+
+;; Rings (4.5.2)
+;;
+
+(wtype q-mes)
+; => WEYLI::MULTIVARIATE-POLYNOMIAL-RING
+
+
+(describe Q-mes)
+
+; Q[m, e, s]
+;  [standard-object]
+;
+; Slots with :INSTANCE allocation:
+;  PROPERTY-LIST                  = (:INTEGRAL-DOMAIN T)
+;  OPERATION-TABLE                = #<HASH-TABLE :TEST EQL :COUNT 17 {10015DC6E3}>
+;  SUPER-DOMAINS                  = NIL
+;  MORPHISMS-FROM                 = NIL
+;  MORPHISMS-TO                   = (#1=Q->#1#[m, e, s])
+;  PRINT-FUNCTION                 = WEYLI::POLYNOMIAL-RING-PRINT-OBJECT
+;  ZERO                           = 0
+;  ONE                            = 1
+;  VARIABLES                      = (m e s)
+;  VARIABLE-HASH-TABLE            = ((m 0) (e 1) (s 2))
+;  VARIABLE-TABLE                 = #2A((m 0) (e 0) (s 0))
+
+
+
+;; Modules (4.5.3)
+;;
+;;    coefficient-domain-of module   [Function]
+;;
+;; Returns the coefficient domain of module.
+
+(coefficient-domain-of q-mes)
+; => Q
+
+
+;; Properties (4.5.4)
+;;
+
+
+
+
+
+
