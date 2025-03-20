@@ -327,6 +327,150 @@ ffl
 ;;;
 
 
+;; Rational Numbers (5.2)
+;;
+;; The domain rational numbers, Q, is the quotient eld of the ring of rational 
+;; integers. The elements of a rational number domain can have structure type 
+;; either rational-integer or rational-number. Elements.
+;; As in Common Lisp there is a set of four functions for truncating numbers 
+;; and ratios to integers. If the second argument is not provided then it 
+;; defaults to 1. If only the rst argument is provided and it is a rational 
+;; integer, then all four functions return the same values.
+;; A domain of rational integers is created by the following function.
+
+;;       get-rational-numbers   [Function]
+;; 
+;; Returns a domain that is isomorphic to the rational numbers, Q. When called
+;; repeatedly, it always returns the same value until reset-domains is called.
+
+;;      floor number &optional divisor
+;;      ceiling number &optional divisor
+;;      truncate number &optional divisor
+;;      round number &optional divisor
+
+(defvar QQ (get-rational-numbers))
+; => QQ
+
+(wtype QQ)
+; => RATIONAL-NUMBERS
+
+(defvar q11/3 (coerce (/ 11 3) QQ))
+; => Q11/3
+
+q11/3
+; => 11/3
+
+(wtype q11/3)
+; => RATIONAL-NUMBER
+
+(numerator q11/3)
+; => 11
+
+(denominator q11/3)
+; => 3
+
+(floor q11/3)
+; => 3
+
+(ceiling q11/3)
+; => 4
+
+(truncate q11/3)
+; => 3
+; => 2
+
+(round q11/3)
+; => 4
+; => -1
+
+
+;;; Real Numbers (5.3)
+;;;
+;;; The entire real number situation is somewhat confused. In particular, the 
+;;; relationship between floating point numbers and real numbers is jumbled. 
+;;; These issues will be fixed at a later date.
+;;; 
+;;;     get-real-numbers &optional precision    [Function]
+;;; 
+;;; This returns a domain whose elements are oating point numbers. If precision
+;;; is not specified, then the machines default double precision oating point 
+;;; numbers will be used. If precision is specified, then a special arbitrary 
+;;; precision oating point package will be used. Operations with these numbers 
+;;; will be somewhat slower (and will cause more garbage collection) than when 
+;;; using the machine's oating point data types.
+
+;;;       floor number &optional divisor  [Function]
+;;;
+;;; Computes the oor of number.
+;;;
+
+
+;;;      ceiling number &optional divisor  [Function]
+;;;
+;;; Computes the ceiling of number.[Function]
+
+
+;;;     truncate number &optional divisor   [Function]
+;;;
+;;; Computes the truncate of number.
+
+;;;     round number &optional divisor [Function]
+;;;
+;;; Computes the round of number.
+
+
+;;;     sqrt n                     [Function]
+;;;
+;;; For positive n returns positive n with the same precision as n.
+
+;;; The following standard trigonometric and hyperbolic routines are provided
+;;;   
+;;;     sin n asin n sinh n asinh n
+;;;     cos n acos n cosh n acosh n
+;;;     tan n atan n tanh n atanh n
+
+
+
+;;;     exp n         [Function]
+;;;
+;;; Returns e^n
+
+
+;;;    log n &optional b   [Function]
+;;;
+;;; For positive n returns the principal part of logb n. If b is not supplied 
+;;; then e, the base of natural logarithms, is used for b.
+
+
+
+;;; Complex Numbers (5.4)
+;;;
+;;; Not yet implemented.
+
+;;;      realpart z    [Function]
+;;;
+;;; If z = x + iy returns x.
+
+
+;;;      imagpart z   [Function]
+;;;
+;;; If z = x + iy returns y .[Function]
+
+
+;;;      conjugate z   [Function]
+;;;
+;;; If z = x + iy returns x ? iy .[Function]
+
+
+;;;      abs z   [Function]
+;;;
+;;; If z = x + iy returns  |z| = sqrt(x^2 + y^2).
+
+
+;;;      phase z    [Function]
+;;;
+;;; If z = r*e^(it) returns t, where r=|z|.
+
 
 
 
