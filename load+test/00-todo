@@ -1,0 +1,42 @@
+general.lisp
+  -- equations not mentioned in manual
+  -- sync with weyl-infix.lisp (by now := == = mean setf/setq, cl equality)
+  -- * (eqn= (+-> "(x+y)^2") (+-> "x^2+2*x*y+y^2")) is ok.
+     => (y + x)^2 = y^2 + x^2 + 2 y x
+     
+  -- * (eqn> (+-> "(x+y)^2") (+-> "x^2+2*x*y+y^2"))
+     => (y + x)^2 > y^2 + x^2 + 2 y x
+
+  -- * (eqn>= (+-> "(x+y)^2") (+-> "x^2+2*x*y+y^2"))
+     => (y + x)^2 >= y^2 + x^2 + 2 y x
+
+  -- maybe redefine?
+     a:=expr => (defvar a expr)
+     a = b   => (eqn= a b)
+     a == b  => (ge-equal a b)    
+
+  -- implement simp expt from ge-simplify.lisp --> simplify(ge-expt)
+
+
+ge-support.lisp
+  -- ?? (defun def-ge-vars (a &rest b) (progn (ge-var a) (ge-vars b)))
+
+latex.lisp
+  -- (defvar Q (get-rational-numbers) --> numerator/denominator
+  -- add method [done].
+  -- add parens where necessary
+  
+weyl-infix.lisp
+  -- see general.lisp
+  
+
+misc
+  -- (get-free-module ...) does not exist (mentioned in manual!)
+  -- grep finds it in matrix.lisp, however, not as definition, but use of.
+  
+
+
+  
+  
+  
+  
