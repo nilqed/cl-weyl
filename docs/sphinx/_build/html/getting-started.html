@@ -44,7 +44,8 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Getting Started</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#creating-a-weyl-world">Creating a Weyl World</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#installation">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#starting-weyl">Starting Weyl</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="basics.html">Basics</a></li>
@@ -78,19 +79,60 @@
              
   <section id="getting-started">
 <h1>Getting Started<a class="headerlink" href="#getting-started" title="Link to this heading">¶</a></h1>
-<p>Weyl is implemented as a large body of functions that extend Lisp’s functionality to include non-
-numeric algebraic computations. These functions can be loaded into an existing Lisp image using
-the tools described in Section 2.1. All of Weyl’s extensions are attached to symbols in the weyl or
-weyli packages. The philosophy behind these packages and how they are to be used is discussed
-in Section 2.2. Some issues with developing programs using Weyl are discussed in Section 2.3. In
-Section 2.4 we give a simple of example what is involved when using Weyl.</p>
-<section id="creating-a-weyl-world">
-<h2>Creating a Weyl World<a class="headerlink" href="#creating-a-weyl-world" title="Link to this heading">¶</a></h2>
-<p>Common Lisp does not include a defsystem facility, which is often used to manage the compilation
-dependencies between di erent les in a Lisp system.1 Although many Lisp vendors provide a
-defsystem, there is no standard, and each vendor’s version di ers slightly from the others. As a
-consequence, we have chosen not to use any of them and instead include with Weyl a copy of Mark
-Kantrowitz’s version.</p>
+<p>The Weyl user manual was written about 30 years ago, so it is not
+surprising when the loading of Common Lisp software has been simplified.</p>
+<section id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Link to this heading">¶</a></h2>
+<p>It is assumed that you have <a class="reference external" href="https://www.quicklisp.org/beta/">Quicklisp</a>
+installed and configured, so that <cite>(ql:quickload :package-name)</cite> is working.</p>
+<p>Either change dir to your <cite>quicklisp/local-projects</cite></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ cd &lt;quicklisp-directory&gt;/local-projects
+$ git clone https://github.com/nilqed/weyl
+</pre></div>
+</div>
+<p>or set a symbolic link after cloning</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ git clone https://github.com/nilqed/weyl
+$ ln -s $PWD/matlisp &lt;quicklisp-directory&gt;/local-projects
+</pre></div>
+</div>
+<p>where <cite>&lt;quicklisp-directory&gt;</cite> usually is <cite>$HOME/quicklisp</cite>.</p>
+</section>
+<section id="starting-weyl">
+<h2>Starting Weyl<a class="headerlink" href="#starting-weyl" title="Link to this heading">¶</a></h2>
+<p>Start your Common Lisp interpreter, then try <cite>(ql:quickload :weyl)</cite>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>~$ sbcl
+This is SBCL 2.2.9.debian, an implementation of ANSI Common Lisp.
+More information about SBCL is available at &lt;http://www.sbcl.org/&gt;.
+
+SBCL is free software, provided as is, with absolutely no warranty.
+It is mostly in the public domain; some portions are provided under
+BSD-style licenses.  See the CREDITS and COPYING files in the
+distribution for more information.
+* (ql:quickload :weyl)
+To load &quot;weyl&quot;:
+  Load 1 ASDF system:
+    weyl
+; Loading &quot;weyl&quot;
+
+;;; *************************************************************************
+;;;   Infix notation for Common Lisp.
+;;;   Version 1.3  28-JUN-96.
+;;;   Written by Mark Kantrowitz, CMU School of Computer Science.
+;;;   Copyright (c) 1993-95. All rights reserved.
+;;;   May be freely redistributed, provided this notice is left intact.
+;;;   This software is made available AS IS, without any warranty.
+;;; *************************************************************************
+..
+(:WEYL)
+* (in-package :weyl)
+#&lt;PACKAGE &quot;WEYL&quot;&gt;
+* (cl-user::quit)
+~$
+</pre></div>
+</div>
+<p>If the package QUICK-LISP (nickname QL) is not known, then maybe a
+<cite>(load “~/quicklisp/setup”)</cite> may help (assuming Quicklisp is installed
+in your home directory.</p>
 </section>
 </section>
 

@@ -13,6 +13,7 @@ Welcome to Weyl's documentation!
    introduction
    getting-started
    basics
+   generic-tools
    scalar-domains
    general
       

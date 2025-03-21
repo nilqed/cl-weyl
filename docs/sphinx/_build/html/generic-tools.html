@@ -1,0 +1,455 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Generic Tools &mdash; Weyl 0.2 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/documentation_options.js?v=10f1778b"></script>
+      <script src="_static/doctools.js?v=888ff710"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Scalar Domains" href="scalar-domains.html" />
+    <link rel="prev" title="Basics" href="basics.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Weyl
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="getting-started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="basics.html">Basics</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Generic Tools</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#combinatorial-tools-3-1">Combinatorial Tools (3.1)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#memoization-3-2">Memoization (3.2)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#tuples-3-3">Tuples (3.3)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#arithmetic-with-lists-3-4">Arithmetic with Lists (3.4)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#avl-trees-3-5">AVL Trees (3.5)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="scalar-domains.html">Scalar Domains</a></li>
+<li class="toctree-l1"><a class="reference internal" href="general.html">General Expressions</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Weyl</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Generic Tools</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/generic-tools.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="generic-tools">
+<h1>Generic Tools<a class="headerlink" href="#generic-tools" title="Link to this heading">¶</a></h1>
+<p>Some facilities needed by symbolic computing routines are more generally useful.
+For instance, it is occasionally necessary to perform some function for every
+permutation of the elements of a set. To capture this idiom, Weyl provides a
+new control structure, called permute. This control structure, and other
+combinatorial control structures, are described in Section 3.1. Other data
+and control structures that are not directly tied to mathematical computation
+are given in the other sections.</p>
+<section id="combinatorial-tools-3-1">
+<h2>Combinatorial Tools (3.1)<a class="headerlink" href="#combinatorial-tools-3-1" title="Link to this heading">¶</a></h2>
+<p>Weyl provides control abstractions that are often useful for computations
+that involve combinatorial enumeration and searching. These control structures
+are permute and choose, which enumerate all permutations of a sequence and
+all subsets of a fixed size of a sequence.</p>
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">permute</span> <span class="pre">sequence</span> <span class="pre">(var</span> <span class="pre">.</span> <span class="pre">options)</span> <span class="pre">&amp;body</span> <span class="pre">body</span>&#160; <span class="pre">[Special</span> <span class="pre">Form]</span></span></dt>
+<dd><p>sequence is a sequence of elements. The variable var is repeatedly bound to
+the different permutations of sequence, and body is evaluated each time.
+The options are provided to specify even and odd permutations, but are not at
+this point implemented.</p>
+</dd></dl>
+
+<p>For example, the following code will print all permutations of the list
+(a b c) and count their number:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="p">(</span><span class="n">let</span> <span class="p">((</span><span class="n">count</span> <span class="mi">0</span><span class="p">))</span>
+<span class="p">(</span><span class="n">permute</span> <span class="s1">&#39; (a b c) (p)</span>
+<span class="p">(</span><span class="nb">print</span> <span class="n">p</span><span class="p">)</span>
+<span class="p">(</span><span class="n">incf</span> <span class="n">count</span><span class="p">))</span>
+<span class="p">(</span><span class="nb">format</span> <span class="n">t</span> <span class="s2">&quot;~%~D permutations total. ~%&quot;</span> <span class="n">count</span><span class="p">))</span>
+<span class="p">(</span><span class="n">C</span> <span class="n">B</span> <span class="n">A</span><span class="p">)</span>
+<span class="p">(</span><span class="n">B</span> <span class="n">C</span> <span class="n">A</span><span class="p">)</span>
+<span class="p">(</span><span class="n">C</span> <span class="n">A</span> <span class="n">B</span><span class="p">)</span>
+<span class="p">(</span><span class="n">A</span> <span class="n">C</span> <span class="n">B</span><span class="p">)</span>
+<span class="p">(</span><span class="n">B</span> <span class="n">A</span> <span class="n">C</span><span class="p">)</span>
+<span class="p">(</span><span class="n">A</span> <span class="n">B</span> <span class="n">C</span><span class="p">)</span>
+<span class="mi">6</span> <span class="n">permutations</span> <span class="n">total</span><span class="o">.</span>
+<span class="n">NIL</span>
+</pre></div>
+</div>
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">choose</span> <span class="pre">set</span> <span class="pre">(var</span> <span class="pre">n</span> <span class="pre">.</span> <span class="pre">options)</span> <span class="pre">&amp;body</span> <span class="pre">body</span>&#160;&#160; <span class="pre">[Special</span> <span class="pre">Form]</span></span></dt>
+<dd><p>While the rst argument to permute must be ordered, the rst argument to
+choose need only be a set (but again, only lists are currently implemented).
+The variable var is bound to each subset of set that has precisely n
+elements and body is evaluated in each case.
+At the moment no options are permitted.</p>
+</dd></dl>
+
+<p>A partition of a positive integer n is a representation of n as a sum of
+positive integers. The following control structure is used to enumerate
+partitions.</p>
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">partition</span> <span class="pre">(var</span> <span class="pre">n</span> <span class="pre">.</span> <span class="pre">options)</span> <span class="pre">&amp;body</span> <span class="pre">body</span>&#160; <span class="pre">[Special</span> <span class="pre">Form]</span></span></dt>
+<dd><p>The argument n is assumed to be an integer. This control structure
+repeatedly binds var to additive partitions of n and then evaluates
+the body. The options allow one to control which partitions of n are
+produced. The options are</p>
+</dd></dl>
+
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>:number-of-parts  The number of parts each partition is allowed to contain.
+:minimum-part     The minimum value each for each of the components of the
+                  partition.
+:maximum-part     The maximum value each for each of the components of the
+                  partition.
+:distinct?        If specified as T then each of the components of the partition
+                  must be distinct.
+
+Partition returns no values.
+</pre></div>
+</div>
+<p>The following examples illustrate the use of the partition control structure.
+First, compute all of the partitions of 6:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="p">(</span><span class="n">partition</span> <span class="p">(</span><span class="n">l</span> <span class="mi">6</span><span class="p">)</span> <span class="p">(</span><span class="nb">print</span> <span class="n">l</span><span class="p">))</span>
+<span class="p">(</span><span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span><span class="p">)</span>
+<span class="p">(</span><span class="mi">2</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span><span class="p">)</span>
+<span class="p">(</span><span class="mi">3</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span><span class="p">)</span>
+<span class="p">(</span><span class="mi">2</span> <span class="mi">2</span> <span class="mi">1</span> <span class="mi">1</span><span class="p">)</span>
+<span class="p">(</span><span class="mi">4</span> <span class="mi">1</span> <span class="mi">1</span><span class="p">)</span>
+<span class="p">(</span><span class="mi">3</span> <span class="mi">2</span> <span class="mi">1</span><span class="p">)</span>
+<span class="p">(</span><span class="mi">5</span> <span class="mi">1</span><span class="p">)</span>
+<span class="p">(</span><span class="mi">2</span> <span class="mi">2</span> <span class="mi">2</span><span class="p">)</span>
+<span class="p">(</span><span class="mi">4</span> <span class="mi">2</span><span class="p">)</span>
+<span class="p">(</span><span class="mi">3</span> <span class="mi">3</span><span class="p">)</span>
+<span class="p">(</span><span class="mi">6</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Now restrict the partitions to those that do not contain 1’s or those that
+consist of precisely 3 components:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="p">(</span><span class="n">partition</span> <span class="p">(</span><span class="n">l</span> <span class="mi">6</span> <span class="p">:</span><span class="n">minimum</span><span class="o">-</span><span class="n">part</span> <span class="mi">2</span><span class="p">)</span>
+<span class="p">(</span><span class="nb">print</span> <span class="n">l</span><span class="p">))</span>
+<span class="p">(</span><span class="mi">2</span> <span class="mi">2</span> <span class="mi">2</span><span class="p">)</span>
+<span class="p">(</span><span class="mi">4</span> <span class="mi">2</span><span class="p">)</span>
+<span class="p">(</span><span class="mi">3</span> <span class="mi">3</span><span class="p">)</span>
+<span class="p">(</span><span class="mi">6</span><span class="p">)</span>
+
+<span class="o">&gt;</span> <span class="p">(</span><span class="n">partition</span> <span class="p">(</span><span class="n">l</span> <span class="mi">6</span> <span class="p">:</span><span class="n">number</span><span class="o">-</span><span class="n">of</span><span class="o">-</span><span class="n">parts</span> <span class="mi">3</span><span class="p">)</span>
+    <span class="p">(</span><span class="nb">print</span> <span class="n">l</span><span class="p">))</span>
+    <span class="p">(</span><span class="mi">4</span> <span class="mi">1</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="p">(</span><span class="mi">3</span> <span class="mi">2</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="p">(</span><span class="mi">2</span> <span class="mi">2</span> <span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>We can further restrict the partitions to only include components that contain
+components no larger than 3 and to those partitions that consist of distinct c
+omponents.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>&gt; (partition (l 6 :number-of-parts 3 :maximum-part 3)
+(print l))
+(3 2 1)
+(2 2 2)
+
+&gt; (partition (l 6 :number-of-parts 3 :maximum-part 3 :distinct? t)
+(print l))
+(3 2 1)
+
+&gt; (partition (l 6 :distinct? t)
+(print l))
+(3 2 1)
+(5 1)
+(4 2)
+(6)
+</pre></div>
+</div>
+<p>It is well known, and easy to prove, that the number of partitions of an
+integer n into m parts is equal to the number of partitions of n where the
+largest component of the partition is m. We can check this numerically with
+the following functions. The rst function counts the number of partitions of n
+with exactly m parts. For this the :number-of-parts option sudffices.</p>
+<div class="highlight-lisp notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="nb">defun</span><span class="w"> </span><span class="nv">partition-count-fixed-parts</span><span class="w"> </span><span class="p">(</span><span class="nv">n</span><span class="w"> </span><span class="nv">m</span><span class="p">)</span>
+<span class="w">  </span><span class="p">(</span><span class="k">let</span><span class="w"> </span><span class="p">((</span><span class="nv">cnt</span><span class="w"> </span><span class="mi">0</span><span class="p">))</span>
+<span class="w">    </span><span class="p">(</span><span class="nv">partition</span><span class="w"> </span><span class="p">(</span><span class="nv">part</span><span class="w"> </span><span class="nv">n</span><span class="w"> </span><span class="ss">:number-of-parts</span><span class="w"> </span><span class="nv">m</span><span class="p">)</span>
+<span class="w">      </span><span class="p">(</span><span class="k">declare</span><span class="w"> </span><span class="p">(</span><span class="k">ignore</span><span class="w"> </span><span class="nv">part</span><span class="p">))</span>
+<span class="w">      </span><span class="p">(</span><span class="nb">incf</span><span class="w"> </span><span class="nv">cnt</span><span class="p">))</span>
+<span class="w">      </span><span class="nv">cnt</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>The function partition-count-exact-max computes the number of partitions where
+the maximum component is exactly m. In this case, the :maximum-part option
+helps lter the partition, but then an additional test needs to be applied to
+ensure that each partition actually has an element of size m.</p>
+<div class="highlight-lisp notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="nb">defun</span><span class="w"> </span><span class="nv">partition-count-exact-max</span><span class="w"> </span><span class="p">(</span><span class="nv">n</span><span class="w"> </span><span class="nv">m</span><span class="p">)</span>
+<span class="w">  </span><span class="p">(</span><span class="k">let</span><span class="w"> </span><span class="p">((</span><span class="nv">cnt</span><span class="w"> </span><span class="mi">0</span><span class="p">))</span>
+<span class="w">    </span><span class="p">(</span><span class="nv">partition</span><span class="w"> </span><span class="p">(</span><span class="nv">part</span><span class="w"> </span><span class="nv">n</span><span class="w"> </span><span class="ss">:maximum-part</span><span class="w"> </span><span class="nv">m</span><span class="p">)</span>
+<span class="w">      </span><span class="p">(</span><span class="nb">when</span><span class="w"> </span><span class="p">(</span><span class="nb">=</span><span class="w"> </span><span class="nv">m</span><span class="w"> </span><span class="p">(</span><span class="nb">apply</span><span class="w"> </span><span class="nf">#&#39;</span><span class="nv">cl::max</span><span class="w"> </span><span class="nv">part</span><span class="p">))</span>
+<span class="w">        </span><span class="p">(</span><span class="nb">incf</span><span class="w"> </span><span class="nv">cnt</span><span class="p">)))</span>
+<span class="w">   </span><span class="nv">cnt</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>Finally we provide a routine for testing the functions given above.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">defun</span> <span class="n">partition</span><span class="o">-</span><span class="n">test</span><span class="o">-</span><span class="mi">1</span> <span class="p">(</span><span class="n">n</span> <span class="n">m</span><span class="p">)</span>
+  <span class="p">(</span><span class="n">let</span> <span class="p">((</span><span class="n">part</span><span class="o">-</span><span class="n">count1</span> <span class="p">(</span><span class="n">partition</span><span class="o">-</span><span class="n">count</span><span class="o">-</span><span class="n">fixed</span><span class="o">-</span><span class="n">parts</span> <span class="n">n</span> <span class="n">m</span><span class="p">))</span>
+        <span class="p">(</span><span class="n">part</span><span class="o">-</span><span class="n">count2</span> <span class="p">(</span><span class="n">partition</span><span class="o">-</span><span class="n">count</span><span class="o">-</span><span class="n">exact</span><span class="o">-</span><span class="nb">max</span> <span class="n">n</span> <span class="n">m</span><span class="p">)))</span>
+    <span class="p">(</span><span class="nb">list</span> <span class="p">(</span><span class="o">=</span> <span class="n">part</span><span class="o">-</span><span class="n">count1</span> <span class="n">part</span><span class="o">-</span><span class="n">count2</span><span class="p">)</span>
+       <span class="n">part</span><span class="o">-</span><span class="n">count1</span> <span class="n">part</span><span class="o">-</span><span class="n">count2</span><span class="p">)))</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="p">(</span><span class="n">partition</span><span class="o">-</span><span class="n">test</span><span class="o">-</span><span class="mi">1</span> <span class="mi">10</span> <span class="mi">3</span><span class="p">)</span>
+<span class="p">(</span><span class="n">T</span> <span class="mi">8</span> <span class="mi">8</span><span class="p">)</span>
+
+<span class="o">&gt;</span> <span class="p">(</span><span class="n">partition</span><span class="o">-</span><span class="n">test</span><span class="o">-</span><span class="mi">1</span> <span class="mi">15</span> <span class="mi">3</span><span class="p">)</span>
+<span class="p">(</span><span class="n">T</span> <span class="mi">19</span> <span class="mi">19</span><span class="p">)</span>
+
+<span class="o">&gt;</span> <span class="p">(</span><span class="n">partition</span><span class="o">-</span><span class="n">test</span><span class="o">-</span><span class="mi">1</span> <span class="mi">15</span> <span class="mi">4</span><span class="p">)</span>
+<span class="p">(</span><span class="n">T</span> <span class="mi">27</span> <span class="mi">27</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="memoization-3-2">
+<h2>Memoization (3.2)<a class="headerlink" href="#memoization-3-2" title="Link to this heading">¶</a></h2>
+<p>It often occurs that the straightforward way of expressing an algorithm is
+quite inefficient because it performs a great deal of recomputation of values
+that were previously computed. The simplest example along these lines is the
+Fibonacci function</p>
+<div class="highlight-lisp notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="nb">defun</span><span class="w"> </span><span class="nv">fib</span><span class="w"> </span><span class="p">(</span><span class="nv">n</span><span class="p">)</span>
+<span class="w">  </span><span class="p">(</span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nb">&lt;</span><span class="w"> </span><span class="nv">n</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="mi">1</span>
+<span class="w">    </span><span class="p">(</span><span class="nb">+</span><span class="w"> </span><span class="p">(</span><span class="nv">fib</span><span class="w"> </span><span class="p">(</span><span class="nb">-</span><span class="w"> </span><span class="nv">n</span><span class="w"> </span><span class="mi">1</span><span class="p">))</span><span class="w"> </span><span class="p">(</span><span class="nv">fib</span><span class="w"> </span><span class="p">(</span><span class="nb">-</span><span class="w"> </span><span class="nv">n</span><span class="w"> </span><span class="mi">2</span><span class="p">)))))</span>
+</pre></div>
+</div>
+<p>Due to the double recursion, this implementation can take time exponential in n.
+By caching values of (fib n) to avoid recomputation, it is possible to reduce
+this to a computation that is linear in n. This is easily done using the control
+abstraction memoize. For instance, we have the following efficient version of
+the Fibonacci function:</p>
+<div class="highlight-lisp notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="nb">defun</span><span class="w"> </span><span class="nv">fib-memo</span><span class="w"> </span><span class="p">(</span><span class="nv">n</span><span class="p">)</span>
+<span class="w">  </span><span class="p">(</span><span class="nv">memoize</span><span class="w"> </span><span class="o">`</span><span class="p">(</span><span class="nv">fib</span><span class="w"> </span><span class="o">,</span><span class="nv">n</span><span class="p">)</span>
+<span class="w">    </span><span class="p">(</span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nb">&lt;</span><span class="w"> </span><span class="nv">n</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="mi">1</span>
+<span class="w">      </span><span class="p">(</span><span class="nb">+</span><span class="w"> </span><span class="p">(</span><span class="nv">fib-memo</span><span class="w"> </span><span class="p">(</span><span class="nb">-</span><span class="w"> </span><span class="nv">n</span><span class="w"> </span><span class="mi">1</span><span class="p">))</span><span class="w"> </span><span class="p">(</span><span class="nv">fib-memo</span><span class="w"> </span><span class="p">(</span><span class="nb">-</span><span class="w"> </span><span class="nv">n</span><span class="w"> </span><span class="mi">2</span><span class="p">))))))</span>
+</pre></div>
+</div>
+<p>The memoize form should be understood as follows. The rst argument is an
+expression that identifies a particular computation. The above example, the
+form <cite>(fib ,n)</cite> represents the computation of the n-th Fibonacci number.
+The body of the memoize form contains the code that actually performs the
+computation. The memoize form checks a cache to see if the computation
+indicated by the rst argument has been previously performed. If so, the value
+returned by the earlier computation is returned immediately. If not the body
+is executed and the value cached for future use.</p>
+<p>The cache used by the memoize control structure is handled by the class
+weyli::has-memoization. The domain of general expressions (discussed in Chapter 6)
+is always a subclass of weyli::has-memoization and is the domain with which
+memoization is usually associated. The internal function
+weyli::%memoize allows one to associate a memoization with any subclass of
+weyli::has-memoization.</p>
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">weyli::%memoize</span> <span class="pre">domain</span> <span class="pre">expression</span> <span class="pre">&amp;body</span> <span class="pre">body</span>&#160; <span class="pre">[Method]</span></span></dt>
+<dd><p>Each time this form is executed, it checks to see if expression is cached
+in domain’s memoization cache. If so, the value in the cache is returned
+without executing the body. If expression is not found in the cache, then
+the forms in body are evaluated, and the value of the last form is both
+returned and saved in domain’s memoization cache.</p>
+</dd></dl>
+
+<p>It is usually much more convenient to use the memoize control structure:</p>
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">memoize</span> <span class="pre">expression</span> <span class="pre">&amp;body</span> <span class="pre">body</span> <span class="pre">[Special</span> <span class="pre">Form]</span></span></dt>
+<dd><p>Performs the same functions as weyli::%memoize except that the domain used
+is <em>gen-eral</em>.</p>
+</dd></dl>
+
+<p>One should note that the expression which is used as the index of the cache
+cannot be a constant. It should contain all of the information that can influence
+the value returned by the body. Also, at this writing, only the rst value
+returned by the expression being memoized is actually cached.
+The other values are ignored.</p>
+</section>
+<section id="tuples-3-3">
+<h2>Tuples (3.3)<a class="headerlink" href="#tuples-3-3" title="Link to this heading">¶</a></h2>
+<p>Instances of the class weyli::tuple are simply one-dimensional vectors.
+Generally, one doesn’t create instances of bare tuples, but rather includes
+the weyli::tuple class with some other classes to create more interesting objects.
+For instance, Weyl vectors are instances of a class that than includes tuple
+and domain-element. When creating an instance of a weyli::tuple one needs to
+initialize a slot that contains the values of the tuple. This can be done by
+using the :values initialization keyword.
+For instance,</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="p">(</span><span class="n">setq</span> <span class="n">tup</span> <span class="p">(</span><span class="n">make</span><span class="o">-</span><span class="n">instance</span> <span class="s1">&#39;weyli::tuple :values &#39;</span><span class="p">(</span><span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span><span class="p">)))</span>
+<span class="o">&lt;</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>The initialization value can be either a list or a Lisp vector.</p>
+<p>Since tuples are instances of a class, various methods can be overloaded to
+work with them. The simplest such function is length, which computes the number
+elements in the tuple. Another useful function is ref, which accesses different
+elements of the tuple by their index. The generic function ref is used in place
+of the Common Lisp functions aref or svref.</p>
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">ref</span> <span class="pre">sequence</span> <span class="pre">&amp;rest</span> <span class="pre">indices</span>&#160;&#160; <span class="pre">[Macro]</span></span></dt>
+<dd><p>Accesses the indicated elements of sequence. Tuples are one-dimensional
+arrays so only one index is allowed. The indexing scheme is zero based,
+so the rst element of the tuple has index 0, the second 1 and so on.</p>
+</dd></dl>
+
+<p>For example,</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="p">(</span><span class="nb">list</span> <span class="p">(</span><span class="n">ref</span> <span class="n">tup</span> <span class="mi">0</span><span class="p">)</span> <span class="p">(</span><span class="n">ref</span> <span class="n">tup</span> <span class="mi">2</span><span class="p">)</span> <span class="p">(</span><span class="n">ref</span> <span class="n">tup</span> <span class="mi">1</span><span class="p">))</span>
+<span class="p">(</span><span class="mi">1</span> <span class="mi">3</span> <span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>It is sometimes useful to be able to convert a tuple into a list of its elements. This can be done
+with the following function:</p>
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">list-of-elements</span> <span class="pre">tuple</span>&#160;&#160; <span class="pre">[Method]</span></span></dt>
+<dd><p>Returns a list of the elements of tuple. For example,</p>
+</dd></dl>
+
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="p">(</span><span class="nb">list</span><span class="o">-</span><span class="n">of</span><span class="o">-</span><span class="n">elements</span> <span class="n">tup</span><span class="p">)</span>
+<span class="p">(</span><span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The following functions extend the Common Lisp mapping functions to work with
+tuples as well as the usual sequences of Common Lisp.</p>
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">map</span> <span class="pre">type</span> <span class="pre">function</span> <span class="pre">tuple</span> <span class="pre">&amp;rest</span> <span class="pre">sequences</span>&#160;&#160; <span class="pre">[Method]</span></span></dt>
+<dd><p>The number of arguments of function is expected to be one more than the
+number of elements in sequences. function is applied to each element of
+tuple and the corresponding elements of each of the elements of sequences.</p>
+</dd></dl>
+
+<p>For instance,
+;;</p>
+<blockquote>
+<div><p>&gt; (map ‘tuple #’cons tup tup)
+&lt;(1 . 1), (2 . 2), (3 . 3)&gt;</p>
+</div></blockquote>
+<p>Algebraic objects in Weyl have a slot that indicates the algebraic domain of
+which the object is an element. When creating an instance of such an object it
+is necessary to indicate this domain. If the sequence returned by map requires
+this information then the domain will be extracted from the tuple. If it is
+necessary to explicitly specify the domain of the resulting tuple, the following
+function may be used.</p>
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">map-with-domain</span> <span class="pre">type</span> <span class="pre">domain</span> <span class="pre">function</span> <span class="pre">tuple</span> <span class="pre">&amp;rest</span> <span class="pre">sequences</span> <span class="pre">[Method]</span></span></dt>
+<dd><p>Similar to map but the domain of the resulting tuple will be domain.</p>
+</dd></dl>
+
+</section>
+<section id="arithmetic-with-lists-3-4">
+<h2>Arithmetic with Lists (3.4)<a class="headerlink" href="#arithmetic-with-lists-3-4" title="Link to this heading">¶</a></h2>
+<p>In Lisp, lists are extremely convenient data structures, especially for
+temporary results in computations. To make them even more useful, Weyl provides
+a couple of functions for performing arithmetic operations with lists. These
+routines use the Weyl arithmetic operations, and thus can be used both for
+arrays and lists that contain Lisp numbers and those those that contain Weyl’s
+mathematical objects</p>
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">list-inner-product</span> <span class="pre">list1</span> <span class="pre">list2</span>&#160; <span class="pre">[Method]</span></span></dt>
+<dd><p>Computes the sum of the pairwise product the elements of list1 and list2.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">list-expt</span> <span class="pre">base-list</span> <span class="pre">expt-list</span>&#160;&#160; <span class="pre">[Method]</span></span></dt>
+<dd><p>Returns a list of consisting of the elements of base-list raised to the
+power of the corresponding element of expt-list.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">array-times</span> <span class="pre">array1</span> <span class="pre">array</span>&#160; <span class="pre">[Method]</span></span></dt>
+<dd><p>Checks to make sure the arguments of the of the right dimensions and then
+computes a matrix product storing the result in a new, appropriately sized
+matrix.</p>
+</dd></dl>
+
+</section>
+<section id="avl-trees-3-5">
+<h2>AVL Trees (3.5)<a class="headerlink" href="#avl-trees-3-5" title="Link to this heading">¶</a></h2>
+<p>tbw</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="basics.html" class="btn btn-neutral float-left" title="Basics" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="scalar-domains.html" class="btn btn-neutral float-right" title="Scalar Domains" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, SimLab Group &amp; Weyl enthusiasts.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
