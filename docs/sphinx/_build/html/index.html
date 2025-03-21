@@ -43,9 +43,9 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="getting-started.html">Getting Started</a></li>
-<li class="toctree-l1"><a class="reference internal" href="basics.html">Basics (4)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="basics.html">Basics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="scalar-domains.html">Scalar Domains</a></li>
 <li class="toctree-l1"><a class="reference internal" href="general.html">General Expressions</a></li>
-<li class="toctree-l1"><a class="reference internal" href="scalar-domains.html">Scalar Domains (5)</a></li>
 </ul>
 
         </div>
@@ -85,27 +85,56 @@
 <li class="toctree-l2"><a class="reference internal" href="getting-started.html#creating-a-weyl-world">Creating a Weyl World</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="basics.html">Basics (4)</a><ul>
+<li class="toctree-l1"><a class="reference internal" href="basics.html">Basics</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="basics.html#common-lisp-object-system-4-1">Common Lisp Object System (4.1)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="basics.html#domains-4-2">Domains (4.2 )</a></li>
+<li class="toctree-l2"><a class="reference internal" href="basics.html#domains-4-2">Domains (4.2 )</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="basics.html#subdomains-and-superdomains-4-2-1">Subdomains and Superdomains (4.2.1)</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="basics.html#morphisms-4-3">Morphisms (4.3)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="basics.html#coercions-4-4">Coercions (4.4)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="basics.html#hierarchy-of-domains-4-5">Hierarchy of Domains (4.5)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="basics.html#hierarchy-of-domains-4-5">Hierarchy of Domains (4.5)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="basics.html#semigroups-monoids-and-groups-4-5-1">Semigroups, Monoids and Groups (4.5.1)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="basics.html#rings-4-5-2">Rings (4.5.2)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="basics.html#modules-4-5-3">Modules (4.5.3)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="basics.html#properties-4-5-4">Properties (4.5.4)</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="general.html">General Expressions</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="general.html#variables-6-2">Variables (6.2)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="general.html#operators-6-4">Operators (6.4)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="general.html#tools-for-general-expressions-6-5">Tools for General Expressions (6.5)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="general.html#functions-6-6">Functions (6.6)</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="scalar-domains.html">Scalar Domains (5)</a><ul>
+<li class="toctree-l1"><a class="reference internal" href="scalar-domains.html">Scalar Domains</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="scalar-domains.html#rational-integers-5-1">Rational Integers (5.1)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="scalar-domains.html#rational-numbers-5-2">Rational Numbers (5.2)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="scalar-domains.html#real-numbers-5-3">Real Numbers (5.3)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="scalar-domains.html#complex-numbers-5-4">Complex Numbers (5.4)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="scalar-domains.html#quaternions-5-5">Quaternions (5.5)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="scalar-domains.html#finite-fields-5-6">Finite Fields (5.6)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="general.html">General Expressions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="general.html#variables-6-2">Variables (6.2)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="general.html#check-if-symbol-is-a-ge-variable">Check if symbol is a ge-variable</a></li>
+<li class="toctree-l3"><a class="reference internal" href="general.html#listing-all-variables-currently-active-in-domain-general">Listing all variables currently active in domain *general*</a></li>
+<li class="toctree-l3"><a class="reference internal" href="general.html#adding-subscripts-to-a-variable-yields-a-new-variable">Adding subscripts to a variable (yields a new variable!)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="general.html#variable-properties">Variable properties</a></li>
+<li class="toctree-l3"><a class="reference internal" href="general.html#dependencies">Dependencies</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="general.html#operators-6-4">Operators (6.4)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="general.html#tools-for-general-expressions-6-5">Tools for General Expressions (6.5)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="general.html#display-tools-6-5-1">Display tools (6.5.1)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="general.html#simplification-tools-6-5-2">Simplification Tools (6.5.2)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="general.html#functions-6-6">Functions (6.6)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="general.html#ge-functions-and-applications-6-6-1">GE Functions and Applications (6.6.1)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="general.html#applicable-functions-6-6-2">Applicable functions (6.6.2)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="general.html#sampled-functions-6-6-3">Sampled Functions (6.6.3)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="general.html#substitution">Substitution</a></li>
+<li class="toctree-l3"><a class="reference internal" href="general.html#equations">Equations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="general.html#ge-function">GE-FUNCTION</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>

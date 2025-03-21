@@ -1,48 +1,49 @@
 .. (ql:quickload :weyl)
 .. (in-package :weyl)
 
-Scalar Domains (5)
-==================
-;;;; Almost all domains that occur in mathematics can be constructed from the 
-;;;; rational integers, Z. For instance, the the rational numbers (Q) are the 
-;;;; quotient eld of Z, the real numbers are completion of Q using the 
-;;;; valuations at in nity and so on. For performance reasons provides direct 
-;;;; implementations of four basic scalar domains, the rational integers (Z), 
-;;;; the rational numbers (Q), the real numbers (R) and the complex numbers 
-;;;; (C ). In addition, a similar direct implementation of finite fields is 
-;;;; also provided. These scalar domains are called numeric domains, and the 
-;;;; corresponding domain hierarchy is given in Figure 5.1. Instances of the 
-;;;; GFp class are finite fields of p elements. (These are parameterized domains.) 
-;;;; The GFq class is used to implement elds of q = pr elements. The class GFm 
-;;;; is discussed in more detail in Section 5.6. Instances of the characteristic
-;;;; zero domains may be created using the functions get-rational-integers, 
-;;;; get-rational-numbers, get-real-numbers and get-complex-numbers. To create 
-;;;; finite fields one can use the function get-finite-field. Depending on its 
-;;;; argument, which must be a power of a single prime, this function will 
-;;;; return a domain of type GFp or GFq.
-;;;; Elements of these domains are implemented using the hierarchy of structure
-;;;; types shown in Figure 5.2. The elements of a rational integer domain are 
-;;;; all of structure type rational-integer. However, some numeric domains may
-;;;; contain elements of different structure types. For instance, objects of 
-;;;; structure type rational-integer as well as rational-number can be elements
-;;;; of the rational number domains (Q). This approach allows us to represent 
-;;;; exactly integers and rational numbers in R and C . In the future, a similar
-;;;; approach will allow us to represent algebraic and transcendental 
-;;;; numbers exactly.
+Scalar Domains
+==============
+Almost all domains that occur in mathematics can be constructed from the 
+rational integers, Z. For instance, the the rational numbers (Q) are the 
+quotient eld of Z, the real numbers are completion of Q using the 
+valuations at in nity and so on. For performance reasons provides direct 
+implementations of four basic scalar domains, the rational integers (Z), 
+the rational numbers (Q), the real numbers (R) and the complex numbers 
+(C ). In addition, a similar direct implementation of finite fields is 
+also provided. These scalar domains are called numeric domains, and the 
+corresponding domain hierarchy is given in Figure 5.1. Instances of the 
+GFp class are finite fields of p elements. (These are parameterized domains.) 
+The GFq class is used to implement elds of q = pr elements. The class GFm 
+is discussed in more detail in Section 5.6. Instances of the characteristic
+zero domains may be created using the functions get-rational-integers, 
+get-rational-numbers, get-real-numbers and get-complex-numbers. To create 
+finite fields one can use the function get-finite-field. Depending on its 
+argument, which must be a power of a single prime, this function will 
+return a domain of type GFp or GFq.
+Elements of these domains are implemented using the hierarchy of structure
+types shown in Figure 5.2. The elements of a rational integer domain are 
+all of structure type rational-integer. However, some numeric domains may
+contain elements of different structure types. For instance, objects of 
+structure type rational-integer as well as rational-number can be elements
+of the rational number domains (Q). This approach allows us to represent 
+exactly integers and rational numbers in R and C . In the future, a similar
+approach will allow us to represent algebraic and transcendental 
+numbers exactly.
 
 
-;;;; One of the complications Weyl must deal with is that Lisp has its own model
-;;;; of the numbers, which must co-exist with Weyl's model. The type structure 
-;;;; used by Lisp is given in Figure 5.3. To simplify use of Weyl, we allow 
-;;;; users to create Weyl numbers from Lisp numbers, and to incorporate Lisp 
-;;;; numbers into their code by providing some automatic coercions. Thus adding
-;;;; a Lisp number to an element of R causes the Lisp number to be coerced to 
-;;;; an element of R of structure rational-integer.
-;;;; There are several different ways to determine if an object is a scalar.
+One of the complications Weyl must deal with is that Lisp has its own model
+of the numbers, which must co-exist with Weyl's model. The type structure 
+used by Lisp is given in Figure 5.3. To simplify use of Weyl, we allow 
+users to create Weyl numbers from Lisp numbers, and to incorporate Lisp 
+numbers into their code by providing some automatic coercions. Thus adding
+a Lisp number to an element of R causes the Lisp number to be coerced to 
+an element of R of structure rational-integer.
+There are several different ways to determine if an object is a scalar.
+::
 
-;;;;      (typep obj 'cl:number) ..... a Lisp number,
-;;;;      (typep obj 'numeric) ....... a Weyl number,
-;;;;      (number? obj) .............. either a Lisp number or a Weyl number.
+     (typep obj 'cl:number) ..... a Lisp number,
+     (typep obj 'numeric) ....... a Weyl number,
+     (number? obj) .............. either a Lisp number or a Weyl number.
 
 .. code-block:: lisp
 
@@ -61,27 +62,29 @@ Scalar Domains (5)
     (number? (coerce 1234 (get-rational-integers)))
     => T
 
-;;;; The following sections are organized by the di erent structure types. 
-;;;; Sections 5.1 through 5.6 deal with rational integers, rational numbers, 
-;;;; real numbers, complex numbers and elements of finite fields respectively. 
-;;;; In each section we discuss the di erent domains these structure elements 
-;;;; can be used in followed by a discussion of the operations that can be 
-;;;; performed with each structure type.
+The following sections are organized by the di erent structure types. 
+Sections 5.1 through 5.6 deal with rational integers, rational numbers, 
+real numbers, complex numbers and elements of finite fields respectively. 
+In each section we discuss the di erent domains these structure elements 
+can be used in followed by a discussion of the operations that can be 
+performed with each structure type.
 
 
 Rational Integers (5.1)
 -----------------------
 
-;;; The rational integers are the integers of elementary arithmetic:
-;;;
-;;;          Z = {..., -3, -2, -1, 0, 1, 2, 3, ...}
-;;;
-;;; Other than limitations on the memory of the host computer, there is no 
-;;; limitation on the size of the elements of Z. The term rational integer is 
-;;; used to distinguish this domain from other domains of algebraic integers, 
-;;; e.g., Z[(1 + sqrt(5))/2].
+The rational integers are the integers of elementary arithmetic:
+::
 
-;;; A domain of rational integers can be created using the following function.
+         Z = {..., -3, -2, -1, 0, 1, 2, 3, ...}
+
+
+Other than limitations on the memory of the host computer, there is no 
+limitation on the size of the elements of Z. The term rational integer is 
+used to distinguish this domain from other domains of algebraic integers, 
+e.g., Z[(1 + sqrt(5))/2].
+
+A domain of rational integers can be created using the following function.
 
 
 .. function::  get-rational-integers                               [Function]
@@ -91,21 +94,21 @@ Rational Integers (5.1)
    is called.
 
 
-;;; Most of the time, there only needs to be one rational integer domain. The 
-;;; domain of rational integers is a euclidean domain.
+Most of the time, there only needs to be one rational integer domain. The 
+domain of rational integers is a euclidean domain.
 
-;;; Elements of structure type rational-integer can be elements of domains of 
-;;; type rational-numbers, real-numbers and complex-numbers. Equivalently, if 
-;;; domain is a domain that admits elements of structure type rational-integer,
-;;; then one invoke make-element with domain and a Lisp integer
+Elements of structure type rational-integer can be elements of domains of 
+type rational-numbers, real-numbers and complex-numbers. Equivalently, if 
+domain is a domain that admits elements of structure type rational-integer,
+then one invoke make-element with domain and a Lisp integer
 
-;;; Rational integers are most easily created by coercing a Lisp integer to a 
-;;; rational integer domain using the function coerce. Furthermore, the usual 
-;;; arithmetic routines (+, -, *, / and expt) work with rational integers that 
-;;; are elements of the same domain. If the domain is a field then `/` may
-;;; return a rational-number.
+Rational integers are most easily created by coercing a Lisp integer to a 
+rational integer domain using the function coerce. Furthermore, the usual 
+arithmetic routines (+, -, *, / and expt) work with rational integers that 
+are elements of the same domain. If the domain is a field then `/` may
+return a rational-number.
 
-;;; For instance, the following routine could be used to compute factorials.
+For instance, the following routine could be used to compute factorials.
 
 .. code-blocks:: lisp
 
@@ -116,13 +119,14 @@ Rational Integers (5.1)
          (* (coerce n ZZ) (my-factorial (- n 1)))))
 
 
-;;; Notice that the unit element of ZZ was created by using the function one, 
-;;; rather than (coerce 1 ZZ). In general, this is more efficient.
+Notice that the unit element of ZZ was created by using the function one, 
+rather than (coerce 1 ZZ). In general, this is more efficient.
 
-;;; One of the more commonly used control structures is that used to construct 
-;;; exponentiation from multiplication by repeated squaring. This control 
-;;; structure is captured by the internal function weyli::repeated-squaring:
-;;;
+One of the more commonly used control structures is that used to construct 
+exponentiation from multiplication by repeated squaring. This control 
+structure is captured by the internal function weyli::repeated-squaring:
+
+
 .. function::  weyli::repeated-squaring mult one                   [Function]
 
    Returns a function of two arguments that is effectively
@@ -135,7 +139,7 @@ Rational Integers (5.1)
    the operation mult. If exp is 1, then one is returned.
 
 
-;;; Using this function, one could have de ned exponentiation as
+Using this function, one could have de ned exponentiation as
 
 .. code-block:: lisp
 
@@ -144,9 +148,9 @@ Rational Integers (5.1)
             #'weyli::times (coerce 1 (domain-of x))) x n))
 
 
-;;; However, this routine can be used for operations other than exponentiation.
-;;; For instance, if one wanted a routine that replicates a sequence n times, 
-;;; one could use the following:
+However, this routine can be used for operations other than exponentiation.
+For instance, if one wanted a routine that replicates a sequence n times, 
+one could use the following:
 
 .. code-block:: lisp
 
@@ -236,8 +240,8 @@ Rational Integers (5.1)
     (reduce #'%times  ffl)
     => 12345678901234567890
 
-;;; note that WEYLI:* is a macro, not a function, i.e. (reduce #'*  ffl)
-;;; won't work as described farther above.
+note that WEYLI:* is a macro, not a function, i.e. (reduce #'*  ffl)
+won't work as described farther above.
 
 
 
@@ -344,30 +348,33 @@ Rational Integers (5.1)
     (weyli::newprime 1299)
     => 113
 
-;;; **BUG?** never > 113 ....
 
-;;; *** Need to point out that the elements of the second rational integer 
-;;;     domain created are totally different from that those that are elements 
-;;;     of the rst instance of the rational integers.)
-;;;
+**BUG?** never > 113 ....
+
+*** Need to point out that the elements of the second rational integer 
+    domain created are totally different from that those that are elements 
+    of the rst instance of the rational integers.)
+
 
 
 Rational Numbers (5.2)
 ----------------------
 
-;; The domain rational numbers, Q, is the quotient eld of the ring of rational 
-;; integers. The elements of a rational number domain can have structure type 
-;; either rational-integer or rational-number. Elements.
-;; As in Common Lisp there is a set of four functions for truncating numbers 
-;; and ratios to integers. If the second argument is not provided then it 
-;; defaults to 1. If only the rst argument is provided and it is a rational 
-;; integer, then all four functions return the same values.
-;; A domain of rational integers is created by the following function.
+The domain rational numbers, Q, is the quotient eld of the ring of rational 
+integers. The elements of a rational number domain can have structure type 
+either rational-integer or rational-number. Elements.
+As in Common Lisp there is a set of four functions for truncating numbers 
+and ratios to integers. If the second argument is not provided then it 
+defaults to 1. If only the rst argument is provided and it is a rational 
+integer, then all four functions return the same values.
+A domain of rational integers is created by the following function.
 
 .. function::       get-rational-numbers                            [Function]
 
+
    Returns a domain that is isomorphic to the rational numbers, Q. When called
    repeatedly, it always returns the same value until reset-domains is called.
+
 
 .. function::  floor number &optional divisor                       [Function]
 
@@ -422,9 +429,9 @@ Rational Numbers (5.2)
 Real Numbers (5.3)
 ------------------
 
-;;; The entire real number situation is somewhat confused. In particular, the 
-;;; relationship between floating point numbers and real numbers is jumbled. 
-;;; These issues will be fixed at a later date.
+The entire real number situation is somewhat confused. In particular, the 
+relationship between floating point numbers and real numbers is jumbled. 
+These issues will be fixed at a later date.
  
 .. function::     get-real-numbers &optional precision             [Function]
 
@@ -541,11 +548,11 @@ Real Numbers (5.3)
     => 2.0
 
 
-;;; The following standard trigonometric and hyperbolic routines are provided
-;;;   
-;;;     sin n asin n sinh n asinh n
-;;;     cos n acos n cosh n acosh n
-;;;     tan n atan n tanh n atanh n
+The following standard trigonometric and hyperbolic routines are provided
+  
+    sin n asin n sinh n asinh n
+    cos n acos n cosh n acosh n
+    tan n atan n tanh n atanh n
 
 .. code-block:: lisp
 
@@ -707,15 +714,16 @@ Complex Numbers (5.4)
 Quaternions (5.5)
 -----------------
 
-;;; Quaternions are a non-commutative algebra over a field, usually the reals, 
-;;; that are often used to represent three dimensional rotations. Weyl can 
-;;; construct a quaternion algebra over any field F. This algebra is a four 
-;;; dimensional vector space over F with the following relations. The
-;;; element (1,0,0,0) is the multiplicative identity. If we denote 
-;;; i = (0,1,0,0), j = (0,0,1,0) and k = (0,0,0,1), then
-;;; 
-;;;      i^2 = j^2 = k^2 = -1,  ij = -ji, jk = -kj and ik = -ki.
-;;; 
+Quaternions are a non-commutative algebra over a field, usually the reals, 
+that are often used to represent three dimensional rotations. Weyl can 
+construct a quaternion algebra over any field F. This algebra is a four 
+dimensional vector space over F with the following relations. The
+element (1,0,0,0) is the multiplicative identity. If we denote 
+i = (0,1,0,0), j = (0,0,1,0) and k = (0,0,0,1), then
+::
+
+     i^2 = j^2 = k^2 = -1,  ij = -ji, jk = -kj and ik = -ki.
+
 
 
 .. function:: get-quaternion-domain field                           [Function]
@@ -745,30 +753,31 @@ Quaternions can be created using make-element.
    all elements of the coefficient domain and is intended only for internal use.
 
 
-;;; As an algebraic extension of the real numbers, the quaternions are a little
-;;; strange. The subfield of quaternions generated by 1 and i, is isomorphic to
-;;; the complex numbers. Adding j and k makes the algebra non-commutative and 
-;;; causes it to violate some basic intuitions. For instance, 1 hasat least 
-;;; three square roots!
-;;; 
-;;; We illustrate some of these issues computationally. First we create a 
-;;; quaternion algebra in which to work.
-;;; 
-;;;      > (setq q (get-quaternion-domain (get-real-numbers)))
-;;;      Quat(R)
-;;; 
-;;; Next, we can create some elements of the quaternions and do some simple 
-;;; calculations with them.
-;;; 
-;;;     > (setq a (make-element q 1 1 1 1))
-;;;     <1, 1, 1, 1>
-;;; 
-;;;     > (setq b (/ a 2))
-;;;     <1/2, 1/2, 1/2, 1/2>
-;;; 
-;;;     > (* b b b)
-;;;     <-1, 0, 0, 0>
-;;; 
+As an algebraic extension of the real numbers, the quaternions are a little
+strange. The subfield of quaternions generated by 1 and i, is isomorphic to
+the complex numbers. Adding j and k makes the algebra non-commutative and 
+causes it to violate some basic intuitions. For instance, 1 hasat least 
+three square roots!
+
+We illustrate some of these issues computationally. First we create a 
+quaternion algebra in which to work.
+::
+
+     > (setq q (get-quaternion-domain (get-real-numbers)))
+     Quat(R)
+
+Next, we can create some elements of the quaternions and do some simple 
+calculations with them.
+
+    > (setq a (make-element q 1 1 1 1))
+    <1, 1, 1, 1>
+
+    > (setq b (/ a 2))
+    <1/2, 1/2, 1/2, 1/2>
+
+    > (* b b b)
+    <-1, 0, 0, 0>
+
 
 .. code-block:: lisp
 
@@ -785,25 +794,28 @@ Quaternions can be created using make-element.
      => <-1, 0, 0, 0>
 
 
-;;; As expected, one can multiply quaternions by other quaternions and by 
-;;; elements of the coefficient field (or objects that can be coerced into the 
-;;; coefficient field).
+As expected, one can multiply quaternions by other quaternions and by 
+elements of the coefficient field (or objects that can be coerced into the 
+coefficient field).
 
 
 .. function:: conjugate quaternion                                  [Function]
 
    This is an extension of the concept of complex conjugation. It negates 
    the coefficients of i, j and k. This is illustrated by the following example.
- 
-;;;     > (setq c (make-element q 1 2 3 4))
-;;;     <1, 2, 3, 4>
-;;;
-;;;     > (conjugate c)
-;;;     <1, -2, -3, -4>
-;;; 
-;;;      > (* c (conjugate c)
-;;;     <30, 0, 0, 0>
-;;; 
+
+
+::
+
+    > (setq c (make-element q 1 2 3 4))
+    <1, 2, 3, 4>
+
+    > (conjugate c)
+    <1, -2, -3, -4>
+
+     > (* c (conjugate c)
+    <30, 0, 0, 0>
+
 
 .. code-block:: lisp
 
@@ -817,133 +829,153 @@ Quaternions can be created using make-element.
     => <30, 0, 0, 0>
 
 
-;;; Notice that the components of the product of a quaternion with its conjugate
-;;; are all zero except for the very first component. This matches what happens
-;;; when one multiplies a complex number with its complex conjugate.
+Notice that the components of the product of a quaternion with its conjugate
+are all zero except for the very first component. This matches what happens
+when one multiplies a complex number with its complex conjugate.
 
 
-;;; ???? division, expt .... not working
+???? division, expt .... not working
 
-;;; Finite Fields (5.6)
-;;; 
-;;; The usual finite fields are provided in Weyl, Fp and algebraic extensions 
-;;; of Fq . Such domains are called GFp domains. Since all finite fields with 
-;;; the same number of elements are isomorphic, fields are created by specifying
-;;; the elements in the field.
-;;; 
-;;;       get-finite-field size         [Function]
-;;; 
-;;; Size is expected to be a a power of a prime number. This function returns 
-;;; a finite field with the indicated number of elements. If size is nil then 
-;;; a GFm field is returned.
-;;; 
-;;;      number-of-elements finite-field [Function]
-;;; 
-;;; Returns the number of elements in finite-field.
-;;;
-;;; At the moment Weyl can only deal with the fields F2^k and Fp . For instance,
-;;; 
-;;;    > (setq F256 (get-finite-field 256))
-;;;    GF(2^8)
-;;; 
-;;;    > (characteristic F256)
-;;;    2
-;;; 
-;;;    > (number-of-elements F256)
-;;;   256
-;;; 
+Finite Fields (5.6)
+-------------------
 
-(defvar  F256 (get-finite-field 256))
-; => F256
+The usual finite fields are provided in Weyl, Fp and algebraic extensions 
+of Fq . Such domains are called GFp domains. Since all finite fields with 
+the same number of elements are isomorphic, fields are created by specifying
+the elements in the field.
 
-(characteristic F256)
-; => 2
+.. function::       get-finite-field size                        [Function]
 
-(number-of-elements F256)
-; => 256
+   Size is expected to be a a power of a prime number. This function returns 
+   a finite field with the indicated number of elements. If size is nil then 
+   a GFm field is returned.
 
 
-;;; Elements of a GFp are created by coercing a rational integer into a GFp 
-;;; domain. For finite fields with characteristic greater than 2, coercing an 
-;;; integer into Fp maps n into n (mod p). For F2^k , the image of an integer 
-;;; is a bit more complicated. Let the binary representation of n be
-;;; 
-;;;     n = n_l ... n_0
-;;;
-;;; and let alpha be the primitive element of F2^k over F2. Then
-;;;
-;;;     n -> n_{k-1} alpha^{k-1} + ... + n_1 alpha + n_0.
-;;; 
-;;; This mapping is particularly appropriate for problems in coding theory.
-;;; 
-;;; In addition, elements of finite fields can be created using make-element.
-;;; 
-;;;       make-element finite-field integer &optional rest  [Function]
-;;; 
-;;; Creates an element of nite- eld from integer . This is the only way to 
-;;; create elements of Fp^k . (As with all make-element methods, the argument 
-;;; list includes &rest arguments, but for finite fields any additional arguments
-;;; are ignored.)
-;;; As an example of the use of nite elds, consider the following function, 
-;;; which determines the order of an element of a finite field (the hard way).
-;;; 
-;;;      (defun element-order (n)
-;;;        (let* ((domain (domain-of n))
-;;;               (one (coerce 1 domain)))
-;;;          (loop for i upfrom 1 below (number-of-elements domain)
-;;;                for power = n then (* n power)
-;;;              do (when (= power one)
-;;;                     (return i)))))
-;;; 
-;;; A more efficient routine is provided by Weyl as multiplicative-order.
-;;; 
-;;; multiplicative-order elt     [Function]
-;;; 
-;;; Elt must be an element of a finite field. This routine computes multiplicative 
-;;; order of elt. This routine requires factoring the size of the multiplicative 
-;;; group of the finite field and thus is appropriate for very large finite fields.
-;;; 
-;;; The following illustrates use of these routines.
-;;; 
-;;;      > (element-order (coerce 5 (get-finite-field 41)))
-;;;     20
-;;;      > (multiplicative-order (coerce 5 (get-finite-field 41)))
-;;; 
+.. function::      number-of-elements finite-field               [Function]
 
-(defun element-order (n)
+   Returns the number of elements in finite-field.
+
+
+At the moment Weyl can only deal with the fields F2^k and Fp . For instance,
+::
+
+   > (setq F256 (get-finite-field 256))
+   GF(2^8)
+
+   > (characteristic F256)
+   2
+
+   > (number-of-elements F256)
+  256
+
+
+
+.. code-block:: lisp
+
+    (defvar  F256 (get-finite-field 256))
+    => F256
+
+    (characteristic F256)
+    => 2
+
+    (number-of-elements F256)
+    => 256
+
+
+Elements of a GFp are created by coercing a rational integer into a GFp 
+domain. For finite fields with characteristic greater than 2, coercing an 
+integer into Fp maps n into n (mod p). For F2^k , the image of an integer 
+is a bit more complicated. Let the binary representation of n be
+::
+
+    n = n_l ... n_0
+
+and let alpha be the primitive element of F2^k over F2. Then
+::
+
+    n -> n_{k-1} alpha^{k-1} + ... + n_1 alpha + n_0.
+
+
+This mapping is particularly appropriate for problems in coding theory.
+
+In addition, elements of finite fields can be created using make-element.
+
+.. function::    make-element finite-field integer &optional rest  [Function]
+
+   Creates an element of nite- eld from integer . This is the only way to 
+   create elements of Fp^k . (As with all make-element methods, the argument 
+   list includes &rest arguments, but for finite fields any additional arguments
+   are ignored.)
+
+
+As an example of the use of nite elds, consider the following function, 
+which determines the order of an element of a finite field (the hard way).
+
+.. code-block:: lisp
+
+ 
+      (defun element-order (n)
         (let* ((domain (domain-of n))
-              (one (coerce 1 domain)))
-         (loop for i upfrom 1 below (number-of-elements domain)
-              for power = n then (* n power)
-            do (when (= power one)
+               (one (coerce 1 domain)))
+          (loop for i upfrom 1 below (number-of-elements domain)
+                for power = n then (* n power)
+              do (when (= power one)
                     (return i)))))
-
-(element-order (coerce 5 (get-finite-field 41)))
-; => 20
-
-(multiplicative-order (coerce 5 (get-finite-field 41)))
-; => 20
+ 
+A more efficient routine is provided by Weyl as multiplicative-order.
 
 
-;;; Consider what is involved when implementing an algorithm using the Chinese 
-;;; remainder theorem. The computation is done in a number of domains like 
-;;; Z=(p1), Z=(p2) and Z=(p3). The results are then combined to produce results 
-;;; in the domains Z=(p1p2) and Z=(p1p2 p3). Rather than working in several 
-;;; different domains and explicitly coercing the elements from one to another, 
-;;; it is easier to assume we are working in a single domain that is the union 
-;;; of Z=(m) for all integers m and marking the elements of this domain with 
-;;; their moduli. We call this domain a GFm.
-;;; 
-;;; GFm domains are also created using the get-finite-field but by providing 
-;;; nil as the number of elements in the field.
-;;; 
-;;; Elements of GFm are printed by indicating their modulus in a subscript 
-;;; surrounded by parentheses. Thus 2_(5) means 2 modulo 5. Combining two 
-;;; elements a_(m) and b_(m) that have the same moduli is the same as if they 
-;;; were both elements of Z=(m). To combine elements of two different rings, 
-;;; we find a ring that contains both as subrings and perform the calculation 
-;;; there. Thus combining a_(m) and b_(n) we combine the images of a and b as 
-;;; elements of Z=(gcd(m; n)).
-;;; FIXTHIS: Need works something out for dealing with completions of the 
-;;; integers at primes, and how we are going to compute with elements.
+.. function:: multiplicative-order elt                             [Function]
+ 
+   Elt must be an element of a finite field. This routine computes multiplicative 
+   order of elt. This routine requires factoring the size of the multiplicative 
+   group of the finite field and thus is appropriate for very large finite fields.
+
+
+The following illustrates use of these routines.
+::
+
+     > (element-order (coerce 5 (get-finite-field 41)))
+    20
+     > (multiplicative-order (coerce 5 (get-finite-field 41)))
+
+
+.. code-block:: lisp
+
+   (defun element-order (n)
+            (let* ((domain (domain-of n))
+                  (one (coerce 1 domain)))
+            (loop for i upfrom 1 below (number-of-elements domain)
+                  for power = n then (* n power)
+               do (when (= power one)
+                      (return i)))))
+
+    (element-order (coerce 5 (get-finite-field 41)))
+     => 20
+
+    (multiplicative-order (coerce 5 (get-finite-field 41)))
+    => 20
+
+
+Consider what is involved when implementing an algorithm using the Chinese 
+remainder theorem. The computation is done in a number of domains like 
+Z=(p1), Z=(p2) and Z=(p3). The results are then combined to produce results 
+in the domains Z=(p1p2) and Z=(p1p2 p3). Rather than working in several 
+different domains and explicitly coercing the elements from one to another, 
+it is easier to assume we are working in a single domain that is the union 
+of Z=(m) for all integers m and marking the elements of this domain with 
+their moduli. We call this domain a GFm.
+
+GFm domains are also created using the get-finite-field but by providing 
+nil as the number of elements in the field.
+
+Elements of GFm are printed by indicating their modulus in a subscript 
+surrounded by parentheses. Thus 2_(5) means 2 modulo 5. Combining two 
+elements a_(m) and b_(m) that have the same moduli is the same as if they 
+were both elements of Z=(m). To combine elements of two different rings, 
+we find a ring that contains both as subrings and perform the calculation 
+there. Thus combining a_(m) and b_(n) we combine the images of a and b as 
+elements of Z=(gcd(m; n)).
+FIXTHIS: Need works something out for dealing with completions of the 
+integers at primes, and how we are going to compute with elements.
 

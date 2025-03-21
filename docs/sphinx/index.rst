@@ -7,14 +7,15 @@ Welcome to Weyl's documentation!
 ================================
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 3
    :caption: Contents:
    
    introduction
    getting-started
    basics
+   scalar-domains
    general
-   scalar-domains   
+      
 
 
 Indices and tables

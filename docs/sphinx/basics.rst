@@ -1,8 +1,8 @@
 .. (ql:quickload :weyl)
 .. (in-package :weyl)
 
-Basics (4)
-==========
+Basics
+======
 This chapter describes the basic tools used by Weyl to model the algebraic
 structures of mathematics. The fundamental di erence between Weyl and most
 other systems is that in addition to providing a representation for domain
