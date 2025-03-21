@@ -720,7 +720,7 @@ c11
 (conjugate cq4)
 ; => <1, -2, -3, -4>
 
-(* cq4 (conjugate cq4)
+(* cq4 (conjugate cq4))
 ; => <30, 0, 0, 0>
 
 
