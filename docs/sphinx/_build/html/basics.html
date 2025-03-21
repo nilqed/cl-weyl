@@ -1,0 +1,587 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Basics (4) &mdash; Weyl 0.2 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/documentation_options.js?v=10f1778b"></script>
+      <script src="_static/doctools.js?v=888ff710"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="General Expressions" href="general.html" />
+    <link rel="prev" title="Getting Started" href="getting-started.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Weyl
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="getting-started.html">Getting Started</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Basics (4)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#common-lisp-object-system-4-1">Common Lisp Object System (4.1)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#domains-4-2">Domains (4.2 )</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#subdomains-and-superdomains-4-2-1">Subdomains and Superdomains (4.2.1)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#morphisms-4-3">Morphisms (4.3)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#coercions-4-4">Coercions (4.4)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#hierarchy-of-domains-4-5">Hierarchy of Domains (4.5)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#semigroups-monoids-and-groups-4-5-1">Semigroups, Monoids and Groups (4.5.1)</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id1">;;</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#rings-4-5-2">Rings (4.5.2)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#modules-4-5-3">Modules (4.5.3)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#properties-4-5-4">Properties (4.5.4)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="general.html">General Expressions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="scalar-domains.html">;;;; Scalar Domains (5)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="scalar-domains.html#id3">;;;</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Weyl</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Basics (4)</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/basics.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="basics-4">
+<h1>Basics (4)<a class="headerlink" href="#basics-4" title="Link to this heading">¶</a></h1>
+<p>This chapter describes the basic tools used by Weyl to model the algebraic
+structures of mathematics. The fundamental di erence between Weyl and most
+other systems is that in addition to providing a representation for domain
+elements like polynomials, Weyl also provides representations for the
+algebraic domains of which the polynomials are elements. In Section 4.2 we
+discuss domains and domain elements. Section 4.3 discusses morphisms,
+which are used to define the relationships between the elements of two
+domains. Section 4.4 illustrates how to make use of these relationships.
+Section 4.5 presents the hierarchy of domains being used in Weyl. Weyl
+uses the Common Lisp Object System quite heavily. We begin this chapter
+with a brief introduction to CLOS, focusing on those points that are
+relevant to Weyl.</p>
+<section id="common-lisp-object-system-4-1">
+<h2>Common Lisp Object System (4.1)<a class="headerlink" href="#common-lisp-object-system-4-1" title="Link to this heading">¶</a></h2>
+<p>Weyl is based on the Common Lisp Object System (CLOS) [1] programming model.
+Since this model of object-oriented programming differs significantly from
+the more common, message-based paradigm used in Smalltalk and C++, we give
+a short introduction here [see the manual, Section 4.1].</p>
+<div class="highlight-lisp notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="nb">defclass</span><span class="w"> </span><span class="nv">complex-number</span><span class="w"> </span><span class="p">()</span>
+<span class="w">  </span><span class="p">((</span><span class="nv">a</span><span class="w"> </span><span class="ss">:initarg</span><span class="w"> </span><span class="ss">:real</span><span class="w"> </span><span class="ss">:accessor</span><span class="w"> </span><span class="nv">real-part</span><span class="p">)</span>
+<span class="w">   </span><span class="p">(</span><span class="nv">b</span><span class="w"> </span><span class="ss">:initarg</span><span class="w"> </span><span class="ss">:imag</span><span class="w"> </span><span class="ss">:accessor</span><span class="w"> </span><span class="nv">imag-part</span><span class="p">)))</span>
+</pre></div>
+</div>
+</section>
+<section id="domains-4-2">
+<h2>Domains (4.2 )<a class="headerlink" href="#domains-4-2" title="Link to this heading">¶</a></h2>
+<p>The objects that are usually manipulated in algebraic computation systems
+(integers, polynomials, algebraic functions, etc.) are called
+<cite>domain elements</cite> in Weyl. They are elements of algebraic objects called
+domains . Examples of domains are the ring of (rational) integers Z, the
+ring of polynomials in x, y and z with integer coefficients, Z[x; y; z ],
+and the field of Gaussian numbers, Q[i].
+[more in the manual, Section 4.2]</p>
+<div class="highlight-lisp notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="nb">defvar</span><span class="w"> </span><span class="nv">ZZ</span><span class="w"> </span><span class="p">(</span><span class="nv">get-rational-integers</span><span class="p">))</span>
+<span class="p">(</span><span class="nb">defvar</span><span class="w"> </span><span class="nv">QQ</span><span class="w"> </span><span class="p">(</span><span class="nv">get-rational-numbers</span><span class="p">))</span>
+<span class="p">(</span><span class="nb">defvar</span><span class="w"> </span><span class="nv">RR</span><span class="w"> </span><span class="p">(</span><span class="nv">get-real-numbers</span><span class="p">))</span>
+
+<span class="p">(</span><span class="nb">describe</span><span class="w"> </span><span class="nv">rr</span><span class="p">)</span>
+
+<span class="c1">; R</span>
+<span class="c1">;  [standard-object]</span>
+<span class="c1">;</span>
+<span class="c1">; Slots with :INSTANCE allocation:</span>
+<span class="c1">;  PROPERTY-LIST                  = (:COMPLETE-SET T :ORDERED-DOMAIN T :INTEGRAL-DOMAIN T)</span>
+<span class="c1">;  OPERATION-TABLE                = #&lt;HASH-TABLE :TEST EQL :COUNT 18 {100481C333}&gt;</span>
+<span class="c1">;  SUPER-DOMAINS                  = NIL</span>
+<span class="c1">;  MORPHISMS-FROM                 = NIL</span>
+<span class="c1">;  MORPHISMS-TO                   = (Q-&gt;R)</span>
+<span class="c1">;  PRINT-FUNCTION                 = WEYLI::REAL-NUMBERS-PRINT-OBJECT</span>
+<span class="c1">;  COEFFICIENT-DOMAIN             = NIL</span>
+
+
+<span class="p">(</span><span class="nb">defvar</span><span class="w"> </span><span class="nv">Q-mes</span><span class="w"> </span><span class="p">(</span><span class="nv">get-polynomial-ring</span><span class="w"> </span><span class="nv">QQ</span><span class="w"> </span><span class="o">&#39;</span><span class="p">(</span><span class="nv">m</span><span class="w"> </span><span class="nv">e</span><span class="w"> </span><span class="nv">s</span><span class="p">)))</span>
+<span class="nv">Q-MES</span>
+<span class="c1">; =&gt; Q[m, e, s]</span>
+</pre></div>
+</div>
+<section id="subdomains-and-superdomains-4-2-1">
+<h3>Subdomains and Superdomains (4.2.1)<a class="headerlink" href="#subdomains-and-superdomains-4-2-1" title="Link to this heading">¶</a></h3>
+<p>In some circumstances it is useful to be able to create a domain that is a
+subdomain of a larger domain. For instance, the positive integers are
+viewed as a subdomain of the rational integers. The elements of an ideal
+of ring form an additive group that is a subdomain of the original ring.</p>
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">super-domains-of</span> <span class="pre">domain</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">[Generic]</span></span></dt>
+<dd><p>Returns the superdomains that contain domain.</p>
+</dd></dl>
+
+<p>At the moment, nothing uses this mechanism. The superdomain concept is
+intended for dealing with deductive questions like: Are there any zero
+divisors in the set of positive integers? Although the set of positive
+integers is not an integral domain, it is a subsemigroup of an integral
+domain and thus none of the positive integers is a zero divisor. Similarly,
+it is intended that an ideal of a ring R will be implemented as an R-module
+that is also a subdomain of R.</p>
+<div class="highlight-lisp notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="nv">weyli::super-domains-of</span><span class="w"> </span><span class="nv">ZZ</span><span class="p">)</span>
+
+<span class="nv">=&gt;</span><span class="w"> </span><span class="no">NIL</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="morphisms-4-3">
+<h2>Morphisms (4.3)<a class="headerlink" href="#morphisms-4-3" title="Link to this heading">¶</a></h2>
+<p>Morphisms are maps between domains. They are rst-class objects in Weyl and
+can manipulated like domains and domain elements. In particular, two
+morphisms can be composed using the operation compose. Morphisms are
+created using the function make-morphism, which takes three arguments.</p>
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">make-morphism</span> <span class="pre">domain</span> <span class="pre">mapping</span> <span class="pre">range</span> <span class="pre">&amp;key</span> <span class="pre">(replace?</span> <span class="pre">T)</span>&#160; <span class="pre">[Generic]</span></span></dt>
+<dd><p>This function creates a morphism from domain to range. Mapping is a
+function of one argument that takes an element of domain and returns an
+element of range . If replace? is true, then any existing morphisms between
+domain and range are deleted before the new morphism is created.</p>
+</dd></dl>
+
+<p>All morphisms created are remembered in the *morphisms* data structure.
+(Initially, this is just a list.) To nd any existing homomorphisms we can
+use the function get-morphisms.</p>
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">get-morphisms</span> <span class="pre">&amp;key</span> <span class="pre">domain</span> <span class="pre">range</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">[Function]</span></span></dt>
+<dd><p>When given no arguments this function returns a list of all the morphisms
+Weyl currently knows about in this context. When the domain is provided,
+it returns all morphisms from domain to anywhere. Similarly, when range
+is provided, only those morphisms that map into range are returned. When
+both range and domain are given, then only those morphisms from domain to
+range are returned</p>
+</dd></dl>
+
+<div class="highlight-lisp notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="nv">get-morphisms</span><span class="p">)</span>
+<span class="w"> </span><span class="nv">=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nv">Z-&gt;Q</span><span class="w"> </span><span class="nv">Z-&gt;R</span><span class="w"> </span><span class="nv">Q-&gt;R</span><span class="w"> </span><span class="nv">Z-&gt;Q[m,</span><span class="w"> </span><span class="nv">e,</span><span class="w"> </span><span class="nv">s]</span><span class="w"> </span><span class="nv">Q-&gt;Q[m,</span><span class="w"> </span><span class="nv">e,</span><span class="w"> </span><span class="nv">s]</span><span class="p">)</span>
+
+<span class="p">(</span><span class="nv">get-morphisms</span><span class="w"> </span><span class="ss">:domain</span><span class="w"> </span><span class="vg">*general*</span><span class="p">)</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="no">NIL</span>
+
+<span class="p">(</span><span class="nv">get-morphisms</span><span class="w"> </span><span class="ss">:domain</span><span class="w"> </span><span class="nv">QQ</span><span class="p">)</span>
+<span class="w"> </span><span class="nv">=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nv">Q-&gt;R</span><span class="w"> </span><span class="nv">Q-&gt;Q[m,</span><span class="w"> </span><span class="nv">e,</span><span class="w"> </span><span class="nv">s]</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>NOTE</strong>: neither <em>morphisms</em> nor weyli::<em>morphisms</em> are defined.</p>
+<p>Classes have been provided to indicate that more is known about the map
+than that is a simple morphism. In particular, a morphism can be a
+homomorphism, an injection, a surjection, an isomorphism and an
+automorphism. At the moment nothing takes advantage of this information.</p>
+</section>
+<section id="coercions-4-4">
+<h2>Coercions (4.4)<a class="headerlink" href="#coercions-4-4" title="Link to this heading">¶</a></h2>
+<p>Explicit coercions are performed by the function coerce:</p>
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">coerce</span> <span class="pre">element</span> <span class="pre">domain</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">[Generic]</span></span></dt>
+<dd><p>Coerce an element to be a member of domain.</p>
+</dd></dl>
+
+<p>Coerce finds an element of domain that corresponds with element. This is
+done using one of two methods. First, there may be a <cite>canonical</cite> coercion,
+which is one that is defined via explicit <cite>coerce</cite> methods. These methods
+take care of mapping Lisp expressions, like numbers and atoms, into Weyl
+domains. If there are no canonical coercion methods then coerce checks to
+see if there is a unique morphism between element’s domain and domain. If
+so, this morphism is used to map element to domain. If there is more than
+one morphism then an error is signaled. If the the switch <em>allow-coercions</em>
+is set to false (nil) then the canonical maps are the only ones that will
+be used by coerce. However, if the user sets <em>allow-coercions</em> to T then
+by creating a homomorphism between two domains, the set of canonical
+maps between domains can be extended. If coerce cannot nd any other
+predefined mapping between the domain of element and domain it then
+searches the set of all defined homomorphisms. If there exists a canonical
+homomorphism between the two domains then it is used to map element into
+domain . If there does not exist a canonical homomorphism but there is
+exactly one homomorphism between the two domains, then it is used.</p>
+<div class="highlight-lisp notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="nb">defvar</span><span class="w"> </span><span class="nv">q2/3</span><span class="w"> </span><span class="p">(</span><span class="nb">coerce</span><span class="w"> </span><span class="p">(</span><span class="nb">/</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="p">)</span><span class="w"> </span><span class="nv">QQ</span><span class="p">))</span>
+<span class="nv">=&gt;Q2/3</span>
+
+<span class="nv">q2/3</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="m">2/3</span>
+
+<span class="p">(</span><span class="nb">describe</span><span class="w"> </span><span class="nv">q2/3</span><span class="p">)</span>
+
+<span class="c1">; 2/3</span>
+<span class="c1">;  [standard-object]</span>
+<span class="c1">;</span>
+<span class="c1">; Slots with :INSTANCE allocation:</span>
+<span class="c1">;  DOMAIN                         = Q</span>
+<span class="c1">;  NUMERATOR                      = 2</span>
+<span class="c1">;  DENOMINATOR                    = 3</span>
+<span class="c1">;*</span>
+</pre></div>
+</div>
+<p>As a general rule, Weyl does not provide for implicit coercions of
+arguments to functions. Thus we assume that in the expression (+ a b) the
+domains of a and b are the same. If this is not the case, the user must
+explicitly insert a coercion. The reason for this is to deal with problems
+such as would arise if, for example, a were 1=2 and b were x. The domain of
+a is Q, while the domain of b is Z[x]. The sum cannot be represented in
+either domain, and in fact we have the choice of embedding it in either
+Q[x] or Z(x). The wrong choice could be lead to very inefficient algorithms.
+However, we do make one exception. There is assumed to be a canonical
+homomorphism of the rational integers into every domain. If only one of
+the arguments to one of the four basic arithmetic operations (+, -, * and /)
+is an element of Z, then it is automatically coerced into the domain of
+the other argument.</p>
+</section>
+<section id="hierarchy-of-domains-4-5">
+<h2>Hierarchy of Domains (4.5)<a class="headerlink" href="#hierarchy-of-domains-4-5" title="Link to this heading">¶</a></h2>
+<p>The root of the domain hierarchy is the class domain. It provides a number
+of utility routines for managing the set of operations and axioms associated
+with a domain. However, all algebraic domains are built on the higher level
+class set. The basic algebraic domains are given in Figure 4.2. The elements
+of a domain of class set can be compared using the binary operator
+weyli::binary=. However, users will find it more convenient to use the
+macro =, which converts several arguments into a sequence of calls to
+weyli::binary=. That is</p>
+<div class="highlight-lisp notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="nb">=</span><span class="w"> </span><span class="nv">a</span><span class="w"> </span><span class="nv">b</span><span class="w"> </span><span class="nv">c</span><span class="p">)</span><span class="w"> </span><span class="nv">==&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">and</span><span class="w"> </span><span class="p">(</span><span class="nv">weyli::binary=</span><span class="w"> </span><span class="nv">a</span><span class="w"> </span><span class="nv">b</span><span class="p">)(</span><span class="nv">weyli::binary=</span><span class="w"> </span><span class="nv">b</span><span class="w"> </span><span class="nv">c</span><span class="p">))</span><span class="o">.</span>
+</pre></div>
+</div>
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">weyli::binary=</span> <span class="pre">x</span> <span class="pre">y</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">[Generic]</span></span></dt>
+<dd><p>Test to see if x and y are equal. Equality is meant in the mathematical
+sense, so two vectors are = if their components are =.</p>
+</dd></dl>
+
+<div class="highlight-lisp notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="nv">weyli::binary=</span><span class="w"> </span><span class="p">(</span><span class="nb">coerce</span><span class="w"> </span><span class="mi">10</span><span class="w"> </span><span class="nv">ZZ</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="nb">coerce</span><span class="w"> </span><span class="mi">10</span><span class="w"> </span><span class="nv">QQ</span><span class="p">))</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="no">NIL</span>
+
+<span class="p">(</span><span class="nb">=</span><span class="w"> </span><span class="p">(</span><span class="nb">coerce</span><span class="w"> </span><span class="mi">10</span><span class="w"> </span><span class="nv">ZZ</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="nb">coerce</span><span class="w"> </span><span class="mi">10</span><span class="w"> </span><span class="nv">QQ</span><span class="p">))</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="no">NIL</span>
+
+<span class="p">(</span><span class="nb">=</span><span class="w"> </span><span class="p">(</span><span class="nb">coerce</span><span class="w"> </span><span class="mi">10</span><span class="w"> </span><span class="nv">RR</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="nb">coerce</span><span class="w"> </span><span class="mi">10</span><span class="w"> </span><span class="nv">RR</span><span class="p">))</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="no">T</span>
+
+
+<span class="p">(</span><span class="nb">=</span><span class="w"> </span><span class="p">(</span><span class="nb">coerce</span><span class="w"> </span><span class="p">(</span><span class="nb">/</span><span class="w"> </span><span class="mi">5</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="nv">RR</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="nb">coerce</span><span class="w"> </span><span class="mf">2.5</span><span class="w">  </span><span class="nv">RR</span><span class="p">))</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="no">NIL</span>
+
+<span class="p">(</span><span class="nb">describe</span><span class="w"> </span><span class="p">(</span><span class="nb">coerce</span><span class="w"> </span><span class="p">(</span><span class="nb">/</span><span class="w"> </span><span class="mi">5</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="nv">RR</span><span class="p">))</span>
+
+<span class="c1">; 5/2</span>
+<span class="c1">;  [standard-object]</span>
+<span class="c1">;</span>
+<span class="c1">; Slots with :INSTANCE allocation:</span>
+<span class="c1">;  DOMAIN                         = R</span>
+<span class="c1">;  NUMERATOR                      = 5</span>
+<span class="c1">;  DENOMINATOR                    = 2</span>
+
+<span class="p">(</span><span class="nb">describe</span><span class="w"> </span><span class="p">(</span><span class="nb">coerce</span><span class="w"> </span><span class="mf">2.5</span><span class="w">  </span><span class="nv">RR</span><span class="p">))</span>
+
+<span class="c1">; 2.5</span>
+<span class="c1">;  [standard-object]</span>
+<span class="c1">;</span>
+<span class="c1">; Slots with :INSTANCE allocation:</span>
+<span class="c1">;  DOMAIN                         = R</span>
+<span class="c1">;  VALUE                          = 2.5</span>
+<span class="c1">; *</span>
+</pre></div>
+</div>
+<section id="semigroups-monoids-and-groups-4-5-1">
+<h3>Semigroups, Monoids and Groups (4.5.1)<a class="headerlink" href="#semigroups-monoids-and-groups-4-5-1" title="Link to this heading">¶</a></h3>
+<p>This section discusses domains that have one operation. That is, they consist
+of a set S and a binary operation (+) such that for two elements a and b in
+S, a (+) b is an element of S . The simplest interesting class of such
+domains is a semigroup, where (+) is assumed to be associative. That is, for
+a, b and c elements of S ,</p>
+<blockquote>
+<div><p>(a (+) b) (+) c = a (+) (b (+) c).</p>
+</div></blockquote>
+<p>In Weyl, domains that are semigroups include the class semigroup. In
+addition, the operation of a semigroup is assumed to be weyli::times [4]. As
+with weyli::binary=, there is a macro * that simplifies its use.
+For instance,</p>
+<div class="highlight-lisp notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="nb">*</span><span class="w"> </span><span class="nv">a</span><span class="w"> </span><span class="nv">b</span><span class="w"> </span><span class="nv">c</span><span class="p">)</span><span class="w"> </span><span class="nb">=</span><span class="w"> </span><span class="p">(</span><span class="nv">weyli::times</span><span class="w"> </span><span class="p">(</span><span class="nv">weyli::times</span><span class="w"> </span><span class="nv">a</span><span class="w"> </span><span class="nv">b</span><span class="p">)</span><span class="w"> </span><span class="nv">c</span><span class="p">)</span><span class="o">.</span>
+</pre></div>
+</div>
+<p>In addition, repeated multiplication can be indicated by expt. That is,
+;;</p>
+<blockquote>
+<div><p>(expt a 3) = (weyli::times (weyli::times a a) a).</p>
+</div></blockquote>
+<p>;;
+although it may be computed more efficiently for elements of some domains.
+::
+;;
+.. function::    weyli::times x y                                    [Generic]</p>
+<blockquote>
+<div><p>Returns the product of two elements of a semigroup.</p>
+</div></blockquote>
+<p>If one wants to compute the product of all the elements of a lists, a
+convenient idiom is to <cite>apply</cite> the <cite>*</cite> function to the list. This is <strong>not</strong>
+possible with the Weyl <cite>*</cite> operator since it is a macro, not a function.
+As a work around for this problem, Weyl also provides a function for
+multiplication caled <cite>%times</cite>. Semantically, this function is the same as
+the <cite>*</cite> macro, but the code that would be generated if <cite>%times</cite> were used
+in place of <cite>*</cite> is not as efficient [5].
+;;
+.. function::   * &amp;rest args</p>
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">%times</span> <span class="pre">&amp;rest</span> <span class="pre">args</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">[Generic]</span></span></dt>
+<dd></dd></dl>
+
+<p>Monoid’s are semigroups that contain a multiplicative identity. This element
+is called one and may be accessed by applying the function one to the domain.
+;;
+.. function::   one semigroup                                       [Generic]</p>
+<blockquote>
+<div><p>Returns the multiplicative identity of monoid.</p>
+</div></blockquote>
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">1?</span> <span class="pre">elt</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">[Generic]</span></span></dt>
+<dd><p>Returns true if its argument is the multiplicative identity and false otherwise.</p>
+</dd></dl>
+
+<p>In addition, the expt function is extended so if its second argument is 0,
+it returns the multiplicative identity.</p>
+<p>The elements of a group have multiplicative inverses which can be determined
+using recip
+;;
+.. function::   recip elt                                           [Generic]</p>
+<blockquote>
+<div><p>Returns the multiplicative inverse of elt .</p>
+</div></blockquote>
+<p>; [4] This is a limitation of the current implementation of Weyl and will be
+;     fixed shortly.
+; [5] The need for this function can be eliminated by compiler macros, but this
+;     solution cannot currently be implemented in a portable manner.</p>
+<p>For efficiency reasons it often valuable to have a binary operation that
+multiplies an element by the multiplicative inverse of the second argument.
+This operation is called weyli::quotient. The macro <cite>/</cite> can be used to
+simplify its use:</p>
+<div class="highlight-lisp notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="nb">/</span><span class="w"> </span><span class="nv">a</span><span class="p">)</span><span class="w"> </span><span class="nb">=</span><span class="w"> </span><span class="p">(</span><span class="nv">recip</span><span class="w"> </span><span class="nv">a</span><span class="p">)</span>
+<span class="p">(</span><span class="nb">/</span><span class="w"> </span><span class="nv">a</span><span class="w"> </span><span class="nv">b</span><span class="p">)</span><span class="w"> </span><span class="nb">=</span><span class="w"> </span><span class="p">(</span><span class="nv">weyli::quotient</span><span class="w"> </span><span class="nv">a</span><span class="w"> </span><span class="nv">b</span><span class="p">)</span>
+<span class="p">(</span><span class="nb">/</span><span class="w"> </span><span class="nv">a</span><span class="w"> </span><span class="nv">b</span><span class="w"> </span><span class="nv">c</span><span class="p">)</span><span class="w"> </span><span class="nb">=</span><span class="w"> </span><span class="p">(</span><span class="nv">weyli::quotient</span><span class="w"> </span><span class="p">(</span><span class="nv">weyli::quotient</span><span class="w"> </span><span class="nv">a</span><span class="w"> </span><span class="nv">b</span><span class="p">)</span><span class="w"> </span><span class="nv">c</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>In a group, the <cite>expt</cite> operation is extended to apply to negative second
+arguments also. In this case
+;;</p>
+<blockquote>
+<div><p>(expt x ?n) = (expt (recip x) n)</p>
+</div></blockquote>
+<section id="id1">
+<h4>;;<a class="headerlink" href="#id1" title="Link to this heading">¶</a></h4>
+<p>A binary operation (+) on a semigroup S is commutative if for every pair of
+elements in a and b in S , a (+) b = b (+) a. The domains abelian-semigroup,
+abelian-monoid and abelian-group are similar to the domains semigroup, monoid
+and group except the binary operation is plus instead of times.
+This is the biggest distinction between the domain structure of Weyl and the
+domains of modern algebra.[6]
+;;
+.. function::    + &amp;rest args</p>
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">%plus</span> <span class="pre">&amp;rest</span> <span class="pre">args</span></span></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">weyli::plus</span> <span class="pre">x</span> <span class="pre">y</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">[Function]</span></span></dt>
+<dd><p>Returns the sum of x and y , which are elements of an abelian-semigroup.
+weyli::plus is a commutative binary operation.</p>
+</dd></dl>
+
+<p>The multiple argument version of weyli::plus is +, which is what should be
+used in all applications.
+;;
+;;
+.. function::  zero abelian-semigroup                              [Function]</p>
+<blockquote>
+<div><p>Returns the additive identity of an abelian semigroup.</p>
+</div></blockquote>
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">zero?</span> <span class="pre">elt</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">[Function]</span></span></dt>
+<dd><p>same as : 0? elt
+Returns true if its argument is the additive identity and false otherwise.</p>
+</dd></dl>
+
+<p>The additive inverse of an element of an abelian-group can be obtained using
+weyli::minus. As the multiplicative case, there is a binary operation,
+weyli::difference and a macro - that makes these operations easier to use.</p>
+<blockquote>
+<div><p>(- a) = (weyli::minus a)
+(- a b) = (weyli::difference a b)
+(- a b c) = (weyli::difference (weyli::difference a b) c)</p>
+</div></blockquote>
+<p>; [6] It would be better if any operation could be declared to be commutative.</p>
+<p>; Figure 4.3: Different Ring Notations</p>
+<p>The function <cite>%difference</cite> is provided for use when a multi-argument version
+of the <cite>-</cite> should be passed to another function. The same caveats about
+efficiency apply here.</p>
+<blockquote>
+<div><p>Notice that algebraically we consider all of these domains to possess</p>
+</div></blockquote>
+<p>only one operation weyli::times, or weyli::plus in the abelian case. The
+other operations are either abbreviations, e.g., expt, or are constructive
+versions of existential axioms. For instance, a monoid M obeys the axiom:
+There exists an element e in M such that all for elements a of M ,
+e - a = a - e = a. The function one just returns the element e.</p>
+</section>
+</section>
+<section id="rings-4-5-2">
+<h3>Rings (4.5.2)<a class="headerlink" href="#rings-4-5-2" title="Link to this heading">¶</a></h3>
+<div class="highlight-lisp notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="nv">wtype</span><span class="w"> </span><span class="nv">q-mes</span><span class="p">)</span>
+<span class="w"> </span><span class="nv">=&gt;</span><span class="w"> </span><span class="nv">WEYLI::MULTIVARIATE-POLYNOMIAL-RING</span>
+
+
+<span class="p">(</span><span class="nb">describe</span><span class="w"> </span><span class="nv">Q-mes</span><span class="p">)</span>
+
+<span class="c1">; Q[m, e, s]</span>
+<span class="c1">;  [standard-object]</span>
+<span class="c1">;</span>
+<span class="c1">; Slots with :INSTANCE allocation:</span>
+<span class="c1">;  PROPERTY-LIST                  = (:INTEGRAL-DOMAIN T)</span>
+<span class="c1">;  OPERATION-TABLE                = #&lt;HASH-TABLE :TEST EQL :COUNT 17 {10015DC6E3}&gt;</span>
+<span class="c1">;  SUPER-DOMAINS                  = NIL</span>
+<span class="c1">;  MORPHISMS-FROM                 = NIL</span>
+<span class="c1">;  MORPHISMS-TO                   = (#1=Q-&gt;#1#[m, e, s])</span>
+<span class="c1">;  PRINT-FUNCTION                 = WEYLI::POLYNOMIAL-RING-PRINT-OBJECT</span>
+<span class="c1">;  ZERO                           = 0</span>
+<span class="c1">;  ONE                            = 1</span>
+<span class="c1">;  VARIABLES                      = (m e s)</span>
+<span class="c1">;  VARIABLE-HASH-TABLE            = ((m 0) (e 1) (s 2))</span>
+<span class="c1">;  VARIABLE-TABLE                 = #2A((m 0) (e 0) (s 0))</span>
+</pre></div>
+</div>
+</section>
+<section id="modules-4-5-3">
+<h3>Modules (4.5.3)<a class="headerlink" href="#modules-4-5-3" title="Link to this heading">¶</a></h3>
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">coefficient-domain-of</span> <span class="pre">module</span>&#160;&#160; <span class="pre">[Function]</span></span></dt>
+<dd><p>Returns the coefficient domain of module.</p>
+</dd></dl>
+
+<div class="highlight-lisp notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="nv">coefficient-domain-of</span><span class="w"> </span><span class="nv">q-mes</span><span class="p">)</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="nv">Q</span>
+</pre></div>
+</div>
+</section>
+<section id="properties-4-5-4">
+<h3>Properties (4.5.4)<a class="headerlink" href="#properties-4-5-4" title="Link to this heading">¶</a></h3>
+<div class="highlight-lisp notranslate"><div class="highlight"><pre><span></span><span class="w"> </span><span class="p">(</span><span class="nv">weyli::ordered-domain?</span><span class="w"> </span><span class="nv">QQ</span><span class="p">)</span>
+<span class="w">  </span><span class="nv">=&gt;</span><span class="w"> </span><span class="no">T</span>
+
+<span class="w"> </span><span class="p">(</span><span class="nv">weyli::ordered-domain?</span><span class="w"> </span><span class="nv">q-mes</span><span class="p">)</span>
+<span class="w"> </span><span class="nv">=&gt;</span><span class="w"> </span><span class="no">NIL</span>
+
+<span class="w"> </span><span class="p">(</span><span class="nv">weyli::integral-domain?</span><span class="w"> </span><span class="nv">ZZ</span><span class="p">)</span>
+<span class="w"> </span><span class="nv">=&gt;</span><span class="w"> </span><span class="no">T</span>
+
+<span class="w"> </span><span class="p">(</span><span class="nv">weyli::euclidean-domain?</span><span class="w"> </span><span class="nv">ZZ</span><span class="p">)</span>
+<span class="w"> </span><span class="nv">=&gt;</span><span class="w"> </span><span class="no">T</span>
+
+<span class="w"> </span><span class="p">(</span><span class="nv">weyli::euclidean-domain?</span><span class="w"> </span><span class="nv">QQ</span><span class="p">)</span>
+<span class="w"> </span><span class="nv">=&gt;</span><span class="w"> </span><span class="no">NIL</span>
+
+<span class="w"> </span><span class="p">(</span><span class="nv">weyli::gcd-domain?</span><span class="w"> </span><span class="nv">QQ</span><span class="p">)</span>
+<span class="w"> </span><span class="nv">=&gt;</span><span class="w"> </span><span class="no">NIL</span>
+
+<span class="w"> </span><span class="p">(</span><span class="nv">weyli::gcd-domain?</span><span class="w"> </span><span class="nv">ZZ</span><span class="p">)</span>
+<span class="w"> </span><span class="nv">=&gt;</span><span class="w"> </span><span class="no">T</span>
+
+<span class="w"> </span><span class="p">(</span><span class="nv">weyli::unique-factorization-domain?</span><span class="w"> </span><span class="nv">ZZ</span><span class="p">)</span>
+<span class="w"> </span><span class="nv">=&gt;</span><span class="w"> </span><span class="no">T</span>
+
+<span class="p">(</span><span class="nv">weyli::unique-factorization-domain?</span><span class="w"> </span><span class="nv">RR</span><span class="p">)</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="no">NIL</span>
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="getting-started.html" class="btn btn-neutral float-left" title="Getting Started" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="general.html" class="btn btn-neutral float-right" title="General Expressions" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, SimLab Group &amp; Weyl enthusiasts.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,789 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>;;;; Scalar Domains (5) &mdash; Weyl 0.2 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/documentation_options.js?v=10f1778b"></script>
+      <script src="_static/doctools.js?v=888ff710"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="General Expressions" href="general.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Weyl
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="getting-started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="basics.html">Basics (4)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="general.html">General Expressions</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">;;;; Scalar Domains (5)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#id3">;;;</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Weyl</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">;;;; Scalar Domains (5)</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/scalar-domains.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <p>(ql:quickload :weyl)
+(in-package :weyl)</p>
+<section id="scalar-domains-5">
+<h1>;;;; Scalar Domains (5)<a class="headerlink" href="#scalar-domains-5" title="Link to this heading">¶</a></h1>
+<p>;;;; Almost all domains that occur in mathematics can be constructed from the
+;;;; rational integers, Z. For instance, the the rational numbers (Q) are the
+;;;; quotient eld of Z, the real numbers are completion of Q using the
+;;;; valuations at in nity and so on. For performance reasons provides direct
+;;;; implementations of four basic scalar domains, the rational integers (Z),
+;;;; the rational numbers (Q), the real numbers (R) and the complex numbers
+;;;; (C ). In addition, a similar direct implementation of finite fields is
+;;;; also provided. These scalar domains are called numeric domains, and the
+;;;; corresponding domain hierarchy is given in Figure 5.1. Instances of the
+;;;; GFp class are finite fields of p elements. (These are parameterized domains.)
+;;;; The GFq class is used to implement elds of q = pr elements. The class GFm
+;;;; is discussed in more detail in Section 5.6. Instances of the characteristic
+;;;; zero domains may be created using the functions get-rational-integers,
+;;;; get-rational-numbers, get-real-numbers and get-complex-numbers. To create
+;;;; finite fields one can use the function get-finite-field. Depending on its
+;;;; argument, which must be a power of a single prime, this function will
+;;;; return a domain of type GFp or GFq.
+;;;; Elements of these domains are implemented using the hierarchy of structure
+;;;; types shown in Figure 5.2. The elements of a rational integer domain are
+;;;; all of structure type rational-integer. However, some numeric domains may
+;;;; contain elements of different structure types. For instance, objects of
+;;;; structure type rational-integer as well as rational-number can be elements
+;;;; of the rational number domains (Q). This approach allows us to represent
+;;;; exactly integers and rational numbers in R and C . In the future, a similar
+;;;; approach will allow us to represent algebraic and transcendental
+;;;; numbers exactly.</p>
+<p>;;;; One of the complications Weyl must deal with is that Lisp has its own model
+;;;; of the numbers, which must co-exist with Weyl’s model. The type structure
+;;;; used by Lisp is given in Figure 5.3. To simplify use of Weyl, we allow
+;;;; users to create Weyl numbers from Lisp numbers, and to incorporate Lisp
+;;;; numbers into their code by providing some automatic coercions. Thus adding
+;;;; a Lisp number to an element of R causes the Lisp number to be coerced to
+;;;; an element of R of structure rational-integer.
+;;;; There are several different ways to determine if an object is a scalar.</p>
+<p>;;;;    (typep obj ‘cl:number) ….. a Lisp number,
+;;;;    (typep obj ‘numeric) ……. a Weyl number,
+;;;;    (number? obj) ………….. either a Lisp number or a Weyl number.</p>
+<p>(typep 1234 ‘cl:number)
+; =&gt; T</p>
+<p>(typep 1234 ‘weyli::numeric)
+; =&gt; NIL</p>
+<p>(typep (coerce 1234 (get-rational-integers))  ‘weyli::numeric)
+; =&gt; T</p>
+<p>(number?  1234 )
+; =&gt; T</p>
+<p>(number? (coerce 1234 (get-rational-integers)))
+; =&gt; T</p>
+<p>;;;; The following sections are organized by the di erent structure types.
+;;;; Sections 5.1 through 5.6 deal with rational integers, rational numbers,
+;;;; real numbers, complex numbers and elements of finite fields respectively.
+;;;; In each section we discuss the di erent domains these structure elements
+;;;; can be used in followed by a discussion of the operations that can be
+;;;; performed with each structure type.</p>
+<p>;;; Rational Integers (5.1)
+;;;
+;;; The rational integers are the integers of elementary arithmetic:
+;;;
+;;;          Z = {…, -3, -2, -1, 0, 1, 2, 3, …}
+;;;
+;;; Other than limitations on the memory of the host computer, there is no
+;;; limitation on the size of the elements of Z. The term rational integer is
+;;; used to distinguish this domain from other domains of algebraic integers,
+;;; e.g., Z[(1 + sqrt(5))/2].</p>
+<p>;;; A domain of rational integers can be created using the following function.</p>
+<p>;;;         get-rational-integers                                   [Function]
+;;;
+;;; Returns a domain that is isomorphic to the rational integers, Z. When
+;;; called repeatedly, it always returns the same value until reset-domains
+;;; is called.</p>
+<p>;;; Most of the time, there only needs to be one rational integer domain. The
+;;; domain of rational integers is a euclidean domain.</p>
+<p>;;; Elements of structure type rational-integer can be elements of domains of
+;;; type rational-numbers, real-numbers and complex-numbers. Equivalently, if
+;;; domain is a domain that admits elements of structure type rational-integer,
+;;; then one invoke make-element with domain and a Lisp integer</p>
+<p>;;; Rational integers are most easily created by coercing a Lisp integer to a
+;;; rational integer domain using the function coerce. Furthermore, the usual
+;;; arithmetic routines (+, -, <a href="#id1"><span class="problematic" id="id2">*</span></a>, / and expt) work with rational integers that
+;;; are elements of the same domain. If the domain is a field then <cite>/</cite> may
+;;; return a rational-number.</p>
+<p>;;; For instance, the following routine could be used to compute factorials.</p>
+<p>(defvar ZZ (get-rational-integers))</p>
+<dl class="simple">
+<dt>(defun my-factorial (n)</dt><dd><dl class="simple">
+<dt>(if (&lt; n 2) (one ZZ)</dt><dd><p>(* (coerce n ZZ) (my-factorial (- n 1)))))</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p>;;; Notice that the unit element of ZZ was created by using the function one,
+;;; rather than (coerce 1 ZZ). In general, this is more efficient.</p>
+<p>;;; One of the more commonly used control structures is that used to construct
+;;; exponentiation from multiplication by repeated squaring. This control
+;;; structure is captured by the internal function weyli::repeated-squaring:
+;;;
+;;;    weyli::repeated-squaring mult one     [Function]
+;;;
+;;;  Returns a function of two arguments that is effectively
+;;;
+;;;        (lambda (base exp)
+;;;          (declare (integer exp))
+;;;          (expt base exp))
+;;;
+;;; except that the body does the exponentiating by repeated squaring using
+;;; the operation mult. If exp is 1, then one is returned.</p>
+<p>;;; Using this function, one could have de ned exponentiation as</p>
+<p>;;;       (defun expt (x n)
+;;;         (funcall (weyli::repeated-squaring
+;;;            #’weyli::times (coerce 1 (domain-of x))) x n))
+;;;
+;;; However, this routine can be used for operations other than exponentiation.
+;;; For instance, if one wanted a routine that replicates a sequence n times,
+;;; one could use the following:
+;;;
+;;;        (defun replicate-sequence (x n)
+;;;          (funcall (weyli::repeated-squaring #’append ()) x n))
+;;;
+;;;</p>
+<p>;;;    isqrt n   [Function]
+;;;
+;;; Returns the integer part of the square root of n.</p>
+<p>(isqrt 123456789)
+; =&gt; 11111</p>
+<p>(- (expt (isqrt 123456789) 2) 123456789)
+; =&gt; -2468</p>
+</section>
+<section id="id3">
+<h1>;;;<a class="headerlink" href="#id3" title="Link to this heading">¶</a></h1>
+<p>;;;    integer-nth-root m n  [Function]
+;;;
+;;; Computes the largest integer not greater than the n-th root of m.
+;;;</p>
+<p>(weyli::integer-nth-root 123456789  5)
+; =&gt; 42</p>
+<p>(expt (weyli::integer-nth-root 123456789  5) 5)
+; =&gt; 130691232</p>
+<p>;;;
+;;;    power-of? number &amp;optional base  [Function]
+;;;
+;;; Returns base and k if number = base , otherwise it returns nil. If base is
+;;; not provided returns the smallest integer of which number is a perfect
+;;; power.
+;;;</p>
+<p>(power-of? 256 2)
+; =&gt; 2
+; =&gt; 8</p>
+<p>(expt 2 8)
+; =&gt; 256</p>
+<p>(ignore-errors (power-of? 256))
+; debugger invoked on a SIMPLE-ERROR in thread
+; #&lt;THREAD “main thread” RUNNING {10048B8113}&gt;:
+;  Haven’t implemented the rest of the cases</p>
+<p>;;;    factor n  [Function]
+;;;
+;;; Factors n into irreducible factors. The value returned is a list of dotted
+;;; pairs. The first component of the dotted pair is the divisor and the second
+;;; is the number of times the divisor divides n. The type of factorization
+;;; method used, can be controlled by setting the variable <em>factor-method</em>.
+;;; The allowable values are simple-integer-factor and fermat-integer-factor.
+;;;</p>
+<p>(factor 123456789)
+; =&gt; ((3 . 2) (3607 . 1) (3803 . 1))</p>
+<p>(factor 12345678901234567890)
+; =&gt; ((2 . 1) (3 . 2) (5 . 1) (101 . 1) (3541 . 1) (3607 . 1) (3803 . 1) (27961 . 1))</p>
+<p>(defvar ff (factor 12345678901234567890))
+; =&gt; FF</p>
+<p>(defvar ffl (mapcar #’(lambda (x) (expt (car x) (cdr x))) ff))
+; =&gt; FFL</p>
+<p>ffl
+; =&gt; (2 9 5 101 3541 3607 3803 27961)</p>
+<p>(reduce #’%times  ffl)
+; =&gt; 12345678901234567890</p>
+<p>;;; note that WEYLI:* is a macro, not a function, i.e. (reduce #’*  ffl)
+;;; won’t work as described farther above.</p>
+<p>;;;
+;;;    prime? n    [Function]
+;;;
+;;; Returns true if n is a prime number. (For other domains, if n has no factors
+;;; that are not units.)
+;;;</p>
+<p>;(prime? 77731)
+; =&gt; T</p>
+<p>(factor  77731)
+; =&gt; ((77731 . 1))</p>
+<p>(prime? 777313713731)
+; =&gt; T</p>
+<p>(prime? 7773137137317313737)
+; =&gt; NIL</p>
+<p>(factor  7773137137317313737)
+; =&gt; ((3 . 2) (2741 . 1) (1485721 . 1) (212083813 . 1))</p>
+<p>;;;
+;;;   totient n  [Function]
+;;;
+;;; Returns the Euler totient function of n, the number of positive integers
+;;; less than n that are relatively prime to n, i.e.:
+;;;
+;;;        totient(n) = n  Pi_{p} (1 - frac{1}{p}),
+;;;
+;;; where product is over all prime divisors of n.
+;;;</p>
+<p>(totient 122345)
+; =&gt; 97872</p>
+<p>(totient 122345876689)
+; =&gt; 116852588160</p>
+<p>;;;
+;;;    factorial n   [Function]
+;;;
+;;; Computes n!
+;;;</p>
+<p>(factorial 123)
+; =&gt; 1214630436702532967576624324188129585545421708848338231532891816182923
+;    5892362167668831156960612640202170735835221294047782591091570411651472
+;    186029519906261646730733907419814952960000000000000000000000000000</p>
+<p>;;;
+;;;    pochhammer n k    [Function]
+;;;
+;;; Computes the Pochhammer function of n and k, which is closely related to
+;;; the factorial:
+;;;
+;;;         pochhammer(n; k) = (n)_k = n (n+1) (n+2) … (n+k-1)
+;;;</p>
+<p>(pochhammer 12 5)
+; =&gt; 524160</p>
+<p>(pochhammer 33 12)
+; =&gt; 10102470716719180800</p>
+<p>;;;
+;;;   combinations n m   [Function]
+;;;
+;;; Computes the number of combinations of n things taken m at a time.
+;;;
+;;;         combinations(n,m) = binom(n,m) = frac{n!}{m!(n-m)!}.
+;;;</p>
+<p>(combinations 33 12)
+; =&gt; 354817320</p>
+<p>(combinations 77 7)
+; =&gt; 2404808340</p>
+<p>;;;
+;;;     newprime n     [Function]
+;;;
+;;; Returns the largest prime less than its argument.</p>
+<p>(weyli::newprime 12)
+; =&gt; 7</p>
+<p>(weyli::newprime 1299)
+; =&gt; 113</p>
+<p>;;; <strong>BUG?</strong> never &gt; 113 ….</p>
+<p>;;; <a href="#id4"><span class="problematic" id="id5">**</span></a>* Need to point out that the elements of the second rational integer
+;;;     domain created are totally different from that those that are elements
+;;;     of the rst instance of the rational integers.)
+;;;</p>
+<p>;; Rational Numbers (5.2)
+;;
+;; The domain rational numbers, Q, is the quotient eld of the ring of rational
+;; integers. The elements of a rational number domain can have structure type
+;; either rational-integer or rational-number. Elements.
+;; As in Common Lisp there is a set of four functions for truncating numbers
+;; and ratios to integers. If the second argument is not provided then it
+;; defaults to 1. If only the rst argument is provided and it is a rational
+;; integer, then all four functions return the same values.
+;; A domain of rational integers is created by the following function.</p>
+<p>;;       get-rational-numbers   [Function]
+;;
+;; Returns a domain that is isomorphic to the rational numbers, Q. When called
+;; repeatedly, it always returns the same value until reset-domains is called.</p>
+<p>;;      floor number &amp;optional divisor
+;;      ceiling number &amp;optional divisor
+;;      truncate number &amp;optional divisor
+;;      round number &amp;optional divisor</p>
+<p>(defvar QQ (get-rational-numbers))
+; =&gt; QQ</p>
+<p>(wtype QQ)
+; =&gt; RATIONAL-NUMBERS</p>
+<p>(defvar q11/3 (coerce (/ 11 3) QQ))
+; =&gt; Q11/3</p>
+<p>q11/3
+; =&gt; 11/3</p>
+<p>(wtype q11/3)
+; =&gt; RATIONAL-NUMBER</p>
+<p>(numerator q11/3)
+; =&gt; 11</p>
+<p>(denominator q11/3)
+; =&gt; 3</p>
+<p>(floor q11/3)
+; =&gt; 3</p>
+<p>(ceiling q11/3)
+; =&gt; 4</p>
+<p>(truncate q11/3)
+; =&gt; 3
+; =&gt; 2</p>
+<p>(round q11/3)
+; =&gt; 4
+; =&gt; -1</p>
+<p>;;; Real Numbers (5.3)
+;;;
+;;; The entire real number situation is somewhat confused. In particular, the
+;;; relationship between floating point numbers and real numbers is jumbled.
+;;; These issues will be fixed at a later date.
+;;;
+;;;     get-real-numbers &amp;optional precision    [Function]
+;;;
+;;; This returns a domain whose elements are floating point numbers. If precision
+;;; is not specified, then the machines default double precision floating point
+;;; numbers will be used. If precision is specified, then a special arbitrary
+;;; precision floating point package will be used. Operations with these numbers
+;;; will be somewhat slower (and will cause more garbage collection) than when
+;;; using the machine’s floating point data types.</p>
+<p>(get-real-numbers )
+; =&gt; R</p>
+<p>(ignore-errors (get-real-numbers 128))
+; =&gt; ;   The function GET-REAL-NUMBERS is called with one argument, but wants
+;        exactly zero.
+;; not implemented yet??</p>
+<p>(describe ‘get-real-numbers)
+; WEYLI:GET-REAL-NUMBERS
+;  [symbol]</p>
+<p>; GET-REAL-NUMBERS names a generic function:
+;  Lambda-list: ()
+;  Derived type: (FUNCTION NIL <a href="#id6"><span class="problematic" id="id7">*</span></a>)
+;  Method-combination: STANDARD
+;  Methods:
+;    (GET-REAL-NUMBERS ())</p>
+<p>(documentation ‘get-real-numbers ‘function)
+; =&gt; NIL</p>
+<p>;;;       floor number &amp;optional divisor  [Function]
+;;;
+;;; Computes the floor of number.
+;;;</p>
+<p>(floor (coerce 3.14 (get-real-numbers)))
+; =&gt; 3
+; =&gt; 0.1400001</p>
+<p>;;;      ceiling number &amp;optional divisor  [Function]
+;;;
+;;; Computes the ceiling of number.</p>
+<p>(ceiling  (coerce 3.14 (get-real-numbers)))
+; =&gt; 4
+; =&gt; -0.8599999</p>
+<p>;;;     truncate number &amp;optional divisor   [Function]
+;;;
+;;; Computes the truncate of number.</p>
+<p>(truncate  (coerce 3.14 (get-real-numbers)))
+; =&gt; 3
+; =&gt; 0.1400001</p>
+<p>;;;     round number &amp;optional divisor [Function]
+;;;
+;;; Computes the round of number.</p>
+<p>(round   (coerce 3.14 (get-real-numbers)))
+; =&gt; 3
+; =&gt; 0.1400001</p>
+<p>(round  3.14)
+; =&gt; 3
+; =&gt; 0.1400001</p>
+<p>(round  3.14 3)
+; =&gt; 1
+; =&gt; 0.1400001</p>
+<p>(round  3.14 2)
+; =&gt; 2
+; =&gt; -0.8599999</p>
+<p>;;;     sqrt n                     [Function]
+;;;
+;;; For positive n returns positive n with the same precision as n.</p>
+<p>(sqrt   (coerce 3.14 (get-real-numbers)))
+; =&gt; 1.7720045</p>
+<p>(sqrt 3.14)
+; =&gt; 1.7720045</p>
+<p>(sqrt 4.0)
+; =&gt; 2.0</p>
+<p>;;; The following standard trigonometric and hyperbolic routines are provided
+;;;
+;;;     sin n asin n sinh n asinh n
+;;;     cos n acos n cosh n acosh n
+;;;     tan n atan n tanh n atanh n</p>
+<p>(defvar mypi (coerce (/ 355 113) (get-real-numbers)))</p>
+<p>(wtype mypi)
+;=&gt; RATIONAL-NUMBER – although we coerced to R</p>
+<p>(defvar mypi-r (coerce (/ 355.0 113.0) (get-real-numbers)))
+; =&gt; MYPI-R</p>
+<p>mypi-r
+; =&gt; 3.141593</p>
+<p>(wtype mypi-r)
+; =&gt; WEYLI::FLOATING-POINT-NUMBER</p>
+<p>(defvar trigfuns ‘(sin cos tan sinh cosh tanh))
+; =&gt; TRIGFUNS</p>
+<p>(mapcar #’(lambda (x) (funcall x mypi-r)) trigfuns)
+; =&gt; (-3.2584137e-7 -1.0 3.2584137e-7 11.548743 11.591957 0.9962721)</p>
+<p>;;;     exp n         [Function]
+;;;
+;;; Returns e^n</p>
+<p>(exp 2)
+; =&gt; 7.389056</p>
+<p>(exp (log (exp 1)))
+; =&gt;2.7182817</p>
+<p>;;;    log n &amp;optional b   [Function]
+;;;
+;;; For positive n returns the principal part of logb n. If b is not supplied
+;;; then e, the base of natural logarithms, is used for b.</p>
+<p>(log (exp 1))
+; =&gt; 0.99999994</p>
+<blockquote>
+<div><p>(ignore-errors (log (exp 1) 2))
+; =&gt; The function LOG is called with two arguments, but wants exactly one.</p>
+</div></blockquote>
+<p>(describe ‘log)
+; WEYLI::LOG
+;  [symbol]
+;
+; LOG names a generic function:
+;  Lambda-list: (NUMBER)
+;  Derived type: (FUNCTION (T) <a href="#id8"><span class="problematic" id="id9">*</span></a>)
+;  Documentation:
+;    Return the natural logarithm of the number.
+;  Method-combination: STANDARD
+;  Methods:
+;    (LOG (FLOATING-POINT-NUMBER))
+;    (LOG (BIGFLOAT))
+;    (LOG (GENERAL-EXPRESSION))
+;    (LOG (NUMERIC))
+;    (LOG (SYMBOL))
+;    (LOG (NUMBER))
+;  Source file: /home/kfp/quicklisp/local-projects/weyl/lisp-numbers.lisp
+; *</p>
+<p>;;; Complex Numbers (5.4)
+;;;
+;;;</p>
+<p>(get-complex-numbers)
+; =&gt; C</p>
+<p>(defvar c11 (coerce #C(1 1)  (get-complex-numbers)))
+; =&gt; C11</p>
+<p>c11
+; =&gt; 1 + i</p>
+<p>;;;      realpart z    [Function]
+;;;
+;;; If z = x + iy returns x.</p>
+<p>(realpart c11)
+; =&gt; 1</p>
+<p>;;;      imagpart z   [Function]
+;;;
+;;; If z = x + iy returns y .[Function]</p>
+<p>(imagpart c11)
+; =&gt; 1</p>
+<p>;;;      conjugate z   [Function]
+;;;
+;;; If z = x + iy returns x ? iy .[Function]</p>
+<p>(conjugate c11)
+; =&gt; 1 + -1 i</p>
+<p>;;;      abs z   [Function]
+;;;
+;;; If z = x + iy returns  <a href="#id10"><span class="problematic" id="id11">|z|</span></a> = sqrt(x^2 + y^2).</p>
+<p>(abs  c11)
+; =&gt; 1.4142135</p>
+<p>;;;      phase z    [Function]
+;;;
+;;; If z = r*e^(it) returns t, where r=|z|.</p>
+<p>(phase c11)
+; =&gt; 0.7853982</p>
+<p>(* c11 c11)
+;=&gt; 2 i</p>
+<p>(/ c11 c11)
+; =&gt; 1</p>
+<p>(+ c11 c11)
+; =&gt; 2 + 2 i</p>
+<p>(- c11 c11)
+; =&gt; 0</p>
+<p>;;; Quaternions (5.5)
+;;;
+;;; Quaternions are a non-commutative algebra over a field, usually the reals,
+;;; that are often used to represent three dimensional rotations. Weyl can
+;;; construct a quaternion algebra over any field F. This algebra is a four
+;;; dimensional vector space over F with the following relations. The
+;;; element (1,0,0,0) is the multiplicative identity. If we denote
+;;; i = (0,1,0,0), j = (0,0,1,0) and k = (0,0,0,1), then
+;;;
+;;;      i^2 = j^2 = k^2 = -1,  ij = -ji, jk = -kj and ik = -ki.
+;;;
+;;;
+;;;       get-quaternion-domain field     [Function]
+;;;
+;;; Gets a quaternion algebra over field, which must be a field.</p>
+<p>(get-quaternion-domain (get-rational-numbers))
+; =&gt; Quat(Q)</p>
+<p>(get-quaternion-domain (get-real-numbers))
+; =&gt; Quat(R)</p>
+<p>(get-quaternion-domain (get-complex-numbers))
+; =&gt; Quat(C)</p>
+<p>;;; Quaternions can be created using make-element.
+;;;
+;;;      make-element quaternion-algebra v1 v2 v3 v4  [Function]
+;;;
+;;;
+;;; Creates an element of quaternion-algebra from its arguments. The value
+;;; returned will be v1 + i v2 + j v3 + k v4 . As with other versions of
+;;; make-element, the function weyli::make-element assumes the arguments are
+;;; all elements of the coefficient domain and is intended only for internal use.
+;;;
+;;; As an algebraic extension of the real numbers, the quaternions are a little
+;;; strange. The subfield of quaternions generated by 1 and i, is isomorphic to
+;;; the complex numbers. Adding j and k makes the algebra non-commutative and
+;;; causes it to violate some basic intuitions. For instance, 1 hasat least
+;;; three square roots!
+;;;
+;;; We illustrate some of these issues computationally. First we create a
+;;; quaternion algebra in which to work.
+;;;
+;;;     &gt; (setq q (get-quaternion-domain (get-real-numbers)))
+;;;    Quat(R)
+;;;
+;;; Next, we can create some elements of the quaternions and do some simple
+;;; calculations with them.
+;;;
+;;;     &gt; (setq a (make-element q 1 1 1 1))
+;;;     &lt;1, 1, 1, 1&gt;
+;;;
+;;;     &gt; (setq b (/ a 2))
+;;;     &lt;1/2, 1/2, 1/2, 1/2&gt;
+;;;
+;;;     &gt; (* b b b)
+;;;     &lt;-1, 0, 0, 0&gt;
+;;;</p>
+<p>(defvar q4 (get-quaternion-domain (get-real-numbers)))
+; =&gt; Q4</p>
+<p>(defvar aq4 (make-element q4 1 1 1 1))
+; =&gt; AQ4</p>
+<p>(defvar bq4 (/ aq4 2))
+; =&gt; BQ4</p>
+<p>(* bq4 bq4 bq4)
+; =&gt; &lt;-1, 0, 0, 0&gt;</p>
+<p>;;; As expected, one can multiply quaternions by other quaternions and by
+;;; elements of the coefficient field (or objects that can be coerced into the
+;;; coefficient field).
+;;;
+;;;
+;;;      conjugate quaternion    [Function]
+;;;
+;;; This is an extension of the concept of complex conjugation. It negates
+;;; the coefficients of i, j and k. This is illustrated by the following example.
+;;;
+;;;     &gt; (setq c (make-element q 1 2 3 4))
+;;;     &lt;1, 2, 3, 4&gt;
+;;;
+;;;     &gt; (conjugate c)
+;;;     &lt;1, -2, -3, -4&gt;
+;;;
+;;;      &gt; (* c (conjugate c)
+;;;     &lt;30, 0, 0, 0&gt;
+;;;</p>
+<p>(defvar cq4 (make-element q4 1 2 3 4))
+; =&gt; CQ4</p>
+<p>(conjugate cq4)
+; =&gt; &lt;1, -2, -3, -4&gt;</p>
+<p>(* cq4 (conjugate cq4))
+; =&gt; &lt;30, 0, 0, 0&gt;</p>
+<p>;;; Notice that the components of the product of a quaternion with its conjugate
+;;; are all zero except for the very first component. This matches what happens
+;;; when one multiplies a complex number with its complex conjugate.</p>
+<p>;;; ???? division, expt …. not working</p>
+<p>;;; Finite Fields (5.6)
+;;;
+;;; The usual finite fields are provided in Weyl, Fp and algebraic extensions
+;;; of Fq . Such domains are called GFp domains. Since all finite fields with
+;;; the same number of elements are isomorphic, fields are created by specifying
+;;; the elements in the field.
+;;;
+;;;       get-finite-field size         [Function]
+;;;
+;;; Size is expected to be a a power of a prime number. This function returns
+;;; a finite field with the indicated number of elements. If size is nil then
+;;; a GFm field is returned.
+;;;
+;;;      number-of-elements finite-field [Function]
+;;;
+;;; Returns the number of elements in finite-field.
+;;;
+;;; At the moment Weyl can only deal with the fields F2^k and Fp . For instance,
+;;;
+;;;    &gt; (setq F256 (get-finite-field 256))
+;;;    GF(2^8)
+;;;
+;;;    &gt; (characteristic F256)
+;;;    2
+;;;
+;;;    &gt; (number-of-elements F256)
+;;;   256
+;;;</p>
+<p>(defvar  F256 (get-finite-field 256))
+; =&gt; F256</p>
+<p>(characteristic F256)
+; =&gt; 2</p>
+<p>(number-of-elements F256)
+; =&gt; 256</p>
+<p>;;; Elements of a GFp are created by coercing a rational integer into a GFp
+;;; domain. For finite fields with characteristic greater than 2, coercing an
+;;; integer into Fp maps n into n (mod p). For F2^k , the image of an integer
+;;; is a bit more complicated. Let the binary representation of n be
+;;;
+;;;     n = n_l … n_0
+;;;
+;;; and let alpha be the primitive element of F2^k over F2. Then
+;;;
+;;;     n -&gt; n_{k-1} alpha^{k-1} + … + n_1 alpha + n_0.
+;;;
+;;; This mapping is particularly appropriate for problems in coding theory.
+;;;
+;;; In addition, elements of finite fields can be created using make-element.
+;;;
+;;;       make-element finite-field integer &amp;optional rest  [Function]
+;;;
+;;; Creates an element of nite- eld from integer . This is the only way to
+;;; create elements of Fp^k . (As with all make-element methods, the argument
+;;; list includes &amp;rest arguments, but for finite fields any additional arguments
+;;; are ignored.)
+;;; As an example of the use of nite elds, consider the following function,
+;;; which determines the order of an element of a finite field (the hard way).
+;;;
+;;;      (defun element-order (n)
+;;;        (let* ((domain (domain-of n))
+;;;               (one (coerce 1 domain)))
+;;;          (loop for i upfrom 1 below (number-of-elements domain)
+;;;                for power = n then (* n power)
+;;;              do (when (= power one)
+;;;                     (return i)))))
+;;;
+;;; A more efficient routine is provided by Weyl as multiplicative-order.
+;;;
+;;; multiplicative-order elt     [Function]
+;;;
+;;; Elt must be an element of a finite field. This routine computes multiplicative
+;;; order of elt. This routine requires factoring the size of the multiplicative
+;;; group of the finite field and thus is appropriate for very large finite fields.
+;;;
+;;; The following illustrates use of these routines.
+;;;
+;;;      &gt; (element-order (coerce 5 (get-finite-field 41)))
+;;;     20
+;;;      &gt; (multiplicative-order (coerce 5 (get-finite-field 41)))
+;;;</p>
+<dl>
+<dt>(defun element-order (n)</dt><dd><dl>
+<dt>(let* ((domain (domain-of n))</dt><dd><blockquote>
+<div><p>(one (coerce 1 domain)))</p>
+</div></blockquote>
+<dl>
+<dt>(loop for i upfrom 1 below (number-of-elements domain)</dt><dd><blockquote>
+<div><p>for power = n then (* n power)</p>
+</div></blockquote>
+<dl class="simple">
+<dt>do (when (= power one)</dt><dd><p>(return i)))))</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd>
+</dl>
+<p>(element-order (coerce 5 (get-finite-field 41)))
+; =&gt; 20</p>
+<p>(multiplicative-order (coerce 5 (get-finite-field 41)))
+; =&gt; 20</p>
+<p>;;; Consider what is involved when implementing an algorithm using the Chinese
+;;; remainder theorem. The computation is done in a number of domains like
+;;; Z=(p1), Z=(p2) and Z=(p3). The results are then combined to produce results
+;;; in the domains Z=(p1p2) and Z=(p1p2 p3). Rather than working in several
+;;; different domains and explicitly coercing the elements from one to another,
+;;; it is easier to assume we are working in a single domain that is the union
+;;; of Z=(m) for all integers m and marking the elements of this domain with
+;;; their moduli. We call this domain a GFm.
+;;;
+;;; GFm domains are also created using the get-finite-field but by providing
+;;; nil as the number of elements in the field.
+;;;
+;;; Elements of GFm are printed by indicating their modulus in a subscript
+;;; surrounded by parentheses. Thus 2_(5) means 2 modulo 5. Combining two
+;;; elements a_(m) and b_(m) that have the same moduli is the same as if they
+;;; were both elements of Z=(m). To combine elements of two different rings,
+;;; we find a ring that contains both as subrings and perform the calculation
+;;; there. Thus combining a_(m) and b_(n) we combine the images of a and b as
+;;; elements of Z=(gcd(m; n)).
+;;; FIXTHIS: Need works something out for dealing with completions of the
+;;; integers at primes, and how we are going to compute with elements.</p>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="general.html" class="btn btn-neutral float-left" title="General Expressions" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, SimLab Group &amp; Weyl enthusiasts.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -12,7 +12,9 @@ Welcome to Weyl's documentation!
    
    introduction
    getting-started
-   general   
+   basics
+   general
+   scalar-domains   
 
 
 Indices and tables
