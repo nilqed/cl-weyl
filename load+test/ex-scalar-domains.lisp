@@ -184,7 +184,7 @@
 (expt 2 8)
 ; => 256
 
-(power-of? 256)
+(ignore-errors (power-of? 256))
 ; debugger invoked on a SIMPLE-ERROR in thread
 ; #<THREAD "main thread" RUNNING {10048B8113}>:
 ;  Haven't implemented the rest of the cases
@@ -304,7 +304,7 @@ ffl
 (combinations 33 12)
 ; => 354817320
 
-* (combinations 77 7)
+(combinations 77 7)
 ; => 2404808340
 
 ;;;
@@ -392,36 +392,99 @@ q11/3
 ;;; 
 ;;;     get-real-numbers &optional precision    [Function]
 ;;; 
-;;; This returns a domain whose elements are oating point numbers. If precision
-;;; is not specified, then the machines default double precision oating point 
+;;; This returns a domain whose elements are floating point numbers. If precision
+;;; is not specified, then the machines default double precision floating point 
 ;;; numbers will be used. If precision is specified, then a special arbitrary 
-;;; precision oating point package will be used. Operations with these numbers 
+;;; precision floating point package will be used. Operations with these numbers 
 ;;; will be somewhat slower (and will cause more garbage collection) than when 
-;;; using the machine's oating point data types.
+;;; using the machine's floating point data types.
+
+(get-real-numbers )
+; => R
+
+(ignore-errors (get-real-numbers 128))
+; => ;   The function GET-REAL-NUMBERS is called with one argument, but wants 
+;        exactly zero. 
+;; not implemented yet??
+
+(describe 'get-real-numbers)
+; WEYLI:GET-REAL-NUMBERS
+;  [symbol]
+
+; GET-REAL-NUMBERS names a generic function:
+;  Lambda-list: ()
+;  Derived type: (FUNCTION NIL *)
+;  Method-combination: STANDARD
+;  Methods:
+;    (GET-REAL-NUMBERS ())
+
+(documentation 'get-real-numbers 'function)
+; => NIL
 
 ;;;       floor number &optional divisor  [Function]
 ;;;
-;;; Computes the oor of number.
+;;; Computes the floor of number.
 ;;;
+
+(floor (coerce 3.14 (get-real-numbers)))
+; => 3
+; => 0.1400001
 
 
 ;;;      ceiling number &optional divisor  [Function]
 ;;;
-;;; Computes the ceiling of number.[Function]
+;;; Computes the ceiling of number.
+
+(ceiling  (coerce 3.14 (get-real-numbers)))
+; => 4
+; => -0.8599999
 
 
 ;;;     truncate number &optional divisor   [Function]
 ;;;
 ;;; Computes the truncate of number.
 
+(truncate  (coerce 3.14 (get-real-numbers)))
+; => 3
+; => 0.1400001
+
+
 ;;;     round number &optional divisor [Function]
 ;;;
 ;;; Computes the round of number.
+
+(round   (coerce 3.14 (get-real-numbers)))
+; => 3
+; => 0.1400001
+
+
+(round  3.14)
+; => 3
+; => 0.1400001
+
+
+(round  3.14 3)
+; => 1
+; => 0.1400001
+
+(round  3.14 2)
+; => 2
+; => -0.8599999
 
 
 ;;;     sqrt n                     [Function]
 ;;;
 ;;; For positive n returns positive n with the same precision as n.
+
+(sqrt   (coerce 3.14 (get-real-numbers)))
+; => 1.7720045
+
+(sqrt 3.14)
+; => 1.7720045
+
+(sqrt 4.0)
+; => 2.0
+
 
 ;;; The following standard trigonometric and hyperbolic routines are provided
 ;;;   
@@ -429,11 +492,37 @@ q11/3
 ;;;     cos n acos n cosh n acosh n
 ;;;     tan n atan n tanh n atanh n
 
+(defvar mypi (coerce (/ 355 113) (get-real-numbers)))
+
+(wtype mypi)
+;=> RATIONAL-NUMBER -- although we coerced to R
+
+(defvar mypi-r (coerce (/ 355.0 113.0) (get-real-numbers)))
+; => MYPI-R
+
+mypi-r
+; => 3.141593
+
+(wtype mypi-r)
+; => WEYLI::FLOATING-POINT-NUMBER
+
+(defvar trigfuns '(sin cos tan sinh cosh tanh))
+; => TRIGFUNS
+
+(mapcar #'(lambda (x) (funcall x mypi-r)) trigfuns)
+; => (-3.2584137e-7 -1.0 3.2584137e-7 11.548743 11.591957 0.9962721)
 
 
 ;;;     exp n         [Function]
 ;;;
 ;;; Returns e^n
+
+(exp 2)
+; => 7.389056
+
+(exp (log (exp 1)))
+; =>2.7182817
+
 
 
 ;;;    log n &optional b   [Function]
@@ -441,36 +530,327 @@ q11/3
 ;;; For positive n returns the principal part of logb n. If b is not supplied 
 ;;; then e, the base of natural logarithms, is used for b.
 
+(log (exp 1))
+; => 0.99999994
+
+ (ignore-errors (log (exp 1) 2))
+ ; => The function LOG is called with two arguments, but wants exactly one.
+
+(describe 'log)
+; WEYLI::LOG
+;  [symbol]
+;
+; LOG names a generic function:
+;  Lambda-list: (NUMBER)
+;  Derived type: (FUNCTION (T) *)
+;  Documentation:
+;    Return the natural logarithm of the number.
+;  Method-combination: STANDARD
+;  Methods:
+;    (LOG (FLOATING-POINT-NUMBER))
+;    (LOG (BIGFLOAT))
+;    (LOG (GENERAL-EXPRESSION))
+;    (LOG (NUMERIC))
+;    (LOG (SYMBOL))
+;    (LOG (NUMBER))
+;  Source file: /home/kfp/quicklisp/local-projects/weyl/lisp-numbers.lisp
+; *
 
 
 ;;; Complex Numbers (5.4)
 ;;;
-;;; Not yet implemented.
+;;;
+
+(get-complex-numbers)
+; => C
+
+(defvar c11 (coerce #C(1 1)  (get-complex-numbers)))
+; => C11
+
+c11
+; => 1 + i
 
 ;;;      realpart z    [Function]
 ;;;
 ;;; If z = x + iy returns x.
+
+(realpart c11)
+; => 1
 
 
 ;;;      imagpart z   [Function]
 ;;;
 ;;; If z = x + iy returns y .[Function]
 
+(imagpart c11)
+; => 1
 
 ;;;      conjugate z   [Function]
 ;;;
 ;;; If z = x + iy returns x ? iy .[Function]
+
+(conjugate c11)
+; => 1 + -1 i
 
 
 ;;;      abs z   [Function]
 ;;;
 ;;; If z = x + iy returns  |z| = sqrt(x^2 + y^2).
 
+(abs  c11)
+; => 1.4142135
+
 
 ;;;      phase z    [Function]
 ;;;
 ;;; If z = r*e^(it) returns t, where r=|z|.
 
+(phase c11)
+; => 0.7853982
+
+(* c11 c11)
+;=> 2 i  
+
+(/ c11 c11)
+; => 1
+
+(+ c11 c11)
+; => 2 + 2 i
+
+(- c11 c11)
+; => 0
 
 
+;;; Quaternions (5.5)
+;;;
+;;; Quaternions are a non-commutative algebra over a field, usually the reals, 
+;;; that are often used to represent three dimensional rotations. Weyl can 
+;;; construct a quaternion algebra over any field F. This algebra is a four 
+;;; dimensional vector space over F with the following relations. The
+;;; element (1,0,0,0) is the multiplicative identity. If we denote 
+;;; i = (0,1,0,0), j = (0,0,1,0) and k = (0,0,0,1), then
+;;; 
+;;;      i^2 = j^2 = k^2 = -1,  ij = -ji, jk = -kj and ik = -ki.
+;;; 
+;;; 
+;;;       get-quaternion-domain field     [Function]
+;;; 
+;;; Gets a quaternion algebra over field, which must be a field.
+
+(get-quaternion-domain (get-rational-numbers))
+; => Quat(Q)
+
+(get-quaternion-domain (get-real-numbers))
+; => Quat(R)
+
+(get-quaternion-domain (get-complex-numbers))
+; => Quat(C)
+
+
+;;; Quaternions can be created using make-element.
+;;;
+;;;      make-element quaternion-algebra v1 v2 v3 v4  [Function]
+;;;
+;;;  
+;;; Creates an element of quaternion-algebra from its arguments. The value
+;;; returned will be v1 + i v2 + j v3 + k v4 . As with other versions of 
+;;; make-element, the function weyli::make-element assumes the arguments are 
+;;; all elements of the coefficient domain and is intended only for internal use.
+;;;
+;;; As an algebraic extension of the real numbers, the quaternions are a little
+;;; strange. The subfield of quaternions generated by 1 and i, is isomorphic to
+;;; the complex numbers. Adding j and k makes the algebra non-commutative and 
+;;; causes it to violate some basic intuitions. For instance, 1 hasat least 
+;;; three square roots!
+;;; 
+;;; We illustrate some of these issues computationally. First we create a 
+;;; quaternion algebra in which to work.
+;;; 
+;;;     > (setq q (get-quaternion-domain (get-real-numbers)))
+;;;    Quat(R)
+;;; 
+;;; Next, we can create some elements of the quaternions and do some simple 
+;;; calculations with them.
+;;; 
+;;;     > (setq a (make-element q 1 1 1 1))
+;;;     <1, 1, 1, 1>
+;;; 
+;;;     > (setq b (/ a 2))
+;;;     <1/2, 1/2, 1/2, 1/2>
+;;; 
+;;;     > (* b b b)
+;;;     <-1, 0, 0, 0>
+;;; 
+
+(defvar q4 (get-quaternion-domain (get-real-numbers)))
+; => Q4
+
+(defvar aq4 (make-element q4 1 1 1 1))
+; => AQ4
+
+(defvar bq4 (/ aq4 2))
+; => BQ4
+
+(* bq4 bq4 bq4)
+; => <-1, 0, 0, 0>
+
+;;; As expected, one can multiply quaternions by other quaternions and by 
+;;; elements of the coefficient field (or objects that can be coerced into the 
+;;; coefficient field).
+;;; 
+;;; 
+;;;      conjugate quaternion    [Function]
+;;; 
+;;; This is an extension of the concept of complex conjugation. It negates 
+;;; the coefficients of i, j and k. This is illustrated by the following example.
+;;; 
+;;;     > (setq c (make-element q 1 2 3 4))
+;;;     <1, 2, 3, 4>
+;;;
+;;;     > (conjugate c)
+;;;     <1, -2, -3, -4>
+;;; 
+;;;      > (* c (conjugate c)
+;;;     <30, 0, 0, 0>
+;;; 
+
+(defvar cq4 (make-element q4 1 2 3 4))
+; => CQ4
+
+(conjugate cq4)
+; => <1, -2, -3, -4>
+
+(* cq4 (conjugate cq4)
+; => <30, 0, 0, 0>
+
+
+;;; Notice that the components of the product of a quaternion with its conjugate
+;;; are all zero except for the very first component. This matches what happens
+;;; when one multiplies a complex number with its complex conjugate.
+
+
+;;; ???? division, expt .... not working
+
+;;; Finite Fields (5.6)
+;;; 
+;;; The usual finite fields are provided in Weyl, Fp and algebraic extensions 
+;;; of Fq . Such domains are called GFp domains. Since all finite fields with 
+;;; the same number of elements are isomorphic, fields are created by specifying
+;;; the elements in the field.
+;;; 
+;;;       get-finite-field size         [Function]
+;;; 
+;;; Size is expected to be a a power of a prime number. This function returns 
+;;; a finite field with the indicated number of elements. If size is nil then 
+;;; a GFm field is returned.
+;;; 
+;;;      number-of-elements finite-field [Function]
+;;; 
+;;; Returns the number of elements in finite-field.
+;;;
+;;; At the moment Weyl can only deal with the fields F2^k and Fp . For instance,
+;;; 
+;;;    > (setq F256 (get-finite-field 256))
+;;;    GF(2^8)
+;;; 
+;;;    > (characteristic F256)
+;;;    2
+;;; 
+;;;    > (number-of-elements F256)
+;;;   256
+;;; 
+
+(defvar  F256 (get-finite-field 256))
+; => F256
+
+(characteristic F256)
+; => 2
+
+(number-of-elements F256)
+; => 256
+
+
+;;; Elements of a GFp are created by coercing a rational integer into a GFp 
+;;; domain. For finite fields with characteristic greater than 2, coercing an 
+;;; integer into Fp maps n into n (mod p). For F2^k , the image of an integer 
+;;; is a bit more complicated. Let the binary representation of n be
+;;; 
+;;;     n = n_l ... n_0
+;;;
+;;; and let alpha be the primitive element of F2^k over F2. Then
+;;;
+;;;     n -> n_{k-1} alpha^{k-1} + ... + n_1 alpha + n_0.
+;;; 
+;;; This mapping is particularly appropriate for problems in coding theory.
+;;; 
+;;; In addition, elements of finite fields can be created using make-element.
+;;; 
+;;;       make-element finite-field integer &optional rest  [Function]
+;;; 
+;;; Creates an element of nite- eld from integer . This is the only way to 
+;;; create elements of Fp^k . (As with all make-element methods, the argument 
+;;; list includes &rest arguments, but for finite fields any additional arguments
+;;; are ignored.)
+;;; As an example of the use of nite elds, consider the following function, 
+;;; which determines the order of an element of a finite field (the hard way).
+;;; 
+;;;      (defun element-order (n)
+;;;        (let* ((domain (domain-of n))
+;;;               (one (coerce 1 domain)))
+;;;          (loop for i upfrom 1 below (number-of-elements domain)
+;;;                for power = n then (* n power)
+;;;              do (when (= power one)
+;;;                     (return i)))))
+;;; 
+;;; A more efficient routine is provided by Weyl as multiplicative-order.
+;;; 
+;;; multiplicative-order elt     [Function]
+;;; 
+;;; Elt must be an element of a finite field. This routine computes multiplicative 
+;;; order of elt. This routine requires factoring the size of the multiplicative 
+;;; group of the finite field and thus is appropriate for very large finite fields.
+;;; 
+;;; The following illustrates use of these routines.
+;;; 
+;;;      > (element-order (coerce 5 (get-finite-field 41)))
+;;;     20
+;;;      > (multiplicative-order (coerce 5 (get-finite-field 41)))
+;;; 
+
+(defun element-order (n)
+        (let* ((domain (domain-of n))
+              (one (coerce 1 domain)))
+         (loop for i upfrom 1 below (number-of-elements domain)
+              for power = n then (* n power)
+            do (when (= power one)
+                    (return i)))))
+
+(element-order (coerce 5 (get-finite-field 41)))
+; => 20
+
+(multiplicative-order (coerce 5 (get-finite-field 41)))
+; => 20
+
+
+;;; Consider what is involved when implementing an algorithm using the Chinese 
+;;; remainder theorem. The computation is done in a number of domains like 
+;;; Z=(p1), Z=(p2) and Z=(p3). The results are then combined to produce results 
+;;; in the domains Z=(p1p2) and Z=(p1p2 p3). Rather than working in several 
+;;; different domains and explicitly coercing the elements from one to another, 
+;;; it is easier to assume we are working in a single domain that is the union 
+;;; of Z=(m) for all integers m and marking the elements of this domain with 
+;;; their moduli. We call this domain a GFm.
+;;; 
+;;; GFm domains are also created using the get-finite-field but by providing 
+;;; nil as the number of elements in the field.
+;;; 
+;;; Elements of GFm are printed by indicating their modulus in a subscript 
+;;; surrounded by parentheses. Thus 2_(5) means 2 modulo 5. Combining two 
+;;; elements a_(m) and b_(m) that have the same moduli is the same as if they 
+;;; were both elements of Z=(m). To combine elements of two different rings, 
+;;; we find a ring that contains both as subrings and perform the calculation 
+;;; there. Thus combining a_(m) and b_(n) we combine the images of a and b as 
+;;; elements of Z=(gcd(m; n)).
+;;; FIXTHIS: Need works something out for dealing with completions of the 
+;;; integers at primes, and how we are going to compute with elements.
 
