@@ -1,8 +1,8 @@
-(ql:quickload :weyl)
-(in-package :weyl)
+.. (ql:quickload :weyl)
+.. (in-package :weyl)
 
-;;;; Scalar Domains (5)
-;;;;
+Scalar Domains (5)
+==================
 ;;;; Almost all domains that occur in mathematics can be constructed from the 
 ;;;; rational integers, Z. For instance, the the rational numbers (Q) are the 
 ;;;; quotient eld of Z, the real numbers are completion of Q using the 
@@ -40,25 +40,26 @@
 ;;;; an element of R of structure rational-integer.
 ;;;; There are several different ways to determine if an object is a scalar.
 
-;;;;    (typep obj 'cl:number) ..... a Lisp number,
-;;;;    (typep obj 'numeric) ....... a Weyl number,
-;;;;    (number? obj) .............. either a Lisp number or a Weyl number.
+;;;;      (typep obj 'cl:number) ..... a Lisp number,
+;;;;      (typep obj 'numeric) ....... a Weyl number,
+;;;;      (number? obj) .............. either a Lisp number or a Weyl number.
 
+.. code-block:: lisp
 
-(typep 1234 'cl:number)
-; => T
+    (typep 1234 'cl:number)
+    => T
 
-(typep 1234 'weyli::numeric)
-; => NIL
+    (typep 1234 'weyli::numeric)
+    => NIL
 
-(typep (coerce 1234 (get-rational-integers))  'weyli::numeric)
-; => T
+    (typep (coerce 1234 (get-rational-integers))  'weyli::numeric)
+    => T
 
-(number?  1234 )
-; => T
+    (number?  1234 )
+    => T
 
-(number? (coerce 1234 (get-rational-integers)))
-; => T
+    (number? (coerce 1234 (get-rational-integers)))
+    => T
 
 ;;;; The following sections are organized by the di erent structure types. 
 ;;;; Sections 5.1 through 5.6 deal with rational integers, rational numbers, 
@@ -68,8 +69,9 @@
 ;;;; performed with each structure type.
 
 
-;;; Rational Integers (5.1)
-;;;
+Rational Integers (5.1)
+-----------------------
+
 ;;; The rational integers are the integers of elementary arithmetic:
 ;;;
 ;;;          Z = {..., -3, -2, -1, 0, 1, 2, 3, ...}
@@ -82,11 +84,11 @@
 ;;; A domain of rational integers can be created using the following function.
 
 
-;;;         get-rational-integers                                   [Function]
-;;;
-;;; Returns a domain that is isomorphic to the rational integers, Z. When 
-;;; called repeatedly, it always returns the same value until reset-domains 
-;;; is called.
+.. function::  get-rational-integers                               [Function]
+
+   Returns a domain that is isomorphic to the rational integers, Z. When 
+   called repeatedly, it always returns the same value until reset-domains 
+   is called.
 
 
 ;;; Most of the time, there only needs to be one rational integer domain. The 
@@ -105,11 +107,14 @@
 
 ;;; For instance, the following routine could be used to compute factorials.
 
-(defvar ZZ (get-rational-integers))
+.. code-blocks:: lisp
 
-(defun my-factorial (n)
-  (if (< n 2) (one ZZ)
-    (* (coerce n ZZ) (my-factorial (- n 1)))))
+    (defvar ZZ (get-rational-integers))
+
+    (defun my-factorial (n)
+       (if (< n 2) (one ZZ)
+         (* (coerce n ZZ) (my-factorial (- n 1)))))
+
 
 ;;; Notice that the unit element of ZZ was created by using the function one, 
 ;;; rather than (coerce 1 ZZ). In general, this is more efficient.
@@ -118,206 +123,226 @@
 ;;; exponentiation from multiplication by repeated squaring. This control 
 ;;; structure is captured by the internal function weyli::repeated-squaring:
 ;;;
-;;;    weyli::repeated-squaring mult one     [Function]
-;;;
-;;;  Returns a function of two arguments that is effectively
-;;;
-;;;        (lambda (base exp)
-;;;          (declare (integer exp))
-;;;          (expt base exp))
-;;;
-;;; except that the body does the exponentiating by repeated squaring using 
-;;; the operation mult. If exp is 1, then one is returned.
+.. function::  weyli::repeated-squaring mult one                   [Function]
+
+   Returns a function of two arguments that is effectively
+
+            (lambda (base exp)
+            (declare (integer exp))
+            (expt base exp))
+
+   except that the body does the exponentiating by repeated squaring using 
+   the operation mult. If exp is 1, then one is returned.
+
 
 ;;; Using this function, one could have de ned exponentiation as
 
-;;;       (defun expt (x n)
-;;;         (funcall (weyli::repeated-squaring 
-;;;            #'weyli::times (coerce 1 (domain-of x))) x n))
-;;;
+.. code-block:: lisp
+
+       (defun expt (x n)
+         (funcall (weyli::repeated-squaring 
+            #'weyli::times (coerce 1 (domain-of x))) x n))
+
+
 ;;; However, this routine can be used for operations other than exponentiation.
 ;;; For instance, if one wanted a routine that replicates a sequence n times, 
 ;;; one could use the following:
-;;;
-;;;        (defun replicate-sequence (x n)
-;;;          (funcall (weyli::repeated-squaring #'append ()) x n))
-;;;
-;;;
 
-;;;    isqrt n   [Function]
-;;;
-;;; Returns the integer part of the square root of n.
+.. code-block:: lisp
 
-(isqrt 123456789)
-; => 11111
-
-(- (expt (isqrt 123456789) 2) 123456789)
-; => -2468
+        (defun replicate-sequence (x n)
+          (funcall (weyli::repeated-squaring #'append ()) x n))
 
 
-;;;
-;;;
-;;;    integer-nth-root m n  [Function]
-;;;
-;;; Computes the largest integer not greater than the n-th root of m.
-;;;
 
-(weyli::integer-nth-root 123456789  5)
-; => 42
+.. function::    isqrt n                                            [Function]
 
-(expt (weyli::integer-nth-root 123456789  5) 5)
-; => 130691232
+   Returns the integer part of the square root of n.
 
+.. code-block:: lisp
 
-;;;
-;;;    power-of? number &optional base  [Function]
-;;;
-;;; Returns base and k if number = base , otherwise it returns nil. If base is 
-;;; not provided returns the smallest integer of which number is a perfect 
-;;; power.
-;;;
+    (isqrt 123456789)
+    => 11111
 
-(power-of? 256 2)
-; => 2
-; => 8
-
-(expt 2 8)
-; => 256
-
-(ignore-errors (power-of? 256))
-; debugger invoked on a SIMPLE-ERROR in thread
-; #<THREAD "main thread" RUNNING {10048B8113}>:
-;  Haven't implemented the rest of the cases
+    (- (expt (isqrt 123456789) 2) 123456789)
+    => -2468
 
 
-;;;    factor n  [Function]
-;;;
-;;; Factors n into irreducible factors. The value returned is a list of dotted
-;;; pairs. The first component of the dotted pair is the divisor and the second
-;;; is the number of times the divisor divides n. The type of factorization 
-;;; method used, can be controlled by setting the variable *factor-method*. 
-;;; The allowable values are simple-integer-factor and fermat-integer-factor.
-;;;
+.. function ::   integer-nth-root m n                             [Function]
 
-(factor 123456789)
-; => ((3 . 2) (3607 . 1) (3803 . 1))
-
-(factor 12345678901234567890)
-; => ((2 . 1) (3 . 2) (5 . 1) (101 . 1) (3541 . 1) (3607 . 1) (3803 . 1) (27961 . 1))
+   Computes the largest integer not greater than the n-th root of m.
 
 
-(defvar ff (factor 12345678901234567890))
-; => FF
+.. code-block:: lisp
 
-(defvar ffl (mapcar #'(lambda (x) (expt (car x) (cdr x))) ff))
-; => FFL
+    (weyli::integer-nth-root 123456789  5)
+    => 42
 
-ffl
-; => (2 9 5 101 3541 3607 3803 27961)
+    (expt (weyli::integer-nth-root 123456789  5) 5)
+    => 130691232
 
-(reduce #'%times  ffl)
-; => 12345678901234567890
+
+
+.. function::    power-of? number &optional base                  [Function]
+
+   Returns base and k if number = base , otherwise it returns nil. If base is 
+   not provided returns the smallest integer of which number is a perfect 
+   power.
+
+
+.. code-block:: lisp
+
+    (power-of? 256 2)
+    => 2
+    => 8
+
+    (expt 2 8)
+    => 256
+
+    (ignore-errors (power-of? 256))
+    ; debugger invoked on a SIMPLE-ERROR in thread
+    ; #<THREAD "main thread" RUNNING {10048B8113}>:
+    ;  Haven't implemented the rest of the cases
+
+
+
+.. function::   factor n                                           [Function]
+
+   Factors n into irreducible factors. The value returned is a list of dotted
+   pairs. The first component of the dotted pair is the divisor and the second
+   is the number of times the divisor divides n. The type of factorization 
+   method used, can be controlled by setting the variable *factor-method*. 
+   The allowable values are simple-integer-factor and fermat-integer-factor.
+
+
+.. code-block:: lisp
+
+    (factor 123456789)
+    => ((3 . 2) (3607 . 1) (3803 . 1))
+
+    (factor 12345678901234567890)
+    => ((2 . 1) (3 . 2) (5 . 1) (101 . 1) (3541 . 1) (3607 . 1) (3803 . 1) (27961 . 1))
+
+
+    (defvar ff (factor 12345678901234567890))
+    => FF
+
+    (defvar ffl (mapcar #'(lambda (x) (expt (car x) (cdr x))) ff))
+    => FFL
+
+    ffl
+    => (2 9 5 101 3541 3607 3803 27961)
+
+    (reduce #'%times  ffl)
+    => 12345678901234567890
 
 ;;; note that WEYLI:* is a macro, not a function, i.e. (reduce #'*  ffl)
 ;;; won't work as described farther above.
 
 
-;;;
-;;;    prime? n    [Function]
-;;;
-;;; Returns true if n is a prime number. (For other domains, if n has no factors
-;;; that are not units.)
-;;;
 
-;(prime? 77731)
-; => T
+.. function::    prime? n                                          [Function]
 
-(factor  77731)
-; => ((77731 . 1))
+   Returns true if n is a prime number. (For other domains, if n has no factors
+   that are not units.)
 
-(prime? 777313713731)
-; => T
+.. code-block:: lisp
 
-(prime? 7773137137317313737)
-; => NIL
+    (prime? 77731)
+    => T
 
-(factor  7773137137317313737)
-; => ((3 . 2) (2741 . 1) (1485721 . 1) (212083813 . 1))
+    (factor  77731)
+    => ((77731 . 1))
 
+    (prime? 777313713731)
+    => T
 
-;;;
-;;;   totient n  [Function]
-;;;
-;;; Returns the Euler totient function of n, the number of positive integers 
-;;; less than n that are relatively prime to n, i.e.:
-;;;
-;;;        totient(n) = n  \Pi_{p} (1 - \frac{1}{p}), 
-;;;
-;;; where product is over all prime divisors of n.
-;;;
+    (prime? 7773137137317313737)
+    => NIL
 
-(totient 122345)
-; => 97872
-
-(totient 122345876689)
-; => 116852588160
-
-;;;
-;;;    factorial n   [Function]
-;;;
-;;; Computes n!
-;;;
-
-(factorial 123)
-; => 1214630436702532967576624324188129585545421708848338231532891816182923
-;    5892362167668831156960612640202170735835221294047782591091570411651472
-;    186029519906261646730733907419814952960000000000000000000000000000
+    (factor  7773137137317313737)
+    => ((3 . 2) (2741 . 1) (1485721 . 1) (212083813 . 1))
 
 
 
+.. function::  totient n  [Function]
+
+   Returns the Euler totient function of n, the number of positive integers 
+   less than n that are relatively prime to n, i.e.:
+
+        totient(n) = n  \Pi_{p} (1 - \frac{1}{p}), 
+
+   where product is over all prime divisors of n.
 
 
-;;;
-;;;    pochhammer n k    [Function]
-;;;
-;;; Computes the Pochhammer function of n and k, which is closely related to 
-;;; the factorial:
-;;;
-;;;         pochhammer(n; k) = (n)_k = n (n+1) (n+2) ... (n+k-1)
-;;;
+.. code-block:: lisp
 
-(pochhammer 12 5)
-; => 524160
+    (totient 122345)
+    => 97872
 
-(pochhammer 33 12)
-; => 10102470716719180800
+    (totient 122345876689)
+    => 116852588160
 
 
-;;;
-;;;   combinations n m   [Function]
-;;;
-;;; Computes the number of combinations of n things taken m at a time.
-;;;
-;;;         combinations(n,m) = \binom(n,m) = \frac{n!}{m!(n-m)!}.
-;;;
+.. function::    factorial n                                       [Function]
 
-(combinations 33 12)
-; => 354817320
-
-(combinations 77 7)
-; => 2404808340
-
-;;;
-;;;     newprime n     [Function]
-;;;
-;;; Returns the largest prime less than its argument.
+   Computes n!
 
 
-(weyli::newprime 12)
-; => 7
+.. code-block:: lisp
 
-(weyli::newprime 1299)
-; => 113
+    (factorial 123)
+    => 1214630436702532967576624324188129585545421708848338231532891816182923
+       5892362167668831156960612640202170735835221294047782591091570411651472
+       186029519906261646730733907419814952960000000000000000000000000000
+
+
+
+..function::    pochhammer n k                                     [Function]
+
+  Computes the Pochhammer function of n and k, which is closely related to 
+  the factorial:
+
+         pochhammer(n; k) = (n)_k = n (n+1) (n+2) ... (n+k-1)
+
+.. code-block:: lisp
+
+    (pochhammer 12 5)
+    => 524160
+
+    (pochhammer 33 12)
+    => 10102470716719180800
+
+
+
+.. function::  combinations n m                                    [Function]
+
+   Computes the number of combinations of n things taken m at a time.
+
+         combinations(n,m) = \binom(n,m) = \frac{n!}{m!(n-m)!}.
+
+
+.. code-block:: lisp
+
+    (combinations 33 12)
+    => 354817320
+
+    (combinations 77 7)
+    => 2404808340
+
+
+.. function::     newprime n                                       [Function]
+
+   Returns the largest prime less than its argument.
+
+
+.. code-block:: lisp
+
+    (weyli::newprime 12)
+    => 7
+
+    (weyli::newprime 1299)
+    => 113
 
 ;;; **BUG?** never > 113 ....
 
@@ -327,8 +352,9 @@ ffl
 ;;;
 
 
-;; Rational Numbers (5.2)
-;;
+Rational Numbers (5.2)
+----------------------
+
 ;; The domain rational numbers, Q, is the quotient eld of the ring of rational 
 ;; integers. The elements of a rational number domain can have structure type 
 ;; either rational-integer or rational-number. Elements.
@@ -338,152 +364,181 @@ ffl
 ;; integer, then all four functions return the same values.
 ;; A domain of rational integers is created by the following function.
 
-;;       get-rational-numbers   [Function]
-;; 
-;; Returns a domain that is isomorphic to the rational numbers, Q. When called
-;; repeatedly, it always returns the same value until reset-domains is called.
+.. function::       get-rational-numbers                            [Function]
 
-;;      floor number &optional divisor
-;;      ceiling number &optional divisor
-;;      truncate number &optional divisor
-;;      round number &optional divisor
+   Returns a domain that is isomorphic to the rational numbers, Q. When called
+   repeatedly, it always returns the same value until reset-domains is called.
 
-(defvar QQ (get-rational-numbers))
-; => QQ
-
-(wtype QQ)
-; => RATIONAL-NUMBERS
-
-(defvar q11/3 (coerce (/ 11 3) QQ))
-; => Q11/3
-
-q11/3
-; => 11/3
-
-(wtype q11/3)
-; => RATIONAL-NUMBER
-
-(numerator q11/3)
-; => 11
-
-(denominator q11/3)
-; => 3
-
-(floor q11/3)
-; => 3
-
-(ceiling q11/3)
-; => 4
-
-(truncate q11/3)
-; => 3
-; => 2
-
-(round q11/3)
-; => 4
-; => -1
+.. function::  floor number &optional divisor                       [Function]
 
 
-;;; Real Numbers (5.3)
-;;;
+.. function::  ceiling number &optional divisor                     [Function]
+
+
+.. function::  truncate number &optional divisor                    [Function]
+
+
+.. function::  round number &optional divisor                       [Function]
+
+
+.. code-block:: lisp
+
+    (defvar QQ (get-rational-numbers))
+    => QQ
+
+    (wtype QQ)
+    => RATIONAL-NUMBERS
+
+    (defvar q11/3 (coerce (/ 11 3) QQ))
+    => Q11/3
+
+    q11/3
+    => 11/3
+
+    (wtype q11/3)
+    => RATIONAL-NUMBER
+
+    (numerator q11/3)
+    => 11
+
+    (denominator q11/3)
+    => 3
+
+    (floor q11/3)
+    => 3
+
+    (ceiling q11/3)
+    => 4
+
+    (truncate q11/3)
+    => 3
+    => 2
+
+    (round q11/3)
+    => 4
+    => -1
+
+
+Real Numbers (5.3)
+------------------
+
 ;;; The entire real number situation is somewhat confused. In particular, the 
 ;;; relationship between floating point numbers and real numbers is jumbled. 
 ;;; These issues will be fixed at a later date.
-;;; 
-;;;     get-real-numbers &optional precision    [Function]
-;;; 
-;;; This returns a domain whose elements are floating point numbers. If precision
-;;; is not specified, then the machines default double precision floating point 
-;;; numbers will be used. If precision is specified, then a special arbitrary 
-;;; precision floating point package will be used. Operations with these numbers 
-;;; will be somewhat slower (and will cause more garbage collection) than when 
-;;; using the machine's floating point data types.
+ 
+.. function::     get-real-numbers &optional precision             [Function]
 
-(get-real-numbers )
-; => R
-
-(ignore-errors (get-real-numbers 128))
-; => ;   The function GET-REAL-NUMBERS is called with one argument, but wants 
-;        exactly zero. 
-;; not implemented yet??
-
-(describe 'get-real-numbers)
-; WEYLI:GET-REAL-NUMBERS
-;  [symbol]
-
-; GET-REAL-NUMBERS names a generic function:
-;  Lambda-list: ()
-;  Derived type: (FUNCTION NIL *)
-;  Method-combination: STANDARD
-;  Methods:
-;    (GET-REAL-NUMBERS ())
-
-(documentation 'get-real-numbers 'function)
-; => NIL
-
-;;;       floor number &optional divisor  [Function]
-;;;
-;;; Computes the floor of number.
-;;;
-
-(floor (coerce 3.14 (get-real-numbers)))
-; => 3
-; => 0.1400001
+   This returns a domain whose elements are floating point numbers. If precision
+   is not specified, then the machines default double precision floating point 
+   numbers will be used. If precision is specified, then a special arbitrary 
+   precision floating point package will be used. Operations with these numbers 
+   will be somewhat slower (and will cause more garbage collection) than when 
+   using the machine's floating point data types.
 
 
-;;;      ceiling number &optional divisor  [Function]
-;;;
-;;; Computes the ceiling of number.
+.. code-block:: lisp
 
-(ceiling  (coerce 3.14 (get-real-numbers)))
-; => 4
-; => -0.8599999
+    (get-real-numbers )
+    => R
 
+    (ignore-errors (get-real-numbers 128))
+    => ;   The function GET-REAL-NUMBERS is called with one argument, but wants 
+         exactly zero. 
+    not implemented yet??
 
-;;;     truncate number &optional divisor   [Function]
-;;;
-;;; Computes the truncate of number.
+    (describe 'get-real-numbers)
+    ; WEYLI:GET-REAL-NUMBERS
+    ;  [symbol]
 
-(truncate  (coerce 3.14 (get-real-numbers)))
-; => 3
-; => 0.1400001
+    ; GET-REAL-NUMBERS names a generic function:
+    ;  Lambda-list: ()
+    ;  Derived type: (FUNCTION NIL *)
+    ;  Method-combination: STANDARD
+    ;  Methods:
+    ;    (GET-REAL-NUMBERS ())
 
-
-;;;     round number &optional divisor [Function]
-;;;
-;;; Computes the round of number.
-
-(round   (coerce 3.14 (get-real-numbers)))
-; => 3
-; => 0.1400001
+    (documentation 'get-real-numbers 'function)
+    ; => NIL
 
 
-(round  3.14)
-; => 3
-; => 0.1400001
+
+.. function::  floor number &optional divisor                      [Function]
+
+   Computes the floor of number.
 
 
-(round  3.14 3)
-; => 1
-; => 0.1400001
+.. code-block:: lisp
 
-(round  3.14 2)
-; => 2
-; => -0.8599999
+    (floor (coerce 3.14 (get-real-numbers)))
+    => 3
+    => 0.1400001
 
 
-;;;     sqrt n                     [Function]
-;;;
-;;; For positive n returns positive n with the same precision as n.
+.. function::      ceiling number &optional divisor                [Function]
 
-(sqrt   (coerce 3.14 (get-real-numbers)))
-; => 1.7720045
+   Computes the ceiling of number.
 
-(sqrt 3.14)
-; => 1.7720045
+.. code-block:: lisp
 
-(sqrt 4.0)
-; => 2.0
+    (ceiling  (coerce 3.14 (get-real-numbers)))
+    => 4
+    => -0.8599999
+
+
+.. function::  truncate number &optional divisor                   [Function]
+
+   Computes the truncate of number.
+
+
+.. code-block:: lisp
+
+    (truncate  (coerce 3.14 (get-real-numbers)))
+    => 3
+    => 0.1400001
+
+
+.. function::     round number &optional divisor                   [Function]
+
+   Computes the round of number.
+
+
+.. code-block:: lisp
+
+    (round   (coerce 3.14 (get-real-numbers)))
+    => 3
+    => 0.1400001
+
+
+    (round  3.14)
+    => 3
+    => 0.1400001
+
+
+    (round  3.14 3)
+    => 1
+    => 0.1400001
+
+    (round  3.14 2)
+    => 2
+    => -0.8599999
+
+
+
+.. function:: sqrt n                                               [Function]
+
+   For positive n returns positive n with the same precision as n.
+
+
+.. code-block:: lisp
+
+    (sqrt   (coerce 3.14 (get-real-numbers)))
+    => 1.7720045
+
+    (sqrt 3.14)
+    => 1.7720045
+
+    (sqrt 4.0)
+    => 2.0
 
 
 ;;; The following standard trigonometric and hyperbolic routines are provided
@@ -492,137 +547,166 @@ q11/3
 ;;;     cos n acos n cosh n acosh n
 ;;;     tan n atan n tanh n atanh n
 
-(defvar mypi (coerce (/ 355 113) (get-real-numbers)))
+.. code-block:: lisp
 
-(wtype mypi)
-;=> RATIONAL-NUMBER -- although we coerced to R
+    (defvar mypi (coerce (/ 355 113) (get-real-numbers)))
 
-(defvar mypi-r (coerce (/ 355.0 113.0) (get-real-numbers)))
-; => MYPI-R
+    (wtype mypi)
+    => RATIONAL-NUMBER -- although we coerced to R
 
-mypi-r
-; => 3.141593
+    (defvar mypi-r (coerce (/ 355.0 113.0) (get-real-numbers)))
+    => MYPI-R
 
-(wtype mypi-r)
-; => WEYLI::FLOATING-POINT-NUMBER
+    mypi-r
+    => 3.141593
 
-(defvar trigfuns '(sin cos tan sinh cosh tanh))
-; => TRIGFUNS
+    (wtype mypi-r)
+    => WEYLI::FLOATING-POINT-NUMBER
 
-(mapcar #'(lambda (x) (funcall x mypi-r)) trigfuns)
-; => (-3.2584137e-7 -1.0 3.2584137e-7 11.548743 11.591957 0.9962721)
+    (defvar trigfuns '(sin cos tan sinh cosh tanh))
+    => TRIGFUNS
 
-
-;;;     exp n         [Function]
-;;;
-;;; Returns e^n
-
-(exp 2)
-; => 7.389056
-
-(exp (log (exp 1)))
-; =>2.7182817
+    (mapcar #'(lambda (x) (funcall x mypi-r)) trigfuns)
+    => (-3.2584137e-7 -1.0 3.2584137e-7 11.548743 11.591957 0.9962721)
 
 
+.. function::     exp n                                            [Function]
 
-;;;    log n &optional b   [Function]
-;;;
-;;; For positive n returns the principal part of logb n. If b is not supplied 
-;;; then e, the base of natural logarithms, is used for b.
-
-(log (exp 1))
-; => 0.99999994
-
- (ignore-errors (log (exp 1) 2))
- ; => The function LOG is called with two arguments, but wants exactly one.
-
-(describe 'log)
-; WEYLI::LOG
-;  [symbol]
-;
-; LOG names a generic function:
-;  Lambda-list: (NUMBER)
-;  Derived type: (FUNCTION (T) *)
-;  Documentation:
-;    Return the natural logarithm of the number.
-;  Method-combination: STANDARD
-;  Methods:
-;    (LOG (FLOATING-POINT-NUMBER))
-;    (LOG (BIGFLOAT))
-;    (LOG (GENERAL-EXPRESSION))
-;    (LOG (NUMERIC))
-;    (LOG (SYMBOL))
-;    (LOG (NUMBER))
-;  Source file: /home/kfp/quicklisp/local-projects/weyl/lisp-numbers.lisp
-; *
+   Returns e^n
 
 
-;;; Complex Numbers (5.4)
-;;;
-;;;
+.. code-block:: lisp
 
-(get-complex-numbers)
-; => C
+    (exp 2)
+    => 7.389056
 
-(defvar c11 (coerce #C(1 1)  (get-complex-numbers)))
-; => C11
-
-c11
-; => 1 + i
-
-;;;      realpart z    [Function]
-;;;
-;;; If z = x + iy returns x.
-
-(realpart c11)
-; => 1
+    (exp (log (exp 1)))
+    =>2.7182817
 
 
-;;;      imagpart z   [Function]
-;;;
-;;; If z = x + iy returns y .[Function]
 
-(imagpart c11)
-; => 1
+.. function::  log n &optional b                                   [Function]
 
-;;;      conjugate z   [Function]
-;;;
-;;; If z = x + iy returns x ? iy .[Function]
-
-(conjugate c11)
-; => 1 + -1 i
+   For positive n returns the principal part of logb n. If b is not supplied 
+   then e, the base of natural logarithms, is used for b.
 
 
-;;;      abs z   [Function]
-;;;
-;;; If z = x + iy returns  |z| = sqrt(x^2 + y^2).
+.. code-block:: lisp
 
-(abs  c11)
-; => 1.4142135
+    (log (exp 1))
+    => 0.99999994
 
-
-;;;      phase z    [Function]
-;;;
-;;; If z = r*e^(it) returns t, where r=|z|.
-
-(phase c11)
-; => 0.7853982
-
-(* c11 c11)
-;=> 2 i  
-
-(/ c11 c11)
-; => 1
-
-(+ c11 c11)
-; => 2 + 2 i
-
-(- c11 c11)
-; => 0
+    (ignore-errors (log (exp 1) 2))
+    => The function LOG is called with two arguments, but wants exactly one.
 
 
-;;; Quaternions (5.5)
-;;;
+    (describe 'log)
+    ; WEYLI::LOG
+    ;  [symbol]
+    ;
+    ; LOG names a generic function:
+    ;  Lambda-list: (NUMBER)
+    ;  Derived type: (FUNCTION (T) *)
+    ;  Documentation:
+    ;    Return the natural logarithm of the number.
+    ;  Method-combination: STANDARD
+    ;  Methods:
+    ;    (LOG (FLOATING-POINT-NUMBER))
+    ;    (LOG (BIGFLOAT))
+    ;    (LOG (GENERAL-EXPRESSION))
+    ;    (LOG (NUMERIC))
+    ;    (LOG (SYMBOL))
+    ;    (LOG (NUMBER))
+    ;  Source file: /home/kfp/quicklisp/local-projects/weyl/lisp-numbers.lisp
+    ; *
+
+
+Complex Numbers (5.4)
+---------------------
+
+.. code-block:: lisp
+
+    (get-complex-numbers)
+    => C
+
+    (defvar c11 (coerce #C(1 1)  (get-complex-numbers)))
+    => C11
+
+    c11
+    => 1 + i
+
+
+.. function:: realpart z                                           [Function]
+
+   If z = x + iy returns x.
+
+
+.. code-block:: lisp
+ 
+    (realpart c11)
+    => 1
+
+
+.. function::     imagpart z                                       [Function]
+
+   If z = x + iy returns y .[Function]
+
+
+.. code-block:: lisp
+
+    (imagpart c11)
+    => 1
+
+
+
+.. function:: conjugate z                                          [Function]
+
+   If z = x + iy returns x ? iy .[Function]
+
+
+.. code-block:: lisp
+
+    (conjugate c11)
+    => 1 + -1 i
+
+
+
+.. function:: abs z                                                [Function]
+
+   If z = x + iy returns  |z| = sqrt(x^2 + y^2).
+
+
+.. code-block:: lisp
+
+    (abs  c11)
+    => 1.4142135
+
+
+.. function::     phase z                                          [Function]
+
+   If z = r*e^(it) returns t, where r=|z|.
+
+.. code-block:: lisp
+
+    (phase c11)
+    => 0.7853982
+
+    (* c11 c11)
+    => 2 i  
+
+    (/ c11 c11)
+    => 1
+
+    (+ c11 c11)
+    => 2 + 2 i
+
+    (- c11 c11)
+    => 0
+
+
+Quaternions (5.5)
+-----------------
+
 ;;; Quaternions are a non-commutative algebra over a field, usually the reals, 
 ;;; that are often used to represent three dimensional rotations. Weyl can 
 ;;; construct a quaternion algebra over any field F. This algebra is a four 
@@ -632,31 +716,35 @@ c11
 ;;; 
 ;;;      i^2 = j^2 = k^2 = -1,  ij = -ji, jk = -kj and ik = -ki.
 ;;; 
-;;; 
-;;;       get-quaternion-domain field     [Function]
-;;; 
-;;; Gets a quaternion algebra over field, which must be a field.
-
-(get-quaternion-domain (get-rational-numbers))
-; => Quat(Q)
-
-(get-quaternion-domain (get-real-numbers))
-; => Quat(R)
-
-(get-quaternion-domain (get-complex-numbers))
-; => Quat(C)
 
 
-;;; Quaternions can be created using make-element.
-;;;
-;;;      make-element quaternion-algebra v1 v2 v3 v4  [Function]
-;;;
-;;;  
-;;; Creates an element of quaternion-algebra from its arguments. The value
-;;; returned will be v1 + i v2 + j v3 + k v4 . As with other versions of 
-;;; make-element, the function weyli::make-element assumes the arguments are 
-;;; all elements of the coefficient domain and is intended only for internal use.
-;;;
+.. function:: get-quaternion-domain field                           [Function]
+
+   Gets a quaternion algebra over field, which must be a field.
+
+
+.. code-block:: lisp
+
+    (get-quaternion-domain (get-rational-numbers))
+    => Quat(Q)
+
+    (get-quaternion-domain (get-real-numbers))
+    => Quat(R)
+
+    (get-quaternion-domain (get-complex-numbers))
+    => Quat(C)
+
+
+Quaternions can be created using make-element.
+
+.. function::  make-element quaternion-algebra v1 v2 v3 v4         [Function]
+  
+   Creates an element of quaternion-algebra from its arguments. The value
+   returned will be v1 + i v2 + j v3 + k v4 . As with other versions of 
+   make-element, the function weyli::make-element assumes the arguments are 
+   all elements of the coefficient domain and is intended only for internal use.
+
+
 ;;; As an algebraic extension of the real numbers, the quaternions are a little
 ;;; strange. The subfield of quaternions generated by 1 and i, is isomorphic to
 ;;; the complex numbers. Adding j and k makes the algebra non-commutative and 
@@ -666,8 +754,8 @@ c11
 ;;; We illustrate some of these issues computationally. First we create a 
 ;;; quaternion algebra in which to work.
 ;;; 
-;;;     > (setq q (get-quaternion-domain (get-real-numbers)))
-;;;    Quat(R)
+;;;      > (setq q (get-quaternion-domain (get-real-numbers)))
+;;;      Quat(R)
 ;;; 
 ;;; Next, we can create some elements of the quaternions and do some simple 
 ;;; calculations with them.
@@ -682,28 +770,31 @@ c11
 ;;;     <-1, 0, 0, 0>
 ;;; 
 
-(defvar q4 (get-quaternion-domain (get-real-numbers)))
-; => Q4
+.. code-block:: lisp
 
-(defvar aq4 (make-element q4 1 1 1 1))
-; => AQ4
+    (defvar q4 (get-quaternion-domain (get-real-numbers)))
+    => Q4
 
-(defvar bq4 (/ aq4 2))
-; => BQ4
+    (defvar aq4 (make-element q4 1 1 1 1))
+    => AQ4
 
-(* bq4 bq4 bq4)
-; => <-1, 0, 0, 0>
+    (defvar bq4 (/ aq4 2))
+    => BQ4
+
+    (* bq4 bq4 bq4)
+     => <-1, 0, 0, 0>
+
 
 ;;; As expected, one can multiply quaternions by other quaternions and by 
 ;;; elements of the coefficient field (or objects that can be coerced into the 
 ;;; coefficient field).
-;;; 
-;;; 
-;;;      conjugate quaternion    [Function]
-;;; 
-;;; This is an extension of the concept of complex conjugation. It negates 
-;;; the coefficients of i, j and k. This is illustrated by the following example.
-;;; 
+
+
+.. function:: conjugate quaternion                                  [Function]
+
+   This is an extension of the concept of complex conjugation. It negates 
+   the coefficients of i, j and k. This is illustrated by the following example.
+ 
 ;;;     > (setq c (make-element q 1 2 3 4))
 ;;;     <1, 2, 3, 4>
 ;;;
@@ -714,14 +805,16 @@ c11
 ;;;     <30, 0, 0, 0>
 ;;; 
 
-(defvar cq4 (make-element q4 1 2 3 4))
-; => CQ4
+.. code-block:: lisp
 
-(conjugate cq4)
-; => <1, -2, -3, -4>
+    (defvar cq4 (make-element q4 1 2 3 4))
+    => CQ4
 
-(* cq4 (conjugate cq4))
-; => <30, 0, 0, 0>
+    (conjugate cq4)
+    => <1, -2, -3, -4>
+
+    (* cq4 (conjugate cq4))
+    => <30, 0, 0, 0>
 
 
 ;;; Notice that the components of the product of a quaternion with its conjugate

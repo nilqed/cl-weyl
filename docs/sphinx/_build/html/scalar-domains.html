@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>;;;; Scalar Domains (5) &mdash; Weyl 0.2 documentation</title>
+  <title>Scalar Domains (5) &mdash; Weyl 0.2 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
 
@@ -45,8 +45,14 @@
 <li class="toctree-l1"><a class="reference internal" href="getting-started.html">Getting Started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="basics.html">Basics (4)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="general.html">General Expressions</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">;;;; Scalar Domains (5)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="#id3">;;;</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Scalar Domains (5)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#rational-integers-5-1">Rational Integers (5.1)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#rational-numbers-5-2">Rational Numbers (5.2)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#real-numbers-5-3">Real Numbers (5.3)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#complex-numbers-5-4">Complex Numbers (5.4)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#quaternions-5-5">Quaternions (5.5)</a></li>
+</ul>
+</li>
 </ul>
 
         </div>
@@ -63,7 +69,7 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active">;;;; Scalar Domains (5)</li>
+      <li class="breadcrumb-item active">Scalar Domains (5)</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/scalar-domains.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -73,10 +79,8 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <p>(ql:quickload :weyl)
-(in-package :weyl)</p>
-<section id="scalar-domains-5">
-<h1>;;;; Scalar Domains (5)<a class="headerlink" href="#scalar-domains-5" title="Link to this heading">¶</a></h1>
+  <section id="scalar-domains-5">
+<h1>Scalar Domains (5)<a class="headerlink" href="#scalar-domains-5" title="Link to this heading">¶</a></h1>
 <p>;;;; Almost all domains that occur in mathematics can be constructed from the
 ;;;; rational integers, Z. For instance, the the rational numbers (Q) are the
 ;;;; quotient eld of Z, the real numbers are completion of Q using the
@@ -111,28 +115,34 @@
 ;;;; a Lisp number to an element of R causes the Lisp number to be coerced to
 ;;;; an element of R of structure rational-integer.
 ;;;; There are several different ways to determine if an object is a scalar.</p>
-<p>;;;;    (typep obj ‘cl:number) ….. a Lisp number,
-;;;;    (typep obj ‘numeric) ……. a Weyl number,
-;;;;    (number? obj) ………….. either a Lisp number or a Weyl number.</p>
-<p>(typep 1234 ‘cl:number)
-; =&gt; T</p>
-<p>(typep 1234 ‘weyli::numeric)
-; =&gt; NIL</p>
-<p>(typep (coerce 1234 (get-rational-integers))  ‘weyli::numeric)
-; =&gt; T</p>
-<p>(number?  1234 )
-; =&gt; T</p>
-<p>(number? (coerce 1234 (get-rational-integers)))
-; =&gt; T</p>
+<p>;;;;      (typep obj ‘cl:number) ….. a Lisp number,
+;;;;      (typep obj ‘numeric) ……. a Weyl number,
+;;;;      (number? obj) ………….. either a Lisp number or a Weyl number.</p>
+<div class="highlight-lisp notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="nb">typep</span><span class="w"> </span><span class="mi">1234</span><span class="w"> </span><span class="ss">&#39;cl:number</span><span class="p">)</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="no">T</span>
+
+<span class="p">(</span><span class="nb">typep</span><span class="w"> </span><span class="mi">1234</span><span class="w"> </span><span class="ss">&#39;weyli::numeric</span><span class="p">)</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="no">NIL</span>
+
+<span class="p">(</span><span class="nb">typep</span><span class="w"> </span><span class="p">(</span><span class="nb">coerce</span><span class="w"> </span><span class="mi">1234</span><span class="w"> </span><span class="p">(</span><span class="nv">get-rational-integers</span><span class="p">))</span><span class="w">  </span><span class="ss">&#39;weyli::numeric</span><span class="p">)</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="no">T</span>
+
+<span class="p">(</span><span class="nv">number?</span><span class="w">  </span><span class="mi">1234</span><span class="w"> </span><span class="p">)</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="no">T</span>
+
+<span class="p">(</span><span class="nv">number?</span><span class="w"> </span><span class="p">(</span><span class="nb">coerce</span><span class="w"> </span><span class="mi">1234</span><span class="w"> </span><span class="p">(</span><span class="nv">get-rational-integers</span><span class="p">)))</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="no">T</span>
+</pre></div>
+</div>
 <p>;;;; The following sections are organized by the di erent structure types.
 ;;;; Sections 5.1 through 5.6 deal with rational integers, rational numbers,
 ;;;; real numbers, complex numbers and elements of finite fields respectively.
 ;;;; In each section we discuss the di erent domains these structure elements
 ;;;; can be used in followed by a discussion of the operations that can be
 ;;;; performed with each structure type.</p>
-<p>;;; Rational Integers (5.1)
-;;;
-;;; The rational integers are the integers of elementary arithmetic:
+<section id="rational-integers-5-1">
+<h2>Rational Integers (5.1)<a class="headerlink" href="#rational-integers-5-1" title="Link to this heading">¶</a></h2>
+<p>;;; The rational integers are the integers of elementary arithmetic:
 ;;;
 ;;;          Z = {…, -3, -2, -1, 0, 1, 2, 3, …}
 ;;;
@@ -141,11 +151,14 @@
 ;;; used to distinguish this domain from other domains of algebraic integers,
 ;;; e.g., Z[(1 + sqrt(5))/2].</p>
 <p>;;; A domain of rational integers can be created using the following function.</p>
-<p>;;;         get-rational-integers                                   [Function]
-;;;
-;;; Returns a domain that is isomorphic to the rational integers, Z. When
-;;; called repeatedly, it always returns the same value until reset-domains
-;;; is called.</p>
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">get-rational-integers</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">[Function]</span></span></dt>
+<dd><p>Returns a domain that is isomorphic to the rational integers, Z. When
+called repeatedly, it always returns the same value until reset-domains
+is called.</p>
+</dd></dl>
+
 <p>;;; Most of the time, there only needs to be one rational integer domain. The
 ;;; domain of rational integers is a euclidean domain.</p>
 <p>;;; Elements of structure type rational-integer can be elements of domains of
@@ -158,177 +171,221 @@
 ;;; are elements of the same domain. If the domain is a field then <cite>/</cite> may
 ;;; return a rational-number.</p>
 <p>;;; For instance, the following routine could be used to compute factorials.</p>
-<p>(defvar ZZ (get-rational-integers))</p>
-<dl class="simple">
-<dt>(defun my-factorial (n)</dt><dd><dl class="simple">
-<dt>(if (&lt; n 2) (one ZZ)</dt><dd><p>(* (coerce n ZZ) (my-factorial (- n 1)))))</p>
-</dd>
-</dl>
-</dd>
-</dl>
 <p>;;; Notice that the unit element of ZZ was created by using the function one,
 ;;; rather than (coerce 1 ZZ). In general, this is more efficient.</p>
 <p>;;; One of the more commonly used control structures is that used to construct
 ;;; exponentiation from multiplication by repeated squaring. This control
 ;;; structure is captured by the internal function weyli::repeated-squaring:
 ;;;
-;;;    weyli::repeated-squaring mult one     [Function]
-;;;
-;;;  Returns a function of two arguments that is effectively
-;;;
-;;;        (lambda (base exp)
-;;;          (declare (integer exp))
-;;;          (expt base exp))
-;;;
-;;; except that the body does the exponentiating by repeated squaring using
-;;; the operation mult. If exp is 1, then one is returned.</p>
+.. function::  weyli::repeated-squaring mult one                   [Function]</p>
+<blockquote>
+<div><p>Returns a function of two arguments that is effectively</p>
+<blockquote>
+<div><p>(lambda (base exp)
+(declare (integer exp))
+(expt base exp))</p>
+</div></blockquote>
+<p>except that the body does the exponentiating by repeated squaring using
+the operation mult. If exp is 1, then one is returned.</p>
+</div></blockquote>
 <p>;;; Using this function, one could have de ned exponentiation as</p>
-<p>;;;       (defun expt (x n)
-;;;         (funcall (weyli::repeated-squaring
-;;;            #’weyli::times (coerce 1 (domain-of x))) x n))
-;;;
-;;; However, this routine can be used for operations other than exponentiation.
+<div class="highlight-lisp notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="nb">defun</span><span class="w"> </span><span class="nb">expt</span><span class="w"> </span><span class="p">(</span><span class="nv">x</span><span class="w"> </span><span class="nv">n</span><span class="p">)</span>
+<span class="w">  </span><span class="p">(</span><span class="nb">funcall</span><span class="w"> </span><span class="p">(</span><span class="nv">weyli::repeated-squaring</span>
+<span class="w">     </span><span class="nf">#&#39;</span><span class="nv">weyli::times</span><span class="w"> </span><span class="p">(</span><span class="nb">coerce</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">(</span><span class="nv">domain-of</span><span class="w"> </span><span class="nv">x</span><span class="p">)))</span><span class="w"> </span><span class="nv">x</span><span class="w"> </span><span class="nv">n</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>;;; However, this routine can be used for operations other than exponentiation.
 ;;; For instance, if one wanted a routine that replicates a sequence n times,
-;;; one could use the following:
-;;;
-;;;        (defun replicate-sequence (x n)
-;;;          (funcall (weyli::repeated-squaring #’append ()) x n))
-;;;
-;;;</p>
-<p>;;;    isqrt n   [Function]
-;;;
-;;; Returns the integer part of the square root of n.</p>
-<p>(isqrt 123456789)
-; =&gt; 11111</p>
-<p>(- (expt (isqrt 123456789) 2) 123456789)
-; =&gt; -2468</p>
-</section>
-<section id="id3">
-<h1>;;;<a class="headerlink" href="#id3" title="Link to this heading">¶</a></h1>
-<p>;;;    integer-nth-root m n  [Function]
-;;;
-;;; Computes the largest integer not greater than the n-th root of m.
-;;;</p>
-<p>(weyli::integer-nth-root 123456789  5)
-; =&gt; 42</p>
-<p>(expt (weyli::integer-nth-root 123456789  5) 5)
-; =&gt; 130691232</p>
-<p>;;;
-;;;    power-of? number &amp;optional base  [Function]
-;;;
-;;; Returns base and k if number = base , otherwise it returns nil. If base is
-;;; not provided returns the smallest integer of which number is a perfect
-;;; power.
-;;;</p>
-<p>(power-of? 256 2)
-; =&gt; 2
-; =&gt; 8</p>
-<p>(expt 2 8)
-; =&gt; 256</p>
-<p>(ignore-errors (power-of? 256))
-; debugger invoked on a SIMPLE-ERROR in thread
-; #&lt;THREAD “main thread” RUNNING {10048B8113}&gt;:
-;  Haven’t implemented the rest of the cases</p>
-<p>;;;    factor n  [Function]
-;;;
-;;; Factors n into irreducible factors. The value returned is a list of dotted
-;;; pairs. The first component of the dotted pair is the divisor and the second
-;;; is the number of times the divisor divides n. The type of factorization
-;;; method used, can be controlled by setting the variable <em>factor-method</em>.
-;;; The allowable values are simple-integer-factor and fermat-integer-factor.
-;;;</p>
-<p>(factor 123456789)
-; =&gt; ((3 . 2) (3607 . 1) (3803 . 1))</p>
-<p>(factor 12345678901234567890)
-; =&gt; ((2 . 1) (3 . 2) (5 . 1) (101 . 1) (3541 . 1) (3607 . 1) (3803 . 1) (27961 . 1))</p>
-<p>(defvar ff (factor 12345678901234567890))
-; =&gt; FF</p>
-<p>(defvar ffl (mapcar #’(lambda (x) (expt (car x) (cdr x))) ff))
-; =&gt; FFL</p>
-<p>ffl
-; =&gt; (2 9 5 101 3541 3607 3803 27961)</p>
-<p>(reduce #’%times  ffl)
-; =&gt; 12345678901234567890</p>
+;;; one could use the following:</p>
+<div class="highlight-lisp notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="nb">defun</span><span class="w"> </span><span class="nv">replicate-sequence</span><span class="w"> </span><span class="p">(</span><span class="nv">x</span><span class="w"> </span><span class="nv">n</span><span class="p">)</span>
+<span class="w">  </span><span class="p">(</span><span class="nb">funcall</span><span class="w"> </span><span class="p">(</span><span class="nv">weyli::repeated-squaring</span><span class="w"> </span><span class="nf">#&#39;</span><span class="nb">append</span><span class="w"> </span><span class="p">())</span><span class="w"> </span><span class="nv">x</span><span class="w"> </span><span class="nv">n</span><span class="p">))</span>
+</pre></div>
+</div>
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">isqrt</span> <span class="pre">n</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">[Function]</span></span></dt>
+<dd><p>Returns the integer part of the square root of n.</p>
+</dd></dl>
+
+<div class="highlight-lisp notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="nb">isqrt</span><span class="w"> </span><span class="mi">123456789</span><span class="p">)</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="mi">11111</span>
+
+<span class="p">(</span><span class="nb">-</span><span class="w"> </span><span class="p">(</span><span class="nb">expt</span><span class="w"> </span><span class="p">(</span><span class="nb">isqrt</span><span class="w"> </span><span class="mi">123456789</span><span class="p">)</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="mi">123456789</span><span class="p">)</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="mi">-2468</span>
+</pre></div>
+</div>
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">integer-nth-root</span> <span class="pre">m</span> <span class="pre">n</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">[Function]</span></span></dt>
+<dd><p>Computes the largest integer not greater than the n-th root of m.</p>
+</dd></dl>
+
+<div class="highlight-lisp notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="nv">weyli::integer-nth-root</span><span class="w"> </span><span class="mi">123456789</span><span class="w">  </span><span class="mi">5</span><span class="p">)</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="mi">42</span>
+
+<span class="p">(</span><span class="nb">expt</span><span class="w"> </span><span class="p">(</span><span class="nv">weyli::integer-nth-root</span><span class="w"> </span><span class="mi">123456789</span><span class="w">  </span><span class="mi">5</span><span class="p">)</span><span class="w"> </span><span class="mi">5</span><span class="p">)</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="mi">130691232</span>
+</pre></div>
+</div>
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">power-of?</span> <span class="pre">number</span> <span class="pre">&amp;optional</span> <span class="pre">base</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">[Function]</span></span></dt>
+<dd><p>Returns base and k if number = base , otherwise it returns nil. If base is
+not provided returns the smallest integer of which number is a perfect
+power.</p>
+</dd></dl>
+
+<div class="highlight-lisp notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="nv">power-of?</span><span class="w"> </span><span class="mi">256</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="mi">2</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="mi">8</span>
+
+<span class="p">(</span><span class="nb">expt</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">8</span><span class="p">)</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="mi">256</span>
+
+<span class="p">(</span><span class="nb">ignore-errors</span><span class="w"> </span><span class="p">(</span><span class="nv">power-of?</span><span class="w"> </span><span class="mi">256</span><span class="p">))</span>
+<span class="c1">; debugger invoked on a SIMPLE-ERROR in thread</span>
+<span class="c1">; #&lt;THREAD &quot;main thread&quot; RUNNING {10048B8113}&gt;:</span>
+<span class="c1">;  Haven&#39;t implemented the rest of the cases</span>
+</pre></div>
+</div>
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">factor</span> <span class="pre">n</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">[Function]</span></span></dt>
+<dd><p>Factors n into irreducible factors. The value returned is a list of dotted
+pairs. The first component of the dotted pair is the divisor and the second
+is the number of times the divisor divides n. The type of factorization
+method used, can be controlled by setting the variable <em>factor-method</em>.
+The allowable values are simple-integer-factor and fermat-integer-factor.</p>
+</dd></dl>
+
+<div class="highlight-lisp notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="nv">factor</span><span class="w"> </span><span class="mi">123456789</span><span class="p">)</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="p">((</span><span class="mi">3</span><span class="w"> </span><span class="o">.</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="mi">3607</span><span class="w"> </span><span class="o">.</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="mi">3803</span><span class="w"> </span><span class="o">.</span><span class="w"> </span><span class="mi">1</span><span class="p">))</span>
+
+<span class="p">(</span><span class="nv">factor</span><span class="w"> </span><span class="mi">12345678901234567890</span><span class="p">)</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="p">((</span><span class="mi">2</span><span class="w"> </span><span class="o">.</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="mi">3</span><span class="w"> </span><span class="o">.</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="mi">5</span><span class="w"> </span><span class="o">.</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="mi">101</span><span class="w"> </span><span class="o">.</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="mi">3541</span><span class="w"> </span><span class="o">.</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="mi">3607</span><span class="w"> </span><span class="o">.</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="mi">3803</span><span class="w"> </span><span class="o">.</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="mi">27961</span><span class="w"> </span><span class="o">.</span><span class="w"> </span><span class="mi">1</span><span class="p">))</span>
+
+
+<span class="p">(</span><span class="nb">defvar</span><span class="w"> </span><span class="nv">ff</span><span class="w"> </span><span class="p">(</span><span class="nv">factor</span><span class="w"> </span><span class="mi">12345678901234567890</span><span class="p">))</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="nv">FF</span>
+
+<span class="p">(</span><span class="nb">defvar</span><span class="w"> </span><span class="nv">ffl</span><span class="w"> </span><span class="p">(</span><span class="nb">mapcar</span><span class="w"> </span><span class="nf">#&#39;</span><span class="p">(</span><span class="k">lambda</span><span class="w"> </span><span class="p">(</span><span class="nv">x</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="nb">expt</span><span class="w"> </span><span class="p">(</span><span class="nb">car</span><span class="w"> </span><span class="nv">x</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="nb">cdr</span><span class="w"> </span><span class="nv">x</span><span class="p">)))</span><span class="w"> </span><span class="nv">ff</span><span class="p">))</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="nv">FFL</span>
+
+<span class="nv">ffl</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="p">(</span><span class="mi">2</span><span class="w"> </span><span class="mi">9</span><span class="w"> </span><span class="mi">5</span><span class="w"> </span><span class="mi">101</span><span class="w"> </span><span class="mi">3541</span><span class="w"> </span><span class="mi">3607</span><span class="w"> </span><span class="mi">3803</span><span class="w"> </span><span class="mi">27961</span><span class="p">)</span>
+
+<span class="p">(</span><span class="nb">reduce</span><span class="w"> </span><span class="nf">#&#39;</span><span class="nv">%times</span><span class="w">  </span><span class="nv">ffl</span><span class="p">)</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="mi">12345678901234567890</span>
+</pre></div>
+</div>
 <p>;;; note that WEYLI:* is a macro, not a function, i.e. (reduce #’*  ffl)
 ;;; won’t work as described farther above.</p>
-<p>;;;
-;;;    prime? n    [Function]
-;;;
-;;; Returns true if n is a prime number. (For other domains, if n has no factors
-;;; that are not units.)
-;;;</p>
-<p>;(prime? 77731)
-; =&gt; T</p>
-<p>(factor  77731)
-; =&gt; ((77731 . 1))</p>
-<p>(prime? 777313713731)
-; =&gt; T</p>
-<p>(prime? 7773137137317313737)
-; =&gt; NIL</p>
-<p>(factor  7773137137317313737)
-; =&gt; ((3 . 2) (2741 . 1) (1485721 . 1) (212083813 . 1))</p>
-<p>;;;
-;;;   totient n  [Function]
-;;;
-;;; Returns the Euler totient function of n, the number of positive integers
-;;; less than n that are relatively prime to n, i.e.:
-;;;
-;;;        totient(n) = n  Pi_{p} (1 - frac{1}{p}),
-;;;
-;;; where product is over all prime divisors of n.
-;;;</p>
-<p>(totient 122345)
-; =&gt; 97872</p>
-<p>(totient 122345876689)
-; =&gt; 116852588160</p>
-<p>;;;
-;;;    factorial n   [Function]
-;;;
-;;; Computes n!
-;;;</p>
-<p>(factorial 123)
-; =&gt; 1214630436702532967576624324188129585545421708848338231532891816182923
-;    5892362167668831156960612640202170735835221294047782591091570411651472
-;    186029519906261646730733907419814952960000000000000000000000000000</p>
-<p>;;;
-;;;    pochhammer n k    [Function]
-;;;
-;;; Computes the Pochhammer function of n and k, which is closely related to
-;;; the factorial:
-;;;
-;;;         pochhammer(n; k) = (n)_k = n (n+1) (n+2) … (n+k-1)
-;;;</p>
-<p>(pochhammer 12 5)
-; =&gt; 524160</p>
-<p>(pochhammer 33 12)
-; =&gt; 10102470716719180800</p>
-<p>;;;
-;;;   combinations n m   [Function]
-;;;
-;;; Computes the number of combinations of n things taken m at a time.
-;;;
-;;;         combinations(n,m) = binom(n,m) = frac{n!}{m!(n-m)!}.
-;;;</p>
-<p>(combinations 33 12)
-; =&gt; 354817320</p>
-<p>(combinations 77 7)
-; =&gt; 2404808340</p>
-<p>;;;
-;;;     newprime n     [Function]
-;;;
-;;; Returns the largest prime less than its argument.</p>
-<p>(weyli::newprime 12)
-; =&gt; 7</p>
-<p>(weyli::newprime 1299)
-; =&gt; 113</p>
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">prime?</span> <span class="pre">n</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">[Function]</span></span></dt>
+<dd><p>Returns true if n is a prime number. (For other domains, if n has no factors
+that are not units.)</p>
+</dd></dl>
+
+<div class="highlight-lisp notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="nv">prime?</span><span class="w"> </span><span class="mi">77731</span><span class="p">)</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="no">T</span>
+
+<span class="p">(</span><span class="nv">factor</span><span class="w">  </span><span class="mi">77731</span><span class="p">)</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="p">((</span><span class="mi">77731</span><span class="w"> </span><span class="o">.</span><span class="w"> </span><span class="mi">1</span><span class="p">))</span>
+
+<span class="p">(</span><span class="nv">prime?</span><span class="w"> </span><span class="mi">777313713731</span><span class="p">)</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="no">T</span>
+
+<span class="p">(</span><span class="nv">prime?</span><span class="w"> </span><span class="mi">7773137137317313737</span><span class="p">)</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="no">NIL</span>
+
+<span class="p">(</span><span class="nv">factor</span><span class="w">  </span><span class="mi">7773137137317313737</span><span class="p">)</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="p">((</span><span class="mi">3</span><span class="w"> </span><span class="o">.</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="mi">2741</span><span class="w"> </span><span class="o">.</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="mi">1485721</span><span class="w"> </span><span class="o">.</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="mi">212083813</span><span class="w"> </span><span class="o">.</span><span class="w"> </span><span class="mi">1</span><span class="p">))</span>
+</pre></div>
+</div>
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">totient</span> <span class="pre">n</span>&#160; <span class="pre">[Function]</span></span></dt>
+<dd><p>Returns the Euler totient function of n, the number of positive integers
+less than n that are relatively prime to n, i.e.:</p>
+<blockquote>
+<div><p>totient(n) = n  Pi_{p} (1 - frac{1}{p}),</p>
+</div></blockquote>
+<p>where product is over all prime divisors of n.</p>
+</dd></dl>
+
+<div class="highlight-lisp notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="nv">totient</span><span class="w"> </span><span class="mi">122345</span><span class="p">)</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="mi">97872</span>
+
+<span class="p">(</span><span class="nv">totient</span><span class="w"> </span><span class="mi">122345876689</span><span class="p">)</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="mi">116852588160</span>
+</pre></div>
+</div>
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">factorial</span> <span class="pre">n</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">[Function]</span></span></dt>
+<dd><p>Computes n!</p>
+</dd></dl>
+
+<div class="highlight-lisp notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="nv">factorial</span><span class="w"> </span><span class="mi">123</span><span class="p">)</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="mi">1214630436702532967576624324188129585545421708848338231532891816182923</span>
+<span class="w">   </span><span class="mi">5892362167668831156960612640202170735835221294047782591091570411651472</span>
+<span class="w">   </span><span class="mi">186029519906261646730733907419814952960000000000000000000000000000</span>
+</pre></div>
+</div>
+<p>..function::    pochhammer n k                                     [Function]</p>
+<blockquote>
+<div><p>Computes the Pochhammer function of n and k, which is closely related to
+the factorial:</p>
+<blockquote>
+<div><p>pochhammer(n; k) = (n)_k = n (n+1) (n+2) … (n+k-1)</p>
+</div></blockquote>
+</div></blockquote>
+<div class="highlight-lisp notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="nv">pochhammer</span><span class="w"> </span><span class="mi">12</span><span class="w"> </span><span class="mi">5</span><span class="p">)</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="mi">524160</span>
+
+<span class="p">(</span><span class="nv">pochhammer</span><span class="w"> </span><span class="mi">33</span><span class="w"> </span><span class="mi">12</span><span class="p">)</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="mi">10102470716719180800</span>
+</pre></div>
+</div>
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">combinations</span> <span class="pre">n</span> <span class="pre">m</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">[Function]</span></span></dt>
+<dd><p>Computes the number of combinations of n things taken m at a time.</p>
+<blockquote>
+<div><p>combinations(n,m) = binom(n,m) = frac{n!}{m!(n-m)!}.</p>
+</div></blockquote>
+</dd></dl>
+
+<div class="highlight-lisp notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="nv">combinations</span><span class="w"> </span><span class="mi">33</span><span class="w"> </span><span class="mi">12</span><span class="p">)</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="mi">354817320</span>
+
+<span class="p">(</span><span class="nv">combinations</span><span class="w"> </span><span class="mi">77</span><span class="w"> </span><span class="mi">7</span><span class="p">)</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="mi">2404808340</span>
+</pre></div>
+</div>
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">newprime</span> <span class="pre">n</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">[Function]</span></span></dt>
+<dd><p>Returns the largest prime less than its argument.</p>
+</dd></dl>
+
+<div class="highlight-lisp notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="nv">weyli::newprime</span><span class="w"> </span><span class="mi">12</span><span class="p">)</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="mi">7</span>
+
+<span class="p">(</span><span class="nv">weyli::newprime</span><span class="w"> </span><span class="mi">1299</span><span class="p">)</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="mi">113</span>
+</pre></div>
+</div>
 <p>;;; <strong>BUG?</strong> never &gt; 113 ….</p>
-<p>;;; <a href="#id4"><span class="problematic" id="id5">**</span></a>* Need to point out that the elements of the second rational integer
+<p>;;; <a href="#id3"><span class="problematic" id="id4">**</span></a>* Need to point out that the elements of the second rational integer
 ;;;     domain created are totally different from that those that are elements
 ;;;     of the rst instance of the rational integers.)
 ;;;</p>
-<p>;; Rational Numbers (5.2)
-;;
-;; The domain rational numbers, Q, is the quotient eld of the ring of rational
+</section>
+<section id="rational-numbers-5-2">
+<h2>Rational Numbers (5.2)<a class="headerlink" href="#rational-numbers-5-2" title="Link to this heading">¶</a></h2>
+<p>;; The domain rational numbers, Q, is the quotient eld of the ring of rational
 ;; integers. The elements of a rational number domain can have structure type
 ;; either rational-integer or rational-number. Elements.
 ;; As in Common Lisp there is a set of four functions for truncating numbers
@@ -336,211 +393,336 @@
 ;; defaults to 1. If only the rst argument is provided and it is a rational
 ;; integer, then all four functions return the same values.
 ;; A domain of rational integers is created by the following function.</p>
-<p>;;       get-rational-numbers   [Function]
-;;
-;; Returns a domain that is isomorphic to the rational numbers, Q. When called
-;; repeatedly, it always returns the same value until reset-domains is called.</p>
-<p>;;      floor number &amp;optional divisor
-;;      ceiling number &amp;optional divisor
-;;      truncate number &amp;optional divisor
-;;      round number &amp;optional divisor</p>
-<p>(defvar QQ (get-rational-numbers))
-; =&gt; QQ</p>
-<p>(wtype QQ)
-; =&gt; RATIONAL-NUMBERS</p>
-<p>(defvar q11/3 (coerce (/ 11 3) QQ))
-; =&gt; Q11/3</p>
-<p>q11/3
-; =&gt; 11/3</p>
-<p>(wtype q11/3)
-; =&gt; RATIONAL-NUMBER</p>
-<p>(numerator q11/3)
-; =&gt; 11</p>
-<p>(denominator q11/3)
-; =&gt; 3</p>
-<p>(floor q11/3)
-; =&gt; 3</p>
-<p>(ceiling q11/3)
-; =&gt; 4</p>
-<p>(truncate q11/3)
-; =&gt; 3
-; =&gt; 2</p>
-<p>(round q11/3)
-; =&gt; 4
-; =&gt; -1</p>
-<p>;;; Real Numbers (5.3)
-;;;
-;;; The entire real number situation is somewhat confused. In particular, the
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">get-rational-numbers</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">[Function]</span></span></dt>
+<dd><p>Returns a domain that is isomorphic to the rational numbers, Q. When called
+repeatedly, it always returns the same value until reset-domains is called.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">floor</span> <span class="pre">number</span> <span class="pre">&amp;optional</span> <span class="pre">divisor</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">[Function]</span></span></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">ceiling</span> <span class="pre">number</span> <span class="pre">&amp;optional</span> <span class="pre">divisor</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">[Function]</span></span></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">truncate</span> <span class="pre">number</span> <span class="pre">&amp;optional</span> <span class="pre">divisor</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">[Function]</span></span></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">round</span> <span class="pre">number</span> <span class="pre">&amp;optional</span> <span class="pre">divisor</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">[Function]</span></span></dt>
+<dd></dd></dl>
+
+<div class="highlight-lisp notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="nb">defvar</span><span class="w"> </span><span class="nv">QQ</span><span class="w"> </span><span class="p">(</span><span class="nv">get-rational-numbers</span><span class="p">))</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="nv">QQ</span>
+
+<span class="p">(</span><span class="nv">wtype</span><span class="w"> </span><span class="nv">QQ</span><span class="p">)</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="nv">RATIONAL-NUMBERS</span>
+
+<span class="p">(</span><span class="nb">defvar</span><span class="w"> </span><span class="nv">q11/3</span><span class="w"> </span><span class="p">(</span><span class="nb">coerce</span><span class="w"> </span><span class="p">(</span><span class="nb">/</span><span class="w"> </span><span class="mi">11</span><span class="w"> </span><span class="mi">3</span><span class="p">)</span><span class="w"> </span><span class="nv">QQ</span><span class="p">))</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="nv">Q11/3</span>
+
+<span class="nv">q11/3</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="m">11/3</span>
+
+<span class="p">(</span><span class="nv">wtype</span><span class="w"> </span><span class="nv">q11/3</span><span class="p">)</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="nv">RATIONAL-NUMBER</span>
+
+<span class="p">(</span><span class="nb">numerator</span><span class="w"> </span><span class="nv">q11/3</span><span class="p">)</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="mi">11</span>
+
+<span class="p">(</span><span class="nb">denominator</span><span class="w"> </span><span class="nv">q11/3</span><span class="p">)</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="mi">3</span>
+
+<span class="p">(</span><span class="nb">floor</span><span class="w"> </span><span class="nv">q11/3</span><span class="p">)</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="mi">3</span>
+
+<span class="p">(</span><span class="nb">ceiling</span><span class="w"> </span><span class="nv">q11/3</span><span class="p">)</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="mi">4</span>
+
+<span class="p">(</span><span class="nb">truncate</span><span class="w"> </span><span class="nv">q11/3</span><span class="p">)</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="mi">3</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="mi">2</span>
+
+<span class="p">(</span><span class="nb">round</span><span class="w"> </span><span class="nv">q11/3</span><span class="p">)</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="mi">4</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="mi">-1</span>
+</pre></div>
+</div>
+</section>
+<section id="real-numbers-5-3">
+<h2>Real Numbers (5.3)<a class="headerlink" href="#real-numbers-5-3" title="Link to this heading">¶</a></h2>
+<p>;;; The entire real number situation is somewhat confused. In particular, the
 ;;; relationship between floating point numbers and real numbers is jumbled.
-;;; These issues will be fixed at a later date.
-;;;
-;;;     get-real-numbers &amp;optional precision    [Function]
-;;;
-;;; This returns a domain whose elements are floating point numbers. If precision
-;;; is not specified, then the machines default double precision floating point
-;;; numbers will be used. If precision is specified, then a special arbitrary
-;;; precision floating point package will be used. Operations with these numbers
-;;; will be somewhat slower (and will cause more garbage collection) than when
-;;; using the machine’s floating point data types.</p>
-<p>(get-real-numbers )
-; =&gt; R</p>
-<p>(ignore-errors (get-real-numbers 128))
-; =&gt; ;   The function GET-REAL-NUMBERS is called with one argument, but wants
-;        exactly zero.
-;; not implemented yet??</p>
-<p>(describe ‘get-real-numbers)
-; WEYLI:GET-REAL-NUMBERS
-;  [symbol]</p>
-<p>; GET-REAL-NUMBERS names a generic function:
-;  Lambda-list: ()
-;  Derived type: (FUNCTION NIL <a href="#id6"><span class="problematic" id="id7">*</span></a>)
-;  Method-combination: STANDARD
-;  Methods:
-;    (GET-REAL-NUMBERS ())</p>
-<p>(documentation ‘get-real-numbers ‘function)
-; =&gt; NIL</p>
-<p>;;;       floor number &amp;optional divisor  [Function]
-;;;
-;;; Computes the floor of number.
-;;;</p>
-<p>(floor (coerce 3.14 (get-real-numbers)))
-; =&gt; 3
-; =&gt; 0.1400001</p>
-<p>;;;      ceiling number &amp;optional divisor  [Function]
-;;;
-;;; Computes the ceiling of number.</p>
-<p>(ceiling  (coerce 3.14 (get-real-numbers)))
-; =&gt; 4
-; =&gt; -0.8599999</p>
-<p>;;;     truncate number &amp;optional divisor   [Function]
-;;;
-;;; Computes the truncate of number.</p>
-<p>(truncate  (coerce 3.14 (get-real-numbers)))
-; =&gt; 3
-; =&gt; 0.1400001</p>
-<p>;;;     round number &amp;optional divisor [Function]
-;;;
-;;; Computes the round of number.</p>
-<p>(round   (coerce 3.14 (get-real-numbers)))
-; =&gt; 3
-; =&gt; 0.1400001</p>
-<p>(round  3.14)
-; =&gt; 3
-; =&gt; 0.1400001</p>
-<p>(round  3.14 3)
-; =&gt; 1
-; =&gt; 0.1400001</p>
-<p>(round  3.14 2)
-; =&gt; 2
-; =&gt; -0.8599999</p>
-<p>;;;     sqrt n                     [Function]
-;;;
-;;; For positive n returns positive n with the same precision as n.</p>
-<p>(sqrt   (coerce 3.14 (get-real-numbers)))
-; =&gt; 1.7720045</p>
-<p>(sqrt 3.14)
-; =&gt; 1.7720045</p>
-<p>(sqrt 4.0)
-; =&gt; 2.0</p>
+;;; These issues will be fixed at a later date.</p>
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">get-real-numbers</span> <span class="pre">&amp;optional</span> <span class="pre">precision</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">[Function]</span></span></dt>
+<dd><p>This returns a domain whose elements are floating point numbers. If precision
+is not specified, then the machines default double precision floating point
+numbers will be used. If precision is specified, then a special arbitrary
+precision floating point package will be used. Operations with these numbers
+will be somewhat slower (and will cause more garbage collection) than when
+using the machine’s floating point data types.</p>
+</dd></dl>
+
+<div class="highlight-lisp notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="nv">get-real-numbers</span><span class="w"> </span><span class="p">)</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="nv">R</span>
+
+<span class="p">(</span><span class="nb">ignore-errors</span><span class="w"> </span><span class="p">(</span><span class="nv">get-real-numbers</span><span class="w"> </span><span class="mi">128</span><span class="p">))</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="c1">;   The function GET-REAL-NUMBERS is called with one argument, but wants</span>
+<span class="w">     </span><span class="nv">exactly</span><span class="w"> </span><span class="nv">zero.</span>
+<span class="nb">not</span><span class="w"> </span><span class="nv">implemented</span><span class="w"> </span><span class="nv">yet??</span>
+
+<span class="p">(</span><span class="nb">describe</span><span class="w"> </span><span class="ss">&#39;get-real-numbers</span><span class="p">)</span>
+<span class="c1">; WEYLI:GET-REAL-NUMBERS</span>
+<span class="c1">;  [symbol]</span>
+
+<span class="c1">; GET-REAL-NUMBERS names a generic function:</span>
+<span class="c1">;  Lambda-list: ()</span>
+<span class="c1">;  Derived type: (FUNCTION NIL *)</span>
+<span class="c1">;  Method-combination: STANDARD</span>
+<span class="c1">;  Methods:</span>
+<span class="c1">;    (GET-REAL-NUMBERS ())</span>
+
+<span class="p">(</span><span class="nb">documentation</span><span class="w"> </span><span class="ss">&#39;get-real-numbers</span><span class="w"> </span><span class="ss">&#39;function</span><span class="p">)</span>
+<span class="c1">; =&gt; NIL</span>
+</pre></div>
+</div>
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">floor</span> <span class="pre">number</span> <span class="pre">&amp;optional</span> <span class="pre">divisor</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">[Function]</span></span></dt>
+<dd><p>Computes the floor of number.</p>
+</dd></dl>
+
+<div class="highlight-lisp notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="nb">floor</span><span class="w"> </span><span class="p">(</span><span class="nb">coerce</span><span class="w"> </span><span class="mf">3.14</span><span class="w"> </span><span class="p">(</span><span class="nv">get-real-numbers</span><span class="p">)))</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="mi">3</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="mf">0.1400001</span>
+</pre></div>
+</div>
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">ceiling</span> <span class="pre">number</span> <span class="pre">&amp;optional</span> <span class="pre">divisor</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">[Function]</span></span></dt>
+<dd><p>Computes the ceiling of number.</p>
+</dd></dl>
+
+<div class="highlight-lisp notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="nb">ceiling</span><span class="w">  </span><span class="p">(</span><span class="nb">coerce</span><span class="w"> </span><span class="mf">3.14</span><span class="w"> </span><span class="p">(</span><span class="nv">get-real-numbers</span><span class="p">)))</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="mi">4</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="mf">-0.8599999</span>
+</pre></div>
+</div>
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">truncate</span> <span class="pre">number</span> <span class="pre">&amp;optional</span> <span class="pre">divisor</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">[Function]</span></span></dt>
+<dd><p>Computes the truncate of number.</p>
+</dd></dl>
+
+<div class="highlight-lisp notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="nb">truncate</span><span class="w">  </span><span class="p">(</span><span class="nb">coerce</span><span class="w"> </span><span class="mf">3.14</span><span class="w"> </span><span class="p">(</span><span class="nv">get-real-numbers</span><span class="p">)))</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="mi">3</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="mf">0.1400001</span>
+</pre></div>
+</div>
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">round</span> <span class="pre">number</span> <span class="pre">&amp;optional</span> <span class="pre">divisor</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">[Function]</span></span></dt>
+<dd><p>Computes the round of number.</p>
+</dd></dl>
+
+<div class="highlight-lisp notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="nb">round</span><span class="w">   </span><span class="p">(</span><span class="nb">coerce</span><span class="w"> </span><span class="mf">3.14</span><span class="w"> </span><span class="p">(</span><span class="nv">get-real-numbers</span><span class="p">)))</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="mi">3</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="mf">0.1400001</span>
+
+
+<span class="p">(</span><span class="nb">round</span><span class="w">  </span><span class="mf">3.14</span><span class="p">)</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="mi">3</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="mf">0.1400001</span>
+
+
+<span class="p">(</span><span class="nb">round</span><span class="w">  </span><span class="mf">3.14</span><span class="w"> </span><span class="mi">3</span><span class="p">)</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="mi">1</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="mf">0.1400001</span>
+
+<span class="p">(</span><span class="nb">round</span><span class="w">  </span><span class="mf">3.14</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="mi">2</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="mf">-0.8599999</span>
+</pre></div>
+</div>
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">sqrt</span> <span class="pre">n</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">[Function]</span></span></dt>
+<dd><p>For positive n returns positive n with the same precision as n.</p>
+</dd></dl>
+
+<div class="highlight-lisp notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="nb">sqrt</span><span class="w">   </span><span class="p">(</span><span class="nb">coerce</span><span class="w"> </span><span class="mf">3.14</span><span class="w"> </span><span class="p">(</span><span class="nv">get-real-numbers</span><span class="p">)))</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="mf">1.7720045</span>
+
+<span class="p">(</span><span class="nb">sqrt</span><span class="w"> </span><span class="mf">3.14</span><span class="p">)</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="mf">1.7720045</span>
+
+<span class="p">(</span><span class="nb">sqrt</span><span class="w"> </span><span class="mf">4.0</span><span class="p">)</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="mf">2.0</span>
+</pre></div>
+</div>
 <p>;;; The following standard trigonometric and hyperbolic routines are provided
 ;;;
 ;;;     sin n asin n sinh n asinh n
 ;;;     cos n acos n cosh n acosh n
 ;;;     tan n atan n tanh n atanh n</p>
-<p>(defvar mypi (coerce (/ 355 113) (get-real-numbers)))</p>
-<p>(wtype mypi)
-;=&gt; RATIONAL-NUMBER – although we coerced to R</p>
-<p>(defvar mypi-r (coerce (/ 355.0 113.0) (get-real-numbers)))
-; =&gt; MYPI-R</p>
-<p>mypi-r
-; =&gt; 3.141593</p>
-<p>(wtype mypi-r)
-; =&gt; WEYLI::FLOATING-POINT-NUMBER</p>
-<p>(defvar trigfuns ‘(sin cos tan sinh cosh tanh))
-; =&gt; TRIGFUNS</p>
-<p>(mapcar #’(lambda (x) (funcall x mypi-r)) trigfuns)
-; =&gt; (-3.2584137e-7 -1.0 3.2584137e-7 11.548743 11.591957 0.9962721)</p>
-<p>;;;     exp n         [Function]
-;;;
-;;; Returns e^n</p>
-<p>(exp 2)
-; =&gt; 7.389056</p>
-<p>(exp (log (exp 1)))
-; =&gt;2.7182817</p>
-<p>;;;    log n &amp;optional b   [Function]
-;;;
-;;; For positive n returns the principal part of logb n. If b is not supplied
-;;; then e, the base of natural logarithms, is used for b.</p>
-<p>(log (exp 1))
-; =&gt; 0.99999994</p>
-<blockquote>
-<div><p>(ignore-errors (log (exp 1) 2))
-; =&gt; The function LOG is called with two arguments, but wants exactly one.</p>
-</div></blockquote>
-<p>(describe ‘log)
-; WEYLI::LOG
-;  [symbol]
-;
-; LOG names a generic function:
-;  Lambda-list: (NUMBER)
-;  Derived type: (FUNCTION (T) <a href="#id8"><span class="problematic" id="id9">*</span></a>)
-;  Documentation:
-;    Return the natural logarithm of the number.
-;  Method-combination: STANDARD
-;  Methods:
-;    (LOG (FLOATING-POINT-NUMBER))
-;    (LOG (BIGFLOAT))
-;    (LOG (GENERAL-EXPRESSION))
-;    (LOG (NUMERIC))
-;    (LOG (SYMBOL))
-;    (LOG (NUMBER))
-;  Source file: /home/kfp/quicklisp/local-projects/weyl/lisp-numbers.lisp
-; *</p>
-<p>;;; Complex Numbers (5.4)
-;;;
-;;;</p>
-<p>(get-complex-numbers)
-; =&gt; C</p>
-<p>(defvar c11 (coerce #C(1 1)  (get-complex-numbers)))
-; =&gt; C11</p>
-<p>c11
-; =&gt; 1 + i</p>
-<p>;;;      realpart z    [Function]
-;;;
-;;; If z = x + iy returns x.</p>
-<p>(realpart c11)
-; =&gt; 1</p>
-<p>;;;      imagpart z   [Function]
-;;;
-;;; If z = x + iy returns y .[Function]</p>
-<p>(imagpart c11)
-; =&gt; 1</p>
-<p>;;;      conjugate z   [Function]
-;;;
-;;; If z = x + iy returns x ? iy .[Function]</p>
-<p>(conjugate c11)
-; =&gt; 1 + -1 i</p>
-<p>;;;      abs z   [Function]
-;;;
-;;; If z = x + iy returns  <a href="#id10"><span class="problematic" id="id11">|z|</span></a> = sqrt(x^2 + y^2).</p>
-<p>(abs  c11)
-; =&gt; 1.4142135</p>
-<p>;;;      phase z    [Function]
-;;;
-;;; If z = r*e^(it) returns t, where r=|z|.</p>
-<p>(phase c11)
-; =&gt; 0.7853982</p>
-<p>(* c11 c11)
-;=&gt; 2 i</p>
-<p>(/ c11 c11)
-; =&gt; 1</p>
-<p>(+ c11 c11)
-; =&gt; 2 + 2 i</p>
-<p>(- c11 c11)
-; =&gt; 0</p>
-<p>;;; Quaternions (5.5)
-;;;
-;;; Quaternions are a non-commutative algebra over a field, usually the reals,
+<div class="highlight-lisp notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="nb">defvar</span><span class="w"> </span><span class="nv">mypi</span><span class="w"> </span><span class="p">(</span><span class="nb">coerce</span><span class="w"> </span><span class="p">(</span><span class="nb">/</span><span class="w"> </span><span class="mi">355</span><span class="w"> </span><span class="mi">113</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="nv">get-real-numbers</span><span class="p">)))</span>
+
+<span class="p">(</span><span class="nv">wtype</span><span class="w"> </span><span class="nv">mypi</span><span class="p">)</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="nv">RATIONAL-NUMBER</span><span class="w"> </span><span class="nv">--</span><span class="w"> </span><span class="nv">although</span><span class="w"> </span><span class="nv">we</span><span class="w"> </span><span class="nv">coerced</span><span class="w"> </span><span class="nv">to</span><span class="w"> </span><span class="nv">R</span>
+
+<span class="p">(</span><span class="nb">defvar</span><span class="w"> </span><span class="nv">mypi-r</span><span class="w"> </span><span class="p">(</span><span class="nb">coerce</span><span class="w"> </span><span class="p">(</span><span class="nb">/</span><span class="w"> </span><span class="mf">355.0</span><span class="w"> </span><span class="mf">113.0</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="nv">get-real-numbers</span><span class="p">)))</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="nv">MYPI-R</span>
+
+<span class="nv">mypi-r</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="mf">3.141593</span>
+
+<span class="p">(</span><span class="nv">wtype</span><span class="w"> </span><span class="nv">mypi-r</span><span class="p">)</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="nv">WEYLI::FLOATING-POINT-NUMBER</span>
+
+<span class="p">(</span><span class="nb">defvar</span><span class="w"> </span><span class="nv">trigfuns</span><span class="w"> </span><span class="o">&#39;</span><span class="p">(</span><span class="nb">sin</span><span class="w"> </span><span class="nb">cos</span><span class="w"> </span><span class="nb">tan</span><span class="w"> </span><span class="nb">sinh</span><span class="w"> </span><span class="nb">cosh</span><span class="w"> </span><span class="nb">tanh</span><span class="p">))</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="nv">TRIGFUNS</span>
+
+<span class="p">(</span><span class="nb">mapcar</span><span class="w"> </span><span class="nf">#&#39;</span><span class="p">(</span><span class="k">lambda</span><span class="w"> </span><span class="p">(</span><span class="nv">x</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="nb">funcall</span><span class="w"> </span><span class="nv">x</span><span class="w"> </span><span class="nv">mypi-r</span><span class="p">))</span><span class="w"> </span><span class="nv">trigfuns</span><span class="p">)</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="p">(</span><span class="mf">-3.2584137e-7</span><span class="w"> </span><span class="mf">-1.0</span><span class="w"> </span><span class="mf">3.2584137e-7</span><span class="w"> </span><span class="mf">11.548743</span><span class="w"> </span><span class="mf">11.591957</span><span class="w"> </span><span class="mf">0.9962721</span><span class="p">)</span>
+</pre></div>
+</div>
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">exp</span> <span class="pre">n</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">[Function]</span></span></dt>
+<dd><p>Returns e^n</p>
+</dd></dl>
+
+<div class="highlight-lisp notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="nb">exp</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="mf">7.389056</span>
+
+<span class="p">(</span><span class="nb">exp</span><span class="w"> </span><span class="p">(</span><span class="nb">log</span><span class="w"> </span><span class="p">(</span><span class="nb">exp</span><span class="w"> </span><span class="mi">1</span><span class="p">)))</span>
+<span class="nv">=&gt;2.7182817</span>
+</pre></div>
+</div>
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">log</span> <span class="pre">n</span> <span class="pre">&amp;optional</span> <span class="pre">b</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">[Function]</span></span></dt>
+<dd><p>For positive n returns the principal part of logb n. If b is not supplied
+then e, the base of natural logarithms, is used for b.</p>
+</dd></dl>
+
+<div class="highlight-lisp notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="nb">log</span><span class="w"> </span><span class="p">(</span><span class="nb">exp</span><span class="w"> </span><span class="mi">1</span><span class="p">))</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="mf">0.99999994</span>
+
+<span class="p">(</span><span class="nb">ignore-errors</span><span class="w"> </span><span class="p">(</span><span class="nb">log</span><span class="w"> </span><span class="p">(</span><span class="nb">exp</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="mi">2</span><span class="p">))</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="nv">The</span><span class="w"> </span><span class="k">function</span><span class="w"> </span><span class="nv">LOG</span><span class="w"> </span><span class="nv">is</span><span class="w"> </span><span class="nv">called</span><span class="w"> </span><span class="nv">with</span><span class="w"> </span><span class="nv">two</span><span class="w"> </span><span class="nv">arguments,</span><span class="w"> </span><span class="nv">but</span><span class="w"> </span><span class="nv">wants</span><span class="w"> </span><span class="nv">exactly</span><span class="w"> </span><span class="nv">one.</span>
+
+
+<span class="p">(</span><span class="nb">describe</span><span class="w"> </span><span class="ss">&#39;log</span><span class="p">)</span>
+<span class="c1">; WEYLI::LOG</span>
+<span class="c1">;  [symbol]</span>
+<span class="c1">;</span>
+<span class="c1">; LOG names a generic function:</span>
+<span class="c1">;  Lambda-list: (NUMBER)</span>
+<span class="c1">;  Derived type: (FUNCTION (T) *)</span>
+<span class="c1">;  Documentation:</span>
+<span class="c1">;    Return the natural logarithm of the number.</span>
+<span class="c1">;  Method-combination: STANDARD</span>
+<span class="c1">;  Methods:</span>
+<span class="c1">;    (LOG (FLOATING-POINT-NUMBER))</span>
+<span class="c1">;    (LOG (BIGFLOAT))</span>
+<span class="c1">;    (LOG (GENERAL-EXPRESSION))</span>
+<span class="c1">;    (LOG (NUMERIC))</span>
+<span class="c1">;    (LOG (SYMBOL))</span>
+<span class="c1">;    (LOG (NUMBER))</span>
+<span class="c1">;  Source file: /home/kfp/quicklisp/local-projects/weyl/lisp-numbers.lisp</span>
+<span class="c1">; *</span>
+</pre></div>
+</div>
+</section>
+<section id="complex-numbers-5-4">
+<h2>Complex Numbers (5.4)<a class="headerlink" href="#complex-numbers-5-4" title="Link to this heading">¶</a></h2>
+<div class="highlight-lisp notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="nv">get-complex-numbers</span><span class="p">)</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="nv">C</span>
+
+<span class="p">(</span><span class="nb">defvar</span><span class="w"> </span><span class="nv">c11</span><span class="w"> </span><span class="p">(</span><span class="nb">coerce</span><span class="w"> </span><span class="m">#C</span><span class="p">(</span><span class="mi">1</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w">  </span><span class="p">(</span><span class="nv">get-complex-numbers</span><span class="p">)))</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="nv">C11</span>
+
+<span class="nv">c11</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="nb">+</span><span class="w"> </span><span class="nv">i</span>
+</pre></div>
+</div>
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">realpart</span> <span class="pre">z</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">[Function]</span></span></dt>
+<dd><p>If z = x + iy returns x.</p>
+</dd></dl>
+
+<div class="highlight-lisp notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="nb">realpart</span><span class="w"> </span><span class="nv">c11</span><span class="p">)</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="mi">1</span>
+</pre></div>
+</div>
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">imagpart</span> <span class="pre">z</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">[Function]</span></span></dt>
+<dd><p>If z = x + iy returns y .[Function]</p>
+</dd></dl>
+
+<div class="highlight-lisp notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="nb">imagpart</span><span class="w"> </span><span class="nv">c11</span><span class="p">)</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="mi">1</span>
+</pre></div>
+</div>
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">conjugate</span> <span class="pre">z</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">[Function]</span></span></dt>
+<dd><p>If z = x + iy returns x ? iy .[Function]</p>
+</dd></dl>
+
+<div class="highlight-lisp notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="nb">conjugate</span><span class="w"> </span><span class="nv">c11</span><span class="p">)</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="nb">+</span><span class="w"> </span><span class="mi">-1</span><span class="w"> </span><span class="nv">i</span>
+</pre></div>
+</div>
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">abs</span> <span class="pre">z</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">[Function]</span></span></dt>
+<dd><p>If z = x + iy returns  <a href="#id5"><span class="problematic" id="id6">|z|</span></a> = sqrt(x^2 + y^2).</p>
+</dd></dl>
+
+<div class="highlight-lisp notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="nb">abs</span><span class="w">  </span><span class="nv">c11</span><span class="p">)</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="mf">1.4142135</span>
+</pre></div>
+</div>
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">phase</span> <span class="pre">z</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">[Function]</span></span></dt>
+<dd><p>If z = r*e^(it) returns t, where r=|z|.</p>
+</dd></dl>
+
+<div class="highlight-lisp notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="nb">phase</span><span class="w"> </span><span class="nv">c11</span><span class="p">)</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="mf">0.7853982</span>
+
+<span class="p">(</span><span class="nb">*</span><span class="w"> </span><span class="nv">c11</span><span class="w"> </span><span class="nv">c11</span><span class="p">)</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="nv">i</span>
+
+<span class="p">(</span><span class="nb">/</span><span class="w"> </span><span class="nv">c11</span><span class="w"> </span><span class="nv">c11</span><span class="p">)</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="mi">1</span>
+
+<span class="p">(</span><span class="nb">+</span><span class="w"> </span><span class="nv">c11</span><span class="w"> </span><span class="nv">c11</span><span class="p">)</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="nb">+</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="nv">i</span>
+
+<span class="p">(</span><span class="nb">-</span><span class="w"> </span><span class="nv">c11</span><span class="w"> </span><span class="nv">c11</span><span class="p">)</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="mi">0</span>
+</pre></div>
+</div>
+</section>
+<section id="quaternions-5-5">
+<h2>Quaternions (5.5)<a class="headerlink" href="#quaternions-5-5" title="Link to this heading">¶</a></h2>
+<p>;;; Quaternions are a non-commutative algebra over a field, usually the reals,
 ;;; that are often used to represent three dimensional rotations. Weyl can
 ;;; construct a quaternion algebra over any field F. This algebra is a four
 ;;; dimensional vector space over F with the following relations. The
@@ -548,28 +730,34 @@
 ;;; i = (0,1,0,0), j = (0,0,1,0) and k = (0,0,0,1), then
 ;;;
 ;;;      i^2 = j^2 = k^2 = -1,  ij = -ji, jk = -kj and ik = -ki.
-;;;
-;;;
-;;;       get-quaternion-domain field     [Function]
-;;;
-;;; Gets a quaternion algebra over field, which must be a field.</p>
-<p>(get-quaternion-domain (get-rational-numbers))
-; =&gt; Quat(Q)</p>
-<p>(get-quaternion-domain (get-real-numbers))
-; =&gt; Quat(R)</p>
-<p>(get-quaternion-domain (get-complex-numbers))
-; =&gt; Quat(C)</p>
-<p>;;; Quaternions can be created using make-element.
-;;;
-;;;      make-element quaternion-algebra v1 v2 v3 v4  [Function]
-;;;
-;;;
-;;; Creates an element of quaternion-algebra from its arguments. The value
-;;; returned will be v1 + i v2 + j v3 + k v4 . As with other versions of
-;;; make-element, the function weyli::make-element assumes the arguments are
-;;; all elements of the coefficient domain and is intended only for internal use.
-;;;
-;;; As an algebraic extension of the real numbers, the quaternions are a little
+;;;</p>
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">get-quaternion-domain</span> <span class="pre">field</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">[Function]</span></span></dt>
+<dd><p>Gets a quaternion algebra over field, which must be a field.</p>
+</dd></dl>
+
+<div class="highlight-lisp notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="nv">get-quaternion-domain</span><span class="w"> </span><span class="p">(</span><span class="nv">get-rational-numbers</span><span class="p">))</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="nv">Quat</span><span class="p">(</span><span class="nv">Q</span><span class="p">)</span>
+
+<span class="p">(</span><span class="nv">get-quaternion-domain</span><span class="w"> </span><span class="p">(</span><span class="nv">get-real-numbers</span><span class="p">))</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="nv">Quat</span><span class="p">(</span><span class="nv">R</span><span class="p">)</span>
+
+<span class="p">(</span><span class="nv">get-quaternion-domain</span><span class="w"> </span><span class="p">(</span><span class="nv">get-complex-numbers</span><span class="p">))</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="nv">Quat</span><span class="p">(</span><span class="nv">C</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Quaternions can be created using make-element.</p>
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">make-element</span> <span class="pre">quaternion-algebra</span> <span class="pre">v1</span> <span class="pre">v2</span> <span class="pre">v3</span> <span class="pre">v4</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">[Function]</span></span></dt>
+<dd><p>Creates an element of quaternion-algebra from its arguments. The value
+returned will be v1 + i v2 + j v3 + k v4 . As with other versions of
+make-element, the function weyli::make-element assumes the arguments are
+all elements of the coefficient domain and is intended only for internal use.</p>
+</dd></dl>
+
+<p>;;; As an algebraic extension of the real numbers, the quaternions are a little
 ;;; strange. The subfield of quaternions generated by 1 and i, is isomorphic to
 ;;; the complex numbers. Adding j and k makes the algebra non-commutative and
 ;;; causes it to violate some basic intuitions. For instance, 1 hasat least
@@ -578,8 +766,8 @@
 ;;; We illustrate some of these issues computationally. First we create a
 ;;; quaternion algebra in which to work.
 ;;;
-;;;     &gt; (setq q (get-quaternion-domain (get-real-numbers)))
-;;;    Quat(R)
+;;;      &gt; (setq q (get-quaternion-domain (get-real-numbers)))
+;;;      Quat(R)
 ;;;
 ;;; Next, we can create some elements of the quaternions and do some simple
 ;;; calculations with them.
@@ -593,25 +781,30 @@
 ;;;     &gt; (* b b b)
 ;;;     &lt;-1, 0, 0, 0&gt;
 ;;;</p>
-<p>(defvar q4 (get-quaternion-domain (get-real-numbers)))
-; =&gt; Q4</p>
-<p>(defvar aq4 (make-element q4 1 1 1 1))
-; =&gt; AQ4</p>
-<p>(defvar bq4 (/ aq4 2))
-; =&gt; BQ4</p>
-<p>(* bq4 bq4 bq4)
-; =&gt; &lt;-1, 0, 0, 0&gt;</p>
+<div class="highlight-lisp notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="nb">defvar</span><span class="w"> </span><span class="nv">q4</span><span class="w"> </span><span class="p">(</span><span class="nv">get-quaternion-domain</span><span class="w"> </span><span class="p">(</span><span class="nv">get-real-numbers</span><span class="p">)))</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="nv">Q4</span>
+
+<span class="p">(</span><span class="nb">defvar</span><span class="w"> </span><span class="nv">aq4</span><span class="w"> </span><span class="p">(</span><span class="nv">make-element</span><span class="w"> </span><span class="nv">q4</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="mi">1</span><span class="p">))</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="nv">AQ4</span>
+
+<span class="p">(</span><span class="nb">defvar</span><span class="w"> </span><span class="nv">bq4</span><span class="w"> </span><span class="p">(</span><span class="nb">/</span><span class="w"> </span><span class="nv">aq4</span><span class="w"> </span><span class="mi">2</span><span class="p">))</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="nv">BQ4</span>
+
+<span class="p">(</span><span class="nb">*</span><span class="w"> </span><span class="nv">bq4</span><span class="w"> </span><span class="nv">bq4</span><span class="w"> </span><span class="nv">bq4</span><span class="p">)</span>
+<span class="w"> </span><span class="nv">=&gt;</span><span class="w"> </span><span class="nv">&lt;-1,</span><span class="w"> </span><span class="mi">0</span><span class="o">,</span><span class="w"> </span><span class="mi">0</span><span class="o">,</span><span class="w"> </span><span class="nv">0&gt;</span>
+</pre></div>
+</div>
 <p>;;; As expected, one can multiply quaternions by other quaternions and by
 ;;; elements of the coefficient field (or objects that can be coerced into the
-;;; coefficient field).
-;;;
-;;;
-;;;      conjugate quaternion    [Function]
-;;;
-;;; This is an extension of the concept of complex conjugation. It negates
-;;; the coefficients of i, j and k. This is illustrated by the following example.
-;;;
-;;;     &gt; (setq c (make-element q 1 2 3 4))
+;;; coefficient field).</p>
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">conjugate</span> <span class="pre">quaternion</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">[Function]</span></span></dt>
+<dd><p>This is an extension of the concept of complex conjugation. It negates
+the coefficients of i, j and k. This is illustrated by the following example.</p>
+</dd></dl>
+
+<p>;;;     &gt; (setq c (make-element q 1 2 3 4))
 ;;;     &lt;1, 2, 3, 4&gt;
 ;;;
 ;;;     &gt; (conjugate c)
@@ -620,12 +813,16 @@
 ;;;      &gt; (* c (conjugate c)
 ;;;     &lt;30, 0, 0, 0&gt;
 ;;;</p>
-<p>(defvar cq4 (make-element q4 1 2 3 4))
-; =&gt; CQ4</p>
-<p>(conjugate cq4)
-; =&gt; &lt;1, -2, -3, -4&gt;</p>
-<p>(* cq4 (conjugate cq4))
-; =&gt; &lt;30, 0, 0, 0&gt;</p>
+<div class="highlight-lisp notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="nb">defvar</span><span class="w"> </span><span class="nv">cq4</span><span class="w"> </span><span class="p">(</span><span class="nv">make-element</span><span class="w"> </span><span class="nv">q4</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="mi">4</span><span class="p">))</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="nv">CQ4</span>
+
+<span class="p">(</span><span class="nb">conjugate</span><span class="w"> </span><span class="nv">cq4</span><span class="p">)</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="nv">&lt;1,</span><span class="w"> </span><span class="mi">-2</span><span class="o">,</span><span class="w"> </span><span class="mi">-3</span><span class="o">,</span><span class="w"> </span><span class="nv">-4&gt;</span>
+
+<span class="p">(</span><span class="nb">*</span><span class="w"> </span><span class="nv">cq4</span><span class="w"> </span><span class="p">(</span><span class="nb">conjugate</span><span class="w"> </span><span class="nv">cq4</span><span class="p">))</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="nv">&lt;30,</span><span class="w"> </span><span class="mi">0</span><span class="o">,</span><span class="w"> </span><span class="mi">0</span><span class="o">,</span><span class="w"> </span><span class="nv">0&gt;</span>
+</pre></div>
+</div>
 <p>;;; Notice that the components of the product of a quaternion with its conjugate
 ;;; are all zero except for the very first component. This matches what happens
 ;;; when one multiplies a complex number with its complex conjugate.</p>
@@ -754,6 +951,7 @@
 ;;; elements of Z=(gcd(m; n)).
 ;;; FIXTHIS: Need works something out for dealing with completions of the
 ;;; integers at primes, and how we are going to compute with elements.</p>
+</section>
 </section>
 
 
