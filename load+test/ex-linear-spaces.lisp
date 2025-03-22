@@ -205,3 +205,37 @@ tbw.
 
 
 |#
+
+
+(defvar MZ (get-matrix-space (get-rational-integers)))
+(defparameter a33  #2A((1 2 3) (4 5 6) (3 4 9)))
+(defvar m3 (make-element MZ a33))
+
+(defvar a44 (make-array '(4 4) :initial-contents
+  '((2 4 5 4) (1 2 3 4) (7 0 6 6) (3 1 2 9))))
+  
+(defvar m4 (make-element MZ a44))
+ 
+;; list are also working ....
+(defvar ml (make-element MZ '((1 2 3) (5 6 7))))
+:ML
+ml
+; Mat<<1,  2,  3>,  <5,  6,  7>>
+
+(defvar xx '( (1 2 3) (4 5 6) (7 8 9)))
+
+(defun coerce-to-Z (l)
+  (loop for a in l collect
+    (mapcar #'(lambda (b) (coerce b (get-rational-integers))) a)))
+    
+;* (coerce-to-z xx)
+;((1 2 3) (4 5 6) (7 8 9))
+;*
+ 
+(defvar xxz (coerce-to-z xx))
+
+
+(make-element MZ xxz)
+;Mat<<1,  2,  3>,  <4,  5,  6>,  <7,  8,  9>>
+;
+(defvar nm (make-element MZ xxz))
