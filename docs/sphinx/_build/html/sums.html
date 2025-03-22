@@ -1,0 +1,431 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sums, Products and Quotients of Domains &mdash; Weyl 0.2 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/documentation_options.js?v=10f1778b"></script>
+      <script src="_static/doctools.js?v=888ff710"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="General Expressions" href="general.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Weyl
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="getting-started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="basics.html">Basics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="generic-tools.html">Generic Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="scalar-domains.html">Scalar Domains</a></li>
+<li class="toctree-l1"><a class="reference internal" href="general.html">General Expressions</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Sums, Products and Quotients of Domains</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#direct-sums-7-1">Direct Sums (7.1)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#free-modules-7-2">Free Modules (7.2)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#tensor-products-7-3">Tensor Products (7.3)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#rings-of-fractions-7-4">Rings of Fractions (7.4)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#factor-domains-7-5">Factor Domains (7.5)</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Weyl</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Sums, Products and Quotients of Domains</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/sums.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="sums-products-and-quotients-of-domains">
+<h1>Sums, Products and Quotients of Domains<a class="headerlink" href="#sums-products-and-quotients-of-domains" title="Link to this heading">¶</a></h1>
+<p>Let A be category of domains, e.g., groups, rings, elds, etc. Given two elements
+of A, say A and B, there are often ways of combining them to produce another
+element of A. This chapter discusses several of those techniques.</p>
+<section id="direct-sums-7-1">
+<h2>Direct Sums (7.1)<a class="headerlink" href="#direct-sums-7-1" title="Link to this heading">¶</a></h2>
+<p>Given two domains A and B , their direct sum can be viewed as the set of all
+pairs of elements in A and B, where arithmetic operations are performed
+component-wise. We denote the direct sum of A and B by A (+) B . If A, B and C
+are domains, then</p>
+<div class="math notranslate nohighlight">
+\[A \oplus (B \oplus C ) = (A \oplus B) \oplus C = A \oplus B \oplus C,\]</div>
+<p>so multiple direct sums are well defined. Direct sums are created using the
+function get-direct-sum:</p>
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">get-direct-sum</span> <span class="pre">domain_1</span> <span class="pre">...</span> <span class="pre">domain_n</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">[Function]</span></span></dt>
+<dd><p>Creates a domain that is the direct sum of domain_1 … domain_n. If any
+of the domain_i are themselves direct sums, then their components are
+included  as if they had been explicitly specified.</p>
+</dd></dl>
+
+<p>The algebraic structure of the object returned by get-direct-sum depends upon
+the type of the objects of which it is composed. The following table illustrates
+the options.</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>A</p></th>
+<th class="head"><p>B</p></th>
+<th class="head" colspan="2"><p>A (+) B</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Ring</p></td>
+<td><p>Ring</p></td>
+<td colspan="2"><p>Ring</p></td>
+</tr>
+<tr class="row-odd"><td><p>Field</p></td>
+<td><p>Field</p></td>
+<td colspan="2"><p>Ring</p></td>
+</tr>
+<tr class="row-even"><td><p>Group</p></td>
+<td><p>Ring</p></td>
+<td colspan="2"><p>Group</p></td>
+</tr>
+<tr class="row-odd"><td><p>Abelian</p></td>
+<td><p>Abelian</p></td>
+<td colspan="2"><p>Abelian</p></td>
+</tr>
+</tbody>
+</table>
+<p>The dimension of a direct sum is the number of its components:</p>
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">dimension</span> <span class="pre">direct-sum</span>&#160; <span class="pre">[Function]</span></span></dt>
+<dd><p>Returns the number of components of the direct sum.</p>
+</dd></dl>
+
+<p>To illustrate this the direct sum we can compute the direct sum of the real
+numbers, the rational numbers and the rational integers as follows:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="p">(</span><span class="n">setq</span> <span class="n">direct</span><span class="o">-</span><span class="nb">sum</span> <span class="p">(</span><span class="n">get</span><span class="o">-</span><span class="n">direct</span><span class="o">-</span><span class="nb">sum</span> <span class="p">(</span><span class="n">get</span><span class="o">-</span><span class="n">real</span><span class="o">-</span><span class="n">numbers</span><span class="p">)</span>
+                                   <span class="p">(</span><span class="n">get</span><span class="o">-</span><span class="n">rational</span><span class="o">-</span><span class="n">numbers</span><span class="p">)</span>
+                                   <span class="p">(</span><span class="n">get</span><span class="o">-</span><span class="n">rational</span><span class="o">-</span><span class="n">integers</span><span class="p">))</span>
+<span class="n">R</span> <span class="p">(</span><span class="o">+</span><span class="p">)</span> <span class="n">Q</span> <span class="p">(</span><span class="o">+</span><span class="p">)</span> <span class="n">Z</span>
+</pre></div>
+</div>
+<p>The symbol used to indicate a direct sum when only ascii characters are
+available is (+). This domain has dimension 3 and it is a ring as one might
+expect:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span> <span class="o">&gt;</span> <span class="p">(</span><span class="n">dimension</span> <span class="n">direct</span><span class="o">-</span><span class="nb">sum</span><span class="p">)</span>
+ <span class="mi">3</span>
+ <span class="o">&gt;</span> <span class="p">(</span><span class="n">typep</span> <span class="n">direct</span><span class="o">-</span><span class="nb">sum</span> <span class="s1">&#39;ring)</span>
+ <span class="n">T</span>
+ <span class="o">&gt;</span> <span class="p">(</span><span class="n">typep</span> <span class="n">direct</span><span class="o">-</span><span class="nb">sum</span> <span class="s1">&#39;field)</span>
+<span class="n">NIL</span>
+</pre></div>
+</div>
+<p>Even though some of the components of the direct sum domain are fields, the
+direct sum itself is a ring. Individual elements of the direct sum can be
+extracted using the routine ref:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="p">(</span><span class="n">ref</span> <span class="n">direct</span><span class="o">-</span><span class="nb">sum</span> <span class="mi">0</span><span class="p">)</span>
+<span class="n">R</span>
+<span class="o">&gt;</span> <span class="p">(</span><span class="n">ref</span> <span class="n">direct</span><span class="o">-</span><span class="nb">sum</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">Z</span>
+</pre></div>
+</div>
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">ref</span> <span class="pre">direct-sum</span> <span class="pre">i</span>&#160; <span class="pre">[Function]</span></span></dt>
+<dd><p>Returns the i-th element (zero based) of direct-sum. direct-sum can either
+be a direct sum domain or an element of a direct sum domain.</p>
+</dd></dl>
+
+<p>Elements of a direct sum domains are created using the following function:</p>
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">make-element</span> <span class="pre">direct-sum</span> <span class="pre">element_1</span> <span class="pre">...</span> <span class="pre">element_n</span>&#160; <span class="pre">[Function]</span></span></dt>
+<dd><p>Creates an element of direct-sum . The number of elements provided must
+match the dimension of direct-sum . Each of the elements is coerced into
+the domain of their associated component of the direct-sum before the
+element is created.</p>
+</dd></dl>
+
+<p>The following illustrates the use of elements of a direct sum.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="p">(</span><span class="n">setq</span> <span class="n">x</span> <span class="p">(</span><span class="n">make</span><span class="o">-</span><span class="n">element</span> <span class="n">direct</span><span class="o">-</span><span class="nb">sum</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span><span class="p">))</span>
+<span class="mi">1</span> <span class="p">(</span><span class="o">+</span><span class="p">)</span> <span class="mi">2</span> <span class="p">(</span><span class="o">+</span><span class="p">)</span> <span class="mi">3</span>
+<span class="o">&gt;</span> <span class="p">(</span><span class="o">+</span> <span class="n">x</span> <span class="n">x</span><span class="p">)</span>
+<span class="mi">2</span> <span class="p">(</span><span class="o">+</span><span class="p">)</span> <span class="mi">4</span> <span class="p">(</span><span class="o">+</span><span class="p">)</span> <span class="mi">6</span>
+<span class="o">&gt;</span> <span class="p">(</span><span class="o">*</span> <span class="mi">3</span> <span class="n">x</span><span class="p">)</span>
+<span class="mi">3</span> <span class="p">(</span><span class="o">+</span><span class="p">)</span> <span class="mi">6</span> <span class="p">(</span><span class="o">+</span><span class="p">)</span> <span class="mi">9</span>
+</pre></div>
+</div>
+<p>As with direct sum domains, the dimension of an element of a direct sum
+domain can be computed using dimension, and individual components can be
+determined using ref.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="p">(</span><span class="n">dimension</span> <span class="n">x</span><span class="p">)</span>
+<span class="mi">3</span>
+<span class="o">&gt;</span> <span class="p">(</span><span class="n">loop</span> <span class="k">for</span> <span class="n">i</span> <span class="n">below</span> <span class="p">(</span><span class="n">dimension</span> <span class="n">x</span><span class="p">)</span>
+      <span class="n">do</span> <span class="p">(</span><span class="nb">format</span> <span class="n">t</span> <span class="s2">&quot;~%Component ~D: ~S, domain: ~S&quot;</span>
+                 <span class="n">i</span> <span class="p">(</span><span class="n">ref</span> <span class="n">x</span> <span class="n">i</span><span class="p">)</span> <span class="p">(</span><span class="n">domain</span><span class="o">-</span><span class="n">of</span> <span class="p">(</span><span class="n">ref</span> <span class="n">x</span> <span class="n">i</span><span class="p">))))</span>
+
+<span class="n">Component</span> <span class="mi">0</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="n">domain</span> <span class="n">R</span>
+<span class="n">Component</span> <span class="mi">1</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="n">domain</span> <span class="n">Q</span>
+<span class="n">Component</span> <span class="mi">2</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="n">domain</span> <span class="n">Z</span>
+</pre></div>
+</div>
+</section>
+<section id="free-modules-7-2">
+<h2>Free Modules (7.2)<a class="headerlink" href="#free-modules-7-2" title="Link to this heading">¶</a></h2>
+<p>M is a free R-module if M is both a free abelian group and an R-module. In Weyl,
+elements of free modules are represented as n-tuples of elements of the
+coefficient domain R. Thus, we are only able to deal with finite dimensional
+free modules. If n is the rank of M as a free abelian group, then as a
+free R-module, M is isomorphic to the direct sum of n copies of R.
+Closely related to the concept of a free module is that of a vector space.
+A vector space is a free module whose coefficient domain is a field. Additional
+information about operations on elements of vector spaces can be found in
+Section 8.1.</p>
+<p>The basic routine for creating a free module is get-free-module.</p>
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">get-free-module</span> <span class="pre">domain</span> <span class="pre">rank</span>&#160; <span class="pre">[Function]</span></span></dt>
+<dd><p>Creates a free module of dimension rank where the elements’ components are
+all elements of domain. domain must be a ring. If domain is a field the
+domain returned will be a vector space.</p>
+</dd></dl>
+
+<p>If one expects the coefficient domain to be a field, and thus the affine module
+will actually be a vector space, then the routine get-vector-space should be
+used instead of get-free-module. This routine explicitly checks that the
+coefficient domain is a field and signals an error if it is not a field.</p>
+<p>Once a free R-module has been created, it is often useful to refer to the
+domain R itself. This can be done using the routine coefficient-domain-of.
+The dimension of the free module can be obtained using dimension.</p>
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">coefficient-domain-of</span> <span class="pre">domain</span>&#160;&#160; <span class="pre">[Function]</span></span></dt>
+<dd><p>Returns the domain of he coefficients of domain.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">dimension</span> <span class="pre">domain</span>&#160;&#160;&#160; <span class="pre">[Function]</span></span></dt>
+<dd><p>This method is de ned for free modules but the value returned is not specified.
+(Actually it should be infinity.)</p>
+</dd></dl>
+
+<p>Elements of a free module can be created using the function make-element.
+The routine make-point calls dimensions, so that code that uses free modules as
+vector spaces can be written more euphoniously.</p>
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">make-element</span> <span class="pre">domain</span> <span class="pre">value</span> <span class="pre">&amp;rest</span> <span class="pre">values</span>&#160; <span class="pre">[Function]</span></span></dt>
+<dd><p>Make an element of the module domain, whose rst component is value, etc.
+If value is a Lisp vector or one dimensional array, then elements of that
+array are used as the components of the free module element.</p>
+</dd></dl>
+
+<p>Use of these routines is illustrated below [Add something here {RZ]</p>
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">ref</span> <span class="pre">vector</span> <span class="pre">i</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">[Function]</span></span></dt>
+<dd><p>Returns the i-th element (zero based) of vector.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">inner-product</span> <span class="pre">u</span> <span class="pre">v</span>&#160;&#160;&#160;&#160; <span class="pre">[Function]</span></span></dt>
+<dd><p>Computes the inner (dot product) of the two vectors u and v.
+If <span class="math notranslate nohighlight">\(u = (u_1 ... u_k)\)</span> and <span class="math notranslate nohighlight">\(v = (v_1 ... v_k)\)</span> then
+<span class="math notranslate nohighlight">\((u,v) = u_1 v_1 + u_2 v_2 + ... + u_k v_k\)</span>.</p>
+</dd></dl>
+
+</section>
+<section id="tensor-products-7-3">
+<h2>Tensor Products (7.3)<a class="headerlink" href="#tensor-products-7-3" title="Link to this heading">¶</a></h2>
+<p>tbw</p>
+</section>
+<section id="rings-of-fractions-7-4">
+<h2>Rings of Fractions (7.4)<a class="headerlink" href="#rings-of-fractions-7-4" title="Link to this heading">¶</a></h2>
+<p>Given an arbitrary ring R, we can construct a new ring, called the quotient
+ring of R, whose elements are pairs of elements in R subject to the following
+equivalence relation. If (a, b) and (c, d) are elements of a quotient ring,
+then they are equal if and only if ad = bc. The sum and product of two elements
+of the quotient ring are de ned as follows</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{eqnarray}
+(a, b) + (c, d) &amp; = &amp; (a d + b c, bd), \\
+(a, b) \times (c, d) &amp; = &amp; (ac, bd).
+\end{eqnarray}\end{split}\]</div>
+<p>If the ring R is an integral domain then the quotient ring is actually a field.</p>
+<p>More generally, let S be a multiplicatively closed subset of R. The
+localization of R with respect to a multiplicative subset of R, S , written
+S^(-1) R, is the ring of pairs (a, s), where a is an element
+of R and s is an element of S .</p>
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">make-ring-of-fractions</span> <span class="pre">domain</span> <span class="pre">&amp;optional</span> <span class="pre">(multiplicative-set</span> <span class="pre">domain)</span> <span class="pre">[Function]</span></span></dt>
+<dd><p>Constructs a quotient ring from domain. If a second argument is provided,
+then this make-quotient-ring returns a ring representing the localization of
+domain with respect to multiplicative-set. Otherwise, the quotient ring of
+domain is returned. If domain is an integral domain, then the ring returned
+will be a field.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">make-quotient-field</span> <span class="pre">domain</span>&#160;&#160; <span class="pre">[Function]</span></span></dt>
+<dd><p>This generic function constructs the quotient eld of domain . The domain
+returned by this operation will be a field. If domain is itself a field, then
+it will be returned without any modification. If domain is a gcd domain then
+operations with the elements of the resulting quotient field will reduce
+their answers to lowest terms by dividing out the common gcd of the resulting
+numerator and divisor.</p>
+</dd></dl>
+
+<p>Two special cases are handled specially by make-quotient. If the argument domain
+is either the rational integers or a polynomial ring then special domains of
+the rational numbers or rational functions are used. This is for efficiency
+reasons. Hopefully, a more general solution can be found in the near future.</p>
+<p>Two operations can be used to create elements of a quotient field:
+make-quotient-element and quotient-reduce. The operation make-quotient-element
+creates a quotient element from the numerator and denominator domains.
+Quotient-reduce does the same thing but removes the common GCD
+from the numerator and denominator rst.
+(Ed: Need to think about things like localizations here.)</p>
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">get-quotient-field</span> <span class="pre">ring</span>&#160; <span class="pre">[Function]</span></span></dt>
+<dd><p>Returns a field which is the quotient field of ring . In some cases, this
+is special cased to return return something more efficient than the general
+quotient field objects.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">weyli::qf-ring</span> <span class="pre">qf</span>&#160;&#160;&#160;&#160;&#160; <span class="pre">[Function]</span></span></dt>
+<dd><p>Returns the ring from which the quotient eld qf was built.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">numerator</span> <span class="pre">q</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">[Function]</span></span></dt>
+<dd><p>Returns the numerator of q .</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">denominator</span> <span class="pre">q</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">[Function]</span></span></dt>
+<dd><p>Returns the denominator of q .</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">quotient-reduce</span> <span class="pre">domain</span> <span class="pre">numerator</span> <span class="pre">&amp;optional</span> <span class="pre">denominator</span> <span class="pre">[Function]</span></span></dt>
+<dd><p>Numerator and denominator are assumed to be elements of base ring of domain .
+quotient-reduce creates and quotient element in domain from numerator and
+denominator . If denominator is not provided, the multiplicative unit of
+domain is used.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">with-numerator-and-denominator</span> <span class="pre">(num</span> <span class="pre">den)</span> <span class="pre">q</span> <span class="pre">&amp;body</span> <span class="pre">body</span> <span class="pre">[Function]</span></span></dt>
+<dd><p>Creates a new lexical environment where the variables num and den are bound
+to the numerator and denominator of q .</p>
+</dd></dl>
+
+</section>
+<section id="factor-domains-7-5">
+<h2>Factor Domains (7.5)<a class="headerlink" href="#factor-domains-7-5" title="Link to this heading">¶</a></h2>
+<p>Let B be a subgroup of A. One can divide the elements of A into equivalence
+classes as follows: Two elements of A are in the same equivalence class if their quotient is an element of B . The
+equivalence classes of A with respect to B form a group, called the factor
+group of A by B . Using this construction one can form factor modules of one
+module by a submodule. If A is a ring and B is an ideal of A, then the factor
+module of A by B is a ring, called the factor ring of A by B . Weyl provides
+four classes for dealing with factor domains, as shown in Figure 7.1. The factor
+domain (group, module or ring) of A and B is written A=B . The components of
+a factor domain may be accessed using the following routines.</p>
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">factor-numer-of</span> <span class="pre">factor-domain</span>&#160; <span class="pre">[Function]</span></span></dt>
+<dd><p>Returns the numerator of a factor domain.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">factor-denom-of</span> <span class="pre">factor-domain</span>&#160;&#160; <span class="pre">[Function]</span></span></dt>
+<dd><p>Returns the denominator of a factor domain.</p>
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="general.html" class="btn btn-neutral float-left" title="General Expressions" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, SimLab Group &amp; Weyl enthusiasts.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
