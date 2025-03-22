@@ -1,7 +1,7 @@
 Sums, Products and Quotients of Domains
 =======================================
 
-Let A be category of domains, e.g., groups, rings, elds, etc. Given two elements
+Let A be category of domains, e.g., groups, rings, fields, etc. Given two elements
 of A, say A and B, there are often ways of combining them to produce another 
 element of A. This chapter discusses several of those techniques.
 
@@ -46,9 +46,8 @@ The dimension of a direct sum is the number of its components:
 
 .. function:: dimension-of direct-sum  [Function]
 
-   Returns the number of components of the direct sum.[1]_
+   Returns the number of components of the direct sum.[#f1]_
 
-.. [1] wrong in manual (dimension)
 
 To illustrate this the direct sum we can compute the direct sum of the real 
 numbers, the rational numbers and the rational integers as follows:
@@ -174,9 +173,9 @@ The dimension of the free module can be obtained using dimension.
 
    Returns the domain of he coefficients of domain.
 
-.. function:: dimension domain    [Function]
+.. function:: dimension-of domain    [Function]
 
-   This method is de ned for free modules but the value returned is not specified. 
+   This method is defined for free modules but the value returned is not specified. 
    (Actually it should be infinity.)
 
 Elements of a free module can be created using the function make-element. 
@@ -282,7 +281,7 @@ Given an arbitrary ring R, we can construct a new ring, called the quotient
 ring of R, whose elements are pairs of elements in R subject to the following 
 equivalence relation. If (a, b) and (c, d) are elements of a quotient ring, 
 then they are equal if and only if ad = bc. The sum and product of two elements 
-of the quotient ring are de ned as follows
+of the quotient ring are defined as follows
 
 .. math::
                 \begin{eqnarray}
@@ -310,7 +309,7 @@ of R and s is an element of S .
 
 .. function:: make-quotient-field domain   [Function]
 
-   This generic function constructs the quotient eld of domain . The domain 
+   This generic function constructs the quotient field of domain . The domain 
    returned by this operation will be a field. If domain is itself a field, then 
    it will be returned without any modification. If domain is a gcd domain then 
    operations with the elements of the resulting quotient field will reduce 
@@ -337,7 +336,7 @@ from the numerator and denominator rst.
    
 .. function:: weyli::qf-ring qf      [Function]
 
-   Returns the ring from which the quotient eld qf was built.
+   Returns the ring from which the quotient field qf was built.
    
 .. function:: numerator q                          [Function]
 
@@ -437,5 +436,10 @@ a factor domain may be accessed using the following routines.
 .. function:: factor-denom-of factor-domain   [Function]
 
    Returns the \denominator of a factor domain.
+
+
+.. rubric:: Footnotes
+
+.. [#f1] wrong in manual (dimension instead of domension-of).
 
 

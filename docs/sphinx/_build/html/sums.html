@@ -84,7 +84,7 @@
              
   <section id="sums-products-and-quotients-of-domains">
 <h1>Sums, Products and Quotients of Domains<a class="headerlink" href="#sums-products-and-quotients-of-domains" title="Link to this heading">¶</a></h1>
-<p>Let A be category of domains, e.g., groups, rings, elds, etc. Given two elements
+<p>Let A be category of domains, e.g., groups, rings, fields, etc. Given two elements
 of A, say A and B, there are often ways of combining them to produce another
 element of A. This chapter discusses several of those techniques.</p>
 <section id="direct-sums-7-1">
@@ -138,15 +138,9 @@ the options.</p>
 <dl class="py function">
 <dt class="sig sig-object py">
 <span class="sig-name descname"><span class="pre">dimension-of</span> <span class="pre">direct-sum</span>&#160; <span class="pre">[Function]</span></span></dt>
-<dd><p>Returns the number of components of the direct sum.[1]_</p>
+<dd><p>Returns the number of components of the direct sum.[#f1]_</p>
 </dd></dl>
 
-<aside class="footnote-list brackets">
-<aside class="footnote brackets" id="id1" role="doc-footnote">
-<span class="label"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></span>
-<p>wrong in manual (dimension)</p>
-</aside>
-</aside>
 <p>To illustrate this the direct sum we can compute the direct sum of the real
 numbers, the rational numbers and the rational integers as follows:</p>
 <div class="highlight-lisp notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="nb">defvar</span><span class="w"> </span><span class="nv">direct-sum</span><span class="w"> </span><span class="p">(</span><span class="nv">get-direct-sum</span><span class="w"> </span><span class="p">(</span><span class="nv">get-real-numbers</span><span class="p">)</span>
@@ -263,8 +257,8 @@ The dimension of the free module can be obtained using dimension.</p>
 
 <dl class="py function">
 <dt class="sig sig-object py">
-<span class="sig-name descname"><span class="pre">dimension</span> <span class="pre">domain</span>&#160;&#160;&#160; <span class="pre">[Function]</span></span></dt>
-<dd><p>This method is de ned for free modules but the value returned is not specified.
+<span class="sig-name descname"><span class="pre">dimension-of</span> <span class="pre">domain</span>&#160;&#160;&#160; <span class="pre">[Function]</span></span></dt>
+<dd><p>This method is defined for free modules but the value returned is not specified.
 (Actually it should be infinity.)</p>
 </dd></dl>
 
@@ -367,7 +361,7 @@ If <span class="math notranslate nohighlight">\(u = (u_1 ... u_k)\)</span> and <
 ring of R, whose elements are pairs of elements in R subject to the following
 equivalence relation. If (a, b) and (c, d) are elements of a quotient ring,
 then they are equal if and only if ad = bc. The sum and product of two elements
-of the quotient ring are de ned as follows</p>
+of the quotient ring are defined as follows</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}\begin{eqnarray}
 (a, b) + (c, d) &amp; = &amp; (a d + b c, bd), \\
@@ -395,7 +389,7 @@ will be a field.</p>
 <dl class="py function">
 <dt class="sig sig-object py">
 <span class="sig-name descname"><span class="pre">make-quotient-field</span> <span class="pre">domain</span>&#160;&#160; <span class="pre">[Function]</span></span></dt>
-<dd><p>This generic function constructs the quotient eld of domain . The domain
+<dd><p>This generic function constructs the quotient field of domain . The domain
 returned by this operation will be a field. If domain is itself a field, then
 it will be returned without any modification. If domain is a gcd domain then
 operations with the elements of the resulting quotient field will reduce
@@ -424,7 +418,7 @@ quotient field objects.</p>
 <dl class="py function">
 <dt class="sig sig-object py">
 <span class="sig-name descname"><span class="pre">weyli::qf-ring</span> <span class="pre">qf</span>&#160;&#160;&#160;&#160;&#160; <span class="pre">[Function]</span></span></dt>
-<dd><p>Returns the ring from which the quotient eld qf was built.</p>
+<dd><p>Returns the ring from which the quotient field qf was built.</p>
 </dd></dl>
 
 <dl class="py function">
@@ -534,6 +528,13 @@ a factor domain may be accessed using the following routines.</p>
 <dd><p>Returns the denominator of a factor domain.</p>
 </dd></dl>
 
+<p class="rubric">Footnotes</p>
+<aside class="footnote-list brackets">
+<aside class="footnote brackets" id="f1" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></span>
+<p>wrong in manual (dimension instead of domension-of).</p>
+</aside>
+</aside>
 </section>
 </section>
 

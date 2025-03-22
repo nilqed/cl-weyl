@@ -177,6 +177,13 @@ arithmetic routines (+, -, <a href="#id1"><span class="problematic" id="id2">*</
 are elements of the same domain. If the domain is a field then <cite>/</cite> may
 return a rational-number.</p>
 <p>For instance, the following routine could be used to compute factorials.</p>
+<div class="highlight-lisp notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="nb">defvar</span><span class="w"> </span><span class="nv">ZZ</span><span class="w"> </span><span class="p">(</span><span class="nv">get-rational-integers</span><span class="p">))</span>
+
+<span class="p">(</span><span class="nb">defun</span><span class="w"> </span><span class="nv">my-factorial</span><span class="w"> </span><span class="p">(</span><span class="nv">n</span><span class="p">)</span>
+<span class="w">   </span><span class="p">(</span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nb">&lt;</span><span class="w"> </span><span class="nv">n</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="nv">one</span><span class="w"> </span><span class="nv">ZZ</span><span class="p">)</span>
+<span class="w">     </span><span class="p">(</span><span class="nb">*</span><span class="w"> </span><span class="p">(</span><span class="nb">coerce</span><span class="w"> </span><span class="nv">n</span><span class="w"> </span><span class="nv">ZZ</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="nv">my-factorial</span><span class="w"> </span><span class="p">(</span><span class="nb">-</span><span class="w"> </span><span class="nv">n</span><span class="w"> </span><span class="mi">1</span><span class="p">)))))</span>
+</pre></div>
+</div>
 <p>Notice that the unit element of ZZ was created by using the function one,
 rather than (coerce 1 ZZ). In general, this is more efficient.</p>
 <p>One of the more commonly used control structures is that used to construct

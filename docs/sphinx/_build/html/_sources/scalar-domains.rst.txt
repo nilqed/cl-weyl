@@ -110,7 +110,7 @@ return a rational-number.
 
 For instance, the following routine could be used to compute factorials.
 
-.. code-blocks:: lisp
+.. code-block:: lisp
 
     (defvar ZZ (get-rational-integers))
 

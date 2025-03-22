@@ -206,5 +206,13 @@ Fixed
     ;; [+] (if (typep exponent 'rational-integer) (>= exponent 2) nil)
   
 
+In matrix.lisp:
 
-
+    (defvar M (get-matrix-space (get-rational-integers)))
+     => M
+   
+gives error (make-space-print-object not defined)
+   
+    ;;; 22-MAR-2025/kfp
+    ;;; replaced make-space-print-object by matrix-space-print-object
+    ;;; in define-domain-creator matrix-space
