@@ -44,41 +44,50 @@ the options.
 
 The dimension of a direct sum is the number of its components:
 
-.. function:: dimension direct-sum  [Function]
+.. function:: dimension-of direct-sum  [Function]
 
-   Returns the number of components of the direct sum.
+   Returns the number of components of the direct sum.[1]_
+
+.. [1] wrong in manual (dimension)
 
 To illustrate this the direct sum we can compute the direct sum of the real 
 numbers, the rational numbers and the rational integers as follows:
-::
 
-    > (setq direct-sum (get-direct-sum (get-real-numbers)
+.. code-block:: lisp
+
+    (defvar direct-sum (get-direct-sum (get-real-numbers)
                                        (get-rational-numbers)
-                                       (get-rational-integers))
-    R (+) Q (+) Z
+                                       (get-rational-integers)))
+    
+    => <R, Q, Z>
 
 The symbol used to indicate a direct sum when only ascii characters are 
 available is (+). This domain has dimension 3 and it is a ring as one might 
 expect:
-::
 
-    > (dimension direct-sum)
-    3
-    > (typep direct-sum 'ring)
-    T
-    > (typep direct-sum 'field)
-   NIL
+.. code-block:: lisp
+
+    (dimension-of direct-sum)
+    => 3
+    
+    (typep direct-sum 'ring)
+    => T
+    
+    (typep direct-sum 'field)
+    => NIL
    
    
 Even though some of the components of the direct sum domain are fields, the 
 direct sum itself is a ring. Individual elements of the direct sum can be 
 extracted using the routine ref:
-::
 
-    > (ref direct-sum 0)
-    R
-    > (ref direct-sum 2)
-    Z
+.. code-block:: lisp
+
+    (ref direct-sum 0)
+    => R
+    
+    (ref direct-sum 2)
+    => Z
 
 
 .. function:: ref direct-sum i  [Function]  
@@ -96,30 +105,40 @@ Elements of a direct sum domains are created using the following function:
    element is created.
 
 The following illustrates the use of elements of a direct sum.
-::
 
-    > (setq x (make-element direct-sum 1 2 3))
-    1 (+) 2 (+) 3
-    > (+ x x)
-    2 (+) 4 (+) 6
-    > (* 3 x)
-    3 (+) 6 (+) 9
+.. code-block:: lisp
+
+    (defvar x (make-element direct-sum 1 2 3))
+    => X
+    
+    x
+    => 1 (+) 2 (+) 3
+    
+    (+ x x)
+    => 2 (+) 4 (+) 6
+    
+    (* 3 x)
+    => 3 (+) 6 (+) 9
 
 As with direct sum domains, the dimension of an element of a direct sum 
 domain can be computed using dimension, and individual components can be 
 determined using ref.
-::
 
-    > (dimension x)
+.. code-block:: lisp
+
+    (dimension-of (domain-of  x))
     3
-    > (loop for i below (dimension x)
-          do (format t "~%Component ~D: ~S, domain: ~S"
-                     i (ref x i) (domain-of (ref x i))))
-
+    
+    (loop for i below (dimension-of (domain-of x))
+      do (format t "~%Component ~D: ~S, domain: ~S"
+                 i (ref x i) (domain-of (ref x i))))
+                 
     Component 0: 1, domain R
     Component 1: 2, domain Q
     Component 2: 3, domain Z
 
+    ; wrong in manual neither (dimension x) nor (dimension-of x) works.
+    
 
 Free Modules (7.2)
 ------------------
@@ -182,7 +201,77 @@ Use of these routines is illustrated below [Add something here {RZ]
    If :math:`u = (u_1 ... u_k)` and :math:`v = (v_1 ... v_k)` then
    :math:`(u,v) = u_1 v_1 + u_2 v_2 + ... + u_k v_k`.
   
-  
+
+.. code-block:: lisp
+
+
+    (describe 'get-free-module)
+    
+    ;WEYLI:GET-FREE-MODULE
+    ;  [symbol]
+    ;
+    ;GET-FREE-MODULE names a generic function:
+    ;  Lambda-list: (DOMAIN DIMENSION)
+    ;  Argument precedence order: (DOMAIN DIMENSION)
+    ;  Derived type: (FUNCTION (T T) *)
+    ;  Method-combination: STANDARD
+    ;  Methods:
+    ;    (GET-FREE-MODULE (RING T))
+
+
+Some examples:
+
+.. code-block:: lisp
+
+    (get-free-module direct-sum 3)
+    => <R, Q, Z>^3
+
+    (get-free-module (get-real-numbers) 3)
+    =>  R^3
+
+    (get-free-module (get-complex-numbers) 2)
+    => C^2
+
+    (defvar C2 (get-free-module (get-complex-numbers) 2))
+    => C2
+
+    (coefficient-domain-of C2)
+    => C
+
+    (coefficient-domain-of (get-free-module (get-real-numbers) 3))
+    => R
+
+    (dimension-of C2)
+    =>2
+
+    (make-element C2 #C(1 1) #C(0 1))
+    => <1 + i, i>
+
+    (make-element (get-free-module (get-real-numbers) 3) 1 2.0 (/ 4 3))
+    => <1, 2.0, 4/3>
+
+
+    (defvar R3 (get-free-module (get-real-numbers) 3))
+    => R3
+
+    (defvar u (make-element R3 1 2 3))
+    => U
+
+    (defvar v (make-element R3 4.0 5.3 6.5))
+    => V
+
+    (ref u 0)
+    => 1
+
+    (ref v 2)
+    => 6.5
+
+    (inner-product u v)
+    =>  34.1
+
+
+
+
 Tensor Products (7.3)
 ---------------------
 tbw
@@ -215,7 +304,10 @@ of R and s is an element of S .
    domain with respect to multiplicative-set. Otherwise, the quotient ring of 
    domain is returned. If domain is an integral domain, then the ring returned 
    will be a field.
-   
+
+.. ATTENTION::
+   The function make-ring-of-fractions could not be found in Weyl ??? 
+
 .. function:: make-quotient-field domain   [Function]
 
    This generic function constructs the quotient eld of domain . The domain 
@@ -267,6 +359,64 @@ from the numerator and denominator rst.
    Creates a new lexical environment where the variables num and den are bound 
    to the numerator and denominator of q .
    
+   
+Examples:
+
+.. code-block:: lisp
+
+    (defvar Z (get-rational-integers))
+    (defvar Q (get-rational-numbers))
+
+
+    (describe 'make-ring-of-fractions)
+    ;WEYL::MAKE-RING-OF-FRACTIONS
+    ;  [symbol]
+    ;MAKE-RING-OF-FRACTIONS names an undefined function
+    ;  Assumed type: FUNCTION
+    (describe 'make-quotient-field)
+    ;WEYL::MAKE-QUOTIENT-FIELD
+    ;[symbol]
+    ;
+
+
+    (describe 'weyli::make-quotient-field)
+    ;WEYLI::MAKE-QUOTIENT-FIELD
+    ;  [symbol]
+    ;
+    ;MAKE-QUOTIENT-FIELD names a generic function:
+    ;  Lambda-list: (FIELD)
+    ;  Derived type: (FUNCTION (T) *)
+    ;  Documentation:
+    ;    The purpose of this method is unknown.
+    ;  Method-combination: STANDARD
+    ;  Methods:
+    ;    (MAKE-QUOTIENT-FIELD (MULTIVARIATE-POLYNOMIAL-RING))
+    ;    (MAKE-QUOTIENT-FIELD (RATIONAL-INTEGERS))
+    ;    (MAKE-QUOTIENT-FIELD (RING))
+    ;    (MAKE-QUOTIENT-FIELD (FIELD))
+    ;  Source file: /home/kfp/quicklisp/local-projects/weyl/quotient-fields.lisp
+    ;*
+
+    (defvar quoQ (weyli::make-quotient-field Q))
+    ;QUOQ
+
+
+    (defvar quoZ (weyli::make-quotient-field Z))
+    ;QUOZ
+    (describe quoz)
+    ;Q
+    ;  [standard-object]
+    ;
+    ;Slots with :INSTANCE allocation:
+    ;  PROPERTY-LIST                  = (:ORDERED-DOMAIN T :INTEGRAL-DOMAIN T)
+    ;  OPERATION-TABLE                = #<HASH-TABLE :TEST EQL :COUNT 18 {1004BDC1F3}>
+    ;  SUPER-DOMAINS                  = NIL
+    ;  MORPHISMS-FROM                 = NIL
+    ;  MORPHISMS-TO                   = (Z->Q)
+    ;  PRINT-FUNCTION                 = WEYLI::RATIONAL-NUMBERS-PRINT-OBJECT
+    ;  COEFFICIENT-DOMAIN             = NIL
+    ;*
+
    
 Factor Domains (7.5)
 --------------------

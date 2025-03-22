@@ -137,36 +137,46 @@ the options.</p>
 <p>The dimension of a direct sum is the number of its components:</p>
 <dl class="py function">
 <dt class="sig sig-object py">
-<span class="sig-name descname"><span class="pre">dimension</span> <span class="pre">direct-sum</span>&#160; <span class="pre">[Function]</span></span></dt>
-<dd><p>Returns the number of components of the direct sum.</p>
+<span class="sig-name descname"><span class="pre">dimension-of</span> <span class="pre">direct-sum</span>&#160; <span class="pre">[Function]</span></span></dt>
+<dd><p>Returns the number of components of the direct sum.[1]_</p>
 </dd></dl>
 
+<aside class="footnote-list brackets">
+<aside class="footnote brackets" id="id1" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></span>
+<p>wrong in manual (dimension)</p>
+</aside>
+</aside>
 <p>To illustrate this the direct sum we can compute the direct sum of the real
 numbers, the rational numbers and the rational integers as follows:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="p">(</span><span class="n">setq</span> <span class="n">direct</span><span class="o">-</span><span class="nb">sum</span> <span class="p">(</span><span class="n">get</span><span class="o">-</span><span class="n">direct</span><span class="o">-</span><span class="nb">sum</span> <span class="p">(</span><span class="n">get</span><span class="o">-</span><span class="n">real</span><span class="o">-</span><span class="n">numbers</span><span class="p">)</span>
-                                   <span class="p">(</span><span class="n">get</span><span class="o">-</span><span class="n">rational</span><span class="o">-</span><span class="n">numbers</span><span class="p">)</span>
-                                   <span class="p">(</span><span class="n">get</span><span class="o">-</span><span class="n">rational</span><span class="o">-</span><span class="n">integers</span><span class="p">))</span>
-<span class="n">R</span> <span class="p">(</span><span class="o">+</span><span class="p">)</span> <span class="n">Q</span> <span class="p">(</span><span class="o">+</span><span class="p">)</span> <span class="n">Z</span>
+<div class="highlight-lisp notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="nb">defvar</span><span class="w"> </span><span class="nv">direct-sum</span><span class="w"> </span><span class="p">(</span><span class="nv">get-direct-sum</span><span class="w"> </span><span class="p">(</span><span class="nv">get-real-numbers</span><span class="p">)</span>
+<span class="w">                                   </span><span class="p">(</span><span class="nv">get-rational-numbers</span><span class="p">)</span>
+<span class="w">                                   </span><span class="p">(</span><span class="nv">get-rational-integers</span><span class="p">)))</span>
+
+<span class="nv">=&gt;</span><span class="w"> </span><span class="nv">&lt;R,</span><span class="w"> </span><span class="nv">Q,</span><span class="w"> </span><span class="nv">Z&gt;</span>
 </pre></div>
 </div>
 <p>The symbol used to indicate a direct sum when only ascii characters are
 available is (+). This domain has dimension 3 and it is a ring as one might
 expect:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span> <span class="o">&gt;</span> <span class="p">(</span><span class="n">dimension</span> <span class="n">direct</span><span class="o">-</span><span class="nb">sum</span><span class="p">)</span>
- <span class="mi">3</span>
- <span class="o">&gt;</span> <span class="p">(</span><span class="n">typep</span> <span class="n">direct</span><span class="o">-</span><span class="nb">sum</span> <span class="s1">&#39;ring)</span>
- <span class="n">T</span>
- <span class="o">&gt;</span> <span class="p">(</span><span class="n">typep</span> <span class="n">direct</span><span class="o">-</span><span class="nb">sum</span> <span class="s1">&#39;field)</span>
-<span class="n">NIL</span>
+<div class="highlight-lisp notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="nv">dimension-of</span><span class="w"> </span><span class="nv">direct-sum</span><span class="p">)</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="mi">3</span>
+
+<span class="p">(</span><span class="nb">typep</span><span class="w"> </span><span class="nv">direct-sum</span><span class="w"> </span><span class="ss">&#39;ring</span><span class="p">)</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="no">T</span>
+
+<span class="p">(</span><span class="nb">typep</span><span class="w"> </span><span class="nv">direct-sum</span><span class="w"> </span><span class="ss">&#39;field</span><span class="p">)</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="no">NIL</span>
 </pre></div>
 </div>
 <p>Even though some of the components of the direct sum domain are fields, the
 direct sum itself is a ring. Individual elements of the direct sum can be
 extracted using the routine ref:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="p">(</span><span class="n">ref</span> <span class="n">direct</span><span class="o">-</span><span class="nb">sum</span> <span class="mi">0</span><span class="p">)</span>
-<span class="n">R</span>
-<span class="o">&gt;</span> <span class="p">(</span><span class="n">ref</span> <span class="n">direct</span><span class="o">-</span><span class="nb">sum</span> <span class="mi">2</span><span class="p">)</span>
-<span class="n">Z</span>
+<div class="highlight-lisp notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="nv">ref</span><span class="w"> </span><span class="nv">direct-sum</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="nv">R</span>
+
+<span class="p">(</span><span class="nv">ref</span><span class="w"> </span><span class="nv">direct-sum</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="nv">Z</span>
 </pre></div>
 </div>
 <dl class="py function">
@@ -187,26 +197,34 @@ element is created.</p>
 </dd></dl>
 
 <p>The following illustrates the use of elements of a direct sum.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="p">(</span><span class="n">setq</span> <span class="n">x</span> <span class="p">(</span><span class="n">make</span><span class="o">-</span><span class="n">element</span> <span class="n">direct</span><span class="o">-</span><span class="nb">sum</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span><span class="p">))</span>
-<span class="mi">1</span> <span class="p">(</span><span class="o">+</span><span class="p">)</span> <span class="mi">2</span> <span class="p">(</span><span class="o">+</span><span class="p">)</span> <span class="mi">3</span>
-<span class="o">&gt;</span> <span class="p">(</span><span class="o">+</span> <span class="n">x</span> <span class="n">x</span><span class="p">)</span>
-<span class="mi">2</span> <span class="p">(</span><span class="o">+</span><span class="p">)</span> <span class="mi">4</span> <span class="p">(</span><span class="o">+</span><span class="p">)</span> <span class="mi">6</span>
-<span class="o">&gt;</span> <span class="p">(</span><span class="o">*</span> <span class="mi">3</span> <span class="n">x</span><span class="p">)</span>
-<span class="mi">3</span> <span class="p">(</span><span class="o">+</span><span class="p">)</span> <span class="mi">6</span> <span class="p">(</span><span class="o">+</span><span class="p">)</span> <span class="mi">9</span>
+<div class="highlight-lisp notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="nb">defvar</span><span class="w"> </span><span class="nv">x</span><span class="w"> </span><span class="p">(</span><span class="nv">make-element</span><span class="w"> </span><span class="nv">direct-sum</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="p">))</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="nv">X</span>
+
+<span class="nv">x</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">(</span><span class="nb">+</span><span class="p">)</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="p">(</span><span class="nb">+</span><span class="p">)</span><span class="w"> </span><span class="mi">3</span>
+
+<span class="p">(</span><span class="nb">+</span><span class="w"> </span><span class="nv">x</span><span class="w"> </span><span class="nv">x</span><span class="p">)</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="p">(</span><span class="nb">+</span><span class="p">)</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">(</span><span class="nb">+</span><span class="p">)</span><span class="w"> </span><span class="mi">6</span>
+
+<span class="p">(</span><span class="nb">*</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="nv">x</span><span class="p">)</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="p">(</span><span class="nb">+</span><span class="p">)</span><span class="w"> </span><span class="mi">6</span><span class="w"> </span><span class="p">(</span><span class="nb">+</span><span class="p">)</span><span class="w"> </span><span class="mi">9</span>
 </pre></div>
 </div>
 <p>As with direct sum domains, the dimension of an element of a direct sum
 domain can be computed using dimension, and individual components can be
 determined using ref.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="p">(</span><span class="n">dimension</span> <span class="n">x</span><span class="p">)</span>
+<div class="highlight-lisp notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="nv">dimension-of</span><span class="w"> </span><span class="p">(</span><span class="nv">domain-of</span><span class="w">  </span><span class="nv">x</span><span class="p">))</span>
 <span class="mi">3</span>
-<span class="o">&gt;</span> <span class="p">(</span><span class="n">loop</span> <span class="k">for</span> <span class="n">i</span> <span class="n">below</span> <span class="p">(</span><span class="n">dimension</span> <span class="n">x</span><span class="p">)</span>
-      <span class="n">do</span> <span class="p">(</span><span class="nb">format</span> <span class="n">t</span> <span class="s2">&quot;~%Component ~D: ~S, domain: ~S&quot;</span>
-                 <span class="n">i</span> <span class="p">(</span><span class="n">ref</span> <span class="n">x</span> <span class="n">i</span><span class="p">)</span> <span class="p">(</span><span class="n">domain</span><span class="o">-</span><span class="n">of</span> <span class="p">(</span><span class="n">ref</span> <span class="n">x</span> <span class="n">i</span><span class="p">))))</span>
 
-<span class="n">Component</span> <span class="mi">0</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="n">domain</span> <span class="n">R</span>
-<span class="n">Component</span> <span class="mi">1</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="n">domain</span> <span class="n">Q</span>
-<span class="n">Component</span> <span class="mi">2</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="n">domain</span> <span class="n">Z</span>
+<span class="p">(</span><span class="nb">loop</span><span class="w"> </span><span class="nv">for</span><span class="w"> </span><span class="nv">i</span><span class="w"> </span><span class="nv">below</span><span class="w"> </span><span class="p">(</span><span class="nv">dimension-of</span><span class="w"> </span><span class="p">(</span><span class="nv">domain-of</span><span class="w"> </span><span class="nv">x</span><span class="p">))</span>
+<span class="w">  </span><span class="nb">do</span><span class="w"> </span><span class="p">(</span><span class="nb">format</span><span class="w"> </span><span class="no">t</span><span class="w"> </span><span class="s">&quot;~%Component ~D: ~S, domain: ~S&quot;</span>
+<span class="w">             </span><span class="nv">i</span><span class="w"> </span><span class="p">(</span><span class="nv">ref</span><span class="w"> </span><span class="nv">x</span><span class="w"> </span><span class="nv">i</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="nv">domain-of</span><span class="w"> </span><span class="p">(</span><span class="nv">ref</span><span class="w"> </span><span class="nv">x</span><span class="w"> </span><span class="nv">i</span><span class="p">))))</span>
+
+<span class="nv">Component</span><span class="w"> </span><span class="nv">0:</span><span class="w"> </span><span class="mi">1</span><span class="o">,</span><span class="w"> </span><span class="nv">domain</span><span class="w"> </span><span class="nv">R</span>
+<span class="nv">Component</span><span class="w"> </span><span class="nv">1:</span><span class="w"> </span><span class="mi">2</span><span class="o">,</span><span class="w"> </span><span class="nv">domain</span><span class="w"> </span><span class="nv">Q</span>
+<span class="nv">Component</span><span class="w"> </span><span class="nv">2:</span><span class="w"> </span><span class="mi">3</span><span class="o">,</span><span class="w"> </span><span class="nv">domain</span><span class="w"> </span><span class="nv">Z</span>
+
+<span class="c1">; wrong in manual neither (dimension x) nor (dimension-of x) works.</span>
 </pre></div>
 </div>
 </section>
@@ -276,6 +294,68 @@ If <span class="math notranslate nohighlight">\(u = (u_1 ... u_k)\)</span> and <
 <span class="math notranslate nohighlight">\((u,v) = u_1 v_1 + u_2 v_2 + ... + u_k v_k\)</span>.</p>
 </dd></dl>
 
+<div class="highlight-lisp notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="nb">describe</span><span class="w"> </span><span class="ss">&#39;get-free-module</span><span class="p">)</span>
+
+<span class="c1">;WEYLI:GET-FREE-MODULE</span>
+<span class="c1">;  [symbol]</span>
+<span class="c1">;</span>
+<span class="c1">;GET-FREE-MODULE names a generic function:</span>
+<span class="c1">;  Lambda-list: (DOMAIN DIMENSION)</span>
+<span class="c1">;  Argument precedence order: (DOMAIN DIMENSION)</span>
+<span class="c1">;  Derived type: (FUNCTION (T T) *)</span>
+<span class="c1">;  Method-combination: STANDARD</span>
+<span class="c1">;  Methods:</span>
+<span class="c1">;    (GET-FREE-MODULE (RING T))</span>
+</pre></div>
+</div>
+<p>Some examples:</p>
+<div class="highlight-lisp notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="nv">get-free-module</span><span class="w"> </span><span class="nv">direct-sum</span><span class="w"> </span><span class="mi">3</span><span class="p">)</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="nv">&lt;R,</span><span class="w"> </span><span class="nv">Q,</span><span class="w"> </span><span class="nv">Z&gt;^3</span>
+
+<span class="p">(</span><span class="nv">get-free-module</span><span class="w"> </span><span class="p">(</span><span class="nv">get-real-numbers</span><span class="p">)</span><span class="w"> </span><span class="mi">3</span><span class="p">)</span>
+<span class="nv">=&gt;</span><span class="w">  </span><span class="nv">R^3</span>
+
+<span class="p">(</span><span class="nv">get-free-module</span><span class="w"> </span><span class="p">(</span><span class="nv">get-complex-numbers</span><span class="p">)</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="nv">C^2</span>
+
+<span class="p">(</span><span class="nb">defvar</span><span class="w"> </span><span class="nv">C2</span><span class="w"> </span><span class="p">(</span><span class="nv">get-free-module</span><span class="w"> </span><span class="p">(</span><span class="nv">get-complex-numbers</span><span class="p">)</span><span class="w"> </span><span class="mi">2</span><span class="p">))</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="nv">C2</span>
+
+<span class="p">(</span><span class="nv">coefficient-domain-of</span><span class="w"> </span><span class="nv">C2</span><span class="p">)</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="nv">C</span>
+
+<span class="p">(</span><span class="nv">coefficient-domain-of</span><span class="w"> </span><span class="p">(</span><span class="nv">get-free-module</span><span class="w"> </span><span class="p">(</span><span class="nv">get-real-numbers</span><span class="p">)</span><span class="w"> </span><span class="mi">3</span><span class="p">))</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="nv">R</span>
+
+<span class="p">(</span><span class="nv">dimension-of</span><span class="w"> </span><span class="nv">C2</span><span class="p">)</span>
+<span class="nv">=&gt;2</span>
+
+<span class="p">(</span><span class="nv">make-element</span><span class="w"> </span><span class="nv">C2</span><span class="w"> </span><span class="m">#C</span><span class="p">(</span><span class="mi">1</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="m">#C</span><span class="p">(</span><span class="mi">0</span><span class="w"> </span><span class="mi">1</span><span class="p">))</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="nv">&lt;1</span><span class="w"> </span><span class="nb">+</span><span class="w"> </span><span class="nv">i,</span><span class="w"> </span><span class="nv">i&gt;</span>
+
+<span class="p">(</span><span class="nv">make-element</span><span class="w"> </span><span class="p">(</span><span class="nv">get-free-module</span><span class="w"> </span><span class="p">(</span><span class="nv">get-real-numbers</span><span class="p">)</span><span class="w"> </span><span class="mi">3</span><span class="p">)</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="mf">2.0</span><span class="w"> </span><span class="p">(</span><span class="nb">/</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="mi">3</span><span class="p">))</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="nv">&lt;1,</span><span class="w"> </span><span class="mf">2.0</span><span class="o">,</span><span class="w"> </span><span class="nv">4/3&gt;</span>
+
+
+<span class="p">(</span><span class="nb">defvar</span><span class="w"> </span><span class="nv">R3</span><span class="w"> </span><span class="p">(</span><span class="nv">get-free-module</span><span class="w"> </span><span class="p">(</span><span class="nv">get-real-numbers</span><span class="p">)</span><span class="w"> </span><span class="mi">3</span><span class="p">))</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="nv">R3</span>
+
+<span class="p">(</span><span class="nb">defvar</span><span class="w"> </span><span class="nv">u</span><span class="w"> </span><span class="p">(</span><span class="nv">make-element</span><span class="w"> </span><span class="nv">R3</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="p">))</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="nv">U</span>
+
+<span class="p">(</span><span class="nb">defvar</span><span class="w"> </span><span class="nv">v</span><span class="w"> </span><span class="p">(</span><span class="nv">make-element</span><span class="w"> </span><span class="nv">R3</span><span class="w"> </span><span class="mf">4.0</span><span class="w"> </span><span class="mf">5.3</span><span class="w"> </span><span class="mf">6.5</span><span class="p">))</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="nv">V</span>
+
+<span class="p">(</span><span class="nv">ref</span><span class="w"> </span><span class="nv">u</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="mi">1</span>
+
+<span class="p">(</span><span class="nv">ref</span><span class="w"> </span><span class="nv">v</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="mf">6.5</span>
+
+<span class="p">(</span><span class="nv">inner-product</span><span class="w"> </span><span class="nv">u</span><span class="w"> </span><span class="nv">v</span><span class="p">)</span>
+<span class="nv">=&gt;</span><span class="w">  </span><span class="mf">34.1</span>
+</pre></div>
+</div>
 </section>
 <section id="tensor-products-7-3">
 <h2>Tensor Products (7.3)<a class="headerlink" href="#tensor-products-7-3" title="Link to this heading">¶</a></h2>
@@ -308,6 +388,10 @@ domain is returned. If domain is an integral domain, then the ring returned
 will be a field.</p>
 </dd></dl>
 
+<div class="admonition attention">
+<p class="admonition-title">Attention</p>
+<p>The function make-ring-of-fractions could not be found in Weyl ???</p>
+</div>
 <dl class="py function">
 <dt class="sig sig-object py">
 <span class="sig-name descname"><span class="pre">make-quotient-field</span> <span class="pre">domain</span>&#160;&#160; <span class="pre">[Function]</span></span></dt>
@@ -371,6 +455,61 @@ domain is used.</p>
 to the numerator and denominator of q .</p>
 </dd></dl>
 
+<p>Examples:</p>
+<div class="highlight-lisp notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="nb">defvar</span><span class="w"> </span><span class="nv">Z</span><span class="w"> </span><span class="p">(</span><span class="nv">get-rational-integers</span><span class="p">))</span>
+<span class="p">(</span><span class="nb">defvar</span><span class="w"> </span><span class="nv">Q</span><span class="w"> </span><span class="p">(</span><span class="nv">get-rational-numbers</span><span class="p">))</span>
+
+
+<span class="p">(</span><span class="nb">describe</span><span class="w"> </span><span class="ss">&#39;make-ring-of-fractions</span><span class="p">)</span>
+<span class="c1">;WEYL::MAKE-RING-OF-FRACTIONS</span>
+<span class="c1">;  [symbol]</span>
+<span class="c1">;MAKE-RING-OF-FRACTIONS names an undefined function</span>
+<span class="c1">;  Assumed type: FUNCTION</span>
+<span class="p">(</span><span class="nb">describe</span><span class="w"> </span><span class="ss">&#39;make-quotient-field</span><span class="p">)</span>
+<span class="c1">;WEYL::MAKE-QUOTIENT-FIELD</span>
+<span class="c1">;[symbol]</span>
+<span class="c1">;</span>
+
+
+<span class="p">(</span><span class="nb">describe</span><span class="w"> </span><span class="ss">&#39;weyli::make-quotient-field</span><span class="p">)</span>
+<span class="c1">;WEYLI::MAKE-QUOTIENT-FIELD</span>
+<span class="c1">;  [symbol]</span>
+<span class="c1">;</span>
+<span class="c1">;MAKE-QUOTIENT-FIELD names a generic function:</span>
+<span class="c1">;  Lambda-list: (FIELD)</span>
+<span class="c1">;  Derived type: (FUNCTION (T) *)</span>
+<span class="c1">;  Documentation:</span>
+<span class="c1">;    The purpose of this method is unknown.</span>
+<span class="c1">;  Method-combination: STANDARD</span>
+<span class="c1">;  Methods:</span>
+<span class="c1">;    (MAKE-QUOTIENT-FIELD (MULTIVARIATE-POLYNOMIAL-RING))</span>
+<span class="c1">;    (MAKE-QUOTIENT-FIELD (RATIONAL-INTEGERS))</span>
+<span class="c1">;    (MAKE-QUOTIENT-FIELD (RING))</span>
+<span class="c1">;    (MAKE-QUOTIENT-FIELD (FIELD))</span>
+<span class="c1">;  Source file: /home/kfp/quicklisp/local-projects/weyl/quotient-fields.lisp</span>
+<span class="c1">;*</span>
+
+<span class="p">(</span><span class="nb">defvar</span><span class="w"> </span><span class="nv">quoQ</span><span class="w"> </span><span class="p">(</span><span class="nv">weyli::make-quotient-field</span><span class="w"> </span><span class="nv">Q</span><span class="p">))</span>
+<span class="c1">;QUOQ</span>
+
+
+<span class="p">(</span><span class="nb">defvar</span><span class="w"> </span><span class="nv">quoZ</span><span class="w"> </span><span class="p">(</span><span class="nv">weyli::make-quotient-field</span><span class="w"> </span><span class="nv">Z</span><span class="p">))</span>
+<span class="c1">;QUOZ</span>
+<span class="p">(</span><span class="nb">describe</span><span class="w"> </span><span class="nv">quoz</span><span class="p">)</span>
+<span class="c1">;Q</span>
+<span class="c1">;  [standard-object]</span>
+<span class="c1">;</span>
+<span class="c1">;Slots with :INSTANCE allocation:</span>
+<span class="c1">;  PROPERTY-LIST                  = (:ORDERED-DOMAIN T :INTEGRAL-DOMAIN T)</span>
+<span class="c1">;  OPERATION-TABLE                = #&lt;HASH-TABLE :TEST EQL :COUNT 18 {1004BDC1F3}&gt;</span>
+<span class="c1">;  SUPER-DOMAINS                  = NIL</span>
+<span class="c1">;  MORPHISMS-FROM                 = NIL</span>
+<span class="c1">;  MORPHISMS-TO                   = (Z-&gt;Q)</span>
+<span class="c1">;  PRINT-FUNCTION                 = WEYLI::RATIONAL-NUMBERS-PRINT-OBJECT</span>
+<span class="c1">;  COEFFICIENT-DOMAIN             = NIL</span>
+<span class="c1">;*</span>
+</pre></div>
+</div>
 </section>
 <section id="factor-domains-7-5">
 <h2>Factor Domains (7.5)<a class="headerlink" href="#factor-domains-7-5" title="Link to this heading">¶</a></h2>

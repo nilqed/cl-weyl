@@ -1,3 +1,6 @@
+(ql:quickload :weyl)
+(in-package :weyl)
+
 #|
 Sums, Products and Quotients of Domains
 =======================================
@@ -288,4 +291,180 @@ a factor domain may be accessed using the following routines.
 
    Returns the \denominator of a factor domain.
 
-#|
+|#
+
+
+(defvar direct-sum (get-direct-sum (get-real-numbers)
+                                   (get-rational-numbers)
+                                   (get-rational-integers)))
+                        
+;=> <R, Q, Z>
+;;; add a )
+
+;(dimension direct-sum)
+; DIMENSION is undefined. must be dimension-of !!!!!!
+; "dimension" is wrong in manual --> must read "dimensio-of"
+
+(dimension-of direct-sum)
+; 3
+
+
+(typep direct-sum 'ring)
+;T
+
+(typep direct-sum 'field)
+;NIL
+
+(ref direct-sum 0)
+;R
+
+(ref direct-sum 2)
+;Z
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(defvar x (make-element direct-sum 1 2 3))
+; X
+
+x
+; 1 (+) 2 (+) 3
+                                
+(+ x x)
+; 2 (+) 4 (+) 6
+
+(*  3 x)
+; 3 (+) 6 (+) 9
+                               
+
+; (dimension-of x) no app method !!!!!!
+
+;this works...
+(dimension-of (domain-of  x))
+;3
+
+(loop for i below (dimension-of (domain-of x))
+      do (format t "~%Component ~D: ~S, domain: ~S"
+                 i (ref x i) (domain-of (ref x i))))
+
+
+;Component 0: 1, domain: R
+;Component 1: 2, domain: Q
+;Component 2: 3, domain: Z
+;NIL
+
+;;;;;;;;;;;; free module
+
+(describe 'get-free-module)
+;WEYLI:GET-FREE-MODULE
+;  [symbol]
+;
+;GET-FREE-MODULE names a generic function:
+;  Lambda-list: (DOMAIN DIMENSION)
+;  Argument precedence order: (DOMAIN DIMENSION)
+;  Derived type: (FUNCTION (T T) *)
+;  Method-combination: STANDARD
+;  Methods:
+;    (GET-FREE-MODULE (RING T))
+
+(get-free-module direct-sum 3)
+;<R, Q, Z>^3
+
+(get-free-module (get-real-numbers) 3)
+; R^3
+
+(get-free-module (get-complex-numbers) 2)
+;C^2
+
+(defvar C2 (get-free-module (get-complex-numbers) 2))
+;C2
+
+(coefficient-domain-of C2)
+;C
+
+(coefficient-domain-of (get-free-module (get-real-numbers) 3))
+;R
+
+(dimension-of C2)
+;2
+
+(make-element C2 #C(1 1) #C(0 1))
+;<1 + i, i>
+
+(make-element (get-free-module (get-real-numbers) 3) 1 2.0 (/ 4 3))
+;<1, 2.0, 4/3>
+
+
+(defvar R3 (get-free-module (get-real-numbers) 3))
+;R3
+
+(defvar u (make-element R3 1 2 3))
+;U
+
+(defvar v (make-element R3 4.0 5.3 6.5))
+;V
+
+(ref u 0)
+;1
+
+(ref v 2)
+;6.5
+
+(inner-product u v)
+; 34.1
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(defvar Z (get-rational-integers))
+(defvar Q (get-rational-numbers))
+
+
+(describe 'make-ring-of-fractions)
+;WEYL::MAKE-RING-OF-FRACTIONS
+;  [symbol]
+;MAKE-RING-OF-FRACTIONS names an undefined function
+;  Assumed type: FUNCTION
+(describe 'make-quotient-field)
+;WEYL::MAKE-QUOTIENT-FIELD
+;[symbol]
+;
+
+
+(describe 'weyli::make-quotient-field)
+;WEYLI::MAKE-QUOTIENT-FIELD
+;  [symbol]
+;
+;MAKE-QUOTIENT-FIELD names a generic function:
+;  Lambda-list: (FIELD)
+;  Derived type: (FUNCTION (T) *)
+;  Documentation:
+;    The purpose of this method is unknown.
+;  Method-combination: STANDARD
+;  Methods:
+;    (MAKE-QUOTIENT-FIELD (MULTIVARIATE-POLYNOMIAL-RING))
+;    (MAKE-QUOTIENT-FIELD (RATIONAL-INTEGERS))
+;    (MAKE-QUOTIENT-FIELD (RING))
+;    (MAKE-QUOTIENT-FIELD (FIELD))
+;  Source file: /home/kfp/quicklisp/local-projects/weyl/quotient-fields.lisp
+;*
+
+(defvar quoQ (weyli::make-quotient-field Q))
+;QUOQ
+
+
+(defvar quoZ (weyli::make-quotient-field Z))
+;QUOZ
+(describe quoz)
+;Q
+;  [standard-object]
+;
+;Slots with :INSTANCE allocation:
+;  PROPERTY-LIST                  = (:ORDERED-DOMAIN T :INTEGRAL-DOMAIN T)
+;  OPERATION-TABLE                = #<HASH-TABLE :TEST EQL :COUNT 18 {1004BDC1F3}>
+;  SUPER-DOMAINS                  = NIL
+;  MORPHISMS-FROM                 = NIL
+;  MORPHISMS-TO                   = (Z->Q)
+;  PRINT-FUNCTION                 = WEYLI::RATIONAL-NUMBERS-PRINT-OBJECT
+;  COEFFICIENT-DOMAIN             = NIL
+;*
+
+;; make-ring-of-fractions  not to find ***********
