@@ -16,7 +16,8 @@ Welcome to Weyl's documentation!
    generic-tools
    scalar-domains
    general
-   sums      
+   sums   
+   linear-spaces   
 
 
 Indices and tables

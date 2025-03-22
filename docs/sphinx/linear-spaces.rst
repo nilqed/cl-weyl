@@ -1,7 +1,7 @@
-(ql:quickload :weyl)
-(in-package :weyl)
+.. (ql:quickload :weyl)
+.. (in-package :weyl)
 
-#|
+
 Linear Spaces
 =============
 The general approach in Weyl is to use functors to create more complex domains 
@@ -203,5 +203,3 @@ Matrix Groups (8.3)
 tbw.
 
 
-
-|#
