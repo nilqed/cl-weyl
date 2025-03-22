@@ -18,7 +18,7 @@ Welcome to Weyl's documentation!
    general
    sums   
    linear-spaces   
-
+   polynomial-rings
 
 Indices and tables
 ==================

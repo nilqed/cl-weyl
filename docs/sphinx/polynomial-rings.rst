@@ -1,8 +1,7 @@
-(ql:quickload :weyl)
-(in-package :weyl)
+.. (ql:quickload :weyl)
+.. (in-package :weyl)
 
 
-#|
 Polynomial Rings
 ================
 Polynomial rings are domains which consist of polynomials in some number of 
@@ -399,46 +398,5 @@ Differential Rings (9.4)
 ------------------------
 Differential rings are polynomial rings that have derivations . A derivation 
 of a differential ring
-
-
-
-|#
-
-(defvar Z (get-rational-integers))
-(defvar Z[xyz] (get-polynomial-ring Z '(x y z)))
-
-(variable-index Z[xyz] 'x)
-;0
-(variable-index Z[xyz] 'y)
-;1
-(variable-index Z[xyz] 'z)
-;2
-(variable-index Z[xyz] 'u)
-;NIL
-
-(weyli::variable-symbol  Z[xyz] 0)
-;x
-
-(weyli::variable-symbol  Z[xyz] 1)
-;y
-
-(weyli::variable-symbol  Z[xyz] 2)
-;z
-
-;;;(weyli::variable-symbol  Z[xyz] 3) error ----
-
-;;; something wrong: Array dimensions are not equal
-;;; only second time it works ????
-;;; (WEYLI::%COPY-ARRAY-CONTENTS* #2A((x 0) (y 0)) #2A((0 0) (0 0) (0 0) (0 0)))
-;;; source: (ERROR "Array dimensions are not equal.")
-
-(defvar  r (get-polynomial-ring (get-rational-numbers) '(x y)))
-r
-(add-new-variable r 'z)
-
-(add-new-variable r 't)
-;Q[x, y, z, t]
-
-
 
 

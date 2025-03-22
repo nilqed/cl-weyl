@@ -1,0 +1,509 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Polynomial Rings &mdash; Weyl 0.2 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/documentation_options.js?v=10f1778b"></script>
+      <script src="_static/doctools.js?v=888ff710"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Linear Spaces" href="linear-spaces.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Weyl
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="getting-started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="basics.html">Basics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="generic-tools.html">Generic Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="scalar-domains.html">Scalar Domains</a></li>
+<li class="toctree-l1"><a class="reference internal" href="general.html">General Expressions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sums.html">Sums, Products and Quotients of Domains</a></li>
+<li class="toctree-l1"><a class="reference internal" href="linear-spaces.html">Linear Spaces</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Polynomial Rings</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#information-about-variables-9-1">Information About Variables (9.1)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#polynomial-arithmetic-9-2">Polynomial Arithmetic (9.2)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#polynomial-operators-9-3">Polynomial Operators (9.3)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#differential-rings-9-4">Differential Rings (9.4)</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Weyl</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Polynomial Rings</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/polynomial-rings.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="polynomial-rings">
+<h1>Polynomial Rings<a class="headerlink" href="#polynomial-rings" title="Link to this heading">¶</a></h1>
+<p>Polynomial rings are domains which consist of polynomials in some number of
+variables over a coefficient domain, e.g. <span class="math notranslate nohighlight">\(\mathbb{Z}[x]\)</span>,
+<span class="math notranslate nohighlight">\(\mathbb{R}[x]\)</span>, <span class="math notranslate nohighlight">\(\mathbb{Q}(t)[x]\)</span>. In these three cases the
+coefficient domains are the rational integers <span class="math notranslate nohighlight">\(\mathbb{Z}\)</span>,
+the real numbers <span class="math notranslate nohighlight">\(\mathbb{R}\)</span> and powerseries in t. Polynomial rings are
+created using the function get-polynomial-ring.</p>
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">get-polynomial-ring</span> <span class="pre">coefficient-domain</span> <span class="pre">list-of-variables</span>&#160; <span class="pre">[Function]</span></span></dt>
+<dd><p>Coefficient-domain must be a ring. List-of-variables is a list of arbitrary
+Lisp objects, each of which represents a generator of the polynomial ring.</p>
+</dd></dl>
+
+<div class="highlight-lisp notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="nb">defvar</span><span class="w"> </span><span class="nv">Z</span><span class="w"> </span><span class="p">(</span><span class="nv">get-rational-integers</span><span class="p">))</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="nv">Z</span>
+
+<span class="p">(</span><span class="nb">defvar</span><span class="w"> </span><span class="nv">Z[xyz]</span><span class="w"> </span><span class="p">(</span><span class="nv">get-polynomial-ring</span><span class="w"> </span><span class="nv">Z</span><span class="w"> </span><span class="o">&#39;</span><span class="p">(</span><span class="nv">x</span><span class="w"> </span><span class="nv">y</span><span class="w"> </span><span class="nv">z</span><span class="p">)))</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="nv">Z[xyz]</span>
+
+<span class="nv">Z[XYZ]</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="nv">Z[x,</span><span class="w"> </span><span class="nv">y,</span><span class="w"> </span><span class="nv">z]</span>
+</pre></div>
+</div>
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">transcendence-degree</span> <span class="pre">domain1</span> <span class="pre">domain2</span>&#160;&#160;&#160; <span class="pre">[Function]</span></span></dt>
+<dd><p>This function checks to see that domain2 is a subring domain1, and if so
+returns the transcendence degree of domain1 over domain2.</p>
+</dd></dl>
+
+<section id="information-about-variables-9-1">
+<h2>Information About Variables (9.1)<a class="headerlink" href="#information-about-variables-9-1" title="Link to this heading">¶</a></h2>
+<p>The variables of a polynomial ring have three di erent representations: as a
+polynomial, as symbol, or as a variable index . The simplest representation is
+as a symbol. These are the symbols passed to get-polynomial-ring and are the
+only mechanism the user has to in uence the external printed representation of
+the variable. Internal to the polynomial package, there are (Lisp) integers
+associated with variables. These integers are used as indices into tables and
+to indicate the ordering of variables in multivariate polynomials. Finally,
+a variable can be represented as a polynomial. Regardless of the internal
+representation used for polynomials, there is an integer associated with each
+variable of the polynomial. These numbers are used as an index into all data
+structures that hold additional information about the variable. The index
+corresponding to a variable is obtained by the generic function variable-index.
+The variable corresponding to an order number is variable-symbol.</p>
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">variable-index</span> <span class="pre">domain</span> <span class="pre">variable</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">[Function]</span></span></dt>
+<dd><p>Returns the variable index corresponding to variable. Variable can be either
+a symbol or a polynomial.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">variable-symbol</span> <span class="pre">domain</span> <span class="pre">variable</span>&#160;&#160;&#160; <span class="pre">[Function]</span></span></dt>
+<dd><p>Returns the variable symbol corresponding to variable. Variable can be
+either an integer or a polynomial.</p>
+</dd></dl>
+
+<p>There is a property list associated with each variable in a polynomial ring.
+This property list is ring specific and not global. The ring property list
+is accessed using the generic function get-variable-property. Properties
+can modified using setf, as with normal property lists.</p>
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">get-variable-property</span> <span class="pre">domain</span> <span class="pre">variable</span> <span class="pre">property</span>&#160;&#160; <span class="pre">[Function]</span></span></dt>
+<dd><p>Returns a property property of variable .</p>
+</dd></dl>
+
+<div class="highlight-lisp notranslate"><div class="highlight"><pre><span></span><span class="nb">*</span><span class="w"> </span><span class="p">(</span><span class="nb">describe</span><span class="w"> </span><span class="nv">Z[xyz]</span><span class="p">)</span>
+<span class="nv">Z[x,</span><span class="w"> </span><span class="nv">y,</span><span class="w"> </span><span class="nv">z]</span>
+<span class="w">  </span><span class="nv">[standard-object]</span>
+
+<span class="nv">Slots</span><span class="w"> </span><span class="nv">with</span><span class="w"> </span><span class="ss">:INSTANCE</span><span class="w"> </span><span class="nv">allocation:</span>
+<span class="w">  </span><span class="nv">PROPERTY-LIST</span><span class="w">                  </span><span class="nb">=</span><span class="w"> </span><span class="p">(</span><span class="ss">:INTEGRAL-DOMAIN</span><span class="w"> </span><span class="no">T</span><span class="p">)</span>
+<span class="w">  </span><span class="nv">OPERATION-TABLE</span><span class="w">                </span><span class="nb">=</span><span class="w"> </span><span class="err">#</span><span class="nv">&lt;HASH-TABLE</span><span class="w"> </span><span class="ss">:TEST</span><span class="w"> </span><span class="nv">EQL</span><span class="w"> </span><span class="ss">:COUNT</span><span class="w"> </span><span class="mi">17</span><span class="w"> </span><span class="nv">{10032F3DE3}&gt;</span>
+<span class="w">  </span><span class="nv">SUPER-DOMAINS</span><span class="w">                  </span><span class="nb">=</span><span class="w"> </span><span class="no">NIL</span>
+<span class="w">  </span><span class="nv">MORPHISMS-FROM</span><span class="w">                 </span><span class="nb">=</span><span class="w"> </span><span class="no">NIL</span>
+<span class="w">  </span><span class="nv">MORPHISMS-TO</span><span class="w">                   </span><span class="nb">=</span><span class="w"> </span><span class="p">(</span><span class="o">#1=</span><span class="nv">Z-&gt;#1#[x,</span><span class="w"> </span><span class="nv">y,</span><span class="w"> </span><span class="nv">z]</span><span class="p">)</span>
+<span class="w">  </span><span class="nv">PRINT-FUNCTION</span><span class="w">                 </span><span class="nb">=</span><span class="w"> </span><span class="nv">WEYLI::POLYNOMIAL-RING-PRINT-OBJECT</span>
+<span class="w">  </span><span class="nv">ZERO</span><span class="w">                           </span><span class="nb">=</span><span class="w"> </span><span class="mi">0</span>
+<span class="w">  </span><span class="nv">ONE</span><span class="w">                            </span><span class="nb">=</span><span class="w"> </span><span class="mi">1</span>
+<span class="w">  </span><span class="nv">VARIABLES</span><span class="w">                      </span><span class="nb">=</span><span class="w"> </span><span class="p">(</span><span class="nv">x</span><span class="w"> </span><span class="nv">y</span><span class="w"> </span><span class="nv">z</span><span class="p">)</span>
+<span class="w">  </span><span class="nv">VARIABLE-HASH-TABLE</span><span class="w">            </span><span class="nb">=</span><span class="w"> </span><span class="p">((</span><span class="nv">x</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="nv">y</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="nv">z</span><span class="w"> </span><span class="mi">2</span><span class="p">))</span>
+<span class="w">  </span><span class="nv">VARIABLE-TABLE</span><span class="w">                 </span><span class="nb">=</span><span class="w"> </span><span class="l l-Other">#2A</span><span class="p">((</span><span class="nv">x</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="nv">y</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="nv">z</span><span class="w"> </span><span class="mi">0</span><span class="p">))</span>
+<span class="w">  </span><span class="nv">COEFFICIENT-DOMAIN</span><span class="w">             </span><span class="nb">=</span><span class="w"> </span><span class="nv">Z</span>
+<span class="nb">*</span>
+</pre></div>
+</div>
+<div class="highlight-lisp notranslate"><div class="highlight"><pre><span></span><span class="nb">*</span><span class="w"> </span><span class="p">(</span><span class="nb">describe</span><span class="w"> </span><span class="ss">&#39;get-variable-property</span><span class="p">)</span>
+<span class="nv">WEYLI:GET-VARIABLE-PROPERTY</span>
+<span class="w">  </span><span class="nv">[symbol]</span>
+
+<span class="nv">GET-VARIABLE-PROPERTY</span><span class="w"> </span><span class="nv">names</span><span class="w"> </span><span class="nv">a</span><span class="w"> </span><span class="nv">generic</span><span class="w"> </span><span class="nv">function:</span>
+<span class="w">  </span><span class="nv">Lambda-list:</span><span class="w"> </span><span class="p">(</span><span class="nv">DOMAIN</span><span class="w"> </span><span class="nv">VARIABLE</span><span class="w"> </span><span class="nv">KEY</span><span class="p">)</span>
+<span class="w">  </span><span class="nv">Argument</span><span class="w"> </span><span class="nv">precedence</span><span class="w"> </span><span class="nv">order:</span><span class="w"> </span><span class="p">(</span><span class="nv">DOMAIN</span><span class="w"> </span><span class="nv">VARIABLE</span><span class="w"> </span><span class="nv">KEY</span><span class="p">)</span>
+<span class="w">  </span><span class="nv">Derived</span><span class="w"> </span><span class="nv">type:</span><span class="w"> </span><span class="p">(</span><span class="nv">FUNCTION</span><span class="w"> </span><span class="p">(</span><span class="no">T</span><span class="w"> </span><span class="no">T</span><span class="w"> </span><span class="no">T</span><span class="p">)</span><span class="w"> </span><span class="nb">*</span><span class="p">)</span>
+<span class="w">  </span><span class="nv">Documentation:</span>
+<span class="w">    </span><span class="nv">There</span><span class="w"> </span><span class="nv">is</span><span class="w"> </span><span class="nv">a</span><span class="w"> </span><span class="nv">property</span><span class="w"> </span><span class="nb">list</span><span class="w"> </span><span class="nv">associated</span><span class="w"> </span><span class="nv">with</span><span class="w"> </span><span class="nv">each</span><span class="w"> </span><span class="nv">variable</span><span class="w"> </span><span class="nv">in</span><span class="w"> </span><span class="nv">a</span><span class="w"> </span><span class="nv">polynomial</span>
+<span class="w">    </span><span class="nv">ring.</span><span class="w"> </span><span class="nv">This</span><span class="w"> </span><span class="nv">property</span><span class="w"> </span><span class="nb">list</span><span class="w"> </span><span class="nv">is</span><span class="w"> </span><span class="nv">ring</span><span class="w"> </span><span class="nv">specific</span><span class="w"> </span><span class="nb">and</span><span class="w"> </span><span class="nb">not</span><span class="w"> </span><span class="nv">global.</span><span class="w"> </span><span class="nv">The</span><span class="w"> </span><span class="nv">ring</span>
+<span class="w">    </span><span class="nv">property</span><span class="w"> </span><span class="nb">list</span><span class="w"> </span><span class="nv">is</span><span class="w"> </span><span class="nv">accessed</span><span class="w"> </span><span class="nv">using</span><span class="w"> </span><span class="k">the</span><span class="w"> </span><span class="nv">generic</span><span class="w"> </span><span class="k">function</span><span class="w"> </span><span class="nv">get-variable-property.</span>
+<span class="w">    </span><span class="nv">Properties</span><span class="w"> </span><span class="nv">can</span><span class="w"> </span><span class="nv">modified</span><span class="w"> </span><span class="nv">using</span><span class="w"> </span><span class="nv">setf,</span><span class="w"> </span><span class="nv">as</span><span class="w"> </span><span class="nv">with</span><span class="w"> </span><span class="nv">normal</span><span class="w"> </span><span class="nv">property</span><span class="w"> </span><span class="nv">lists.</span>
+<span class="w">  </span><span class="nv">Method-combination:</span><span class="w"> </span><span class="nv">STANDARD</span>
+<span class="w">  </span><span class="nv">Methods:</span>
+<span class="w">    </span><span class="p">(</span><span class="nv">GET-VARIABLE-PROPERTY</span><span class="w"> </span><span class="p">(</span><span class="nv">VARIABLE-HASH-TABLE</span><span class="w"> </span><span class="no">T</span><span class="w"> </span><span class="no">T</span><span class="p">))</span>
+<span class="w">    </span><span class="p">(</span><span class="nv">GET-VARIABLE-PROPERTY</span><span class="w"> </span><span class="p">(</span><span class="nv">DOMAIN</span><span class="w"> </span><span class="nv">GE-VARIABLE</span><span class="w"> </span><span class="no">T</span><span class="p">))</span>
+<span class="w">      </span><span class="nv">Documentation:</span>
+<span class="w">        </span><span class="nv">Returns</span><span class="w"> </span><span class="nv">a</span><span class="w"> </span><span class="nv">property</span><span class="w"> </span><span class="nv">property</span><span class="w"> </span><span class="nv">of</span><span class="w"> </span><span class="nv">variable.</span>
+<span class="w">  </span><span class="nv">Source</span><span class="w"> </span><span class="nv">file:</span><span class="w"> </span><span class="nv">/home/kfp/quicklisp/local-projects/weyl/general.lisp</span>
+
+<span class="p">(</span><span class="nv">SETF</span><span class="w"> </span><span class="nv">GET-VARIABLE-PROPERTY</span><span class="p">)</span><span class="w"> </span><span class="nv">has</span><span class="w"> </span><span class="nv">setf-expansion:</span><span class="w"> </span><span class="nv">WEYLI::SET-VARIABLE-PROPERTY</span>
+<span class="nb">*</span>
+</pre></div>
+</div>
+<p>In contrast with normal mathematical usage, the polynomial rings of Weyl can be
+modified in a limited fashion after they have been created. In particular, it
+is possible to add variables to a polynomial ring, but removing variables is
+not allowed. The variables are added to the end of the ring’s list of variables
+so that they will be less main” than any of the existing variables, and thus
+only minimal changes to existing polynomial representations will be needed.</p>
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">add-new-variable</span> <span class="pre">ring</span> <span class="pre">var</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">[Function]</span></span></dt>
+<dd><p>Var is a variable in the general representation. This function modifies
+ring to have an additional variable.</p>
+</dd></dl>
+
+<p>The behavior of this routine is illustrated by the following examples. First,
+we create a polynomial ring with two variables, and then add a third variable
+to it.</p>
+<div class="highlight-lisp notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="nb">defvar</span><span class="w">  </span><span class="nv">r</span><span class="w"> </span><span class="p">(</span><span class="nv">get-polynomial-ring</span><span class="w"> </span><span class="p">(</span><span class="nv">get-rational-numbers</span><span class="p">)</span><span class="w"> </span><span class="o">&#39;</span><span class="p">(</span><span class="nv">x</span><span class="w"> </span><span class="nv">y</span><span class="p">)))</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="nv">R</span>
+
+<span class="p">(</span><span class="nv">add-new-variable</span><span class="w"> </span><span class="nv">r</span><span class="w"> </span><span class="ss">&#39;z</span><span class="p">)</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="nv">Q[x,</span><span class="w"> </span><span class="nv">y,</span><span class="w"> </span><span class="nv">z]</span>
+</pre></div>
+</div>
+<p>Now try adding a more complex expression to the ring. In this case,
+add-new-variable determines that w and sin(z+x) are the only new kernels and
+adds them.</p>
+<div class="highlight-lisp notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="nv">add-new-variable</span><span class="w"> </span><span class="nv">r</span><span class="w"> </span><span class="p">(</span><span class="nb">expt</span><span class="w"> </span><span class="p">(</span><span class="nb">+</span><span class="w"> </span><span class="ss">&#39;x</span><span class="w"> </span><span class="ss">&#39;w</span><span class="w"> </span><span class="p">(</span><span class="nb">sin</span><span class="w"> </span><span class="p">(</span><span class="nb">+</span><span class="w"> </span><span class="ss">&#39;x</span><span class="w"> </span><span class="ss">&#39;z</span><span class="p">)))</span><span class="w"> </span><span class="mi">3</span><span class="p">))</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="nv">Q[x,</span><span class="w"> </span><span class="nv">y,</span><span class="w"> </span><span class="nv">z,</span><span class="w"> </span><span class="nv">w,</span><span class="w"> </span><span class="nb">sin</span><span class="p">(</span><span class="nv">z</span><span class="w"> </span><span class="nb">+</span><span class="w"> </span><span class="nv">x</span><span class="p">)</span><span class="nv">]</span>
+</pre></div>
+</div>
+</section>
+<section id="polynomial-arithmetic-9-2">
+<h2>Polynomial Arithmetic (9.2)<a class="headerlink" href="#polynomial-arithmetic-9-2" title="Link to this heading">¶</a></h2>
+<p>The simplest way to create a polynomial is to coerce a general expression into
+a polynomial ring. For instance, if r is the ring Q[x,y], as de ned above,
+we could proceed as follows. First, we create a polynomial in x and y as
+general expressions.</p>
+<div class="highlight-lisp notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="nb">expt</span><span class="w"> </span><span class="p">(</span><span class="nb">+</span><span class="w"> </span><span class="ss">&#39;x</span><span class="w"> </span><span class="ss">&#39;y</span><span class="p">)</span><span class="w"> </span><span class="mi">3</span><span class="p">)</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nv">y</span><span class="w"> </span><span class="nb">+</span><span class="w"> </span><span class="nv">x</span><span class="p">)</span><span class="nv">^3</span>
+</pre></div>
+</div>
+<p>Notice that the expressions is not expanded. Next, we coerce the expression into the polynomial
+ring r.</p>
+<div class="highlight-lisp notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="nb">coerce</span><span class="w"> </span><span class="p">(</span><span class="nb">expt</span><span class="w"> </span><span class="p">(</span><span class="nb">+</span><span class="w"> </span><span class="ss">&#39;x</span><span class="w"> </span><span class="ss">&#39;y</span><span class="p">)</span><span class="w"> </span><span class="mi">3</span><span class="p">)</span><span class="w"> </span><span class="nv">r</span><span class="p">)</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="nv">x^3</span><span class="w"> </span><span class="nb">+</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="nv">y</span><span class="w"> </span><span class="nv">x^2</span><span class="w"> </span><span class="nb">+</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="nv">y^2</span><span class="w"> </span><span class="nv">x</span><span class="w"> </span><span class="nb">+</span><span class="w"> </span><span class="nv">y^3</span>
+</pre></div>
+</div>
+<p>This time the expression is expanded. When represented as an element of a
+polynomial ring, as opposed to being general expressions, polynomials are
+represented using a canonical representation (as described in Section 9.5).
+This canonical representation expresses polynomials as a sum of terms.
+This is easily seen in the following example.</p>
+<div class="highlight-lisp notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="nb">defvar</span><span class="w">  </span><span class="nv">p</span><span class="w"> </span><span class="p">(</span><span class="nb">+</span><span class="w"> </span><span class="p">(</span><span class="nb">*</span><span class="w"> </span><span class="p">(</span><span class="nb">-</span><span class="w"> </span><span class="ss">&#39;x</span><span class="w"> </span><span class="ss">&#39;y</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="nb">+</span><span class="w"> </span><span class="ss">&#39;x</span><span class="w"> </span><span class="ss">&#39;y</span><span class="p">))</span><span class="w"> </span><span class="p">(</span><span class="nb">expt</span><span class="w"> </span><span class="ss">&#39;y</span><span class="w"> </span><span class="mi">2</span><span class="p">)))</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="nv">P</span>
+
+<span class="nv">p</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="p">(</span><span class="mi">-1</span><span class="w"> </span><span class="nv">y</span><span class="w"> </span><span class="nb">+</span><span class="w"> </span><span class="nv">x</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="nv">y</span><span class="w"> </span><span class="nb">+</span><span class="w"> </span><span class="nv">x</span><span class="p">)</span><span class="w"> </span><span class="nb">+</span><span class="w"> </span><span class="nv">y^2</span>
+</pre></div>
+</div>
+<p>General expressions can represent polynomials as products of sums, and thus
+do not have a canonical representation for the polynomial. When the expression
+is coerced into a polynomial ring, the products are expanded to produce a
+simple form for the expression.</p>
+<div class="highlight-lisp notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="nb">coerce</span><span class="w"> </span><span class="nv">p</span><span class="w"> </span><span class="nv">r</span><span class="p">)</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="nv">x^2</span>
+</pre></div>
+</div>
+</section>
+<section id="polynomial-operators-9-3">
+<h2>Polynomial Operators (9.3)<a class="headerlink" href="#polynomial-operators-9-3" title="Link to this heading">¶</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">scalar?</span> <span class="pre">polynomial</span>&#160; <span class="pre">[Function]</span></span></dt>
+<dd><p>The argument of this function is expected to be an element of a polynomial
+domain. If the argument is an element of the coefficient field this function
+returns T otherwise it returns nil.</p>
+</dd></dl>
+
+<div class="highlight-lisp notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="nb">defvar</span><span class="w"> </span><span class="nv">pol</span><span class="w"> </span><span class="p">(</span><span class="nb">coerce</span><span class="w"> </span><span class="p">(</span><span class="nb">+</span><span class="w"> </span><span class="ss">&#39;x</span><span class="w"> </span><span class="ss">&#39;y</span><span class="w"> </span><span class="p">(</span><span class="nb">expt</span><span class="w"> </span><span class="p">(</span><span class="nb">+</span><span class="w"> </span><span class="ss">&#39;x</span><span class="w"> </span><span class="ss">&#39;y</span><span class="p">)</span><span class="w"> </span><span class="mi">3</span><span class="p">))</span><span class="w"> </span><span class="nv">r</span><span class="p">))</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="nv">POL</span>
+
+<span class="p">(</span><span class="nv">wtype</span><span class="w"> </span><span class="nv">pol</span><span class="p">)</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="nv">WEYLI::MPOLYNOMIAL</span>
+
+<span class="p">(</span><span class="nv">scalar?</span><span class="w"> </span><span class="nv">pol</span><span class="p">)</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="no">NIL</span>
+</pre></div>
+</div>
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">degree</span> <span class="pre">polynomial</span> <span class="pre">var</span>&#160;&#160; <span class="pre">[Function]</span></span></dt>
+<dd><p>Returns the degree of polynomial in the variable var as a lisp integer.</p>
+</dd></dl>
+
+<div class="highlight-lisp notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="nv">degree</span><span class="w"> </span><span class="nv">pol</span><span class="w"> </span><span class="ss">&#39;x</span><span class="p">)</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="mi">3</span>
+
+<span class="p">(</span><span class="nv">degree</span><span class="w"> </span><span class="nv">pol</span><span class="w"> </span><span class="ss">&#39;y</span><span class="p">)</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="mi">3</span>
+</pre></div>
+</div>
+<p>The usual arithmetic operations including plus, minus, di erence, times,
+quotient, recip and expt, can be applied to polynomials. For polynomial rings,
+expt is restricted to integer exponents.</p>
+<div class="highlight-lisp notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="nb">defvar</span><span class="w"> </span><span class="nv">pol2</span><span class="w"> </span><span class="p">(</span><span class="nb">coerce</span><span class="w"> </span><span class="p">(</span><span class="nb">+</span><span class="w"> </span><span class="ss">&#39;x</span><span class="w"> </span><span class="ss">&#39;y</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="nv">r</span><span class="p">))</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="nv">POL2</span>
+
+<span class="p">(</span><span class="nb">+</span><span class="w"> </span><span class="nv">pol</span><span class="w"> </span><span class="nv">pol2</span><span class="p">)</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="nv">x^3</span><span class="w"> </span><span class="nb">+</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="nv">y</span><span class="w"> </span><span class="nv">x^2</span><span class="w"> </span><span class="nb">+</span><span class="w"> </span><span class="p">(</span><span class="mi">3</span><span class="w"> </span><span class="nv">y^2</span><span class="w"> </span><span class="nb">+</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="nv">x</span><span class="w"> </span><span class="nb">+</span><span class="w"> </span><span class="p">(</span><span class="nv">y^3</span><span class="w"> </span><span class="nb">+</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="nv">y</span><span class="p">)</span>
+
+<span class="p">(</span><span class="nb">+</span><span class="w"> </span><span class="nv">pol</span><span class="w"> </span><span class="p">(</span><span class="nb">*</span><span class="w"> </span><span class="mi">5</span><span class="w"> </span><span class="nv">pol2</span><span class="p">))</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="nv">x^3</span><span class="w"> </span><span class="nb">+</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="nv">y</span><span class="w"> </span><span class="nv">x^2</span><span class="w"> </span><span class="nb">+</span><span class="w"> </span><span class="p">(</span><span class="mi">3</span><span class="w"> </span><span class="nv">y^2</span><span class="w"> </span><span class="nb">+</span><span class="w"> </span><span class="mi">6</span><span class="p">)</span><span class="w"> </span><span class="nv">x</span><span class="w"> </span><span class="nb">+</span><span class="w"> </span><span class="p">(</span><span class="nv">y^3</span><span class="w"> </span><span class="nb">+</span><span class="w"> </span><span class="mi">6</span><span class="w"> </span><span class="nv">y</span><span class="p">)</span>
+
+<span class="p">(</span><span class="nb">*</span><span class="w"> </span><span class="nv">pol</span><span class="w"> </span><span class="nv">pol2</span><span class="p">)</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="nv">x^4</span><span class="w"> </span><span class="nb">+</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="nv">y</span><span class="w"> </span><span class="nv">x^3</span><span class="w"> </span><span class="nb">+</span><span class="w"> </span><span class="p">(</span><span class="mi">6</span><span class="w"> </span><span class="nv">y^2</span><span class="w"> </span><span class="nb">+</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="nv">x^2</span><span class="w"> </span><span class="nb">+</span><span class="w"> </span><span class="p">(</span><span class="mi">4</span><span class="w"> </span><span class="nv">y^3</span><span class="w"> </span><span class="nb">+</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="nv">y</span><span class="p">)</span><span class="w"> </span><span class="nv">x</span><span class="w"> </span><span class="nb">+</span><span class="w"> </span><span class="p">(</span><span class="nv">y^4</span><span class="w"> </span><span class="nb">+</span><span class="w"> </span><span class="nv">y^2</span><span class="p">)</span>
+
+<span class="p">(</span><span class="nb">-</span><span class="w">  </span><span class="nv">pol</span><span class="w"> </span><span class="nv">pol2</span><span class="p">)</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="nv">x^3</span><span class="w"> </span><span class="nb">+</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="nv">y</span><span class="w"> </span><span class="nv">x^2</span><span class="w"> </span><span class="nb">+</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="nv">y^2</span><span class="w"> </span><span class="nv">x</span><span class="w"> </span><span class="nb">+</span><span class="w"> </span><span class="nv">y^3</span>
+
+<span class="p">(</span><span class="nb">/</span><span class="w">  </span><span class="nv">pol</span><span class="w"> </span><span class="nv">pol2</span><span class="p">)</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="nv">x^2</span><span class="w"> </span><span class="nb">+</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="nv">y</span><span class="w"> </span><span class="nv">x</span><span class="w"> </span><span class="nb">+</span><span class="w"> </span><span class="p">(</span><span class="nv">y^2</span><span class="w"> </span><span class="nb">+</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span>
+
+<span class="p">(</span><span class="nb">expt</span><span class="w"> </span><span class="nv">pol2</span><span class="w"> </span><span class="mi">10</span><span class="p">)</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="nv">x^10</span><span class="w"> </span><span class="nb">+</span><span class="w"> </span><span class="mi">10</span><span class="w"> </span><span class="nv">y</span><span class="w"> </span><span class="nv">x^9</span><span class="w"> </span><span class="nb">+</span><span class="w"> </span><span class="mi">45</span><span class="w"> </span><span class="nv">y^2</span><span class="w"> </span><span class="nv">x^8</span><span class="w"> </span><span class="nb">+</span><span class="w"> </span><span class="mi">120</span><span class="w"> </span><span class="nv">y^3</span><span class="w"> </span><span class="nv">x^7</span><span class="w"> </span><span class="nb">+</span><span class="w"> </span><span class="mi">210</span><span class="w"> </span><span class="nv">y^4</span><span class="w"> </span><span class="nv">x^6</span><span class="w"> </span><span class="nb">+</span>
+<span class="w">   </span><span class="mi">252</span><span class="w"> </span><span class="nv">y^5</span><span class="w"> </span><span class="nv">x^5</span><span class="w"> </span><span class="nb">+</span><span class="w"> </span><span class="mi">210</span><span class="w"> </span><span class="nv">y^6</span><span class="w"> </span><span class="nv">x^4</span><span class="w"> </span><span class="nb">+</span><span class="w"> </span><span class="mi">120</span><span class="w"> </span><span class="nv">y^7</span><span class="w"> </span><span class="nv">x^3</span><span class="w"> </span><span class="nb">+</span><span class="w"> </span><span class="mi">45</span><span class="w"> </span><span class="nv">y^8</span><span class="w"> </span><span class="nv">x^2</span><span class="w"> </span><span class="nb">+</span><span class="w"> </span><span class="mi">10</span><span class="w"> </span><span class="nv">y^9</span><span class="w"> </span><span class="nv">x</span><span class="w"> </span><span class="nb">+</span><span class="w"> </span><span class="nv">y^10</span>
+</pre></div>
+</div>
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">remainder</span> <span class="pre">x</span> <span class="pre">y</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">[Function]</span></span></dt>
+<dd><p>Computes the polynomial pseudo-remainder of x and y.</p>
+</dd></dl>
+
+<div class="highlight-lisp notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="nv">remainder</span><span class="w"> </span><span class="nv">pol2</span><span class="w"> </span><span class="nv">pol</span><span class="p">)</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="nv">x</span><span class="w"> </span><span class="nb">+</span><span class="w"> </span><span class="nv">y</span>
+</pre></div>
+</div>
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">gcd</span> <span class="pre">x</span> <span class="pre">y</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">[Function]</span></span></dt>
+<dd><p>Computes the polynomial greatest common divisor of x and y. The variable
+weyli::poly-gcd-algorithm is bound to the particular GCD algorithm to be used.</p>
+</dd></dl>
+
+<div class="highlight-lisp notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="nb">gcd</span><span class="w">  </span><span class="nv">pol</span><span class="w"> </span><span class="nv">pol2</span><span class="p">)</span>
+<span class="nv">x</span><span class="w"> </span><span class="nb">+</span><span class="w"> </span><span class="nv">y</span>
+</pre></div>
+</div>
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">partial-deriv</span> <span class="pre">polynomial</span> <span class="pre">var</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">[Function]</span></span></dt>
+<dd><p>This function takes the partial derivative of polynomial with respect to var.
+var is actually a polynomial, not the lisp object which is the variable.</p>
+</dd></dl>
+
+<div class="highlight-lisp notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="nv">partial-deriv</span><span class="w"> </span><span class="nv">pol</span><span class="w"> </span><span class="ss">&#39;y</span><span class="p">)</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="nv">x^2</span><span class="w"> </span><span class="nb">+</span><span class="w"> </span><span class="mi">6</span><span class="w"> </span><span class="nv">y</span><span class="w"> </span><span class="nv">x</span><span class="w"> </span><span class="nb">+</span><span class="w"> </span><span class="p">(</span><span class="mi">3</span><span class="w"> </span><span class="nv">y^2</span><span class="w"> </span><span class="nb">+</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">deriv</span> <span class="pre">polynomial</span> <span class="pre">var</span> <span class="pre">&amp;rest</span> <span class="pre">vars</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">[Function]</span></span></dt>
+<dd><p>Computes the derivative of polynomial with respect to var. This is done for
+var and each element of var. The variables can either be elements of
+<em>general</em> or of a polynomial domain.</p>
+</dd></dl>
+
+<div class="highlight-lisp notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="nv">deriv</span><span class="w"> </span><span class="nv">pol</span><span class="w"> </span><span class="ss">&#39;x</span><span class="w"> </span><span class="ss">&#39;y</span><span class="w"> </span><span class="ss">&#39;y</span><span class="p">)</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="mi">6</span>
+
+<span class="p">(</span><span class="nv">deriv</span><span class="w"> </span><span class="nv">pol</span><span class="w"> </span><span class="ss">&#39;x</span><span class="w"> </span><span class="ss">&#39;x</span><span class="p">)</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="mi">6</span><span class="w"> </span><span class="nv">x</span><span class="w"> </span><span class="nb">+</span><span class="w"> </span><span class="mi">6</span><span class="w"> </span><span class="nv">y</span>
+</pre></div>
+</div>
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">coefficient</span> <span class="pre">polynomial</span> <span class="pre">var</span> <span class="pre">&amp;optional</span> <span class="pre">degree</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">[Function]</span></span></dt>
+<dd><p>Compute the coefficient of the monomial in var of order degree in polynomial.
+degree defaults to 1.</p>
+</dd></dl>
+
+<div class="highlight-lisp notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="nv">coefficient</span><span class="w"> </span><span class="nv">pol</span><span class="w"> </span><span class="ss">&#39;y</span><span class="p">)</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="nv">x^2</span><span class="w"> </span><span class="nb">+</span><span class="w"> </span><span class="mi">1</span>
+
+<span class="p">(</span><span class="nv">coefficient</span><span class="w"> </span><span class="nv">pol</span><span class="w"> </span><span class="ss">&#39;y</span><span class="w"> </span><span class="mi">3</span><span class="p">)</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="mi">1</span>
+
+<span class="p">(</span><span class="nv">coefficient</span><span class="w"> </span><span class="nv">pol</span><span class="w"> </span><span class="ss">&#39;x</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="nv">y</span>
+</pre></div>
+</div>
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">substitute</span> <span class="pre">value</span> <span class="pre">var</span> <span class="pre">polynomial</span>&#160; <span class="pre">[Function]</span></span></dt>
+<dd><p>Substitutes value for each occurrence of var in polynomial . If value is a
+list, it is interpreted as a set of values to be substituted in parallel
+for the variables in var . The values being substituted must be either
+elements of the domain of polynomial or its coefficient domain.</p>
+</dd></dl>
+
+<div class="highlight-lisp notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="nb">defvar</span><span class="w"> </span><span class="nv">pol3</span><span class="w"> </span><span class="p">(</span><span class="nb">coerce</span><span class="w"> </span><span class="p">(</span><span class="nb">expt</span><span class="w"> </span><span class="p">(</span><span class="nb">-</span><span class="w"> </span><span class="p">(</span><span class="nb">+</span><span class="w"> </span><span class="ss">&#39;x</span><span class="w"> </span><span class="ss">&#39;y</span><span class="p">)</span><span class="w"> </span><span class="ss">&#39;z</span><span class="p">)</span><span class="w"> </span><span class="mi">3</span><span class="p">)</span><span class="w">    </span><span class="nv">Z[xyz]</span><span class="p">))</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="nv">POL3</span>
+
+<span class="nv">pol3</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="nv">x^3</span><span class="w"> </span><span class="nb">+</span><span class="w"> </span><span class="p">(</span><span class="mi">3</span><span class="w"> </span><span class="nv">y</span><span class="w"> </span><span class="nb">+</span><span class="w"> </span><span class="mi">-3</span><span class="w"> </span><span class="nv">z</span><span class="p">)</span><span class="w"> </span><span class="nv">x^2</span><span class="w"> </span><span class="nb">+</span><span class="w"> </span><span class="p">(</span><span class="mi">3</span><span class="w"> </span><span class="nv">y^2</span><span class="w"> </span><span class="nb">+</span><span class="w"> </span><span class="mi">-6</span><span class="w"> </span><span class="nv">z</span><span class="w"> </span><span class="nv">y</span><span class="w"> </span><span class="nb">+</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="nv">z^2</span><span class="p">)</span><span class="w"> </span><span class="nv">x</span><span class="w"> </span><span class="nb">+</span>
+<span class="w">   </span><span class="p">(</span><span class="nv">y^3</span><span class="w"> </span><span class="nb">+</span><span class="w"> </span><span class="mi">-3</span><span class="w"> </span><span class="nv">z</span><span class="w"> </span><span class="nv">y^2</span><span class="w"> </span><span class="nb">+</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="nv">z^2</span><span class="w"> </span><span class="nv">y</span><span class="w"> </span><span class="nb">+</span><span class="w"> </span><span class="nb">-</span><span class="w"> </span><span class="nv">z^3</span><span class="p">)</span>
+
+<span class="p">(</span><span class="nb">substitute</span><span class="w"> </span><span class="mi">12</span><span class="w"> </span><span class="ss">&#39;x</span><span class="w"> </span><span class="nv">pol3</span><span class="p">)</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="nv">y^3</span><span class="w"> </span><span class="nb">+</span><span class="w"> </span><span class="p">(</span><span class="mi">-3</span><span class="w"> </span><span class="nv">z</span><span class="w"> </span><span class="nb">+</span><span class="w"> </span><span class="mi">36</span><span class="p">)</span><span class="w"> </span><span class="nv">y^2</span><span class="w"> </span><span class="nb">+</span><span class="w"> </span><span class="p">(</span><span class="mi">3</span><span class="w"> </span><span class="nv">z^2</span><span class="w"> </span><span class="nb">-</span><span class="w"> </span><span class="mi">72</span><span class="w"> </span><span class="nv">z</span><span class="w"> </span><span class="nb">+</span><span class="w"> </span><span class="mi">432</span><span class="p">)</span><span class="w"> </span><span class="nv">y</span><span class="w"> </span><span class="nb">+</span>
+<span class="w">   </span><span class="p">(</span><span class="nb">-</span><span class="w"> </span><span class="nv">z^3</span><span class="w"> </span><span class="nb">+</span><span class="w"> </span><span class="mi">36</span><span class="w"> </span><span class="nv">z^2</span><span class="w"> </span><span class="nb">-</span><span class="w"> </span><span class="mi">432</span><span class="w"> </span><span class="nv">z</span><span class="w"> </span><span class="nb">+</span><span class="w"> </span><span class="mi">1728</span><span class="p">)</span>
+
+<span class="p">(</span><span class="nb">substitute</span><span class="w"> </span><span class="ss">&#39;z</span><span class="w"> </span><span class="ss">&#39;x</span><span class="w"> </span><span class="nv">pol3</span><span class="p">)</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="nv">y^3</span>
+</pre></div>
+</div>
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">list-of-variables</span> <span class="pre">polynomial</span> <span class="pre">&amp;optional</span> <span class="pre">vars</span>&#160;&#160;&#160;&#160; <span class="pre">[Function]</span></span></dt>
+<dd><p>Returns a list of the variables that actually appear in polynomial.
+If provided, vars must be a list. The variables that appear in polynomial
+are added to vars.</p>
+</dd></dl>
+
+<div class="highlight-lisp notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="nv">list-of-variables</span><span class="w"> </span><span class="nv">pol3</span><span class="p">)</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nv">x</span><span class="w"> </span><span class="nv">y</span><span class="w"> </span><span class="nv">z</span><span class="p">)</span>
+
+<span class="p">(</span><span class="nv">list-of-variables</span><span class="w"> </span><span class="nv">pol3</span><span class="w"> </span><span class="o">&#39;</span><span class="p">(</span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="p">))</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nv">x</span><span class="w"> </span><span class="nv">y</span><span class="w"> </span><span class="nv">z</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="p">)</span>
+</pre></div>
+</div>
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">interpolate</span> <span class="pre">vars</span> <span class="pre">points</span> <span class="pre">values</span> <span class="pre">&amp;optional</span> <span class="pre">degrees</span>&#160; <span class="pre">[Function]</span></span></dt>
+<dd><p>Uses the information provided to produce a polynomial whose values at each
+of the specified points is the corresponding value. The variables of the
+polynomials are indicated by vars. For a univariate interpolation, vars
+should be a single variable and points and values should be simple lists.
+In this case the degree of the interpolated polynomial will be less than the
+length of points. For multivariate polynomials, points and values are lists
+of lists, where each of the sub-lists has the same length as the number
+of variables. The degree bounds for the multivariate polynomial can be
+specified by the degrees argument. It can be either a list of the maximum
+degrees in each of the variables, or the symbols :total or :maximum. In
+either of these two cases, interpolate uses the maximum degree bound that
+yields a polynomial with fewer terms than the number of points supplied.
+When :maximum is speci ed it is assumed that each variable can attain the
+maximum degree independently. So for two variables with a maximum of 10
+terms, the possible terms of the returned polynomial are:</p>
+<blockquote>
+<div><p><span class="math notranslate nohighlight">\(1,x,y,x y,x^2,x^2 y,x y^2\)</span></p>
+</div></blockquote>
+<p>When :total is specified, with the same parameters, the possible terms are:</p>
+<blockquote>
+<div><p><span class="math notranslate nohighlight">\(1,x,y,x^2,x y,y^2,x^3,x^2 y,x y^2, y^3\)</span></p>
+</div></blockquote>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">interpolate</span> <span class="pre">domain</span> <span class="pre">Bp</span> <span class="pre">degree-bounds</span>&#160;&#160; <span class="pre">[Function]</span></span></dt>
+<dd><p>The domain should be multivariate-polynomial-ring. The Bp is the name of
+the function representing the black box, that is, the function should
+return the value of the polynomial at the requested point. The degree-bounds
+is the list of degree bounds for the multivariate polynomial in each of
+the ring variables of the domain. The function will return the multivariate
+polynomial computed using the probabilistic sparse multivariate interpolation
+algorithm given in the book by Zippel.</p>
+</dd></dl>
+
+</section>
+<section id="differential-rings-9-4">
+<h2>Differential Rings (9.4)<a class="headerlink" href="#differential-rings-9-4" title="Link to this heading">¶</a></h2>
+<p>Differential rings are polynomial rings that have derivations . A derivation
+of a differential ring</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="linear-spaces.html" class="btn btn-neutral float-left" title="Linear Spaces" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, SimLab Group &amp; Weyl enthusiasts.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
