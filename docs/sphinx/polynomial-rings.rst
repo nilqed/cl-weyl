@@ -397,6 +397,205 @@ expt is restricted to integer exponents.
 Differential Rings (9.4)
 ------------------------
 Differential rings are polynomial rings that have derivations . A derivation 
-of a differential ring
+of a differential ring :math:`R(x)` is a map :math:`\delta` from R(x) to R(x)
+which has the following properties:
+
+.. math::
+
+          \begin{eqnarray}
+             \delta(a p + b q) &=& a \delta p + b \delta q \\
+             \delta a &=& 0 \\
+             \delta( p q) &=& p \delta q + q \delta p.
+          \end{eqnarray}
+          
+where a,b in R and p and q are not elements of R.
+
+
+.. function:: get-differential-ring domain variables    [Function]
+
+   Return a differential ring whose coefficients lie in domain and which 
+   contains the variables variables. 
+   
+For example:
+
+.. code-block:: lisp
+
+    (defvar DR (get-differential-ring (get-rational-integers) '(x y))
+    => Z<x, y>
+    
+    not working (SBCL): todo 
+
+
+.. function:: derivation p   [Function]
+
+   Returns the derivative of the di erential polynomial p . 
+   
+
+For example:
+
+.. code-block:: lisp
+
+    (setq p (expt (+ (coerce 'x r) (coerce 'y r)) 2))
+    => x^2 + 2 y x + y^2
+
+    (deriv p)
+
+    => (2 D{x, 1} + 2 D{y, 1}) x + ((2 D{x, 1} + 2 D{y, 1}) y)
+
+
+.. function:: variable-derivation domain variable     [Function]
+
+   Returns the derivative of variable . The derivative can be either an element 
+   of domain, or :generate which indicates that the derivative will be a new 
+   variable which is yet to be created.
+   
+The derivative of a variable can be set using setf.
+
+
+Structure Types for Polynomials (9.5)
+-------------------------------------
+
+This section discusses the internal structures used represent polynomials. 
+This material is only of value for those problems that require especially 
+efficient access to the low level polynomial primitives in Weyl.
+
+Polynomials are represented using one of three different structure types. 
+The class structure of these types is given in Figure 9.1. The simplest 
+structure is only used by elements of univariate polynomial rings and is 
+called weyli::upolynomials. Two di erent representations are provided
+for multivariate polynomials. The weyli::mpolynomial structure type uses a 
+recursive structure, so polynomials can be views as univariate polynomials 
+with polynomial coefficients. This is the classical representation used by 
+systems like Macsyma. The weyli::epolynomial structure is represents
+polynomials as a set of pairs of exponent vectors and coefficients.
+In all three cases, instances of the the polynomial class include a slot called 
+form, in which the data representing the polynomial is kept. These lower level 
+data structures are what is actually passed between low level polynomial 
+routines. For univariate polynomials the form slot contains a vector of the 
+polynomial's coefficients. Instances of weyli::mpolynomial contain a recursive 
+list structure while instances of weyli::epolynomial contain a sorted list of 
+the polynomial's monomials with non-zero coefficients. For efficiency the 
+internal code used by the more complex algorithms uses these internal 
+structures, not instances of the polynomial classes. The algorithms themselves
+however, accept their arguments and return values that are instances of the 
+polynomial classes.
+This approach couples maximum system exibility with efficient representations 
+when needed.
+
+Throughout the remainder of this section we will refer to the classes of 
+these polynomials without the "weyli::" prefix for succinctness.
+
+Multivariate Polynomials (9.5.1)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+There are two basic representations of polynomials, recursive and expanded. 
+The difference between these two is illustrated by the polynomial
+
+.. math::
+
+    x^3 + x^2 (y+ 3 z^3) + x y^3 + y^4.
+    
+which is given in recursive form, and by
+
+.. math:: 
+
+   x^3 + x^2 y + 3 x^2 y^3 + x y^3 + y^4
+   
+in expanded form. Both of these forms express the polynomial as a sum of terms. 
+The expanded polynomial is a somewhat simpler representation since it consists 
+of a sum of monomials in all of the variables. Section 9.5.2 is devoted to 
+this representation. The recursive representation uses terms that are products 
+of x to some power times a polynomial in the remaining variables. This 
+coefficient is then represented recursively as a sum of terms in y with 
+coefficients in the remaining variables. The details of the representation also
+depend on the variable order chosen. In the example given above, we have chosen
+the variable ordering x, y , z. If we had chosen z , y , x, the polynomial 
+would have the following form:
+
+.. math::
+
+    z^3 (3 x^2) + (y^4 + y^3(x) + y (x^2) + x^3).
+    
+Multivariate polynomials are implemented using three di erent levels of structure. 
+First, there is the mpolynomial structure type.
+
+Expanded Polynomials (9.5.2)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+For some important algorithms, especial those of commutative algebra that are 
+based on the Groebner basis algorithm, it is convenient to represent a 
+polynomial as a sorted list of monomials.
+
+As in the previous section we assume that we are representing polynomials in 
+the ring k[x_1,...,x_n], k is assumed to be a ring.
+
+The monomials of an epolynomial are represented by a (simple) vector of 
+n + 1 elements. The rst component of the vector contains the coefficient of 
+the monomial. The remaining components contain the exponents of the variables, 
+represented as Lisp xnums. 
+ 
+Associated with each epolynomial is a function that orders the monomials. 
+These functions canbe provided by the user, but it is usually preferable to 
+let Weyl create them since Weyl's version is usually the most efficient. 
+A selection of ordering function can be produced by the following
+function
+
+.. function:: weyli::make-comparison-fun n list-of-vars &key (total? nil) (new? nil) (reverse? nil) [Function]
+
+   Returns a function that can be used to order the monomial structures used 
+   by epolynomials. n is the number of variables in the ring, or equivalently, 
+   one more then the length of the vectors used to represent the monomials. 
+   list-of-vars is a list of the indices from 1 to n in the order in which 
+   the corresponding exponents should be examined. If total? is specified, 
+   then the total degree of the monomial will be tested before the individual 
+   exponents. weyli::make-comparison-fun tries to reuse functions that were p
+   reviously created. If new? is specified, this is not done and a new function
+   is generated. This is usually only necessary for debugging purposes.
+   
+
+When special orderings of the variables are not needed and one of the standard 
+variable orderings is used, the following function is often more convenient.
+
+.. function:: weyli::get-comparison-fun n type  [Function]
+
+   Returns a function that can be used as to order the monomial structures 
+   used by epolynomials. n is the number of variables ion the ring, or 
+   equivalently, one more than the length of the vectors used to represent 
+   the monomials. type is one of the keywords given the table below.
+   
+::
+
+
+    | :lexical                     Lexical monomial ordering
+    | :revlex                      Reverse lexical monomial ordering
+    | :total-lexical               Monomials are ordered by their total degree. 
+    |                              If they have the same total degree then the 
+    |                              lexical ordering is used to break ties.
+    | :total-revlex                Monomials are ordered by their total degree. If 
+    |                              they have the same total degree then the reverse
+    |                              lexical ordering is used to break ties.
+
+
+Expanded polynomials are created using the following function. Notice that 
+its argument pattern is slightly di erent from that used to create univariate 
+and recursive multivariate polynomials. It is also necessary to provide a 
+term ordering function, such as one returned by weyli::get-comparison-fun.
+
+.. function:: weyli::make-epolynomial domain greater-fun poly-form  [Function]
+
+   Generates an instance of an epolynomial in domain. The terms of the 
+   resulting polynomials are sorted using greater-fun. The argument poly-form 
+   can be any object that can be coerced into the ring domain.
+   
+Univariate Polynomials (9.5.3)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Univariate polynomials are the simplest representation of polynomials used by 
+Weyl and are only intended for special, performance intensive reasons. Their 
+existence should not be visible to the user. Nonetheless, for certain algorithms
+significant performance improvements can be achieved through their use.
+
+
+
+
+
+
 
 

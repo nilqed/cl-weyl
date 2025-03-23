@@ -55,6 +55,12 @@
 <li class="toctree-l2"><a class="reference internal" href="#polynomial-arithmetic-9-2">Polynomial Arithmetic (9.2)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#polynomial-operators-9-3">Polynomial Operators (9.3)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#differential-rings-9-4">Differential Rings (9.4)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#structure-types-for-polynomials-9-5">Structure Types for Polynomials (9.5)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#multivariate-polynomials-9-5-1">Multivariate Polynomials (9.5.1)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#expanded-polynomials-9-5-2">Expanded Polynomials (9.5.2)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#univariate-polynomials-9-5-3">Univariate Polynomials (9.5.3)</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -472,7 +478,178 @@ algorithm given in the book by Zippel.</p>
 <section id="differential-rings-9-4">
 <h2>Differential Rings (9.4)<a class="headerlink" href="#differential-rings-9-4" title="Link to this heading">¶</a></h2>
 <p>Differential rings are polynomial rings that have derivations . A derivation
-of a differential ring</p>
+of a differential ring <span class="math notranslate nohighlight">\(R(x)\)</span> is a map <span class="math notranslate nohighlight">\(\delta\)</span> from R(x) to R(x)
+which has the following properties:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{eqnarray}
+   \delta(a p + b q) &amp;=&amp; a \delta p + b \delta q \\
+   \delta a &amp;=&amp; 0 \\
+   \delta( p q) &amp;=&amp; p \delta q + q \delta p.
+\end{eqnarray}\end{split}\]</div>
+<p>where a,b in R and p and q are not elements of R.</p>
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">get-differential-ring</span> <span class="pre">domain</span> <span class="pre">variables</span>&#160;&#160;&#160; <span class="pre">[Function]</span></span></dt>
+<dd><p>Return a differential ring whose coefficients lie in domain and which
+contains the variables variables.</p>
+</dd></dl>
+
+<p>For example:</p>
+<div class="highlight-lisp notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="nb">defvar</span><span class="w"> </span><span class="nv">DR</span><span class="w"> </span><span class="p">(</span><span class="nv">get-differential-ring</span><span class="w"> </span><span class="p">(</span><span class="nv">get-rational-integers</span><span class="p">)</span><span class="w"> </span><span class="o">&#39;</span><span class="p">(</span><span class="nv">x</span><span class="w"> </span><span class="nv">y</span><span class="p">))</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="nv">Z&lt;x,</span><span class="w"> </span><span class="nv">y&gt;</span>
+
+<span class="nb">not</span><span class="w"> </span><span class="nv">working</span><span class="w"> </span><span class="p">(</span><span class="nv">SBCL</span><span class="p">)</span><span class="err">:</span><span class="w"> </span><span class="nv">todo</span>
+</pre></div>
+</div>
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">derivation</span> <span class="pre">p</span>&#160;&#160; <span class="pre">[Function]</span></span></dt>
+<dd><p>Returns the derivative of the di erential polynomial p .</p>
+</dd></dl>
+
+<p>For example:</p>
+<div class="highlight-lisp notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="k">setq</span><span class="w"> </span><span class="nv">p</span><span class="w"> </span><span class="p">(</span><span class="nb">expt</span><span class="w"> </span><span class="p">(</span><span class="nb">+</span><span class="w"> </span><span class="p">(</span><span class="nb">coerce</span><span class="w"> </span><span class="ss">&#39;x</span><span class="w"> </span><span class="nv">r</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="nb">coerce</span><span class="w"> </span><span class="ss">&#39;y</span><span class="w"> </span><span class="nv">r</span><span class="p">))</span><span class="w"> </span><span class="mi">2</span><span class="p">))</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="nv">x^2</span><span class="w"> </span><span class="nb">+</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="nv">y</span><span class="w"> </span><span class="nv">x</span><span class="w"> </span><span class="nb">+</span><span class="w"> </span><span class="nv">y^2</span>
+
+<span class="p">(</span><span class="nv">deriv</span><span class="w"> </span><span class="nv">p</span><span class="p">)</span>
+
+<span class="nv">=&gt;</span><span class="w"> </span><span class="p">(</span><span class="mi">2</span><span class="w"> </span><span class="nv">D{x,</span><span class="w"> </span><span class="nv">1}</span><span class="w"> </span><span class="nb">+</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="nv">D{y,</span><span class="w"> </span><span class="nv">1}</span><span class="p">)</span><span class="w"> </span><span class="nv">x</span><span class="w"> </span><span class="nb">+</span><span class="w"> </span><span class="p">((</span><span class="mi">2</span><span class="w"> </span><span class="nv">D{x,</span><span class="w"> </span><span class="nv">1}</span><span class="w"> </span><span class="nb">+</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="nv">D{y,</span><span class="w"> </span><span class="nv">1}</span><span class="p">)</span><span class="w"> </span><span class="nv">y</span><span class="p">)</span>
+</pre></div>
+</div>
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">variable-derivation</span> <span class="pre">domain</span> <span class="pre">variable</span>&#160;&#160;&#160;&#160; <span class="pre">[Function]</span></span></dt>
+<dd><p>Returns the derivative of variable . The derivative can be either an element
+of domain, or :generate which indicates that the derivative will be a new
+variable which is yet to be created.</p>
+</dd></dl>
+
+<p>The derivative of a variable can be set using setf.</p>
+</section>
+<section id="structure-types-for-polynomials-9-5">
+<h2>Structure Types for Polynomials (9.5)<a class="headerlink" href="#structure-types-for-polynomials-9-5" title="Link to this heading">¶</a></h2>
+<p>This section discusses the internal structures used represent polynomials.
+This material is only of value for those problems that require especially
+efficient access to the low level polynomial primitives in Weyl.</p>
+<p>Polynomials are represented using one of three different structure types.
+The class structure of these types is given in Figure 9.1. The simplest
+structure is only used by elements of univariate polynomial rings and is
+called weyli::upolynomials. Two di erent representations are provided
+for multivariate polynomials. The weyli::mpolynomial structure type uses a
+recursive structure, so polynomials can be views as univariate polynomials
+with polynomial coefficients. This is the classical representation used by
+systems like Macsyma. The weyli::epolynomial structure is represents
+polynomials as a set of pairs of exponent vectors and coefficients.
+In all three cases, instances of the the polynomial class include a slot called
+form, in which the data representing the polynomial is kept. These lower level
+data structures are what is actually passed between low level polynomial
+routines. For univariate polynomials the form slot contains a vector of the
+polynomial’s coefficients. Instances of weyli::mpolynomial contain a recursive
+list structure while instances of weyli::epolynomial contain a sorted list of
+the polynomial’s monomials with non-zero coefficients. For efficiency the
+internal code used by the more complex algorithms uses these internal
+structures, not instances of the polynomial classes. The algorithms themselves
+however, accept their arguments and return values that are instances of the
+polynomial classes.
+This approach couples maximum system exibility with efficient representations
+when needed.</p>
+<p>Throughout the remainder of this section we will refer to the classes of
+these polynomials without the “weyli::” prefix for succinctness.</p>
+<section id="multivariate-polynomials-9-5-1">
+<h3>Multivariate Polynomials (9.5.1)<a class="headerlink" href="#multivariate-polynomials-9-5-1" title="Link to this heading">¶</a></h3>
+<p>There are two basic representations of polynomials, recursive and expanded.
+The difference between these two is illustrated by the polynomial</p>
+<div class="math notranslate nohighlight">
+\[x^3 + x^2 (y+ 3 z^3) + x y^3 + y^4.\]</div>
+<p>which is given in recursive form, and by</p>
+<div class="math notranslate nohighlight">
+\[x^3 + x^2 y + 3 x^2 y^3 + x y^3 + y^4\]</div>
+<p>in expanded form. Both of these forms express the polynomial as a sum of terms.
+The expanded polynomial is a somewhat simpler representation since it consists
+of a sum of monomials in all of the variables. Section 9.5.2 is devoted to
+this representation. The recursive representation uses terms that are products
+of x to some power times a polynomial in the remaining variables. This
+coefficient is then represented recursively as a sum of terms in y with
+coefficients in the remaining variables. The details of the representation also
+depend on the variable order chosen. In the example given above, we have chosen
+the variable ordering x, y , z. If we had chosen z , y , x, the polynomial
+would have the following form:</p>
+<div class="math notranslate nohighlight">
+\[z^3 (3 x^2) + (y^4 + y^3(x) + y (x^2) + x^3).\]</div>
+<p>Multivariate polynomials are implemented using three di erent levels of structure.
+First, there is the mpolynomial structure type.</p>
+</section>
+<section id="expanded-polynomials-9-5-2">
+<h3>Expanded Polynomials (9.5.2)<a class="headerlink" href="#expanded-polynomials-9-5-2" title="Link to this heading">¶</a></h3>
+<p>For some important algorithms, especial those of commutative algebra that are
+based on the Groebner basis algorithm, it is convenient to represent a
+polynomial as a sorted list of monomials.</p>
+<p>As in the previous section we assume that we are representing polynomials in
+the ring k[x_1,…,x_n], k is assumed to be a ring.</p>
+<p>The monomials of an epolynomial are represented by a (simple) vector of
+n + 1 elements. The rst component of the vector contains the coefficient of
+the monomial. The remaining components contain the exponents of the variables,
+represented as Lisp xnums.</p>
+<p>Associated with each epolynomial is a function that orders the monomials.
+These functions canbe provided by the user, but it is usually preferable to
+let Weyl create them since Weyl’s version is usually the most efficient.
+A selection of ordering function can be produced by the following
+function</p>
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">weyli::make-comparison-fun</span> <span class="pre">n</span> <span class="pre">list-of-vars</span> <span class="pre">&amp;key</span> <span class="pre">(total?</span> <span class="pre">nil)</span> <span class="pre">(new?</span> <span class="pre">nil)</span> <span class="pre">(reverse?</span> <span class="pre">nil)</span> <span class="pre">[Function]</span></span></dt>
+<dd><p>Returns a function that can be used to order the monomial structures used
+by epolynomials. n is the number of variables in the ring, or equivalently,
+one more then the length of the vectors used to represent the monomials.
+list-of-vars is a list of the indices from 1 to n in the order in which
+the corresponding exponents should be examined. If total? is specified,
+then the total degree of the monomial will be tested before the individual
+exponents. weyli::make-comparison-fun tries to reuse functions that were p
+reviously created. If new? is specified, this is not done and a new function
+is generated. This is usually only necessary for debugging purposes.</p>
+</dd></dl>
+
+<p>When special orderings of the variables are not needed and one of the standard
+variable orderings is used, the following function is often more convenient.</p>
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">weyli::get-comparison-fun</span> <span class="pre">n</span> <span class="pre">type</span>&#160; <span class="pre">[Function]</span></span></dt>
+<dd><p>Returns a function that can be used as to order the monomial structures
+used by epolynomials. n is the number of variables ion the ring, or
+equivalently, one more than the length of the vectors used to represent
+the monomials. type is one of the keywords given the table below.</p>
+</dd></dl>
+
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">|</span> <span class="p">:</span><span class="n">lexical</span>                     <span class="n">Lexical</span> <span class="n">monomial</span> <span class="n">ordering</span>
+<span class="o">|</span> <span class="p">:</span><span class="n">revlex</span>                      <span class="n">Reverse</span> <span class="n">lexical</span> <span class="n">monomial</span> <span class="n">ordering</span>
+<span class="o">|</span> <span class="p">:</span><span class="n">total</span><span class="o">-</span><span class="n">lexical</span>               <span class="n">Monomials</span> <span class="n">are</span> <span class="n">ordered</span> <span class="n">by</span> <span class="n">their</span> <span class="n">total</span> <span class="n">degree</span><span class="o">.</span>
+<span class="o">|</span>                              <span class="n">If</span> <span class="n">they</span> <span class="n">have</span> <span class="n">the</span> <span class="n">same</span> <span class="n">total</span> <span class="n">degree</span> <span class="n">then</span> <span class="n">the</span>
+<span class="o">|</span>                              <span class="n">lexical</span> <span class="n">ordering</span> <span class="ow">is</span> <span class="n">used</span> <span class="n">to</span> <span class="k">break</span> <span class="n">ties</span><span class="o">.</span>
+<span class="o">|</span> <span class="p">:</span><span class="n">total</span><span class="o">-</span><span class="n">revlex</span>                <span class="n">Monomials</span> <span class="n">are</span> <span class="n">ordered</span> <span class="n">by</span> <span class="n">their</span> <span class="n">total</span> <span class="n">degree</span><span class="o">.</span> <span class="n">If</span>
+<span class="o">|</span>                              <span class="n">they</span> <span class="n">have</span> <span class="n">the</span> <span class="n">same</span> <span class="n">total</span> <span class="n">degree</span> <span class="n">then</span> <span class="n">the</span> <span class="n">reverse</span>
+<span class="o">|</span>                              <span class="n">lexical</span> <span class="n">ordering</span> <span class="ow">is</span> <span class="n">used</span> <span class="n">to</span> <span class="k">break</span> <span class="n">ties</span><span class="o">.</span>
+</pre></div>
+</div>
+<p>Expanded polynomials are created using the following function. Notice that
+its argument pattern is slightly di erent from that used to create univariate
+and recursive multivariate polynomials. It is also necessary to provide a
+term ordering function, such as one returned by weyli::get-comparison-fun.</p>
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">weyli::make-epolynomial</span> <span class="pre">domain</span> <span class="pre">greater-fun</span> <span class="pre">poly-form</span>&#160; <span class="pre">[Function]</span></span></dt>
+<dd><p>Generates an instance of an epolynomial in domain. The terms of the
+resulting polynomials are sorted using greater-fun. The argument poly-form
+can be any object that can be coerced into the ring domain.</p>
+</dd></dl>
+
+</section>
+<section id="univariate-polynomials-9-5-3">
+<h3>Univariate Polynomials (9.5.3)<a class="headerlink" href="#univariate-polynomials-9-5-3" title="Link to this heading">¶</a></h3>
+<p>Univariate polynomials are the simplest representation of polynomials used by
+Weyl and are only intended for special, performance intensive reasons. Their
+existence should not be visible to the user. Nonetheless, for certain algorithms
+significant performance improvements can be achieved through their use.</p>
+</section>
 </section>
 </section>
 
