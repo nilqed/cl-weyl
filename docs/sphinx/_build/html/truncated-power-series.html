@@ -1,0 +1,495 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Truncated Power Series &mdash; Weyl 0.2 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/documentation_options.js?v=10f1778b"></script>
+      <script src="_static/doctools.js?v=888ff710"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Algebraic Structures" href="algebraic-structures.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Weyl
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="getting-started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="basics.html">Basics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="generic-tools.html">Generic Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="scalar-domains.html">Scalar Domains</a></li>
+<li class="toctree-l1"><a class="reference internal" href="general.html">General Expressions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sums.html">Sums, Products and Quotients of Domains</a></li>
+<li class="toctree-l1"><a class="reference internal" href="linear-spaces.html">Linear Spaces</a></li>
+<li class="toctree-l1"><a class="reference internal" href="polynomial-rings.html">Polynomial Rings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="algebraic-structures.html">Algebraic Structures</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Truncated Power Series</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#creating-truncated-power-series-domains-11-1">Creating Truncated Power Series Domains (11.1)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#truncated-power-series-operators-11-2">Truncated Power Series Operators (11.2)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#truncated-power-series-internals-11-3">Truncated Power Series Internals (11.3)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#enumerated-truncate-power-series-11-3-1">Enumerated Truncate Power Series (11.3.1)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Weyl</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Truncated Power Series</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/truncated-power-series.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="truncated-power-series">
+<h1>Truncated Power Series<a class="headerlink" href="#truncated-power-series" title="Link to this heading">¶</a></h1>
+<p>Formal power series are in nite degree polynomials, where the arithmetic
+operations are de ned formally using the same rules as a polynomial arithmetic.
+Thus</p>
+<div class="math notranslate nohighlight">
+\[f(x) = \sum_{0\leq i} a_i\,x^i = a_0 + a_1 x + a_2 x^2 + \ldots,\]</div>
+<p>is a power series, and we have</p>
+<div class="math notranslate nohighlight">
+\[(\sum_{0\leq i} a_i\,x^i) (\sum_{0\leq i} b_i\,x^i)  =
+      \sum_{0\leq i} (\sum_{0\leq j \leq i} a_i\,b_{i-j}) \,x^i.\]</div>
+<p>Some operations are possible with formal power series that are not possible with
+polynomials. For instance, if the leading coefficient of a formal power series
+is invertible then the formal power series has a reciprocal.</p>
+<p>Rings of formal power series are denoted using a similar notation to that used
+for polynomials except that the brackets are doubled. Thus, Z[[x]] and Q[t][[x]]
+represent rings of formal power series in x whose coefficients are rational
+integers and polynomials with rational number coefficients.</p>
+<p>The quotient field of a ring of formal power series consists of formal power
+series whose leading term can have negative order. For example, we have</p>
+<div class="math notranslate nohighlight">
+\[(x+x^2+\ldots)^{-1} = \frac{1}{x}-1+\ldots.\]</div>
+<p>The field of formal power series is denoted using doubled parenthesis similar
+adaptation to the notation for the eld of rational functions. Thus, R((x)) is
+the field of formal power series with real number coefficients.</p>
+<p>In mathematics one also deals with regular power series, which are formal power
+series that are convergent in some sense. Thus, while</p>
+<div class="math notranslate nohighlight">
+\[1+ 2 x + 3! x^2 + 4! x^3 + \ldots,\]</div>
+<p>is a perfectly reasonable formal power series, but it is not convergent for any
+value of x. When one represents physical quantities, convergent power series
+are usually more interesting, since they can actually be evaluated. However,
+arithmetic operations with power series may shrink their radius of convergence,
+and keeping track of the radius of convergence throughout the computation can
+be quite difficult. Instead, it is often more convenient to deal with formal
+power series and leave the convergence issues to later.</p>
+<p>While Weyl does not have a representation for the power series
+(either convergent or formal), it does provide tools for manipulating truncated
+power series. A truncated power series only contains those monomials of a formal
+power series that have degree less than some bound. Thus, while the function
+sin x has the infinite power series expansion</p>
+<div class="math notranslate nohighlight">
+\[sin x = x - \frac{x^3}{6} + \frac{x^5}{120} - \frac{x^7}{5040}+\ldots.\]</div>
+<p>its truncated power series expansion is</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="p">(</span><span class="n">setq</span> <span class="n">sinx</span> <span class="p">(</span><span class="n">taylor</span> <span class="p">(</span><span class="n">sin</span> <span class="n">qx</span><span class="p">)</span> <span class="n">domain</span> <span class="mi">5</span><span class="p">))</span>
+<span class="n">x</span> <span class="o">-</span> <span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="mi">6</span><span class="p">)</span><span class="n">x</span><span class="o">^</span><span class="mi">3</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="mi">120</span><span class="p">)</span><span class="n">x</span><span class="o">^</span><span class="mi">5</span> <span class="o">-</span> <span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="mi">5040</span><span class="p">)</span><span class="n">x</span><span class="o">^</span><span class="mi">7</span> <span class="o">+</span> <span class="n">o</span><span class="p">(</span><span class="n">x</span><span class="o">^</span><span class="mi">5</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The small “o” notation indicates that all terms of order greater than 5 have
+been ignored. The argument domain is some domain of truncated power series.</p>
+<p>The following sections describe the tools provided by Weyl for computing with
+formal power series.</p>
+<section id="creating-truncated-power-series-domains-11-1">
+<h2>Creating Truncated Power Series Domains (11.1)<a class="headerlink" href="#creating-truncated-power-series-domains-11-1" title="Link to this heading">¶</a></h2>
+<p>Truncate power series rings and elds can be created using the function
+get-tpower-series.</p>
+<p>The following form creates the ring of power series with rational integer
+coefficients</p>
+<div class="highlight-lisp notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="nv">weyli::get-tpower-series-domain</span><span class="w"> </span><span class="p">(</span><span class="nv">get-rational-integers</span><span class="p">)</span><span class="w"> </span><span class="ss">&#39;x</span><span class="p">)</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="nv">Z[[x]]</span>
+</pre></div>
+</div>
+<p>Notice that this domain is actually a ring and not a field is indicated by
+the square brackets. When a power series domain is created over a field,
+round brackets are used:</p>
+<div class="highlight-lisp notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="nb">defvar</span><span class="w">  </span><span class="nv">domain</span><span class="w"> </span><span class="p">(</span><span class="nv">get-tpower-series-domain</span><span class="w"> </span><span class="p">(</span><span class="nv">get-rational-numbers</span><span class="p">)</span><span class="w"> </span><span class="ss">&#39;x</span><span class="p">))</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="nv">DOMAIN</span>
+
+<span class="nv">domain</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="nv">Q</span><span class="p">((</span><span class="nv">x</span><span class="p">))</span>
+
+<span class="p">(</span><span class="nb">defvar</span><span class="w">  </span><span class="nv">sinx</span><span class="w"> </span><span class="p">(</span><span class="nv">taylor</span><span class="w"> </span><span class="p">(</span><span class="nb">sin</span><span class="w"> </span><span class="ss">&#39;x</span><span class="p">)</span><span class="w"> </span><span class="nv">domain</span><span class="w"> </span><span class="mi">5</span><span class="p">))</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="nv">SINX</span>
+
+<span class="nv">sinx</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="nv">x</span><span class="w"> </span><span class="nb">-</span><span class="w"> </span><span class="p">(</span><span class="m">1/6</span><span class="p">)</span><span class="nv">x^3</span><span class="w"> </span><span class="nb">+</span><span class="w"> </span><span class="p">(</span><span class="m">1/120</span><span class="p">)</span><span class="nv">x^5</span><span class="w"> </span><span class="nb">+</span><span class="w"> </span><span class="nv">o</span><span class="p">(</span><span class="nv">x^5</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="truncated-power-series-operators-11-2">
+<h2>Truncated Power Series Operators (11.2)<a class="headerlink" href="#truncated-power-series-operators-11-2" title="Link to this heading">¶</a></h2>
+<p>The simplest way to actually create a truncated power series is to use the
+Taylor series expansion function:</p>
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">taylor</span> <span class="pre">expr</span> <span class="pre">tps-domain</span> <span class="pre">order</span>&#160;&#160; <span class="pre">[Function]</span></span></dt>
+<dd><p>Returns the power expansion of the general expression expr as a truncated
+power series of order order in the domain tps-domain. The variable of
+expansion will be the power series variable of tps-domain.</p>
+</dd></dl>
+
+<p>For instance, to compute the power series expansion of sin x one could type</p>
+<div class="highlight-lisp notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="k">setq</span><span class="w"> </span><span class="nv">sinx</span><span class="w"> </span><span class="p">(</span><span class="nv">taylor</span><span class="w"> </span><span class="p">(</span><span class="nb">sin</span><span class="w"> </span><span class="ss">&#39;x</span><span class="p">)</span><span class="w"> </span><span class="nv">domain</span><span class="w"> </span><span class="mi">8</span><span class="p">))</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="nv">x</span><span class="w"> </span><span class="nb">-</span><span class="w"> </span><span class="p">(</span><span class="m">1/6</span><span class="p">)</span><span class="nv">x^3</span><span class="w"> </span><span class="nb">+</span><span class="w"> </span><span class="p">(</span><span class="m">1/120</span><span class="p">)</span><span class="nv">x^5</span><span class="w"> </span><span class="nb">-</span><span class="w"> </span><span class="p">(</span><span class="m">1/5040</span><span class="p">)</span><span class="nv">x^7</span><span class="w"> </span><span class="nb">+</span><span class="w"> </span><span class="nv">o</span><span class="p">(</span><span class="nv">x^8</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The taylor function also works with more complex functions.</p>
+<div class="highlight-lisp notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="nb">defvar</span><span class="w">  </span><span class="nv">temp1</span><span class="w"> </span><span class="p">(</span><span class="nv">taylor</span><span class="w"> </span><span class="p">(</span><span class="nb">cos</span><span class="w"> </span><span class="p">(</span><span class="nb">sin</span><span class="w"> </span><span class="ss">&#39;x</span><span class="p">))</span><span class="w"> </span><span class="nv">domain</span><span class="w">  </span><span class="mi">5</span><span class="p">))</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="nv">TEMP1</span>
+
+<span class="nv">temp1</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="nb">-</span><span class="w"> </span><span class="p">(</span><span class="m">1/2</span><span class="p">)</span><span class="nv">x^2</span><span class="w"> </span><span class="nb">+</span><span class="w"> </span><span class="p">(</span><span class="m">5/24</span><span class="p">)</span><span class="nv">x^4</span><span class="w"> </span><span class="nb">+</span><span class="w"> </span><span class="nv">o</span><span class="p">(</span><span class="nv">x^5</span><span class="p">)</span>
+
+<span class="p">(</span><span class="nb">defvar</span><span class="w">  </span><span class="nv">temp2</span><span class="w"> </span><span class="p">(</span><span class="nv">taylor</span><span class="w"> </span><span class="p">(</span><span class="nb">sin</span><span class="w"> </span><span class="p">(</span><span class="nb">sin</span><span class="w"> </span><span class="ss">&#39;x</span><span class="p">))</span><span class="w"> </span><span class="nv">domain</span><span class="w"> </span><span class="mi">5</span><span class="p">))</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="nv">TEMP2</span>
+
+<span class="nv">temp2</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="nv">x</span><span class="w"> </span><span class="nb">-</span><span class="w"> </span><span class="p">(</span><span class="m">1/3</span><span class="p">)</span><span class="nv">x^3</span><span class="w"> </span><span class="nb">+</span><span class="w"> </span><span class="p">(</span><span class="m">1/10</span><span class="p">)</span><span class="nv">x^5</span><span class="w"> </span><span class="nb">+</span><span class="w"> </span><span class="nv">o</span><span class="p">(</span><span class="nv">x^5</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Arithmetic operations can also be performed with power series expressions:</p>
+<div class="highlight-lisp notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="nb">+</span><span class="w"> </span><span class="p">(</span><span class="nb">*</span><span class="w"> </span><span class="nv">temp1</span><span class="w"> </span><span class="nv">temp1</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="nb">expt</span><span class="w"> </span><span class="nv">temp2</span><span class="w"> </span><span class="mi">2</span><span class="p">))</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="nb">+</span><span class="w"> </span><span class="nv">o</span><span class="p">(</span><span class="nv">x^5</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Although taylor returns a truncated power series approximation to the power
+series expansion of the expression, if the coefficient arithmetic is exact,
+then every coefficient returned will be exact. So, in this case up to order 5,
+the only non-zero term in the power series expansion is 1. Truncated power
+series can be manipulated with the usual arithmetic operations. For binary
+operations, the order of the result may be reduced to ensure that only the
+known coefficients are advertised as known. For instance, although temp2 has
+order 5 its sum with a truncated power series of order 3 is only of order 3.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="o">+</span> <span class="n">temp2</span> <span class="p">(</span><span class="n">taylor</span> <span class="p">(</span><span class="n">sin</span> <span class="s1">&#39;x) domain 3))</span>
+<span class="o">=&gt;</span> <span class="mi">2</span><span class="n">x</span> <span class="o">-</span> <span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span><span class="n">x</span><span class="o">^</span><span class="mi">3</span> <span class="o">+</span> <span class="n">o</span><span class="p">(</span><span class="n">x</span><span class="o">^</span><span class="mi">3</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Notice also, the even unary operations can yield results with different
+orders, viz.,</p>
+<div class="highlight-lisp notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="nb">*</span><span class="w"> </span><span class="nv">temp2</span><span class="w"> </span><span class="nv">temp2</span><span class="p">)</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="nv">x^2</span><span class="w"> </span><span class="nb">-</span><span class="w"> </span><span class="p">(</span><span class="m">2/3</span><span class="p">)</span><span class="nv">x^4</span><span class="w"> </span><span class="nb">+</span><span class="w"> </span><span class="p">(</span><span class="m">14/45</span><span class="p">)</span><span class="nv">x^6</span><span class="w"> </span><span class="nb">+</span><span class="w"> </span><span class="nv">o</span><span class="p">(</span><span class="nv">x^6</span><span class="p">)</span>
+
+<span class="p">(</span><span class="nb">expt</span><span class="w"> </span><span class="nv">temp2</span><span class="w"> </span><span class="mi">-3</span><span class="p">)</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="nv">x^</span><span class="p">(</span><span class="mi">-3</span><span class="p">)</span><span class="w"> </span><span class="nb">+</span><span class="w"> </span><span class="nv">x^</span><span class="p">(</span><span class="mi">-1</span><span class="p">)</span><span class="w"> </span><span class="nb">+</span><span class="w"> </span><span class="p">(</span><span class="m">11/30</span><span class="p">)</span><span class="nv">x</span><span class="w"> </span><span class="nb">+</span><span class="w"> </span><span class="nv">o</span><span class="p">(</span><span class="nv">x</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Nonetheless, when the taylor function is requested to compute the power series
+expansion to a given order, it computes the internal subexpressions to a
+sufficiently high order, to ensure that the correct coefficients are computed</p>
+<div class="highlight-lisp notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="nb">expt</span><span class="w"> </span><span class="p">(</span><span class="nb">-</span><span class="w"> </span><span class="nv">temp1</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="mi">-3</span><span class="p">)</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="p">(</span><span class="mi">-8</span><span class="p">)</span><span class="nv">x^</span><span class="p">(</span><span class="mi">-6</span><span class="p">)</span><span class="w"> </span><span class="nb">-</span><span class="w"> </span><span class="nv">10x^</span><span class="p">(</span><span class="mi">-4</span><span class="p">)</span><span class="w"> </span><span class="nb">+</span><span class="w"> </span><span class="nv">o</span><span class="p">(</span><span class="nv">x^</span><span class="p">(</span><span class="mi">-3</span><span class="p">))</span>
+
+<span class="p">(</span><span class="nv">taylor</span><span class="w"> </span><span class="p">(</span><span class="nb">expt</span><span class="w"> </span><span class="p">(</span><span class="nb">-</span><span class="w"> </span><span class="p">(</span><span class="nb">cos</span><span class="w"> </span><span class="p">(</span><span class="nb">sin</span><span class="w"> </span><span class="ss">&#39;x</span><span class="p">))</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="mi">-3</span><span class="p">)</span><span class="w"> </span><span class="nv">domain</span><span class="w"> </span><span class="mi">5</span><span class="p">)</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="p">(</span><span class="mi">-8</span><span class="p">)</span><span class="nv">x^</span><span class="p">(</span><span class="mi">-6</span><span class="p">)</span><span class="w"> </span><span class="nb">-</span><span class="w"> </span><span class="nv">10x^</span><span class="p">(</span><span class="mi">-4</span><span class="p">)</span><span class="w"> </span><span class="nb">-</span><span class="w"> </span><span class="p">(</span><span class="m">88/15</span><span class="p">)</span><span class="nv">x^</span><span class="p">(</span><span class="mi">-2</span><span class="p">)</span><span class="w"> </span><span class="nb">-</span><span class="w"> </span><span class="m">16783/7560</span><span class="w"> </span><span class="nb">-</span><span class="w"> </span><span class="p">(</span><span class="m">32267/50400</span><span class="p">)</span><span class="nv">x^2</span><span class="w"> </span><span class="nb">-</span>
+<span class="w">       </span><span class="p">(</span><span class="m">1045753/6652800</span><span class="p">)</span><span class="nv">x^4</span><span class="w"> </span><span class="nb">+</span><span class="w"> </span><span class="nv">o</span><span class="p">(</span><span class="nv">x^5</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The power series package can also deal with power series with fractional
+exponents. For instance,</p>
+<div class="highlight-lisp notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="nb">expt</span><span class="w"> </span><span class="p">(</span><span class="nv">taylor</span><span class="w"> </span><span class="p">(</span><span class="nb">sin</span><span class="w"> </span><span class="ss">&#39;x</span><span class="p">)</span><span class="w"> </span><span class="nv">domain</span><span class="w">  </span><span class="mi">5</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="nb">-</span><span class="w"> </span><span class="p">(</span><span class="nb">/</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="mi">3</span><span class="p">)))</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="nv">x^</span><span class="p">(</span><span class="m">-1/3</span><span class="p">)</span><span class="w"> </span><span class="nb">+</span><span class="w"> </span><span class="p">(</span><span class="m">1/18</span><span class="p">)</span><span class="nv">x^</span><span class="p">(</span><span class="m">5/3</span><span class="p">)</span><span class="w"> </span><span class="nb">+</span><span class="w"> </span><span class="p">(</span><span class="m">11/3240</span><span class="p">)</span><span class="nv">x^</span><span class="p">(</span><span class="m">11/3</span><span class="p">)</span><span class="w"> </span><span class="nb">+</span><span class="w"> </span><span class="nv">o</span><span class="p">(</span><span class="nv">x^</span><span class="p">(</span><span class="m">11/3</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>One power series can be substituted into another using the substitute function.
+In addition, derivatives of power series can also be computed using deriv.</p>
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">substitute</span> <span class="pre">value</span> <span class="pre">var</span> <span class="pre">tps</span>&#160;&#160; <span class="pre">[Function]</span></span></dt>
+<dd><p>Returns the truncated power series computed by substituting the truncated
+power series value for the ring variable in tps. The general expression
+variable var should be equal to the ring variable of the domain of tps.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">deriv</span> <span class="pre">tps</span> <span class="pre">&amp;rest</span> <span class="pre">vars</span>&#160;&#160;&#160; <span class="pre">[Function]</span></span></dt>
+<dd><p>The derivative of the tps with respect to each variable in vars is computed
+successively and the final truncated power series is returned.</p>
+</dd></dl>
+
+<p>For instance, another way to compute the first few terms of the power series
+of sin sin x is to substitute the power series of sin x into itself</p>
+<div class="highlight-lisp notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="nb">substitute</span><span class="w"> </span><span class="p">(</span><span class="nv">taylor</span><span class="w"> </span><span class="p">(</span><span class="nb">sin</span><span class="w"> </span><span class="ss">&#39;x</span><span class="p">)</span><span class="w"> </span><span class="nv">domain</span><span class="w">  </span><span class="mi">5</span><span class="p">)</span><span class="w"> </span><span class="ss">&#39;x</span><span class="w"> </span><span class="p">(</span><span class="nv">taylor</span><span class="w"> </span><span class="p">(</span><span class="nb">sin</span><span class="w"> </span><span class="ss">&#39;x</span><span class="p">)</span><span class="w"> </span><span class="nv">domain</span><span class="w">  </span><span class="mi">5</span><span class="p">))</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="nv">x</span><span class="w"> </span><span class="nb">-</span><span class="w"> </span><span class="p">(</span><span class="m">1/3</span><span class="p">)</span><span class="nv">x^3</span><span class="w"> </span><span class="nb">+</span><span class="w"> </span><span class="p">(</span><span class="m">1/10</span><span class="p">)</span><span class="nv">x^5</span><span class="w"> </span><span class="nb">+</span><span class="w"> </span><span class="nv">o</span><span class="p">(</span><span class="nv">x^5</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>As mentioned, before the order of the resulting power series expansion may be
+less than the order of arguments.</p>
+<div class="highlight-lisp notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="nv">deriv</span><span class="w"> </span><span class="p">(</span><span class="nb">substitute</span><span class="w"> </span><span class="p">(</span><span class="nv">taylor</span><span class="w"> </span><span class="p">(</span><span class="nb">sin</span><span class="w"> </span><span class="ss">&#39;x</span><span class="p">)</span><span class="w"> </span><span class="nv">domain</span><span class="w">  </span><span class="mi">5</span><span class="p">)</span><span class="w"> </span><span class="ss">&#39;x</span><span class="w"> </span><span class="p">(</span><span class="nv">taylor</span><span class="w"> </span><span class="p">(</span><span class="nb">sin</span><span class="w"> </span><span class="ss">&#39;x</span><span class="p">)</span><span class="w"> </span><span class="nv">domain</span><span class="w">  </span><span class="mi">5</span><span class="p">))</span><span class="ss">&#39;x</span><span class="p">)</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="nb">-</span><span class="w"> </span><span class="nv">x^2</span><span class="w"> </span><span class="nb">+</span><span class="w"> </span><span class="p">(</span><span class="m">1/2</span><span class="p">)</span><span class="nv">x^4</span><span class="w"> </span><span class="nb">+</span><span class="w"> </span><span class="nv">o</span><span class="p">(</span><span class="nv">x^4</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>One of the operations that can be performed with power series that cannot be
+performed with polynomials is the reversion. That is, given a power series
+for <span class="math notranslate nohighlight">\(f(x)\)</span>, we can compute the power series for <span class="math notranslate nohighlight">\(f^{-1} (x)\)</span>.
+This computation  is performed by the function revert</p>
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">revert</span> <span class="pre">tps</span>&#160;&#160;&#160;&#160;&#160; <span class="pre">[Function]</span></span></dt>
+<dd><p>Returns the truncated power series that is the reversion of tps.</p>
+</dd></dl>
+
+<p>For instance, given the power series expansion for sin x</p>
+<p>we can compute the reversion of sin x as follows:</p>
+<div class="highlight-lisp notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="nv">reversion</span><span class="w"> </span><span class="nv">sinx</span><span class="p">)</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="nv">x</span><span class="w"> </span><span class="nb">+</span><span class="w"> </span><span class="p">(</span><span class="m">1/6</span><span class="p">)</span><span class="nv">x^3</span><span class="w"> </span><span class="nb">+</span><span class="w"> </span><span class="p">(</span><span class="m">3/40</span><span class="p">)</span><span class="nv">x^5</span><span class="w"> </span><span class="nb">+</span><span class="w"> </span><span class="p">(</span><span class="m">5/112</span><span class="p">)</span><span class="nv">x^7</span><span class="w"> </span><span class="nb">+</span><span class="w"> </span><span class="p">(</span><span class="m">35/1152</span><span class="p">)</span><span class="nv">x^9</span><span class="w"> </span><span class="nb">+</span><span class="w"> </span><span class="nv">o</span><span class="p">(</span><span class="nv">x^10</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>If we substitute the reversion of sinx obtained above for x in sinx, we
+should get x, as expected:</p>
+<div class="highlight-lisp notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="nb">substitute</span><span class="w"> </span><span class="p">(</span><span class="nv">reversion</span><span class="w"> </span><span class="nv">sinx</span><span class="p">)</span><span class="w"> </span><span class="ss">&#39;x</span><span class="w"> </span><span class="nv">sinx</span><span class="p">)</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="nv">x</span><span class="w"> </span><span class="nb">+</span><span class="w"> </span><span class="nv">o</span><span class="p">(</span><span class="nv">x^10</span><span class="p">)</span>
+</pre></div>
+</div>
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">solve-diff-eqn</span> <span class="pre">diff-eqn</span> <span class="pre">coef-ring</span> <span class="pre">var</span> <span class="pre">order</span> <span class="pre">init-list</span>&#160; <span class="pre">[Function]</span></span></dt>
+<dd><p>Solves the differential equation diff-eqn given in the form of a general
+expression. The solution is given as a truncated power series of order order
+with coeffcients in the coef-ring with var taken as the ring variable. The
+init-list is the list of initial values of length equal to the order of the
+diff-eqn.</p>
+</dd></dl>
+
+<p>The following examples illustrate how to obtain power series solutions to
+ordinary differential equations in one variable:</p>
+<div class="highlight-lisp notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="nb">defvar</span><span class="w">  </span><span class="nv">y</span><span class="w"> </span><span class="p">(</span><span class="nv">funct</span><span class="w"> </span><span class="nv">y</span><span class="w"> </span><span class="ss">&#39;x</span><span class="p">))</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="nv">Y</span>
+
+<span class="p">(</span><span class="nb">defvar</span><span class="w"> </span><span class="nv">y0</span><span class="w"> </span><span class="p">(</span><span class="nv">deriv</span><span class="w"> </span><span class="nv">y</span><span class="w"> </span><span class="ss">&#39;x</span><span class="p">))</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="nv">Y0</span>
+
+<span class="p">(</span><span class="nb">defvar</span><span class="w"> </span><span class="nv">y00</span><span class="w"> </span><span class="p">(</span><span class="nv">deriv</span><span class="w"> </span><span class="nv">y</span><span class="w"> </span><span class="ss">&#39;x</span><span class="w"> </span><span class="ss">&#39;x</span><span class="p">)))</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="nv">Y00</span>
+
+<span class="p">(</span><span class="nb">defvar</span><span class="w"> </span><span class="nv">diff-eqn1</span><span class="w"> </span><span class="p">(</span><span class="nb">+</span><span class="w"> </span><span class="nv">y</span><span class="w"> </span><span class="nv">y0</span><span class="w"> </span><span class="p">(</span><span class="nb">*</span><span class="w"> </span><span class="mi">-1</span><span class="w"> </span><span class="ss">&#39;x</span><span class="w"> </span><span class="ss">&#39;x</span><span class="p">)))</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="nv">DIFF-EQN1</span>
+
+<span class="nv">diff-eqn1</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="nv">y</span><span class="p">(</span><span class="nv">x</span><span class="p">)</span><span class="w"> </span><span class="nb">+</span><span class="w"> </span><span class="nv">y_{0}</span><span class="p">(</span><span class="nv">x</span><span class="p">)</span><span class="w"> </span><span class="nb">-</span><span class="w"> </span><span class="nv">x^2</span>
+
+
+<span class="c1">; (solve-diff-eqn diff-eqn1 (get-rational-numbers) &#39;x 6 &#39;(1))</span>
+<span class="c1">; undefined ???</span>
+
+<span class="nv">is</span><span class="w"> </span><span class="o">#+</span><span class="k">ignore</span><span class="w"> </span><span class="nv">!</span>
+
+<span class="p">(</span><span class="k">setq</span><span class="w"> </span><span class="nv">diff-eqn2</span><span class="w"> </span><span class="p">(</span><span class="nb">-</span><span class="w"> </span><span class="nv">y00</span><span class="w"> </span><span class="nv">y</span><span class="p">))</span>
+<span class="p">(</span><span class="nv">solve-diff-eqn</span><span class="w"> </span><span class="nv">diff-eqn2</span><span class="w"> </span><span class="p">(</span><span class="nv">get-rational-numbers</span><span class="p">)</span><span class="w"> </span><span class="ss">&#39;x</span><span class="w"> </span><span class="mi">5</span><span class="w"> </span><span class="o">&#39;</span><span class="p">(</span><span class="nv">c0</span><span class="w"> </span><span class="nv">c1</span><span class="p">))</span>
+</pre></div>
+</div>
+</section>
+<section id="truncated-power-series-internals-11-3">
+<h2>Truncated Power Series Internals (11.3)<a class="headerlink" href="#truncated-power-series-internals-11-3" title="Link to this heading">¶</a></h2>
+<p>This section describes the internal representation used to implement truncated
+power series and is only of interest to those who want to extend the package.
+Truncated power series are currently represented by a single Lisp class,
+weyli::tpower-series, which is a representation in which all of the coefficients
+are enumerated in an array. Generative representations are not currently
+available.</p>
+<section id="enumerated-truncate-power-series-11-3-1">
+<h3>Enumerated Truncate Power Series (11.3.1)<a class="headerlink" href="#enumerated-truncate-power-series-11-3-1" title="Link to this heading">¶</a></h3>
+<p>This class, currently the only representation for power series, maintains an
+array of known coefficients and is therefore useful only for power series with
+a finite and typically small number of nonzero coefficients. The power series
+may have an in nite order (in which case the behavior is nearly identical to
+that of polynomials) but in such cases the largest nonzero term must have a
+finite exponent. This class will perform best when used with dense power series
+(i.e., power series in which the sequences of exponent numerators of nonzero
+terms do not have large skips).</p>
+<p>Truncated power series in Weyl are a little
+more complex than the proceeding discussion might indicate. In particular, we
+permit truncated power series to have negative and fractional exponents in
+order to allow for certain algebraic operations on power series. For instance,
+we would like to represent</p>
+<p>..math:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>\<span class="n">sqrt</span><span class="p">{</span><span class="n">x</span><span class="o">+</span><span class="n">x</span><span class="o">^</span><span class="mi">2</span><span class="p">}</span> <span class="o">=</span> <span class="n">x</span><span class="o">^</span><span class="p">{</span>\<span class="n">tfrac</span><span class="p">{</span><span class="mi">1</span><span class="p">}{</span><span class="mi">2</span><span class="p">}}</span> <span class="o">-</span> \<span class="n">frac</span><span class="p">{</span><span class="n">x</span><span class="o">^</span>\<span class="n">tfrac</span><span class="p">{</span><span class="mi">3</span><span class="p">}{</span><span class="mi">2</span><span class="p">}}{</span><span class="mi">2</span><span class="p">}</span><span class="o">+</span>
+     \<span class="n">frac</span><span class="p">{</span><span class="n">x</span><span class="o">^</span>\<span class="n">tfrac</span><span class="p">{</span><span class="mi">5</span><span class="p">}{</span><span class="mi">2</span><span class="p">}}{</span><span class="mi">8</span><span class="p">}</span> <span class="o">+</span> \<span class="n">ldots</span><span class="o">.</span>
+</pre></div>
+</div>
+<p>and the reciprocal of the function</p>
+<div class="math notranslate nohighlight">
+\[\frac{1}{\sqrt{x+x^2}} = x^{-\tfrac{1}{2}} - \frac{x^\tfrac{1}{2}}{2}+
+      \frac{3 x^\tfrac{3}{2}}{8} - \frac{5 x^\tfrac{5}{2}}{16}  + \ldots.\]</div>
+<p>To deal with these issues the truncated power series representation in Weyl has
+four components. The most obvious is the vector with coefficients of the power
+series. The branch order of the power series is the least common multiple of
+the denominators of the exponents that arise in the power series. Thus in the
+pervious two examples the branch order is 2.</p>
+<p>The valence of the power series
+is the degree of the term with nonzero coefficient with least degree when
+multiplied by the branch order. In the previous two examples, the valences
+are 1 and -1 respectively.</p>
+<p>Finally, the product of the branch order and the degree of the highest term
+retained in the truncated power series is called the order of the power series.
+Notice that these definitions have been chosen so that all of the parameters
+are integers. The following routines can be used to access the parameters of
+a truncated power series.</p>
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">branch-order</span> <span class="pre">tps</span>&#160;&#160; <span class="pre">[Function]</span></span></dt>
+<dd><p>Returns the branching order of tps as a lisp integer. This number is the
+greatest common divisor of all of the denominators of the exponents in
+the truncated power series.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">order</span> <span class="pre">tps</span>&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">[Function]</span></span></dt>
+<dd><p>Returns the order of tps as a Lisp integer. This number is the product of
+the greatest exponent in the truncated power series and the branch order
+of the power series.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">valence</span> <span class="pre">tps</span>&#160;&#160;&#160;&#160;&#160; <span class="pre">[Function]</span></span></dt>
+<dd><p>Returns the valence of tps as a Lisp integer. This number is the product of
+the least exponent in the truncated power series and the branch order of
+the power series.</p>
+</dd></dl>
+
+<p>The following examples illustrate the use of these routines:</p>
+<div class="highlight-lisp notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="nb">defvar</span><span class="w"> </span><span class="nv">temp</span><span class="p">)</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="nv">TEMP</span>
+<span class="p">(</span><span class="k">setq</span><span class="w"> </span><span class="nv">temp</span><span class="w"> </span><span class="p">(</span><span class="nv">taylor</span><span class="w"> </span><span class="p">(</span><span class="nb">expt</span><span class="w"> </span><span class="p">(</span><span class="nb">+</span><span class="w"> </span><span class="ss">&#39;x</span><span class="w"> </span><span class="p">(</span><span class="nb">*</span><span class="w"> </span><span class="ss">&#39;x</span><span class="w"> </span><span class="ss">&#39;x</span><span class="p">))</span><span class="w"> </span><span class="m">-1/2</span><span class="p">)</span><span class="w"> </span><span class="nv">domain</span><span class="w">  </span><span class="mi">2</span><span class="p">))</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="nv">x^</span><span class="p">(</span><span class="m">-1/2</span><span class="p">)</span><span class="w"> </span><span class="nb">-</span><span class="w"> </span><span class="p">(</span><span class="m">1/2</span><span class="p">)</span><span class="nv">x^</span><span class="p">(</span><span class="m">1/2</span><span class="p">)</span><span class="w"> </span><span class="nb">+</span><span class="w"> </span><span class="p">(</span><span class="m">3/8</span><span class="p">)</span><span class="nv">x^</span><span class="p">(</span><span class="m">3/2</span><span class="p">)</span><span class="w"> </span><span class="nb">-</span><span class="w"> </span><span class="p">(</span><span class="m">5/16</span><span class="p">)</span><span class="nv">x^</span><span class="p">(</span><span class="m">5/2</span><span class="p">)</span><span class="w"> </span><span class="nb">+</span><span class="w"> </span><span class="nv">o</span><span class="p">(</span><span class="nv">x^</span><span class="p">(</span><span class="m">5/2</span><span class="p">))</span>
+</pre></div>
+</div>
+<p><cite>temp</cite> is the power series of the expression given above. It has both negative
+and fraction exponents.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">describe</span> <span class="n">temp</span><span class="p">)</span>
+<span class="c1">#1=x^(-1/2) - (1/2)#1#^(1/2) + (3/8)#1#^(3/2) - (5/16)#1#^(5/2) + o(#1..</span>
+  <span class="p">[</span><span class="n">standard</span><span class="o">-</span><span class="nb">object</span><span class="p">]</span>
+
+<span class="n">Slots</span> <span class="k">with</span> <span class="p">:</span><span class="n">INSTANCE</span> <span class="n">allocation</span><span class="p">:</span>
+  <span class="n">DOMAIN</span>                         <span class="o">=</span> <span class="n">Q</span><span class="p">((</span><span class="n">x</span><span class="p">))</span>
+  <span class="n">VALENCE</span>                        <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+  <span class="n">BRANCH</span><span class="o">-</span><span class="n">ORDER</span>                   <span class="o">=</span> <span class="mi">2</span>
+  <span class="n">ORDER</span>                          <span class="o">=</span> <span class="mi">5</span>
+  <span class="n">COEFFS</span>                         <span class="o">=</span> <span class="c1">#(1 0 -1/2 0 3/8 0 -5/16)</span>
+<span class="o">*</span>
+</pre></div>
+</div>
+<p>Notice that the branch order, valence and order are all rational integers.
+T
+he branch order of the power series can be modified by using setf and the
+branch-order accessor. This operation increases the size of the coefficient
+array of the power series and adjusts the order and valence appropriately.
+This operation is used internally to before combining two power series
+with different branching orders.</p>
+<div class="highlight-lisp notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="nb">setf</span><span class="w"> </span><span class="p">(</span><span class="nv">weyli::branch-order</span><span class="w"> </span><span class="nv">temp</span><span class="p">)</span><span class="w"> </span><span class="mi">4</span><span class="p">)</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="nv">x^</span><span class="p">(</span><span class="m">-1/2</span><span class="p">)</span><span class="w"> </span><span class="nb">-</span><span class="w"> </span><span class="p">(</span><span class="m">1/2</span><span class="p">)</span><span class="nv">x^</span><span class="p">(</span><span class="m">1/2</span><span class="p">)</span><span class="w"> </span><span class="nb">+</span><span class="w"> </span><span class="p">(</span><span class="m">3/8</span><span class="p">)</span><span class="nv">x^</span><span class="p">(</span><span class="m">3/2</span><span class="p">)</span><span class="w"> </span><span class="nb">-</span><span class="w"> </span><span class="p">(</span><span class="m">5/16</span><span class="p">)</span><span class="nv">x^</span><span class="p">(</span><span class="m">5/2</span><span class="p">)</span><span class="w"> </span><span class="nb">+</span><span class="w"> </span><span class="nv">o</span><span class="p">(</span><span class="nv">x^</span><span class="p">(</span><span class="m">5/2</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>Notice that the outward appearance of the power series has not changed, even
+though the branching order has been increased. However, the internal form has
+changed.</p>
+<p>When writing low level code using truncated power series, it is more convenient
+not to use the accessors for the slots in a truncated power series, but instead
+to have variables bound to the various pieces. This is done by the following
+special form.</p>
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">weyli::with-tpower-series</span> <span class="pre">((var1</span> <span class="pre">tps1</span> <span class="pre">)</span> <span class="pre">...</span> <span class="pre">(var1</span> <span class="pre">tps1</span> <span class="pre">))</span> <span class="pre">&amp;body</span> <span class="pre">body</span> <span class="pre">[Function]</span></span></dt>
+<dd><p>For each truncated power series provided, this form binds four new variables,
+with names based on vari , one for each of the slots in tpsi . The names of
+these slots are vari -bo for the branching order, vari -val for the valence,
+vari -order for the order and vari -coeffs for the coefficient vector.</p>
+</dd></dl>
+
+<p>Similarly, the following function need not be here but should be a setf method
+on order</p>
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">weyli::truncate-order</span> <span class="pre">tps</span> <span class="pre">integer</span>&#160;&#160;&#160;&#160; <span class="pre">[Function]</span></span></dt>
+<dd><p>Truncates the order of tps so that the largest exponent is no greater than
+integer. If integer is greater than or equal to the current truncation order,
+then tps is returned unaltered.</p>
+</dd></dl>
+
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="algebraic-structures.html" class="btn btn-neutral float-left" title="Algebraic Structures" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, SimLab Group &amp; Weyl enthusiasts.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

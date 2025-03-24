@@ -19,6 +19,9 @@ Welcome to Weyl's documentation!
    sums   
    linear-spaces   
    polynomial-rings
+   algebraic-structures
+   truncated-power-series
+   
 
 Indices and tables
 ==================

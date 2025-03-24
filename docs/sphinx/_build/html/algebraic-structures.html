@@ -1,0 +1,247 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Algebraic Structures &mdash; Weyl 0.2 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/documentation_options.js?v=10f1778b"></script>
+      <script src="_static/doctools.js?v=888ff710"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Truncated Power Series" href="truncated-power-series.html" />
+    <link rel="prev" title="Polynomial Rings" href="polynomial-rings.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Weyl
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="getting-started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="basics.html">Basics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="generic-tools.html">Generic Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="scalar-domains.html">Scalar Domains</a></li>
+<li class="toctree-l1"><a class="reference internal" href="general.html">General Expressions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sums.html">Sums, Products and Quotients of Domains</a></li>
+<li class="toctree-l1"><a class="reference internal" href="linear-spaces.html">Linear Spaces</a></li>
+<li class="toctree-l1"><a class="reference internal" href="polynomial-rings.html">Polynomial Rings</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Algebraic Structures</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#ideals-10-1">Ideals (10.1)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#the-spectrum-of-a-ring-10-2">The Spectrum of a Ring (10.2)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#algebraic-extensions-10-3">Algebraic Extensions (10.3)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#algebraic-closures-10-4">Algebraic Closures (10.4)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="truncated-power-series.html">Truncated Power Series</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Weyl</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Algebraic Structures</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/algebraic-structures.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="algebraic-structures">
+<h1>Algebraic Structures<a class="headerlink" href="#algebraic-structures" title="Link to this heading">¶</a></h1>
+<p>This chapter begins with a discussion of Weyl’s representation of ideals and
+spectrums of rings. Taking the quotient of these structures and their rings
+gives leads to domains that can be used to represent algebraic numbers and
+algebraic functions.</p>
+<section id="ideals-10-1">
+<h2>Ideals (10.1)<a class="headerlink" href="#ideals-10-1" title="Link to this heading">¶</a></h2>
+<p>Recall that an ideal of a commutative ring R is an additive subgroup of R such
+that the product of any element of the ideal by an element of R is an element
+of the ideal. Thus the ideal is an R module.</p>
+<p>Ideals are a slightly unusual objects in Weyl since they are treated like domain
+elements (arithmetic operations can be applied to ideals), but are in fact
+domains. One might think that they should be both domains and domains elements,
+and perhaps they will be in the future, but doing so now would be problematic.
+If they were domain elements, they would have to be elements of some domain and
+there is no natural domain that would suffice. (The spectrum of the ring only
+includes the prime ideals, and additional possesses a topology.)</p>
+<p>The set of classes used to represent ideals is given in Figure 10.1. All ideals
+are subclasses of the class ideal. Every ideal is represented by a (not
+necessarily minimal) list of elements that generate the ideal. Currently,
+Weyl is only capable of representing ideals that are finitely generated. Ideals
+can be created using the following function:</p>
+<p>There are two subclasses of the class ideal: PID-ideal and grobner-basis. If
+the ring of the ideal is a principal ideal domain, then make-ideal will create
+an instance of PID-ideal. The ring of the ideal is a polynomial ring then a
+grobner-basis ideal will be created.[1]_ Two basic arithmetic operations are
+provided for manipulating ideals: addition and multiplication.
+Given the ideal ideals A = (a_1, …, a_m ) and B = (b_1, …, b_n), their
+sum is defined to be</p>
+<div class="math notranslate nohighlight">
+\[A+B = (a_1,\ldots,a_m,b_1,\ldots,b_n)\]</div>
+<p>and their product is defined to be</p>
+<div class="math notranslate nohighlight">
+\[A \cdot B = (a_1 b_1,a_1 b_2,\ldots,a_1 b_n, a_2 b_1,
+\ldots,a_m b_{n-1}, a_m b_n).\]</div>
+<p>The standard + and * operators in Weyl are thus overloaded to work with ideals
+also. This is illustrated in the following simple examples:</p>
+<div class="highlight-lisp notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="nb">defvar</span><span class="w">  </span><span class="nv">a</span><span class="w"> </span><span class="p">(</span><span class="nv">make-ideal</span><span class="w"> </span><span class="p">(</span><span class="nv">get-rational-integers</span><span class="p">)</span><span class="w"> </span><span class="mi">12</span><span class="p">))</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="nv">A</span>
+
+<span class="p">(</span><span class="nb">defvar</span><span class="w">  </span><span class="nv">b</span><span class="w"> </span><span class="p">(</span><span class="nv">make-ideal</span><span class="w"> </span><span class="p">(</span><span class="nv">get-rational-integers</span><span class="p">)</span><span class="w"> </span><span class="mi">15</span><span class="p">))</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="nv">B</span>
+</pre></div>
+</div>
+<p>An ideal is printed as a parenthesized list of its generators. Since we know
+that Z is a principal ideal domain, the list of generators will only have one
+element.[2]_</p>
+<div class="highlight-lisp notranslate"><div class="highlight"><pre><span></span><span class="nv">A</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="err">#</span><span class="nv">Id</span><span class="p">(</span><span class="mi">12</span><span class="p">)</span>
+
+<span class="nv">B</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="err">#</span><span class="nv">Id</span><span class="p">(</span><span class="mi">15</span><span class="p">)</span>
+
+<span class="p">(</span><span class="nb">+</span><span class="w"> </span><span class="nv">a</span><span class="w"> </span><span class="nv">b</span><span class="p">)</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="err">#</span><span class="nv">Id</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+
+<span class="p">(</span><span class="nb">*</span><span class="w"> </span><span class="nv">a</span><span class="w"> </span><span class="nv">b</span><span class="p">)</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="err">#</span><span class="nv">Id</span><span class="p">(</span><span class="mi">180</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>For a more sophisticated example consider:</p>
+<div class="highlight-lisp notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="nb">defvar</span><span class="w"> </span><span class="nv">r</span><span class="w"> </span><span class="p">(</span><span class="nv">get-polynomial-ring</span><span class="w"> </span><span class="p">(</span><span class="nv">get-rational-numbers</span><span class="p">)</span><span class="w"> </span><span class="o">&#39;</span><span class="p">(</span><span class="nv">x</span><span class="w"> </span><span class="nv">y</span><span class="p">)))</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="nv">R</span>
+
+<span class="nv">R</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="nv">Q[x,</span><span class="w"> </span><span class="nv">y]</span>
+
+
+<span class="c1">;;(setq a (make-ideal r (+ (* &#39;x &#39;x &#39;x) (* &#39;y &#39;y)) (* &#39;x &#39;y)))</span>
+<span class="c1">;; error</span>
+
+<span class="c1">;(setq b (+ a (* a a)))</span>
+<span class="c1">;#Id(x^2 y^2, x^4 y + x y^3, x^4 y +</span>
+<span class="c1">;x y^3, x^6 + 2 x^3 y^2 + y^4, x^3 + y^2, x y)</span>
+</pre></div>
+</div>
+<p>Although the last two results do exhibit bases for a ideals, they are not
+the minimal bases. A reduced basis can be obtained by applying the following
+routine.</p>
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">reduce-basis</span> <span class="pre">ideal</span>&#160;&#160; <span class="pre">[Function]</span></span></dt>
+<dd><p>Reduces the basis provided for the ideal using the techniques available. For
+polynomials ideals this means computing the Gröbner basis assuming a monomial
+ordering has been provided.</p>
+</dd></dl>
+
+<p>When this routine is applied to the previous example we have:</p>
+<div class="highlight-lisp notranslate"><div class="highlight"><pre><span></span><span class="nb">&gt;</span><span class="w"> </span><span class="p">(</span><span class="nv">reduce-basis</span><span class="w"> </span><span class="nv">a</span><span class="p">)</span>
+<span class="err">#</span><span class="nv">Id</span><span class="p">(</span><span class="w"> </span><span class="nv">x</span><span class="w"> </span><span class="nv">y,</span><span class="w"> </span><span class="nv">x^3</span><span class="w"> </span><span class="nb">+</span><span class="w"> </span><span class="nv">y^2,y^3</span><span class="p">)</span>
+<span class="nb">&gt;</span><span class="w"> </span><span class="p">(</span><span class="nv">reduce-basis</span><span class="w"> </span><span class="nv">b</span><span class="p">)</span><span class="nv">}</span>
+<span class="err">#</span><span class="nv">Id</span><span class="p">(</span><span class="w"> </span><span class="nv">x</span><span class="w"> </span><span class="nv">y,</span><span class="w"> </span><span class="nv">x^3</span><span class="w"> </span><span class="nb">+</span><span class="w"> </span><span class="nv">y^2,y^3</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>So we see that a is equal to (+ a (* a a)). Further notice that the reduce
+basis has more elements that the original basis.</p>
+</section>
+<section id="the-spectrum-of-a-ring-10-2">
+<h2>The Spectrum of a Ring (10.2)<a class="headerlink" href="#the-spectrum-of-a-ring-10-2" title="Link to this heading">¶</a></h2>
+<p>This section needs to discuss the topological structure of the spectrum as well.</p>
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">spectrum</span> <span class="pre">Ring</span>&#160; <span class="pre">[Function]</span></span></dt>
+<dd><p>This function returns a new domain which is the spectrum of ring. The
+elements of this domain are the ideals of ring. (Need to gure out how the
+topology of Spec R ts into all this.)</p>
+</dd></dl>
+
+</section>
+<section id="algebraic-extensions-10-3">
+<h2>Algebraic Extensions (10.3)<a class="headerlink" href="#algebraic-extensions-10-3" title="Link to this heading">¶</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">algebraic-degree</span> <span class="pre">domain1</span> <span class="pre">domain2</span>&#160;&#160; <span class="pre">[Function]</span></span></dt>
+<dd><p>This function checks to ensure that domain2 is a subring of domain1 and,
+if so, returns the algebraic degree of domain2 over domain1.</p>
+</dd></dl>
+
+</section>
+<section id="algebraic-closures-10-4">
+<h2>Algebraic Closures (10.4)<a class="headerlink" href="#algebraic-closures-10-4" title="Link to this heading">¶</a></h2>
+<p>Need to special case the algebraic closure of the real numbers. This is the
+only algebraic closure that is of nite degree.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="polynomial-rings.html" class="btn btn-neutral float-left" title="Polynomial Rings" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="truncated-power-series.html" class="btn btn-neutral float-right" title="Truncated Power Series" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, SimLab Group &amp; Weyl enthusiasts.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
