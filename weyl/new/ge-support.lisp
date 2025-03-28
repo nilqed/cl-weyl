@@ -24,6 +24,12 @@
  with (ge-variable? v)."
   (weyli::ge-variables *general*))
   
+(defmacro def-ge-vars (p &rest q)
+"Define the arguments as ge-variables. Example: (def-ge-vars a b c)"
+  (nconc `(progn (ge-var ,p))
+     (loop for s in q collect
+       (list 'ge-var s))))
+  
 (defun set-latex-repr (var ltx)
 "Add a LaTeX representation ltx (string '\\...') to a ge-variable var.
  Example: (set-latex-repr a \"\\alpha\")."
