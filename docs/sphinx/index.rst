@@ -21,6 +21,7 @@ Welcome to Weyl's documentation!
    polynomial-rings
    algebraic-structures
    truncated-power-series
+   spaces-and-topology
    
 
 Indices and tables

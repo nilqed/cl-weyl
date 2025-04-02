@@ -1,0 +1,617 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Spaces and Topology &mdash; Weyl 0.2 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/documentation_options.js?v=10f1778b"></script>
+      <script src="_static/doctools.js?v=888ff710"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Truncated Power Series" href="truncated-power-series.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Weyl
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="getting-started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="basics.html">Basics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="generic-tools.html">Generic Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="scalar-domains.html">Scalar Domains</a></li>
+<li class="toctree-l1"><a class="reference internal" href="general.html">General Expressions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sums.html">Sums, Products and Quotients of Domains</a></li>
+<li class="toctree-l1"><a class="reference internal" href="linear-spaces.html">Linear Spaces</a></li>
+<li class="toctree-l1"><a class="reference internal" href="polynomial-rings.html">Polynomial Rings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="algebraic-structures.html">Algebraic Structures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="truncated-power-series.html">Truncated Power Series</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Spaces and Topology</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#point-set-topology-12-1">Point Set Topology (12.1)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#affine-spaces-12-2">Affine Spaces (12.2)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#projective-spaces-12-3">Projective Spaces (12.3)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#algebraic-topology-12-4">Algebraic Topology (12.4)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#cells-and-simplices-12-4-1">Cells and Simplices (12.4.1)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#complexes-12-4-2">Complexes (12.4.2)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#chains-12-4-3">Chains (12.4.3)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Weyl</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Spaces and Topology</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/spaces-and-topology.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="spaces-and-topology">
+<h1>Spaces and Topology<a class="headerlink" href="#spaces-and-topology" title="Link to this heading">¶</a></h1>
+<p>Spaces are sets of mathematical objects (domains in Weyl’s terminology) that we
+endow with some topological structure. Examples of spaces include n-dimensional
+Euclidean space, the space of square integrable functions and the spectrum of
+a ring. In addition, we often provide a metric to provide the geometric
+structure of a space. This chapter describes the tools Weyl provides for
+creating and manipulating these spaces.</p>
+<p>The basic domains Weyl provides for spaces are shown in Figure 12.1.
+All spaces are subclasses of abstract-space. It would be very useful to be
+able to indicate that a space is Hausdorff, connected, compact or has some
+similar topological property. This is not generally possible at the moment,
+but will be added at some future date.</p>
+<p>One property that can be attached to a space is its dimension. Intuitively, the
+dimension of a space can be thought of as the number of orthogonal directions
+that can be taken in the space. However, this does not apply to spaces that
+are not embedded in some Euclidean space.Mathematically, the dimension of a
+topological space is either a non-negative integer or infinity.1For Weyl’s
+purposes, it is useful to, in addition, have spaces without a speci c dimension.
+A dimensional-space is a space that has a specific, possibly in infinite,
+dimension.</p>
+<p>A very useful, specific type of dimensional space is a Euclidean space. A
+Euclidean space is <span class="math notranslate nohighlight">\(\mathbb{R}^n\)</span> endowed with the Euclidean metric for
+measuring  distances between points. The open sets of a Euclidean space can be
+constructed  via set union from the open balls <span class="math notranslate nohighlight">\(B_d(p)\)</span>, the set of
+points of distance less than d from the point p. The open sets are closed
+under union and finite intersection. The closed sets are the complements of
+the open sets.</p>
+<p>Closely related to Euclidean spaces are general vector spaces and modules.
+Recall from Section 4.5.3, that M is an R-module if M is an abelian group and
+if multiplication by elements of R is closed in M . A free module is a module
+that is freely generated. As can be seen from Figure 12.1, Weyl only permits
+free modules that have speci ed dimensions. A vector space is a free R-module
+where R is a field. From Figure 12.1 we see that Weyl treats a Euclidean space
+as a vector space, where the coefficient domain is the real numbers, R. The
+routines for dealing with free modules are described in Section 7.2.</p>
+<p>Finally, Weyl provides a mechanism for dealing with projective spaces. A
+projective space is an n + 1 dimensional space together with an equivalence
+relation that equates points that are nonzero scalar multiples of each other,
+i.e., u ~= v if u = a*v , for a = 0. Due to the equivalence relation, the
+projective space has dimension n.</p>
+<p>The actual dimensions of a space can be determined by the function dimensions.</p>
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">dimensions</span> <span class="pre">space</span> <span class="pre">[Function]</span></span></dt>
+<dd><p>Returns a list of the dimensions of the space. For free-modules, vector
+spaces, projective spaces, and so on there is only one element in this list.
+However for spaces like R3xZ5 there may be more elements.</p>
+</dd></dl>
+
+<section id="point-set-topology-12-1">
+<h2>Point Set Topology (12.1)<a class="headerlink" href="#point-set-topology-12-1" title="Link to this heading">¶</a></h2>
+<p>Objects in topologies are subsets of spaces. The root class of all spaces is
+abstract-space. Abstract spaces do not have a dimension and consist only of
+points. To create an abstract space one must explicitly call make-instance on
+the class abstract-space. The most commonly used spaces, the Euclidean spaces,
+can be created using the function get-euclidean-space:</p>
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">get-euclidean-space</span> <span class="pre">dimension</span> <span class="pre">&amp;optional</span> <span class="pre">(domain</span> <span class="pre">*general*)</span> <span class="pre">[Function]</span></span></dt>
+<dd><p>Creates, if needed, an instance of the Euclidean space with the indicated
+dimension. Elements of the Euclidean space will be represented as n-tuples.
+The components of these n-tuples will be elements of domain.</p>
+</dd></dl>
+
+<div class="highlight-lisp notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="nb">defvar</span><span class="w"> </span><span class="nv">E4</span><span class="w"> </span><span class="p">(</span><span class="nv">get-euclidean-space</span><span class="w"> </span><span class="mi">4</span><span class="p">))</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="nv">E4</span>
+
+<span class="nv">E4</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="nv">E^4</span>
+
+<span class="p">(</span><span class="nv">dimension-of</span><span class="w"> </span><span class="nv">E4</span><span class="p">)</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="mi">4</span>
+
+<span class="p">(</span><span class="nv">dimensions</span><span class="w">  </span><span class="nv">E4</span><span class="p">)</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>To create points in a space we use the function make-point:</p>
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">make-point</span> <span class="pre">space</span> <span class="pre">coord1</span> <span class="pre">&amp;rest</span> <span class="pre">coords</span>&#160;&#160; <span class="pre">[Function]</span></span></dt>
+<dd><p>Creates a point in space. If space is an abstract space, then only one
+argument is expected and will be treated as a unique identifier for the
+point in the space. If the first coordinate is nil then a new anonymous
+point will be created. For vector spaces, the values are expected to be
+the coordinates of the point.</p>
+</dd></dl>
+
+<div class="highlight-lisp notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="nv">make-point</span><span class="w"> </span><span class="nv">E4</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="mi">4</span><span class="p">)</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="err">#</span><span class="nv">P&lt;1,</span><span class="w"> </span><span class="mi">2</span><span class="o">,</span><span class="w"> </span><span class="mi">3</span><span class="o">,</span><span class="w"> </span><span class="nv">4&gt;</span>
+
+<span class="p">(</span><span class="nv">make-point</span><span class="w"> </span><span class="nv">E4</span><span class="w"> </span><span class="ss">&#39;a</span><span class="w"> </span><span class="ss">&#39;b</span><span class="w"> </span><span class="ss">&#39;c</span><span class="w"> </span><span class="ss">&#39;d</span><span class="p">)</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="err">#</span><span class="nv">P&lt;a,</span><span class="w"> </span><span class="nv">b,</span><span class="w"> </span><span class="nv">c,</span><span class="w"> </span><span class="nv">d&gt;</span>
+</pre></div>
+</div>
+<p>All points in a space are identified by a unique integer identifier. This is
+currently implemented (using the class weyli::has-id-number) by including a
+slot in each point containing an integer unique to that point. When anonymous
+points are generated in an abstract space, the printed representation is
+distinguished by this number. For some spaces, e.g., R, it may be more
+appropriate to use a different ordering.</p>
+<div class="highlight-lisp notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="nb">defvar</span><span class="w"> </span><span class="nv">abs-space</span><span class="p">)</span>
+<span class="p">(</span><span class="k">setq</span><span class="w"> </span><span class="nv">abs-space</span><span class="w"> </span><span class="p">(</span><span class="nb">make-instance</span><span class="w"> </span><span class="ss">&#39;abstract-space</span><span class="p">))</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="err">#</span><span class="nv">&lt;Domain:</span><span class="w"> </span><span class="nv">ABSTRACT-SPACE&gt;</span>
+
+<span class="p">(</span><span class="k">progn</span>
+<span class="w">   </span><span class="p">(</span><span class="k">setq</span><span class="w"> </span><span class="nv">a</span><span class="w"> </span><span class="p">(</span><span class="nv">make-point</span><span class="w"> </span><span class="nv">abs-space</span><span class="w"> </span><span class="no">nil</span><span class="p">)</span>
+<span class="w">         </span><span class="nv">b</span><span class="w"> </span><span class="p">(</span><span class="nv">make-point</span><span class="w"> </span><span class="nv">abs-space</span><span class="w"> </span><span class="no">nil</span><span class="p">)</span>
+<span class="w">         </span><span class="nv">c</span><span class="w"> </span><span class="p">(</span><span class="nv">make-point</span><span class="w"> </span><span class="nv">abs-space</span><span class="w"> </span><span class="ss">&#39;c</span><span class="p">))</span>
+<span class="w">   </span><span class="p">(</span><span class="nb">list</span><span class="w"> </span><span class="nv">a</span><span class="w"> </span><span class="nv">b</span><span class="w"> </span><span class="nv">c</span><span class="p">))</span>
+
+<span class="nv">=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nv">&lt;1&gt;</span><span class="w"> </span><span class="nv">&lt;2&gt;</span><span class="w"> </span><span class="nv">&lt;C&gt;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Notice that the third point was created with a name and, unlike the other
+two points, its printed form includes that name.
+Similarly, we can create points in Euclidean domains. In this case, the
+printed representation of a point includes the point’s coordinates.</p>
+</section>
+<section id="affine-spaces-12-2">
+<h2>Affine Spaces (12.2)<a class="headerlink" href="#affine-spaces-12-2" title="Link to this heading">¶</a></h2>
+<p>Affine spaces are created using the function make-affne-space:</p>
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">make-affine-space</span> <span class="pre">eld</span> <span class="pre">dimension</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">[Function]</span></span></dt>
+<dd><p>Create an affine space of dimensions dimension where the components are
+elements of the field field.</p>
+</dd></dl>
+
+<div class="highlight-lisp notranslate"><div class="highlight"><pre><span></span><span class="nb">*</span><span class="w"> </span><span class="p">(</span><span class="nb">defvar</span><span class="w">  </span><span class="nv">R</span><span class="w"> </span><span class="p">(</span><span class="nv">get-real-numbers</span><span class="p">))</span>
+<span class="nv">R</span>
+
+<span class="p">(</span><span class="nb">defvar</span><span class="w"> </span><span class="nv">A2</span><span class="w">  </span><span class="p">(</span><span class="nv">weyli::make-affine-space</span><span class="w"> </span><span class="nv">R</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="p">))</span>
+<span class="nv">=&gt;</span><span class="w">  </span><span class="nv">There</span><span class="w"> </span><span class="nv">is</span><span class="w"> </span><span class="nv">no</span><span class="w"> </span><span class="nv">applicable</span><span class="w"> </span><span class="nc">method</span><span class="w"> </span><span class="nv">for</span><span class="w"> </span><span class="k">the</span><span class="w"> </span><span class="nv">generic</span><span class="w"> </span><span class="k">function</span>
+
+<span class="nb">*</span><span class="w"> </span><span class="p">(</span><span class="nb">describe</span><span class="w"> </span><span class="ss">&#39;weyli::make-affine-space</span><span class="p">)</span>
+<span class="nv">WEYLI::MAKE-AFFINE-SPACE</span>
+<span class="w">  </span><span class="nv">[symbol]</span>
+
+<span class="nv">MAKE-AFFINE-SPACE</span><span class="w"> </span><span class="nv">names</span><span class="w"> </span><span class="nv">a</span><span class="w"> </span><span class="nv">generic</span><span class="w"> </span><span class="nv">function:</span>
+<span class="w">  </span><span class="nv">Lambda-list:</span><span class="w"> </span><span class="p">(</span><span class="nv">SPACE</span><span class="w"> </span><span class="nv">&amp;OPTIONAL</span><span class="w"> </span><span class="nv">N</span><span class="p">)</span>
+<span class="w">  </span><span class="nv">Derived</span><span class="w"> </span><span class="nv">type:</span><span class="w"> </span><span class="p">(</span><span class="nv">FUNCTION</span><span class="w"> </span><span class="p">(</span><span class="no">T</span><span class="w"> </span><span class="nv">&amp;OPTIONAL</span><span class="w"> </span><span class="no">T</span><span class="p">)</span><span class="w"> </span><span class="nb">*</span><span class="p">)</span>
+<span class="w">  </span><span class="nv">Method-combination:</span><span class="w"> </span><span class="nv">STANDARD</span>
+<span class="w">  </span><span class="nv">Methods:</span>
+<span class="w">    </span><span class="p">(</span><span class="nv">MAKE-AFFINE-SPACE</span><span class="w"> </span><span class="p">(</span><span class="nv">PROJECTIVE-SPACE</span><span class="p">))</span>
+<span class="nb">*</span>
+</pre></div>
+</div>
+<p>Elements of spaces, both affine and projective, are created using the generic
+function make-point:</p>
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">make-element</span> <span class="pre">space</span> <span class="pre">&amp;rest</span> <span class="pre">elements</span>&#160; <span class="pre">[Function]</span></span></dt>
+<dd><p>Creates an element of space. Elements is a list of n elements which can
+be coerced into the coefficient domain of space.</p>
+</dd></dl>
+
+<p>There is also an internal function weyli::make-element that does not do any
+checking of its arguments and can lead to rather subtle problems if used
+incorrectly. On the other hand it is noticeably faster.</p>
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">cross-product</span> <span class="pre">u</span> <span class="pre">v</span>&#160;&#160;&#160; <span class="pre">[Function]</span></span></dt>
+<dd><blockquote>
+<div><p>This function is only defined for elements of three dimensional vector
+spaces. If u = (u1, u2, u3) and v = (v1, v2, v3) then</p>
+</div></blockquote>
+<p>(cross-product uv ) = (v2 u3 - u3 v2 , u3 u1 - u1 v3 , u1 v2 - u2 v1)..</p>
+</dd></dl>
+
+</section>
+<section id="projective-spaces-12-3">
+<h2>Projective Spaces (12.3)<a class="headerlink" href="#projective-spaces-12-3" title="Link to this heading">¶</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">make-projective-space</span> <span class="pre">eld</span> <span class="pre">dimension</span>&#160;&#160; <span class="pre">[Function]</span></span></dt>
+<dd><p>Create a projective space of dimensions dimension where the components
+are elements of the field field.</p>
+</dd></dl>
+
+<p>As in the case of regular affine spaces, elements of a projective space are
+created using the generic function make-point.</p>
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">make-point</span> <span class="pre">space</span> <span class="pre">&amp;rest</span> <span class="pre">elements</span>&#160;&#160; <span class="pre">[Function]</span></span></dt>
+<dd><p>Creates a point which an element of space. For projective spaces, elements
+can be a list of either n or n + 1 elements of the coefficient domain of
+space. If n + 1 elements are provided then these are the full set of
+elements of the point. If only n elements are provided, the nal missing
+element is lled out by a 1 from the coefficient domain of space.</p>
+</dd></dl>
+
+<div class="highlight-lisp notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="nb">defvar</span><span class="w">  </span><span class="nv">A2</span><span class="w"> </span><span class="p">(</span><span class="nv">weyli::make-projective-space</span><span class="w"> </span><span class="nv">R</span><span class="w"> </span><span class="mi">2</span><span class="p">))</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="nv">A2</span>
+
+<span class="p">(</span><span class="nv">make-point</span><span class="w"> </span><span class="nv">A2</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span>
+<span class="nv">=&gt;</span><span class="w"> </span><span class="nv">There</span><span class="w"> </span><span class="nv">is</span><span class="w"> </span><span class="nv">no</span><span class="w"> </span><span class="nv">applicable</span><span class="w"> </span><span class="nc">method</span><span class="w"> </span><span class="nv">for</span><span class="w"> </span><span class="k">the</span><span class="w"> </span><span class="nv">generic</span><span class="w"> </span><span class="k">function</span>
+</pre></div>
+</div>
+<p>Affine spaces can be embedded in projective spaces. For projective spaces of
+dimension n, there are n + 1 canonical embeddings. The function
+make-affine-projection is passed a projective space and creates an affine space
+with an attached homomorphism into the projective space.</p>
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">make-affine-projection</span> <span class="pre">space</span> <span class="pre">&amp;optional</span> <span class="pre">dimension</span>&#160;&#160;&#160;&#160; <span class="pre">[Function]</span></span></dt>
+<dd><p>This function returns an affine space that is the projection of space where
+we hold the component dimension fixed. For instance, let p = (u; v; w) is
+an element of a two dimension projective space P 2 . The image of p in the
+affine projection of P 2 with dimension 0 held fixed is (v/u, w/u). With
+dimension 1 is held fixed then p maps to (u/v, w/v ). Finally, if dimension
+2 is held fixed, p maps to (u/w, v/w). If dimension is not provided then
+we produce an affine space where the last dimension is held fixed.</p>
+</dd></dl>
+
+</section>
+<section id="algebraic-topology-12-4">
+<h2>Algebraic Topology (12.4)<a class="headerlink" href="#algebraic-topology-12-4" title="Link to this heading">¶</a></h2>
+<section id="cells-and-simplices-12-4-1">
+<h3>Cells and Simplices (12.4.1)<a class="headerlink" href="#cells-and-simplices-12-4-1" title="Link to this heading">¶</a></h3>
+<p>A k-cell is a region (subset) of a space that is homeomorphic to B_n, the unit
+ball in Rn : B_n = {p in Rn: <a href="#id1"><span class="problematic" id="id2">|</span></a>p|&lt;=1} That is, a k-cell is a set that is
+topologically equivalent to an n-dimensional ball (it is connected, without
+any holes, etc.).</p>
+<p>A k-simplex is a k-cell de ned by the convex hull of k + 1 points, called
+vertices. For example, a 1-simplex is a line segment de ned by two vertices,
+while a 2-simplex is a triangle, defined by three. An oriented k-simplex is
+defined by an ordered list of vertices, and the lists are partitioned
+into two orientations those that are even permutations of some reference
+ordering, and those that are odd permutations.</p>
+<p>Unlike most objects in Weyl, (oriented) simplices are not domain elements.
+They should be viewed as sorted lists of sets of points.</p>
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">make-simplex</span> <span class="pre">vertex0</span> <span class="pre">...</span> <span class="pre">vertexk</span>&#160;&#160; <span class="pre">[Function]</span></span></dt>
+<dd></dd></dl>
+
+<p>Creates a k simplex whose components are vertex0 … vertexk . This routine
+ensures that all of the points are from the same space. Simplices are
+immutable, i.e., once created they can not be modified.</p>
+<p>Assuming that the variables a, b and c are points in some abstract space,
+a triangle could be created as follows:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="p">(</span><span class="n">setq</span> <span class="n">triangle</span> <span class="p">(</span><span class="n">make</span><span class="o">-</span><span class="n">simplex</span> <span class="n">a</span> <span class="n">b</span> <span class="n">c</span><span class="p">))</span>
+<span class="p">[</span><span class="o">&lt;</span><span class="n">A</span><span class="o">&gt;</span><span class="p">,</span> <span class="o">&lt;</span><span class="n">B</span><span class="o">&gt;</span><span class="p">,</span> <span class="o">&lt;</span><span class="n">C</span><span class="o">&gt;</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>Two simplices are equal if they have the same vertex set, with the same
+orientation.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="p">(</span><span class="o">=</span> <span class="n">triangle</span> <span class="p">(</span><span class="n">make</span><span class="o">-</span><span class="n">simplex</span> <span class="n">a</span> <span class="n">b</span> <span class="n">c</span><span class="p">))</span>
+<span class="n">t</span>
+</pre></div>
+</div>
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">vertices-of</span> <span class="pre">simplex</span>&#160;&#160;&#160; <span class="pre">[Function]</span></span></dt>
+<dd><p>Returns a list of the vertices of simplex. For instance,</p>
+</dd></dl>
+
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="p">(</span><span class="n">vertices</span><span class="o">-</span><span class="n">of</span> <span class="n">triangle</span><span class="p">)</span>
+<span class="p">(</span><span class="o">&lt;</span><span class="n">A</span><span class="o">&gt;</span> <span class="o">&lt;</span><span class="n">B</span><span class="o">&gt;</span> <span class="o">&lt;</span><span class="n">C</span><span class="o">&gt;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Notice that there aren’t any commas between the vertices. This is a LISP list
+as opposed to a simplex.</p>
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">face?</span> <span class="pre">cell1</span> <span class="pre">cell2</span>&#160;&#160;&#160;&#160; <span class="pre">[Function]</span></span></dt>
+<dd><p>A predicate that returns T if cell1 is a face of cell2. Cells are defined
+to be faces of themselves.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">same-cell?</span> <span class="pre">cell1</span> <span class="pre">cell2</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">[Function]</span></span></dt>
+<dd><p>A predicate that returns T if cell1 and cell2 are the same cell, independent of orientation.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">dimension-of</span> <span class="pre">cell</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">[Function]</span></span></dt>
+<dd><p>Returns a Lisp integer that is the dimension of cell. Weyl provides a
+dimension function only for simplices.</p>
+</dd></dl>
+
+</section>
+<section id="complexes-12-4-2">
+<h3>Complexes (12.4.2)<a class="headerlink" href="#complexes-12-4-2" title="Link to this heading">¶</a></h3>
+<p>A simplicial complex K is a set of simplices of the same space with the
+property that if s 2 K ! faces(s) subset K , that is if a simplex s is in
+the complex, the all of the faces of s must also be in K . It follows that
+there is a set of maximal simplices (those that are not the face of any other
+simplex in K ) that provide a unique minimal representation for K . Although
+the maximal cells in a complex often have the same dimension, this is not
+required.</p>
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">make-simplicial-complex</span> <span class="pre">simplices</span>&#160;&#160;&#160; <span class="pre">[Function]</span></span></dt>
+<dd><p>Creates a simplicial complex containing each of the simplices in simplices
+together with their faces .</p>
+</dd></dl>
+
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="p">(</span><span class="n">setq</span> <span class="nb">complex</span> <span class="p">(</span><span class="n">make</span><span class="o">-</span><span class="n">simplicial</span><span class="o">-</span><span class="nb">complex</span> <span class="p">(</span><span class="nb">list</span> <span class="n">triangle</span><span class="p">)))</span>
+<span class="c1">#&lt;COMPLEX&gt;</span>
+</pre></div>
+</div>
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">map-over-cells</span> <span class="pre">(var</span> <span class="pre">&amp;optional</span> <span class="pre">n</span> <span class="pre">complex)</span> <span class="pre">struct</span> <span class="pre">&amp;body</span> <span class="pre">body</span>&#160;&#160; <span class="pre">[Function]</span></span></dt>
+<dd><p>The forms in body are evaluated with var bound to each n-dimensional face of
+struct. If n is nil then the body is evaluated for all faces, regardless of
+dimension. struct may be either a simplex or a simplicial complex. If complex
+is nil (the default), then map-over-cells maps over lists of vertices (i.e.,
+var will be set to a list of the vertices of the given cell. Otherwise
+map-over-cells maps over the canonical cell structures in complex.</p>
+</dd></dl>
+
+<p>Here is an example of mapping over the faces of a 2-simplex [&lt;A&gt;, &lt;B&gt;, &lt;C&gt;].
+Note that since dimension is not speci ed, simplices of all dimension are printed.
+Also, since no complex was specified, each simplex is represented by the list
+of its vertices.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="p">(</span><span class="nb">map</span><span class="o">-</span><span class="n">over</span><span class="o">-</span><span class="n">cells</span> <span class="p">(</span><span class="n">simp</span><span class="p">)</span> <span class="n">triangle</span> <span class="p">(</span><span class="nb">print</span> <span class="n">simp</span><span class="p">))</span>
+<span class="p">(</span><span class="o">&lt;</span><span class="n">A</span><span class="o">&gt;</span><span class="p">)</span>
+<span class="p">(</span><span class="o">&lt;</span><span class="n">B</span><span class="o">&gt;</span> <span class="o">&lt;</span><span class="n">A</span><span class="o">&gt;</span><span class="p">)</span>
+<span class="p">(</span><span class="o">&lt;</span><span class="n">C</span><span class="o">&gt;</span> <span class="o">&lt;</span><span class="n">B</span><span class="o">&gt;</span> <span class="o">&lt;</span><span class="n">A</span><span class="o">&gt;</span><span class="p">)</span>
+<span class="p">(</span><span class="o">&lt;</span><span class="n">C</span><span class="o">&gt;</span> <span class="o">&lt;</span><span class="n">A</span><span class="o">&gt;</span><span class="p">)</span>
+<span class="p">(</span><span class="o">&lt;</span><span class="n">B</span><span class="o">&gt;</span><span class="p">)</span>
+<span class="p">(</span><span class="o">&lt;</span><span class="n">C</span><span class="o">&gt;</span> <span class="o">&lt;</span><span class="n">B</span><span class="o">&gt;</span><span class="p">)</span>
+<span class="p">(</span><span class="o">&lt;</span><span class="n">C</span><span class="o">&gt;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>A second example shows iteration over the 1-cells of triangle, rst with, then
+without specifying the complex from which the simplex structures should be
+extracted. Note the brackets used in the Weyl representation of a simplex in
+the second example.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="nb">map</span><span class="o">-</span><span class="n">over</span><span class="o">-</span><span class="n">cells</span> <span class="p">(</span><span class="n">simp</span> <span class="mi">1</span><span class="p">)</span> <span class="p">(</span><span class="nb">print</span> <span class="n">simp</span><span class="p">))</span>
+<span class="p">(</span><span class="o">&lt;</span><span class="n">B</span><span class="o">&gt;</span> <span class="o">&lt;</span><span class="n">A</span><span class="o">&gt;</span><span class="p">)</span>
+<span class="p">(</span><span class="o">&lt;</span><span class="n">C</span><span class="o">&gt;</span> <span class="o">&lt;</span><span class="n">A</span><span class="o">&gt;</span><span class="p">)</span>
+<span class="p">(</span><span class="o">&lt;</span><span class="n">C</span><span class="o">&gt;</span> <span class="o">&lt;</span><span class="n">B</span><span class="o">&gt;</span><span class="p">)</span>
+<span class="n">triangle</span>
+<span class="p">(</span><span class="nb">map</span><span class="o">-</span><span class="n">over</span><span class="o">-</span><span class="n">cells</span> <span class="p">(</span><span class="n">simp</span> <span class="mi">1</span> <span class="nb">complex</span><span class="p">)</span> <span class="n">triangle</span> <span class="p">(</span><span class="nb">print</span> <span class="n">simp</span><span class="p">))</span>
+<span class="p">[</span><span class="o">&lt;</span><span class="n">A</span><span class="o">&gt;</span><span class="p">,</span> <span class="o">&lt;</span><span class="n">B</span><span class="o">&gt;</span><span class="p">]</span>
+<span class="p">[</span><span class="o">&lt;</span><span class="n">A</span><span class="o">&gt;</span><span class="p">,</span> <span class="o">&lt;</span><span class="n">C</span><span class="o">&gt;</span><span class="p">]</span>
+<span class="p">[</span><span class="o">&lt;</span><span class="n">B</span><span class="o">&gt;</span><span class="p">,</span> <span class="o">&lt;</span><span class="n">C</span><span class="o">&gt;</span><span class="p">]</span>
+</pre></div>
+</div>
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">get-canonical-cell</span> <span class="pre">cell-complex</span> <span class="pre">cell</span>&#160; <span class="pre">[Function]</span></span></dt>
+<dd><p>If cell is contained in cell-complex then get-canonical-cell returns two
+values: the canonical cell with the vertices of cell that lies in cell-complex,
+and the sign of the relative orientation between the cell returned and cell.
+If cell is not contained in cell-complex then nil is returned.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">get-canonical-cell</span> <span class="pre">cell-complex</span> <span class="pre">&amp;rest</span> <span class="pre">points</span>&#160; <span class="pre">[Function]</span></span></dt>
+<dd><p>If the cell whose vertices are points is contained in cell-complex then
+get-canonical-cell returns two values: the canonical cell with vertices
+points that lies in cell-complex, and the sign of the relative orientation
+between the ordering of the cell returned and the ordering of the points
+provided. If cell is not contained in cell-complex then nil is returned.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">vertex-set</span> <span class="pre">complex</span> <span class="pre">[Function]</span></span></dt>
+<dd><p>Returns a list of the vertices of each of the maximal cells in complex.</p>
+</dd></dl>
+
+<p>Cell complexes are, in general, immutable. New cell complexes can be created
+from old cell complexes using boolean operations like union and intersection.</p>
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">union</span> <span class="pre">&amp;rest</span> <span class="pre">complexes</span>&#160;&#160; <span class="pre">[Function]</span></span></dt>
+<dd><p>Returns a new complex, whose maximal cells include the maximal cells of each
+of the elements of complexes.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">intersection</span> <span class="pre">&amp;rest</span> <span class="pre">complexes</span>&#160; <span class="pre">[Function]</span></span></dt>
+<dd><p>Returns a new complex, which is the intersection of the elements of complexes.</p>
+</dd></dl>
+
+<p>The following operations violate the immutability of cell complexes and thus
+only intended to be used in situations that require additional performance, or
+to implement higher level operations which do preserve the immutability of their
+arguments.
+New simplices can be added and deleted from cell-complexes using insert and delete.</p>
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">insert</span> <span class="pre">cell</span> <span class="pre">cell-complex</span>&#160; <span class="pre">[Function]</span></span></dt>
+<dd><p>Destructively modifies cell-complex by adding cell and each of its sub-cells
+to cell-complex if each is not not already an element. This operation is
+provided for use by internal routines.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">delete</span> <span class="pre">cell</span> <span class="pre">cell-complex</span> <span class="pre">&amp;key</span> <span class="pre">(subsimplices?</span> <span class="pre">T)</span>&#160; <span class="pre">[Function]</span></span></dt>
+<dd><p>Destructively modi es cell-complex by deleting cell from cell-complex. Any
+subcells of a cell that are not contained in the remaining maximal cell of
+cell-complex are also deleted. This operation is provided for use by internal
+routines.</p>
+</dd></dl>
+
+</section>
+<section id="chains-12-4-3">
+<h3>Chains (12.4.3)<a class="headerlink" href="#chains-12-4-3" title="Link to this heading">¶</a></h3>
+<p>If K is an oriented simplicial complex, and G an abelian group, a p-chain c_p
+C_p(K,G) is a map cp:p-simplices(K ) –&gt; G that assigns an element of G to each
+p-simplex in K . Equivalently, we may say that a p-chain is a formal sum of the
+p-simplices of K with coefficients in G. The group operation in G is then used
+to define the + operator for C_p(K,G), yielding the abelian group of
+p-chains over K and G.</p>
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">get-chain-module</span> <span class="pre">complex</span> <span class="pre">n</span> <span class="pre">&amp;optional</span> <span class="pre">group</span>&#160; <span class="pre">[Function]</span></span></dt>
+<dd><p>Creates the group of n-chains of complex with coefficients in group. If
+group is not provided then Z is used instead. If provided, group must be
+an abelian group.</p>
+</dd></dl>
+
+<p>Individual chains may be created by coercing a simplex into the chain module.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="p">(</span><span class="n">setq</span> <span class="mi">1</span><span class="o">-</span><span class="n">chains</span> <span class="p">(</span><span class="n">get</span><span class="o">-</span><span class="n">chain</span><span class="o">-</span><span class="n">module</span> <span class="nb">complex</span> <span class="mi">1</span><span class="p">))</span>
+<span class="n">C</span><span class="p">[</span><span class="mi">1</span><span class="p">](</span><span class="c1">#&lt;COMPLEX&gt;)</span>
+<span class="o">&gt;</span> <span class="p">(</span><span class="n">coerce</span> <span class="p">(</span><span class="n">make</span><span class="o">-</span><span class="n">simplex</span> <span class="n">a</span> <span class="n">b</span><span class="p">)</span> <span class="mi">1</span><span class="o">-</span><span class="n">chains</span><span class="p">)</span>
+<span class="p">[</span><span class="o">&lt;</span><span class="n">A</span><span class="o">&gt;</span><span class="p">,</span> <span class="o">&lt;</span><span class="n">B</span><span class="o">&gt;</span><span class="p">]</span>
+<span class="o">&gt;</span> <span class="p">(</span><span class="o">+</span> <span class="p">(</span><span class="n">coerce</span> <span class="p">(</span><span class="n">make</span><span class="o">-</span><span class="n">simplex</span> <span class="n">a</span> <span class="n">b</span><span class="p">)</span> <span class="mi">1</span><span class="o">-</span><span class="n">chains</span><span class="p">)</span>
+<span class="p">(</span><span class="o">*</span> <span class="mi">2</span> <span class="p">(</span><span class="n">coerce</span> <span class="p">(</span><span class="n">make</span><span class="o">-</span><span class="n">simplex</span> <span class="n">b</span> <span class="n">c</span><span class="p">)</span> <span class="mi">1</span><span class="o">-</span><span class="n">chains</span><span class="p">)))</span>
+<span class="p">[</span><span class="o">&lt;</span><span class="n">A</span><span class="o">&gt;</span><span class="p">,</span> <span class="o">&lt;</span><span class="n">B</span><span class="o">&gt;</span><span class="p">]</span> <span class="o">+</span> <span class="mi">2</span><span class="p">[</span><span class="o">&lt;</span><span class="n">B</span><span class="o">&gt;</span><span class="p">,</span> <span class="o">&lt;</span><span class="n">C</span><span class="o">&gt;</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>If <span class="math notranslate nohighlight">\(\sigma=[v_0,\ldots,v_p]\)</span> is a p-simplex, then its <strong>boundary</strong>
+is the following p-1 chain by linearity:</p>
+<div class="math notranslate nohighlight">
+\[\partial\sigma = \partial [v_0,\ldots,v_p] =
+   \sum_{i=0}^p (-1)^i [v_0,\ldots,\hat{v_i},\ldots,v_p].\]</div>
+<p>where <span class="math notranslate nohighlight">\(\hat{v_i}\)</span> indicates that the v_i vertex is missing. The boundary
+operation can be extended to chains by linearity.</p>
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">boundary</span> <span class="pre">chain</span>&#160; <span class="pre">[Function]</span></span></dt>
+<dd><p>chain can be either chain or a simplex. It returns the chain representing
+the boundary of chain .</p>
+</dd></dl>
+
+<p>This is illustrated by computing the boundary of triangle.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="p">(</span><span class="n">setq</span> <span class="n">tri</span><span class="o">-</span><span class="n">bound</span> <span class="p">(</span><span class="n">boundary</span> <span class="n">triangle</span><span class="p">))</span>
+<span class="p">[</span><span class="o">&lt;</span><span class="n">A</span><span class="o">&gt;</span><span class="p">,</span> <span class="o">&lt;</span><span class="n">B</span><span class="o">&gt;</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="o">&lt;</span><span class="n">B</span><span class="o">&gt;</span><span class="p">,</span> <span class="o">&lt;</span><span class="n">C</span><span class="o">&gt;</span><span class="p">]</span> <span class="o">-</span> <span class="p">[</span><span class="o">&lt;</span><span class="n">A</span><span class="o">&gt;</span><span class="p">,</span> <span class="o">&lt;</span><span class="n">C</span><span class="o">&gt;</span><span class="p">]</span>
+<span class="o">&gt;</span> <span class="p">(</span><span class="n">boundary</span> <span class="n">tri</span><span class="o">-</span><span class="n">boundary</span><span class="p">)</span>
+<span class="mi">0</span>
+</pre></div>
+</div>
+<p>It is generally true that <span class="math notranslate nohighlight">\(\partial\partial\sigma=0\)</span> for all simplices
+<span class="math notranslate nohighlight">\(\sigma\)</span>.</p>
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">boundary-domain</span> <span class="pre">chain</span>&#160; <span class="pre">[Function]</span></span></dt>
+<dd><p>Returns the chain-module that is the domain for the boundary of chain.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">boundary-domain</span> <span class="pre">simplex</span>&#160; <span class="pre">[Function]</span></span></dt>
+<dd><p>Returns a chain whose coefficients are the derivatives of the given chain
+coefficients. It is assumed that the new chain is in the same chain module
+as the old chain.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">deriv</span> <span class="pre">chain</span> <span class="pre">&amp;rest</span> <span class="pre">params</span>&#160; <span class="pre">[Function]</span></span></dt>
+<dd><p>Returns a chain whose coefficients are the derivatives of the given chain
+coefficients. It is assumed that the new chain is in the same chain module
+as the old chain.</p>
+</dd></dl>
+
+<p>Chains may be added and multiplied by elements of their coefficient domain.</p>
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">make-chain</span> <span class="pre">chain-module</span> <span class="pre">simplex-coefficient-pairs</span>&#160; <span class="pre">[Function]</span></span></dt>
+<dd><p>Creates a chain.</p>
+</dd></dl>
+
+<p>[1] By using the Hausdorff dimension for the dimension of a space, we can
+construct spaces that have non-integral dimension.</p>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="truncated-power-series.html" class="btn btn-neutral float-left" title="Truncated Power Series" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, SimLab Group &amp; Weyl enthusiasts.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
