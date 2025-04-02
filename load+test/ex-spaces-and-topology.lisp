@@ -311,8 +311,187 @@ simplex in K ) that provide a unique minimal representation for K . Although
 the maximal cells in a complex often have the same dimension, this is not 
 required.
 
+.. function:: make-simplicial-complex simplices    [Function]
+
+   Creates a simplicial complex containing each of the simplices in simplices 
+   together with their faces .
+
+::
+
+   > (setq complex (make-simplicial-complex (list triangle)))
+   #<COMPLEX>
 
 
+.. function:: map-over-cells (var &optional n complex) struct &body body   [Function]
+
+   The forms in body are evaluated with var bound to each n-dimensional face of 
+   struct. If n is nil then the body is evaluated for all faces, regardless of 
+   dimension. struct may be either a simplex or a simplicial complex. If complex
+   is nil (the default), then map-over-cells maps over lists of vertices (i.e., 
+   var will be set to a list of the vertices of the given cell. Otherwise 
+   map-over-cells maps over the canonical cell structures in complex.
+
+Here is an example of mapping over the faces of a 2-simplex [<A>, <B>, <C>]. 
+Note that since dimension is not speci ed, simplices of all dimension are printed. 
+Also, since no complex was specified, each simplex is represented by the list 
+of its vertices.
+::
+
+    > (map-over-cells (simp) triangle (print simp))
+    (<A>)
+    (<B> <A>)
+    (<C> <B> <A>)
+    (<C> <A>)
+    (<B>)
+    (<C> <B>)
+    (<C>)
+    
+
+A second example shows iteration over the 1-cells of triangle, rst with, then 
+without specifying the complex from which the simplex structures should be 
+extracted. Note the brackets used in the Weyl representation of a simplex in 
+the second example.
+::
+
+    (map-over-cells (simp 1) (print simp))
+    (<B> <A>)
+    (<C> <A>)
+    (<C> <B>)
+    triangle
+    (map-over-cells (simp 1 complex) triangle (print simp))
+    [<A>, <B>]
+    [<A>, <C>]
+    [<B>, <C>]
+
+
+.. function:: get-canonical-cell cell-complex cell  [Function]
+
+   If cell is contained in cell-complex then get-canonical-cell returns two 
+   values: the canonical cell with the vertices of cell that lies in cell-complex, 
+   and the sign of the relative orientation between the cell returned and cell. 
+   If cell is not contained in cell-complex then nil is returned.
+   
+
+.. function:: get-canonical-cell cell-complex &rest points  [Function]
+
+   If the cell whose vertices are points is contained in cell-complex then 
+   get-canonical-cell returns two values: the canonical cell with vertices 
+   points that lies in cell-complex, and the sign of the relative orientation 
+   between the ordering of the cell returned and the ordering of the points 
+   provided. If cell is not contained in cell-complex then nil is returned.
+   
+
+.. function:: vertex-set complex [Function]
+
+   Returns a list of the vertices of each of the maximal cells in complex.
+
+Cell complexes are, in general, immutable. New cell complexes can be created 
+from old cell complexes using boolean operations like union and intersection.
+
+.. function:: union &rest complexes   [Function]
+
+   Returns a new complex, whose maximal cells include the maximal cells of each 
+   of the elements of complexes.
+   
+.. function:: intersection &rest complexes  [Function]
+
+   Returns a new complex, which is the intersection of the elements of complexes.
+
+The following operations violate the immutability of cell complexes and thus 
+only intended to be used in situations that require additional performance, or 
+to implement higher level operations which do preserve the immutability of their 
+arguments.
+New simplices can be added and deleted from cell-complexes using insert and delete.
+
+.. function:: insert cell cell-complex  [Function]
+
+    Destructively modifies cell-complex by adding cell and each of its sub-cells 
+    to cell-complex if each is not not already an element. This operation is 
+    provided for use by internal routines.
+    
+
+.. function:: delete cell cell-complex &key (subsimplices? T)  [Function]
+
+   Destructively modi es cell-complex by deleting cell from cell-complex. Any 
+   subcells of a cell that are not contained in the remaining maximal cell of 
+   cell-complex are also deleted. This operation is provided for use by internal 
+   routines.
+   
+Chains (12.4.3)
+^^^^^^^^^^^^^^^
+If K is an oriented simplicial complex, and G an abelian group, a p-chain c_p 
+C_p(K,G) is a map cp:p-simplices(K ) --> G that assigns an element of G to each 
+p-simplex in K . Equivalently, we may say that a p-chain is a formal sum of the 
+p-simplices of K with coefficients in G. The group operation in G is then used 
+to define the + operator for C_p(K,G), yielding the abelian group of
+p-chains over K and G.
+
+.. function:: get-chain-module complex n &optional group  [Function]
+
+    Creates the group of n-chains of complex with coefficients in group. If 
+    group is not provided then Z is used instead. If provided, group must be 
+    an abelian group.
+
+Individual chains may be created by coercing a simplex into the chain module.
+::
+
+    > (setq 1-chains (get-chain-module complex 1))
+    C[1](#<COMPLEX>)
+    > (coerce (make-simplex a b) 1-chains)
+    [<A>, <B>]
+    > (+ (coerce (make-simplex a b) 1-chains)
+    (* 2 (coerce (make-simplex b c) 1-chains)))
+    [<A>, <B>] + 2[<B>, <C>]
+
+If :math:`\sigma=[v_0,\ldots,v_p]` is a p-simplex, then its **boundary**
+is the following p-1 chain by linearity:
+
+.. math::
+
+    \partial\sigma = \partial [v_0,\ldots,v_p] = 
+       \sum_{i=0}^p (-1)^i [v_0,\ldots,\hat{v_i},\ldots,v_p].
+       
+where :math:`\hat{v_i}` indicates that the v_i vertex is missing. The boundary 
+operation can be extended to chains by linearity.
+
+.. function:: boundary chain  [Function]
+
+   chain can be either chain or a simplex. It returns the chain representing 
+   the boundary of chain .
+
+This is illustrated by computing the boundary of triangle.
+::
+
+    > (setq tri-bound (boundary triangle))
+    [<A>, <B>] + [<B>, <C>] - [<A>, <C>]
+    > (boundary tri-boundary)
+    0
+
+It is generally true that :math:`\partial\partial\sigma=0` for all simplices 
+:math:`\sigma`.
+
+
+.. function:: boundary-domain chain  [Function]
+
+    Returns the chain-module that is the domain for the boundary of chain.
+
+.. function:: boundary-domain simplex  [Function]
+
+    Returns a chain whose coefficients are the derivatives of the given chain 
+    coefficients. It is assumed that the new chain is in the same chain module 
+    as the old chain.
+    
+.. function:: deriv chain &rest params  [Function]
+
+    Returns a chain whose coefficients are the derivatives of the given chain 
+    coefficients. It is assumed that the new chain is in the same chain module 
+    as the old chain.
+
+Chains may be added and multiplied by elements of their coefficient domain.
+
+.. function:: make-chain chain-module simplex-coefficient-pairs  [Function]
+
+    Creates a chain.
 
 
 

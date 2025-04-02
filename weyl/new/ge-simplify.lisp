@@ -1,4 +1,4 @@
-(ql:quickload :weyl)
+;;(ql:quickload :weyl)
 (in-package :weyl)
 
 ;;;; More Simplification Tools
@@ -273,6 +273,15 @@
                   (v (if (null b) 1 (reduce #'(lambda (u v) (* u v)) b))))
                   (* v u)))))
                   
+
+
+
+;; override
+;(in-package :weyli)
+;(defmethod simplify ((x ge-times)) 
+;  (simp-times-terms (domain-of x) (terms-of (weyl::simp-expt x))))
+;(in-package :weyl)
+
 ;;; tests
 
 (defvar t1 (* (expt 2 p) (expt x q) (expt 3 p) (expt y q)))

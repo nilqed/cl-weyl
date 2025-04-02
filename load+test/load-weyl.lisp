@@ -63,6 +63,7 @@
 (load "../weyl/new/display")
 (load "../weyl/new/weyl-user-manual")
 (load "../weyl/new/make-docs")
+;(load "../weyl/new/ge-simplify")
 
 
 ;; some files have to be compiled to get full functionality.

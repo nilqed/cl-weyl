@@ -17,3 +17,4 @@
 (def-ge-vars p q r u v w x y z)
 
 (defvar ge1 (+-> "p^(q+x)-(r/w)^y+u*v^2*w^z"))
+
